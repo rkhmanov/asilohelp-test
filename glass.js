@@ -56,16 +56,6 @@ if (!off) {
   // 1. Шапка
   glassify(document.querySelector(".hdr"));
 
-  // 2. Плавающие карточки: первый экран, «Кто мы», «База знаний»
-  document.querySelectorAll(".hero .scr, .fl, .status").forEach(glassify);
-
-  // 3. Всё, что лежит поверх фото: чипы на фото Саши, стикеры на отзывах
-  document.querySelectorAll(".dark__art .chip, .rv .sticker, .arch .sticker").forEach(glassify);
-
-  // 4. Плашка «Тестовая версия» — тёмное стекло
-  const banner = document.querySelector(".test-banner");
-  if (banner) { banner.setAttribute("data-theme", "dark"); glassify(banner); }
-
   // 5. Отзывы: круглые стеклянные кнопки поверх ленты с фото
   const reel = document.getElementById("reel");
   const oldNav = document.querySelector(".reviews__nav");

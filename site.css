@@ -423,10 +423,6 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 .hdr.lg-on::before { display: none; }
 .lg-host { position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; }
 .lg-host > .lg-glass { position: absolute; inset: 0; border-radius: inherit; }
-/* поверх фото стекло чуть плотнее — чтобы текст читался */
-.dark__art .chip, .rv .sticker, .arch .sticker { --lg-glass: rgb(255 255 255 / .62); }
-.status { --lg-glass: rgb(255 255 255 / .7); }
-.lg .test-banner { opacity: 1; color: #fff; }
 
 /* отзывы: кнопки поверх ленты */
 .reel-wrap { position: relative; }
