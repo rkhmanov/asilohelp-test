@@ -424,6 +424,17 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 .lg-host { position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; }
 .lg-host > .lg-glass { position: absolute; inset: 0; border-radius: inherit; }
 
+/* шапка: «Услуги ⌄» — меню Glisse; кнопка выглядит как обычный пункт меню */
+.nav-menu { display: inline-flex; align-items: center; }
+.nav-menu .lg-menu > .lg-button { width: auto; height: 32px; margin: 0 -10px; padding: 0 10px; border-radius: 16px; font-size: 14px; color: inherit;
+  background: transparent; background-image: none; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.nav-menu .lg-menu > .lg-button::after { display: none; }
+.nav-menu .lg-menu > .lg-button:hover { color: var(--accent); }
+.nav-menu__label { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.nav-menu .lg-menu-card { width: 240px; top: -8px; left: -18px; color: var(--ink); --lg-surface: rgb(255 255 255 / .72); }
+.nav-menu .lg-menu-item { min-height: 40px; font-size: 14px; }
+.nav-menu .lg-menu-item > svg { color: var(--accent); }
+
 /* отзывы: кнопки поверх ленты */
 .reel-wrap { position: relative; }
 .reel-nav { position: absolute; right: max(16px, calc((100% - 1326px) / 2)); bottom: 18px; z-index: 2; }

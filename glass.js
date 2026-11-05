@@ -3,7 +3,7 @@
 // ?glass=0 — выключить всё и посмотреть прежний вид.
 import { createElement as h, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Glass, SegmentedControl, Switch, Button, TabBar } from "glisse";
+import { Glass, SegmentedControl, Switch, Button, TabBar, Menu } from "glisse";
 
 const off = new URLSearchParams(location.search).get("glass") === "0";
 
@@ -29,6 +29,10 @@ const icons = {
   news: svg("M6 3h9l4 4v14H6z", "M14 3v5h5", "M9 13h7", "M9 17h5"),
   us: svg("M9 11.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z", "M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6", "M16 4.6a3.5 3.5 0 0 1 0 6.8", "M18 14.3c2 .7 3.5 2.6 3.5 5.7"),
   faq: svg("M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z", "M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.6", "M12 17h.01"),
+  chat: svg("M4 5h16v11H9l-5 4z", "M8 9.5h8", "M8 12.5h5"),
+  folder: svg("M3.5 6.5h6l2 2h9v10.5h-17z", "M8 13.5h8"),
+  route: svg("M12 21s6.5-5.6 6.5-11a6.5 6.5 0 0 0-13 0c0 5.4 6.5 11 6.5 11z", "M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"),
+  grid: svg("M4 4h7v7H4z", "M13 4h7v7h-7z", "M4 13h7v7H4z", "M13 13h7v7h-7z"),
   apply: svg("M21 3 3 10.4l7.2 2.4L12.6 20z", "M10.2 12.8 21 3"),
 };
 
@@ -55,6 +59,30 @@ if (!off) {
 
   // 1. Шапка
   glassify(document.querySelector(".hdr"));
+
+  // 2. Шапка: «Услуги ⌄» — стеклянное выпадающее меню
+  const servicesLink = document.querySelector('.hdr nav a[href="#help"]');
+  if (servicesLink) {
+    const go = (sel) => () => {
+      const el = document.querySelector(sel);
+      if (el) el.scrollIntoView({ block: sel === "#help" ? "start" : "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    };
+    const host = document.createElement("span");
+    host.className = "nav-menu";
+    servicesLink.replaceWith(host);
+    createRoot(host).render(h(Menu, {
+      "aria-label": "Услуги",
+      align: "start",
+      icon: h("span", { className: "nav-menu__label" }, "Услуги", h("img", { src: "img/chevron.svg", alt: "", width: 8, height: 4 })),
+      items: [
+        { label: "Консультация", icon: icons.chat, onSelect: go(".fc--a") },
+        { label: "Работа с кейсом", icon: icons.folder, onSelect: go(".fc--b") },
+        { label: "Сопровождение", icon: icons.route, onSelect: go(".fc--c") },
+        "separator",
+        { label: "Все услуги", icon: icons.grid, onSelect: go("#help") },
+      ],
+    }));
+  }
 
   // 5. Отзывы: круглые стеклянные кнопки поверх ленты с фото
   const reel = document.getElementById("reel");
