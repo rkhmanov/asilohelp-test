@@ -4,8 +4,10 @@ import { createElement } from "react";
 import { createRoot } from "react-dom/client";
 import { Glass } from "glisse";
 
+// ?glass=0 — показать прежнюю шапку (матовое стекло) для сравнения
+const off = new URLSearchParams(location.search).get("glass") === "0";
 const hdr = document.querySelector(".hdr");
-if (hdr) {
+if (hdr && !off) {
   const host = document.createElement("div");
   host.className = "hdr__glass-host";
   host.setAttribute("aria-hidden", "true");
