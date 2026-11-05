@@ -415,3 +415,10 @@ main, .foot { zoom: var(--z, 1); }
 .hdr__bot { background: rgba(255,255,255,.55); border-color: rgba(233,233,236,.9); }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .hdr { background: rgba(255,255,255,.96); } }
 @media (prefers-reduced-transparency: reduce) { .hdr { background: #fff; } }
+
+/* Шапка Glisse (жидкое стекло): своё стекло .hdr выключаем, иначе оно станет backdrop root и линза ничего не увидит */
+html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --lg-drop: rgb(33 33 41 / .08); }
+.hdr.hdr--glisse { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.hdr.hdr--glisse::before { display: none; }
+.hdr__glass-host { position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; }
+.hdr__glass { position: absolute; inset: 0; border-radius: inherit; }
