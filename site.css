@@ -416,6 +416,147 @@ main, .foot { zoom: var(--z, 1); }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .hdr { background: rgba(255,255,255,.96); } }
 @media (prefers-reduced-transparency: reduce) { .hdr { background: #fff; } }
 
+/* ===== версия 2 ===== */
+main { position: relative; }
+/* фон блоков 1–3: пыльный бордовый с белыми овалами (Figma «Фон блоков 1–3», версия 4) */
+.bg-burgundy { position: absolute; left: 50%; transform: translateX(-50%); top: 585px; width: 1440px; height: 1700px; z-index: -1; pointer-events: none;
+  background: url(img/v2-bg.jpg) center/100% 100% no-repeat; }
+body { background: #fff; }
+.hero, .help, .who { background: transparent; }
+.help .sh h2 { color: #fff; } .help .sh h2 span { color: #F3DDE1; opacity: .85; }
+.help__more { color: #fff; } .help__more a { color: #F6C9D1; }
+.help .flip-hint { color: rgba(255,255,255,.75); }
+/* карточки: белая вуаль на фото */
+.flip__front::after { background: linear-gradient(180deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.28) 55%, rgba(255,255,255,.35)); }
+.fc--b .flip__front::after { background: linear-gradient(180deg, rgba(255,255,255,0) 0, rgba(255,255,255,.62) 14%, rgba(255,255,255,0) 26%); }
+.fc--c .flip__front::after { background: linear-gradient(180deg, rgba(255,255,255,0) 44%, rgba(255,255,255,.76) 62%, rgba(255,255,255,0) 80%); }
+.ft--b { top: 13px; left: 17px; } .ft--c { top: 300px; }
+.flip__face { background: #fff; }
+/* блок 3: картинка во второй плитке */
+.mini--img { padding: 0; } .mini--img img { width: 100%; height: 100%; object-fit: cover; }
+.tile > p { min-height: 0; }
+/* блок 4: стеклянные плитки */
+.b { border: 1px solid rgba(255,255,255,.85); box-shadow: 0 18px 34px -12px rgba(26,28,38,.13), inset 2px 3px 9px rgba(41,46,61,.08), inset -2px -2px 7px rgba(255,255,255,.72); }
+.b--red { background: linear-gradient(113deg, rgba(140,15,36,.97), rgba(184,46,74,.92) 50%, rgba(110,13,31,.96)); border-color: rgba(255,199,209,.38);
+  box-shadow: 0 18px 34px -12px rgba(26,28,38,.24), inset 2px 3px 9px rgba(41,46,61,.24), inset -2px -2px 7px rgba(255,255,255,.18); }
+.b--red .big--xl { font-size: 150px; letter-spacing: -.05em; margin-top: -8px; } .b--red p { margin-top: 12px; }
+.b--team { background: linear-gradient(107deg, rgba(255,255,255,.92), rgba(229,240,250,.88) 50%, rgba(245,232,235,.86)); }
+.b3--pink { background: linear-gradient(107deg, rgba(255,245,247,.94), rgba(240,209,219,.88) 50%, rgba(252,237,229,.9)); }
+.b3--dark { background: linear-gradient(107deg, rgba(31,36,46,.98), rgba(56,64,82,.95) 50%, rgba(26,28,38,.98)); border-color: rgba(184,204,240,.24);
+  box-shadow: 0 18px 34px -12px rgba(26,28,38,.24), inset 2px 3px 9px rgba(41,46,61,.24), inset -2px -2px 7px rgba(255,255,255,.18); }
+.b3--dark h3 { font-size: 60px; }
+.b3--gray { background: linear-gradient(107deg, rgba(250,252,255,.94), rgba(219,232,247,.9) 50%, rgba(242,232,237,.88)); }
+@media (max-width: 1100px) { .bg-burgundy { width: 100%; top: 520px; height: 1900px; background-size: cover; } .b--red .big--xl { font-size: 96px; } }
+@media (max-width: 600px) { .b--red .big--xl { font-size: 72px; } .b3--dark h3 { font-size: 44px; } }
+/* кадрирование картинок как в Figma */
+.flip__face > img { inset: auto; max-width: none; }
+.fc--a .flip__face > img { width: 117.8%; height: 117.8%; left: 0; top: -17.8%; }
+.fc--b .flip__face > img { width: 131.9%; height: 132%; left: -18.5%; top: -.7%; }
+.fc--c .flip__face > img { width: 176.2%; height: 175.8%; left: -62.5%; top: -18.8%; }
+/* оборот карточки: белая полупрозрачная вуаль, бордовый текст */
+.flip__back::after { background: rgba(255,255,255,.72); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+.flip__back p { color: #A02538; font-weight: 400; }
+.flip__back b { color: #5A1522; font-weight: 600; }
+/* Safari: лицевая надпись просвечивала зеркально — прячем лицевую сторону на середине поворота */
+.flip__face, .flip__face * { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.flip__front { transition: visibility 0s .4s; }
+.flip__back { visibility: hidden; transition: visibility 0s .4s; }
+@media (hover: hover) {
+  .flip:hover .flip__front, .flip:focus-visible .flip__front { visibility: hidden; }
+  .flip:hover .flip__back, .flip:focus-visible .flip__back { visibility: visible; }
+}
+.flip.is-flipped .flip__front { visibility: hidden; } .flip.is-flipped .flip__back { visibility: visible; }
+@media (prefers-reduced-motion: reduce) { .flip__front, .flip__back { transition: none; } }
+/* переворот: симметричная кривая — ребро (90°) ровно на середине, 0,4 с. Стороны меняются точно в этот момент в обе стороны */
+.flip__inner { transition: transform .8s cubic-bezier(.65,0,.35,1), translate .45s var(--m-ease, ease); }
+.flip__front { transform: rotateY(0deg) translateZ(1px); }
+.flip__back { transform: rotateY(180deg) translateZ(1px); }
+.flip__front, .flip__back { transition: visibility 0s linear .4s; }
+/* переход по ссылкам меню: блок встаёт под шапкой, а не под неё (шапка 8 + 68 px + воздух) */
+main section[id] { scroll-margin-top: 96px; }
+@media (max-width: 1100px) { main section[id] { scroll-margin-top: 84px; } }
+
+/* ===== обновление по «мой прототип» (28.09): блок 6 «Бесплатно» на ярком бордовом, блок 7 «База знаний» ===== */
+.free { padding: 292px 0 310px; }
+.bg-free { position: absolute; left: 50%; transform: translateX(-50%); top: -232px; width: 1440px; height: 1957px; z-index: -1; pointer-events: none;
+  background: url(img/v2-bg-free.jpg) center/100% 100% no-repeat; }
+.free .sh h2 { color: #fff; } .free .sh h2 span { color: #F3DDE1; opacity: .85; }
+.free .sh p { color: #fff; opacity: .85; }
+.free__grid { margin-top: 60px; }
+.ftile { color: var(--ink); }
+.ftile--main::after { background: linear-gradient(180deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.62) 55%, rgba(255,255,255,.77)); }
+.ftile--main p { color: var(--ink); }
+.ftile--tr::after { background: linear-gradient(189deg, rgba(255,255,255,0) 57%, rgba(255,255,255,.17) 76%, rgba(255,255,255,.21) 98%); }
+.ftile--br::after { background: linear-gradient(235deg, rgba(255,255,255,.08) 34%, rgba(255,255,255,.42) 66%, rgba(255,255,255,0) 79%); }
+.ftile--side { padding-top: 60px; } .ftile--side p { color: var(--ink); max-width: 374px; }
+.btn--red-s { background: var(--accent); color: #fff; height: 48px; padding: 5px 5px 5px 24px; box-shadow: 0 12px 28px -10px rgba(160,37,56,.5); }
+.free__note { color: #fff; font-size: 60px; right: auto; left: calc(50% + 337px); bottom: auto; top: 1104px; }
+.free__arrow { position: absolute; left: calc(50% + 566px); top: 1150px; width: 102px; height: auto; transform: rotate(-105deg); pointer-events: none; }
+/* база знаний */
+.kb { padding-top: 60px; }
+.kb__box--v2 { min-height: 624px; padding: 90px 63px 60px; background: url(img/v2-kb-bg.jpg) center/cover no-repeat; }
+.kb__box--v2 > .btn { height: 56px; font-size: 30px; padding-left: 24px; gap: 30px; }
+.kb__box--v2 .fl--screens { left: 749px; top: -43px; }
+.kb__box--v2 .fl--timeline { left: 652px; top: 340px; }
+.kb__box--v2 .fl--inside { left: 951px; top: 165px; }
+@media (max-width: 1100px) {
+  .free { padding: 120px 0 120px; } .bg-free { width: 100%; top: -120px; height: calc(100% + 240px); background-size: cover; }
+  .free__arrow { display: none; }
+  .kb__box--v2 { padding: 40px 24px 480px; } .kb__box--v2 > .btn { font-size: 18px; }
+  .kb__box--v2 .fl--timeline { left: 12px; top: auto; } .kb__box--v2 .fl--inside { left: auto; top: auto; }
+}
+
+/* ===== макет Figma «мой прототип», сверка 22.11.2026 ===== */
+/* фоны: зернистая «пыль», как в макете (версия 5 — блоки 1–3, версия 6 — блок 6) */
+.bg-burgundy { background-image: url(img/bg-dust.jpg); }
+.bg-free { background-image: url(img/bg-free.jpg); }
+/* у картинок фона по краям остаётся светлое зерно — растворяем края, чтобы не было резкой границы */
+.bg-burgundy, .bg-free { -webkit-mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent); }
+/* 1 · первый экран: размеры из макета 1440 */
+.hero__center { top: 213px; gap: 30px; width: 860px; }
+.hero h1 { font-size: 62px; line-height: 1.04; letter-spacing: -.03em; white-space: nowrap; }
+.hero h1 > span { white-space: nowrap; }
+.hero__row { gap: 18px; }
+.faces img { width: 62px; height: 62px; border-width: 4px; margin-right: -22px; }
+.mark { border-radius: 32px; padding: 4px 24px 7px; }
+.hero__lead { font-size: 18px; line-height: 1.5; width: 700px; }
+.hero__btns { gap: 12px; margin-bottom: 18px; }
+.hero__btns .btn { height: 56px; padding: 0 30px; font-size: 16px; }
+.hero__nums { gap: 16px; }
+.hero__nums div { width: 190px; }
+.hero__nums b { font-size: 42px; letter-spacing: -.02em; line-height: 1; }
+.hero__nums span { font-size: 14px; }
+/* 2 · заголовок на бордовом и подпись под карточками */
+.help .sh h2 { letter-spacing: -.05em; }
+/* 2 · вертикальный ритм как в макете: заголовок 115 px от верха блока, карточки через 33 px, подпись через 56 px */
+.help { padding: 115px 0 77px; }
+.help__grid { margin-top: 33px; }
+.help .flip-hint { margin-top: 18px; line-height: 16px; }
+.help__more { margin-top: 22px; }
+/* 3 · заголовок 128 px от верха блока */
+.who { padding: 128px 0 64px; }
+.b3--dark h3 { white-space: nowrap; }
+/* 4 · белая точка в красной плитке — с мягкой тенью, как в макете */
+.b--red .dot { box-shadow: 0 14px 24px rgba(60,8,18,.28); }
+@media (max-width: 1100px) {
+  /* на узком экране блоки длиннее макета: бордовый фон рисуем прямо под блоком, белые края картинки уводим за его границы */
+  .bg-burgundy, .bg-free { display: none; }
+  .help, .free { background: #9c2a3e url(img/bg-dust.jpg) center/100% 185% no-repeat; }
+  .free { background-color: #a3263b; background-image: url(img/bg-free.jpg); }
+  .help { padding: 80px 0 60px; } .who { padding: 64px 0 60px; }
+  .hero__center { width: auto; } .hero__lead { width: auto; } .hero h1, .hero h1 > span { white-space: normal; }
+}
+@media (max-width: 600px) {
+  .hero h1 { font-size: 30px; } .faces img { width: 40px; height: 40px; border-width: 3px; margin-right: -14px; }
+  .mark { border-radius: 16px; padding: 2px 14px 6px; }
+  .hero__lead { font-size: 15px; } .hero__nums b { font-size: 28px; } .hero__nums span { font-size: 11px; }
+  .hero__btns .btn { width: 100%; }
+  .hero__nums div { width: auto; flex: 1; }
+  .ft--c { top: 200px; }
+  .b3--gray h3 { font-size: 24px; } .b3--dark h3 { white-space: normal; }
+  .apply h2 { font-size: 34px; }
+}
+
 /* ── Жидкое стекло (Glisse) — включается классом .lg на <html> из glass.js ── */
 html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --lg-drop: rgb(33 33 41 / .08); --lg-on: var(--accent); --lg-fill: var(--accent); }
 /* блок со стеклом: свой фон и blur выключаем, иначе он станет backdrop root и линза ничего не увидит */
