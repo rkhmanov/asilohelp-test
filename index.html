@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="motion.css?v=16">
-<link rel="stylesheet" href="site.css?v=21">
+<link rel="stylesheet" href="motion.css?v=17">
+<link rel="stylesheet" href="site.css?v=22">
 <script type="importmap">{"imports":{"react":"https://esm.sh/react@19.1.0","react/jsx-runtime":"https://esm.sh/react@19.1.0/jsx-runtime","react-dom/client":"https://esm.sh/react-dom@19.1.0/client?deps=react@19.1.0","glisse":"./vendor/glisse/index.js"}}</script>
-<script type="module" src="glass.js?v=4"></script>
+<script type="module" src="glass.js?v=5"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot')</script>
 <style>.shot *,.shot *::before{transition:none!important;animation:none!important} @media (max-width:700px){.br-d{display:none}} .scr, .fl { transform: rotate(var(--rot, 0deg)); } @media (max-width: 1100px) { .fl--inside { animation: none; } }</style>
 </head>
@@ -36,6 +36,7 @@
 </header>
 
 <main id="top">
+<div class="bg-burgundy" aria-hidden="true"></div>
 
 <!-- 1 · Первый экран -->
 <section class="hero"><div class="hero__stage">
@@ -43,12 +44,12 @@
     <h1>
       <span>Поможем ЛГБТ‑людям</span>
       <span class="hero__row">
-        <span class="faces" aria-hidden="true"><img src="img/hero-sasha.jpg" alt=""><img src="img/face1.png" alt=""><img src="img/face2.png" alt=""><img src="img/face3.png" alt=""><img src="img/face4.png" alt=""><img src="img/face5.png" alt=""><img src="img/face6.png" alt=""></span>
+        <span class="faces" aria-hidden="true"><img src="img/face2.png" alt=""><img src="img/face3.png" alt=""><img src="img/face4.png" alt=""><img src="img/face6.png" alt=""></span>
         <span>получить</span><span class="mark">ASILO</span>
       </span>
       <span>в Испании</span>
     </h1>
-    <p class="hero__lead">От доработки пакета документов и онлайн-консультаций<br class="br-d"> до старта с нуля и полного ведения, включая помощь<br class="br-d"> с визой, кейсом, интервью и адаптацией.</p>
+    <p class="hero__lead">От онлайн-консультаций и разбора готового кейса<br class="br-d"> до старта с нуля и полного ведения, включая помощь<br class="br-d"> с визой, кейсом, интервью и адаптацией.</p>
     <div class="hero__btns">
       <a class="btn btn--accent m-btn m-btn--accent" href="#apply">Оценить шансы</a>
       <a class="btn btn--outline m-btn" href="#kb">База знаний</a>
@@ -60,25 +61,6 @@
     </div>
   </div>
 
-  <div class="scr scr--bot m-float" style="--dur:8s;--lift:-10px" aria-hidden="true">
-    <div class="scr__head"><img src="img/bot-ava.svg" alt="" width="30" height="30">ASILOhelperBot</div>
-    <div class="scr__msg">Заявка принята. Свяжемся с понедельника по пятницу, чтобы записать вас на оценку шансов.</div>
-  </div>
-  <div class="scr scr--polaroid m-float" style="--dur:10s;--delay:-3s;--lift:-12px" aria-hidden="true">
-    <img src="img/hero-sasha.jpg" alt=""><span class="hand">Саша, Барселона</span>
-  </div>
-  <div class="scr scr--case m-float" style="--dur:9s;--delay:-5s;--lift:-8px" aria-hidden="true">
-    <b>Ваш кейс</b>
-    <span class="chk"><i></i>Интервью с журналистом</span>
-    <span class="chk"><i></i>Доказательства</span>
-    <span class="chk"><i></i>Перевод на испанский</span>
-    <span class="chk chk--off"><i></i>Проверка юристом</span>
-  </div>
-  <div class="scr scr--channel m-float" style="--dur:11s;--delay:-2s;--lift:-9px" aria-hidden="true">
-    <div class="ch"><img src="img/channel-ava.png" alt=""><div><b>ЛГБТ-беженство | Испания</b><small>3,9 тыс. подписчиков</small></div></div>
-    <p>Новости о защите в Испании: правила, сроки, законы.</p>
-  </div>
-  <span class="hero__note hand" aria-hidden="true">это про тебя ↓</span>
 </div></section>
 
 <!-- 2 · Как мы помогаем -->
@@ -88,22 +70,22 @@
     <div class="help__grid" data-reveal-group="0.08">
       <div class="flip fc--a" data-reveal tabindex="0" aria-label="Консультации: нажмите, чтобы узнать, что входит">
         <div class="flip__inner">
-          <div class="flip__face flip__front"><img src="img/flip-consult.jpg" alt=""><h3 class="visually-hidden">Консультации</h3><span class="ft ft--a">КОН<br>СУЛЬ<br>ТАЦИИ</span></div>
-          <div class="flip__face flip__back" aria-hidden="true"><img src="img/flip-consult.jpg" alt=""><p><b>Ответим на все вопросы</b> по переезду и адаптации. Обсудим интервью, программу и кейс. А если есть готовый — <b>проверим его</b>, соберём список рекомендаций и подготовим <b>персональный гайд</b> по сбору доказательств.</p></div>
+          <div class="flip__face flip__front"><img src="img/v2-card-consult.jpg" alt=""><h3 class="visually-hidden">Консультации</h3><span class="ft ft--a">КОН<br>СУЛЬ<br>ТАЦИИ</span></div>
+          <div class="flip__face flip__back" aria-hidden="true"><img src="img/v2-card-consult.jpg" alt=""><p><b>Ответим на все вопросы</b> по переезду и адаптации. Обсудим интервью, программу и кейс. А если есть готовый — <b>проверим его</b>, соберём список рекомендаций и подготовим <b>персональный гайд</b> по сбору доказательств.</p></div>
         </div>
         <a class="btn btn--white m-btn flip__btn" href="#apply">Записаться на консультацию <img class="m-arrow" src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
       </div>
       <div class="flip fc--b" data-reveal tabindex="0" aria-label="Работа с кейсом: нажмите, чтобы узнать, что входит">
         <div class="flip__inner">
-          <div class="flip__face flip__front"><img src="img/flip-case.jpg" alt=""><h3 class="visually-hidden">Работа с кейсом</h3><span class="ft ft--b">РАБОТА<br>С КЕЙСОМ</span></div>
-          <div class="flip__face flip__back" aria-hidden="true"><img src="img/flip-case.jpg" alt=""><p><b>Команда из 5 человек</b> будет работать над вашим кейсом: мы начнём с интервью, соберём доказательную базу, подготовим отчёт о ситуации в стране и переведём готовый материал на испанский язык. Вы получаете <b>готовый к подаче документ</b>.</p></div>
+          <div class="flip__face flip__front"><img src="img/v2-card-case.jpg" alt=""><h3 class="visually-hidden">Работа с кейсом</h3><span class="ft ft--b">РАБОТА<br>С КЕЙСОМ</span></div>
+          <div class="flip__face flip__back" aria-hidden="true"><img src="img/v2-card-case.jpg" alt=""><p><b>Команда из 5 человек</b> будет работать над вашим кейсом: мы начнём с интервью, соберём доказательную базу, подготовим отчёт о ситуации в стране и переведём готовый материал на испанский язык. Вы получаете <b>готовый к подаче документ</b>.</p></div>
         </div>
         <a class="btn btn--white m-btn flip__btn" href="#apply">Помочь с кейсом <img class="m-arrow" src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
       </div>
       <div class="flip fc--c" data-reveal tabindex="0" aria-label="Сопровождение: нажмите, чтобы узнать, что входит">
         <div class="flip__inner">
-          <div class="flip__face flip__front"><img src="img/flip-sopr.jpg" alt=""><h3 class="visually-hidden">Сопровождение</h3><span class="ft ft--c">СОПРО<br>ВОЖДЕ<br>НИЕ</span></div>
-          <div class="flip__face flip__back" aria-hidden="true"><img src="img/flip-sopr.jpg" alt=""><p><b>Помогаем с нуля</b>: поможем сделать загранпаспорт, найдём слот и подготовим документы на визу, поможем с кейсом <b>от начала и до конца</b>, запишем на подачу и подготовим к интервью. После откроем счёт и <b>поможем с адаптацией</b>.</p></div>
+          <div class="flip__face flip__front"><img src="img/v2-card-sopr.jpg" alt=""><h3 class="visually-hidden">Сопровождение</h3><span class="ft ft--c">СОПРО<br>ВОЖДЕ<br>НИЕ</span></div>
+          <div class="flip__face flip__back" aria-hidden="true"><img src="img/v2-card-sopr.jpg" alt=""><p><b>Помогаем с нуля</b>: поможем сделать загранпаспорт, найдём слот и подготовим документы на визу, поможем с кейсом <b>от начала и до конца</b>, запишем на подачу и подготовим к интервью. После откроем счёт и <b>поможем с адаптацией</b>.</p></div>
         </div>
         <a class="btn btn--white m-btn flip__btn" href="#apply">Узнать подробнее <img class="m-arrow" src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
       </div>
@@ -121,23 +103,19 @@
     <div class="tiles3" data-reveal-group="0.08">
       <article class="tile m-card" data-reveal>
         <div class="mini"><div class="basis"><small>ОСНОВАНИЕ ДЛЯ ЗАЩИТЫ</small><b>ориентация</b><em>и гендерная идентичность — Ley 4/2023</em></div></div>
-        <div class="tile__head"><h3>Нет преследования?</h3><img class="m-arrow" src="img/arrow-diag.svg" alt="" width="44" height="44"></div>
-        <p>Обоснованный страх преследования — тоже основание, даже без прямой угрозы.</p>
-        <div class="inkb">В базе знаний <span><img src="img/dot-red14.svg" alt="" width="14" height="14">Основания</span></div>
+        <div class="tile__head"><h3>Нет преследования</h3><img class="m-arrow" src="img/arrow-diag.svg" alt="" width="44" height="44"></div>
+        <p>Лично к вам никто не подошёл с ножом, не уволил с работы и не сдал в полицию. Это не значит, что вы не можете запросить защиту — пока это происходит с людьми вокруг вас, вы можете стать следующим.</p>
       </article>
       <article class="tile m-card" data-reveal>
-        <div class="mini"><div class="evid"><small>ДОКАЗАТЕЛЬСТВА · В КЕЙС</small>
-          <div><b>скриншоты</b><span>угроз и переписок</span></div><div><b>справки</b><span>из больницы, полиции</span></div><div><b>свидетели</b><span>письма знакомых</span></div></div></div>
-        <div class="tile__head"><h3>Травля и насилие</h3><img class="m-arrow" src="img/arrow-diag.svg" alt="" width="44" height="44"></div>
-        <p>Угрозы, нападения, увольнение, отказ полиции принять заявление.</p>
-        <div class="inkb">В базе знаний <span><img src="img/dot-red14.svg" alt="" width="14" height="14">Доказательства</span></div>
+        <div class="mini mini--img"><img src="img/v2-who-secret.jpg" alt=""></div>
+        <div class="tile__head"><h3>О вас никто не знает</h3><img class="m-arrow" src="img/arrow-diag.svg" alt="" width="44" height="44"></div>
+        <p>Вы жили скрытно, поэтому не было проблем. Это усложняет задачу, но не делает её невозможной. Ведь есть причины, почему вы выбрали такую жизнь.</p>
       </article>
       <article class="tile m-card" data-reveal>
         <div class="mini"><div class="chron"><small>ХРОНОЛОГИЯ · ПРИМЕР</small>
           <div><i></i><b>2022</b><span>новый закон</span></div><div><i></i><b>2023</b><span>давление на работе</span></div><div class="on"><i></i><b>2024</b><span>решение уехать</span></div></div></div>
-        <div class="tile__head"><h3>Страх за будущее</h3><img class="m-arrow" src="img/arrow-diag.svg" alt="" width="44" height="44"></div>
-        <p>Обоснованный страх преследования — тоже основание, даже без прямой угрозы.</p>
-        <div class="inkb">В базе знаний <span><img src="img/dot-red14.svg" alt="" width="14" height="14">Кейс</span></div>
+        <div class="tile__head"><h3>Вам просто страшно</h3><img class="m-arrow" src="img/arrow-diag.svg" alt="" width="44" height="44"></div>
+        <p>Ещё ничего не случилось, но вам страшно. Это тоже позволяет запросить международную защиту, но и этот страх надо обосновать. Мы помогаем с такими кейсами и добиваемся одобрения.</p>
       </article>
     </div>
     <div class="dark" data-reveal>
@@ -168,8 +146,8 @@
       <p>Команда ЛГБТ-людей и союзников. Многие из нас сами прошли этот путь, мы получили международную защиту и живем в Испании.</p></div>
     <div class="bento" data-reveal-group="0.08">
       <div class="b b--red" data-reveal>
-        <div class="big" data-count="187">187</div>
-        <p>человека переехали в Испанию и запросили защиту вместе с нами.</p>
+        <div class="big big--xl" data-count="187">187</div>
+        <p>человека переехали в Испанию<br>и запросили защиту вместе с нами.</p>
         <a class="link" href="#reviews">Истории клиентов <img src="img/arrow-small-white.svg" alt="" width="8" height="8"></a>
         <div class="stack" aria-hidden="true"><i></i><i></i>
           <div class="status"><small>ВАШ СТАТУС</small><b>protección</b><span>международная защита</span><div class="bar"><i></i></div><em>карта резидента на 5 лет</em></div></div>
@@ -178,29 +156,29 @@
       <div class="b b--team" data-reveal>
         <h3>Команда</h3><span class="sq" aria-hidden="true"><i></i></span>
         <p>Каждый отвечает за свою часть пути — от оценки шансов до интервью.</p>
-        <div class="names"><span>Саша</span><span>Леся</span><span>Илья</span><span>Юрист</span><span>Рома</span></div>
+        <div class="names"><span>Саша</span><span>Леся</span><span>Артём</span><span>Михаил</span></div>
         <div class="roles">
-          <div><b>Саша</b><strong>основатель</strong><span>процессы, база знаний, сам получил защиту</span></div>
-          <div><b>Леся</b><strong>консультант</strong><span>отвечает на заявки</span></div>
-          <div><b>Илья</b><strong>журналист</strong><span>интервью и текст кейса</span></div>
-          <div><b>Михаил</b><strong>юрист</strong><span>проверка кейса, подготовка к интервью</span></div>
+          <div><b>Саша</b><strong>основатель</strong><span>процессы, база знаний, сам получил защиту, отвечает за проект</span></div>
+          <div><b>Леся</b><strong>консультантка</strong><span>отвечает на заявки, помогает с оценкой шансов, составляет договор</span></div>
+          <div><b>Артём</b><strong>журналист</strong><span>готовит черновую версию кейса, помогает собирать доказательства</span></div>
+          <div><b>Михаил</b><strong>юрист</strong><span>вычитывает кейс, готовит к интервью и отвечает за юр. часть</span></div>
         </div>
       </div>
     </div>
     <div class="bento3" data-reveal-group="0.08">
       <div class="b b3 b3--pink" data-reveal>
         <h3>Официально</h3>
-        <p>Мы работаем по договору и зарегистрированы в Испании. Оплатить любые услуги можно в нескольких валютах по банковским реквизитам.</p>
+        <p>Мы работаем по договору<br>и зарегистрированы в Испании. Оплатить любые услуги можно<br>в нескольких валютах по официальным реквизитам.</p>
         <div class="doc" aria-hidden="true"><b>Договор об оказании услуг</b><i></i><i></i><i style="width:120px"></i><span>Подписан</span></div>
       </div>
       <div class="b b3 b3--dark" data-reveal>
-        <h3>2 юриста</h3>
+        <h3>8 человек</h3>
         <p>в команде: проверяют кейс и готовят к интервью в полиции.</p>
         <ul><li>Проверка кейса юристом</li><li>Тренинг к интервью</li><li>Ответы на вопросы в чате</li></ul>
       </div>
       <div class="b b3 b3--gray" data-reveal>
         <h3>Конфиденциально</h3>
-        <p>Не передаем ваши данные третьим лицам. Храним данные на защищенных серверах. Общение и работа с нами не нарушает законы России.</p>
+        <p>Мы не передаём ваши данные третьим лицам и храним их на защищённых серверах. Общение и работа с нами не нарушает законы России.</p>
         <a href="#">Политика конфиденциальности →</a>
       </div>
     </div>
@@ -230,36 +208,38 @@
 
 <!-- 6 · Бесплатно -->
 <section class="free">
+  <div class="bg-free" aria-hidden="true"></div>
   <div class="wrap">
     <div class="sh" data-reveal><h2>Начните с наших<span>бесплатных материалов</span></h2>
       <p>Мы верим, что этот путь можно пройти самостоятельно, поэтому не прячем знания: база, канал и чат открыты для всех. А если захотите, чтобы рядом была команда, — мы поможем.</p></div>
     <div class="free__grid" data-reveal-group="0.08">
       <article class="ftile ftile--main m-card" data-reveal>
-        <img src="img/rv-sasha-dog.jpg" alt="">
+        <img src="img/v2-free-main.jpg" alt="">
         <span class="badge">Бесплатно</span>
         <div>
           <h3>Оценка шансов</h3>
           <p>Разберём вашу ситуацию и честно скажем, подходит ли вам защита.</p>
-          <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="#apply">Оценить шансы <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
+          <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="#apply">ОЦЕНИТЬ ШАНСЫ <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
         </div>
       </article>
       <div class="free__side">
         <article class="ftile ftile--side ftile--tr m-card" data-reveal>
-          <img src="img/rv-gothic.jpg" alt="">
+          <img src="img/v2-free-channel.jpg" alt="">
           <h3>Канал в телеграме</h3>
           <p>Еженедельные обновления, важные анонсы, ежемесячные анонсы бесплатных разборов кейса и консультаций</p>
-          <a class="btn btn--white m-btn" href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Подписаться на канал <img class="m-arrow" src="img/arrow-dark38.svg" alt="" width="38" height="38"></a>
+          <a class="btn btn--red-s m-btn m-btn--accent" href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Подписаться на канал <img class="m-arrow" src="img/v2-arrow-white38.svg" alt="" width="38" height="38"></a>
         </article>
         <article class="ftile ftile--side ftile--br m-card" data-reveal>
-          <img src="img/free-chat.jpg" alt="">
+          <img src="img/v2-free-chat.jpg" alt="">
           <h3>Сообщество заявителей</h3>
           <p>Более 30 000 сообщений и 800 участников, которые делятся своим опытом, задают вопросы и получают на них ответы</p>
-          <a class="btn btn--white m-btn" href="https://t.me/+GRq-QZJDqDNlNDEy" target="_blank" rel="noopener">Вступить в чат <img class="m-arrow" src="img/arrow-dark38.svg" alt="" width="38" height="38"></a>
+          <a class="btn btn--red-s m-btn m-btn--accent" href="https://t.me/+GRq-QZJDqDNlNDEy" target="_blank" rel="noopener">Вступить в чат <img class="m-arrow" src="img/v2-arrow-white38.svg" alt="" width="38" height="38"></a>
         </article>
       </div>
     </div>
   </div>
-  <span class="free__note hand" aria-hidden="true">и главное ↓</span>
+  <span class="free__note hand" aria-hidden="true">и главное</span>
+  <img class="free__arrow" src="img/v2-arrow-hand.png" alt="" aria-hidden="true">
 </section>
 
 <!-- 7 · База знаний -->
@@ -267,7 +247,7 @@
   <div class="wrap">
     <div class="sh sh--sm" data-reveal><h2>Полная база знаний<span>бесплатно в нашем боте</span></h2>
       <p>Мы не просим деньги за информацию, которая доступна онлайн в разных источниках. Мы собрали наш опыт и поделились им в удобном формате. Все о защите в Испании — от первых шагов до жизни после.</p></div>
-    <div class="kb__box" data-reveal>
+    <div class="kb__box kb__box--v2" data-reveal>
       <div class="kb__title">МЕЖДУНАРОДНАЯ<br>ЗАЩИТА В<span class="mark">Испании</span></div>
       <p class="kb__ver">База знаний · версия 1.6</p>
       <p class="kb__lead">Всё, что мы узнали, пока сами проходили этот путь: от загранпаспорта и визы до интервью, красной карты и гражданства. Бесплатно.</p>
@@ -276,7 +256,7 @@
         <div><b>1800+</b><span>регулярных<br>пользователей</span></div>
         <div><b data-count="37">37</b><span>гайдов<br>и чек-листов</span></div>
       </div>
-      <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">Получить доступ <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
+      <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">ПОЛУЧИТЬ ДОСТУП <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
       <div class="fl fl--screens m-float" style="--dur:10s;--lift:-8px" aria-hidden="true"><img src="img/kb-screens.jpg" alt=""></div>
       <div class="fl fl--timeline m-float" style="--dur:12s;--delay:-4s;--lift:-7px" aria-hidden="true"><img src="img/kb-timeline.jpg" alt=""><p>Весь путь на одной схеме · автор — Мила Юма</p></div>
       <div class="fl fl--inside m-float" style="--dur:9s;--delay:-2s;--lift:-10px" aria-hidden="true"><b>Внутри</b><span>До отъезда</span><span>Кейс</span><span>Доказательства</span><span>Интервью</span><span>Подача в Испании</span></div>
