@@ -312,6 +312,23 @@ section { position: relative; }
 .form__note { font-size: 10px; color: var(--muted); text-align: center; margin-top: 12px; }
 .form__ok { display: none; text-align: center; padding: 60px 10px; }
 .form__ok b { font-weight: 600; font-size: 24px; } .form__ok p { font-size: 13px; line-height: 1.6; color: #646464; margin-top: 12px; }
+.form__ok:focus { outline: none; }
+.form__ok a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.form__code span { display: inline-block; margin-left: 4px; padding: 4px 10px; border-radius: 8px; background: var(--tile-2); color: var(--ink); font-weight: 600; font-size: 15px; letter-spacing: .02em; }
+/* форма: ошибки, ловушка для ботов, проверка Turnstile */
+.field__err { font-size: 12px; line-height: 1.45; color: var(--accent); }
+.field__err[hidden], .form__err[hidden] { display: none; }
+.field.is-invalid input, .field.is-invalid textarea { background: #FDF2F4; box-shadow: inset 0 0 0 1.5px var(--accent); }
+.consent a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.consent.is-invalid input:not(.consent__native) { border-color: var(--accent); }
+.consent.is-invalid .consent__switch { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 999px; }
+.hp { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+.ts { margin: 6px 0 12px; min-height: 65px; }
+.ts .field__err { margin-top: 6px; }
+/* ниже селекторы с .form__body > p — иначе их перебивает стиль вводного абзаца формы */
+.form__body > p.field__err--consent { font-size: 12px; line-height: 1.45; color: var(--accent); margin: -4px 0 14px; }
+.form__body > p.form__err { background: var(--pink); color: var(--accent); border-radius: 12px; padding: 12px 16px; font-size: 13px; line-height: 1.5; margin: 4px 0 8px; }
+.submit:disabled { opacity: .6; cursor: progress; }
 
 /* подвал */
 .foot { padding: 4px 40px 40px; }
