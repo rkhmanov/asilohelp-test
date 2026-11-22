@@ -44,7 +44,7 @@ function ConsentSwitch({ input, label }) {
     input.addEventListener("change", sync);
     return () => input.removeEventListener("change", sync);
   }, [input]);
-  return h(Switch, { checked: on, "aria-label": label, onCheckedChange: (v) => { input.checked = v; setOn(v); } });
+  return h(Switch, { checked: on, "aria-label": label, onCheckedChange: (v) => { input.checked = v; setOn(v); input.dispatchEvent(new Event("change", { bubbles: true })); } });
 }
 
 function mount(where, el) {
@@ -103,7 +103,6 @@ if (!off) {
   // 6. Форма: Telegram / E-mail — сегментированный переключатель iOS
   const seg = document.querySelector(".contact .seg");
   if (seg) {
-    const input = seg.parentElement.querySelector("input");
     const host = document.createElement("div");
     host.className = "seg-lg";
     seg.replaceWith(host);
@@ -111,7 +110,8 @@ if (!off) {
       "aria-label": "Способ связи",
       items: [{ value: "tg", label: "Telegram" }, { value: "mail", label: "E-mail" }],
       defaultValue: "tg",
-      onValueChange: (v) => { input.placeholder = v === "mail" ? "name@mail.com" : "@username"; input.type = v === "mail" ? "email" : "text"; },
+      // тип контакта, подсказку и проверку ведёт скрипт формы в index.html
+      onValueChange: (v) => window.asiloSetContactType?.(v === "mail" ? "email" : "telegram"),
     }));
   }
 
