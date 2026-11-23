@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="motion.css?v=17">
 <link rel="stylesheet" href="site.css?v=23">
 <script type="importmap">{"imports":{"react":"https://esm.sh/react@19.1.0","react/jsx-runtime":"https://esm.sh/react@19.1.0/jsx-runtime","react-dom/client":"https://esm.sh/react-dom@19.1.0/client?deps=react@19.1.0","glisse":"./vendor/glisse/index.js"}}</script>
-<script type="module" src="glass.js?v=7"></script>
+<script type="module" src="glass.js?v=8"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot')</script>
 <style>.shot *,.shot *::before{transition:none!important;animation:none!important} @media (max-width:700px){.br-d{display:none}} .scr, .fl { transform: rotate(var(--rot, 0deg)); } @media (max-width: 1100px) { .fl--inside { animation: none; } }</style>
 </head>
@@ -23,7 +23,7 @@
   <div class="hdr">
     <a class="hdr__logo" href="#top" aria-label="asilohelp — на главную"><img src="img/logo.svg" alt="asilohelp" width="197" height="32"></a>
     <nav aria-label="Меню">
-      <a href="#help">Услуги <img src="img/chevron.svg" alt="" width="8" height="4"></a>
+      <a href="#help" data-nav="services">Услуги <img src="img/chevron.svg" alt="" width="8" height="4"></a>
       <a href="stati.html">Статьи</a>
       <a href="o-nas.html">О нас</a>
       <a href="#faq">Вопросы</a>
@@ -73,21 +73,21 @@
           <div class="flip__face flip__front"><img src="img/v2-card-consult.jpg" alt=""><h3 class="visually-hidden">Консультации</h3><span class="ft ft--a">КОН<br>СУЛЬ<br>ТАЦИИ</span></div>
           <div class="flip__face flip__back" aria-hidden="true"><img src="img/v2-card-consult.jpg" alt=""><p><b>Ответим на все вопросы</b> по переезду и адаптации. Обсудим интервью, программу и кейс. А если есть готовый — <b>проверим его</b>, соберём список рекомендаций и подготовим <b>персональный гайд</b> по сбору доказательств.</p></div>
         </div>
-        <a class="btn btn--white m-btn flip__btn" href="#apply">Записаться на консультацию <img class="m-arrow" src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
+        <a class="btn btn--white m-btn flip__btn" href="konsultacii.html">Выбрать консультацию <img class="m-arrow" src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
       </div>
       <div class="flip fc--b" data-reveal tabindex="0" aria-label="Работа с кейсом: нажмите, чтобы узнать, что входит">
         <div class="flip__inner">
           <div class="flip__face flip__front"><img src="img/v2-card-case.jpg" alt=""><h3 class="visually-hidden">Работа с кейсом</h3><span class="ft ft--b">РАБОТА<br>С КЕЙСОМ</span></div>
           <div class="flip__face flip__back" aria-hidden="true"><img src="img/v2-card-case.jpg" alt=""><p><b>Команда из 5 человек</b> будет работать над вашим кейсом: мы начнём с интервью, соберём доказательную базу, подготовим отчёт о ситуации в стране и переведём готовый материал на испанский язык. Вы получаете <b>готовый к подаче документ</b>.</p></div>
         </div>
-        <a class="btn btn--white m-btn flip__btn" href="#apply">Помочь с кейсом <img class="m-arrow" src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
+        <a class="btn btn--white m-btn flip__btn" href="keys.html">Подробнее о кейсе <img class="m-arrow" src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
       </div>
       <div class="flip fc--c" data-reveal tabindex="0" aria-label="Сопровождение: нажмите, чтобы узнать, что входит">
         <div class="flip__inner">
           <div class="flip__face flip__front"><img src="img/v2-card-sopr.jpg" alt=""><h3 class="visually-hidden">Сопровождение</h3><span class="ft ft--c">СОПРО<br>ВОЖДЕ<br>НИЕ</span></div>
           <div class="flip__face flip__back" aria-hidden="true"><img src="img/v2-card-sopr.jpg" alt=""><p><b>Помогаем с нуля</b>: поможем сделать загранпаспорт, найдём слот и подготовим документы на визу, поможем с кейсом <b>от начала и до конца</b>, запишем на подачу и подготовим к интервью. После откроем счёт и <b>поможем с адаптацией</b>.</p></div>
         </div>
-        <a class="btn btn--white m-btn flip__btn" href="#apply">Узнать подробнее <img class="m-arrow" src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
+        <a class="btn btn--white m-btn flip__btn" href="soprovozhdenie.html">Узнать подробнее <img class="m-arrow" src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
       </div>
     </div>
     <p class="flip-hint">Наведите на карточку — узнаете, что входит</p>
@@ -349,7 +349,7 @@
       <div class="foot__about"><img src="img/logo-footer.svg" alt="asilohelp" width="234" height="38">
         <p>Помогаем ЛГБТ-людям из России и постсоветских стран переехать в Испанию и запросить международную защиту.</p>
         <p>Мы не адвокатское бюро. Материалы сайта — информация, а не юридическая консультация.</p></div>
-      <div class="foot__col"><b>Сайт</b><a href="#help">Сопровождение</a><a href="stati.html">Статьи и база знаний</a><a href="o-nas.html">О нас</a><a href="#faq">Частые вопросы</a><a href="#apply">Оставить заявку</a></div>
+      <div class="foot__col"><b>Сайт</b><a href="konsultacii.html">Консультации</a><a href="keys.html">Работа с кейсом</a><a href="soprovozhdenie.html">Сопровождение</a><a href="stati.html">Статьи и база знаний</a><a href="o-nas.html">О нас</a><a href="#faq">Частые вопросы</a><a href="#apply">Оставить заявку</a></div>
       <div class="foot__col"><b>Мы в сети</b><a href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Telegram-канал</a><a href="https://www.instagram.com/rkhmanov/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@rkhmanov/" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@rkhmanov" target="_blank" rel="noopener">TikTok</a><a href="https://t.me/+GRq-QZJDqDNlNDEy" target="_blank" rel="noopener">Чат по Барселоне</a></div>
       <div class="foot__col"><b>Документы</b><a href="legal.html">Правовая информация</a><a href="privacy.html">Политика конфиденциальности</a><a href="cookies.html">Политика cookie</a></div>
     </div>
@@ -360,6 +360,7 @@
 <div class="test-banner">Тестовая версия · не индексируется</div>
 
 <script src="motion.js"></script>
+<script src="form.js?v=1"></script>
 <script>
   // отзывы: листание
   const reel = document.getElementById('reel');
@@ -367,130 +368,6 @@
   // карточки услуг: переворот по нажатию (телефон) и с клавиатуры
   document.querySelectorAll('.flip').forEach(f => { f.addEventListener('click', e => { if (e.target.closest('.flip__btn')) return; if (!matchMedia('(hover: hover)').matches) f.classList.toggle('is-flipped'); }); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f.classList.toggle('is-flipped'); } }); });
   if (!matchMedia('(hover: hover)').matches) document.querySelector('.flip-hint').textContent = 'Нажмите на карточку — узнаете, что входит';
-  // форма заявки → CRM (crm.asilohelp.com/site/lead, код — rkhmanov/asilo-bot, cloudflare/src/sitelead.ts)
-  (() => {
-    const API = 'https://crm.asilohelp.com/site/lead';
-    const form = document.getElementById('form');
-    const $ = sel => form.querySelector(sel);
-    const name = $('#f-name'), contact = $('#f-contact'), about = $('#f-about'), consent = $('#f-consent'), sensitive = $('#f-sensitive');
-    const typeInput = $('[name="contact_type"]'), submit = $('.submit'), formErr = $('#form-err');
-    const submitText = submit.textContent;
-    let sending = false;
-
-    // Telegram / E-mail. Без стекла — кнопки .seg; со стеклом glass.js вызывает window.asiloSetContactType.
-    const setType = type => {
-      typeInput.value = type;
-      contact.type = type === 'email' ? 'email' : 'text';
-      contact.inputMode = type === 'email' ? 'email' : 'text';
-      contact.autocomplete = type === 'email' ? 'email' : 'off';
-      contact.placeholder = type === 'email' ? 'name@mail.com' : '@username или +34…';
-      clearErr(contact);
-    };
-    window.asiloSetContactType = setType;
-    form.querySelectorAll('.seg, .chips').forEach(g => g.addEventListener('click', e => {
-      const t = e.target.closest('button'); if (!t) return;
-      g.querySelectorAll('button').forEach(x => { x.classList.toggle('on', x === t); x.setAttribute('aria-pressed', x === t); });
-      if (g.classList.contains('seg')) setType(t.dataset.type);
-    }));
-
-    // ошибки у полей
-    const errBox = el => document.getElementById(el.getAttribute('aria-describedby') || 'err-ts');
-    function setErr(el, msg) { const b = errBox(el); b.textContent = msg; b.hidden = false; el.setAttribute('aria-invalid', 'true'); el.closest('.field, .consent')?.classList.add('is-invalid'); }
-    function clearErr(el) { const b = errBox(el); if (b) { b.hidden = true; b.textContent = ''; } el.removeAttribute('aria-invalid'); el.closest('.field, .consent')?.classList.remove('is-invalid'); }
-    [name, contact, about].forEach(el => el.addEventListener('input', () => clearErr(el)));
-    consent.addEventListener('change', () => { if (consent.checked) clearErr(consent); });
-    const tsErr = document.getElementById('err-ts');
-    window.asiloTsOk = () => { tsErr.hidden = true; };
-    window.asiloTsReset = () => {};
-
-    // Telegram: @username (5–32: латиница, цифры, _), ссылка t.me/… или телефон +7…15 цифр
-    function normTelegram(v) {
-      v = v.trim().replace(/^https?:\/\//i, '').replace(/^(t\.me|telegram\.me)\//i, '@');
-      const phone = v.replace(/[\s\-().]/g, '');
-      if (/^\+\d{7,15}$/.test(phone)) return phone;
-      const u = v.replace(/^@/, '');
-      if (/^[A-Za-z0-9_]{5,32}$/.test(u)) return '@' + u;
-      return null;
-    }
-    const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-    function validate() {
-      [name, contact, about, consent].forEach(clearErr);
-      const bad = [];
-      const n = name.value.trim();
-      if (!n) { setErr(name, 'Напишите, как к вам обращаться.'); bad.push(name); }
-      else if (n.length > 80) { setErr(name, 'Слишком длинно — не больше 80 знаков.'); bad.push(name); }
-      let c = contact.value.trim();
-      if (typeInput.value === 'email') {
-        if (!c) { setErr(contact, 'Укажите e-mail, чтобы мы могли ответить.'); bad.push(contact); }
-        else if (!EMAIL.test(c) || c.length > 254) { setErr(contact, 'Проверьте e-mail — например, name@mail.com.'); bad.push(contact); }
-      } else {
-        const t = c && normTelegram(c);
-        if (!c) { setErr(contact, 'Укажите Telegram, чтобы мы могли ответить.'); bad.push(contact); }
-        else if (!t) { setErr(contact, 'Укажите @username (5–32 знака: латиница, цифры, _) или телефон в формате +34…'); bad.push(contact); }
-        else c = t;
-      }
-      if (about.value.length > 2000) { setErr(about, 'Слишком длинно — не больше 2000 знаков.'); bad.push(about); }
-      if (!consent.checked) { setErr(consent, 'Без согласия на обработку данных мы не сможем ответить на заявку.'); bad.push(consent); }
-      return { bad, contact: c };
-    }
-    const token = () => (window.turnstile && turnstile.getResponse()) || form.querySelector('[name="cf-turnstile-response"]')?.value || '';
-    function focusEl(el) {
-      // со стеклом галочка спрятана под тумблером — фокус на тумблер
-      const target = el.classList.contains('consent__native') ? el.parentElement.querySelector('.consent__switch [role="switch"], .consent__switch button, .consent__switch input') || el : el;
-      target.focus({ preventScroll: true });
-      (el.closest('.field, .consent') || el).scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-    }
-    function busy(on) {
-      sending = on;
-      submit.disabled = on;
-      submit.setAttribute('aria-busy', on);
-      form.setAttribute('aria-busy', on);
-      submit.textContent = on ? 'Отправляем…' : submitText;
-    }
-    function fail(msg) {
-      formErr.textContent = msg; formErr.hidden = false;
-      try { window.turnstile && turnstile.reset(); } catch (_) {}
-    }
-    const GENERIC = 'Не получилось отправить заявку. Попробуйте ещё раз через минуту или напишите нам в Telegram: @ASILOhelperBot.';
-
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      if (sending) return;
-      formErr.hidden = true;
-      const { bad, contact: c } = validate();
-      const tok = token();
-      if (!tok && !bad.length) { tsErr.textContent = 'Подтвердите, что вы не робот.'; tsErr.hidden = false; }
-      if (bad.length) { focusEl(bad[0]); return; }
-      if (!tok) { tsErr.scrollIntoView({ block: 'center' }); return; }
-      tsErr.hidden = true;
-      busy(true);
-      const chip = form.querySelector('.chips button.on');
-      const body = {
-        name: name.value.trim(), contact_type: typeInput.value, contact: c,
-        interest: chip ? chip.textContent.trim() : 'Пока не знаю', about: about.value.trim(),
-        consent: true, sensitive_consent: sensitive.checked, token: tok,
-        website: form.querySelector('[name="website"]').value, page: location.href,
-      };
-      const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 20000);
-      try {
-        const res = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ctl.signal });
-        let data = null; try { data = await res.json(); } catch (_) {}
-        if (res.ok && data && data.ok) { done(data.code, body.contact_type); return; }
-        fail((data && data.error) || (res.status === 403 ? 'Не получилось пройти проверку на робота. Отметьте галочку ещё раз и отправьте заявку.'
-          : res.status === 429 ? 'Слишком много заявок подряд. Подождите пару минут и попробуйте снова.' : GENERIC));
-      } catch (_) { fail(GENERIC); }
-      finally { clearTimeout(timer); busy(false); }
-    });
-
-    function done(code, type) {
-      const ok = $('.form__ok');
-      if (code) { const p = $('.form__code'); p.querySelector('span').textContent = code; p.hidden = false; }
-      $('.form__next').firstChild.textContent = (type === 'email' ? 'Менеджерка напишет вам на почту в рабочий день. ' : 'Менеджерка напишет вам в Telegram в рабочий день. ') + 'Если за два рабочих дня никто не ответил — напишите нам в ';
-      $('.form__body').style.display = 'none'; ok.style.display = 'block'; ok.focus({ preventScroll: true });
-      form.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-    }
-  })();
 </script>
 </body>
 </html>

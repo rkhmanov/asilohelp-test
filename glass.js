@@ -60,12 +60,16 @@ if (!off) {
   // 1. Шапка
   glassify(document.querySelector(".hdr"));
 
-  // 2. Шапка: «Услуги ⌄» — стеклянное выпадающее меню
-  const servicesLink = document.querySelector('.hdr nav a[href="#help"]');
+  // 2. Шапка: «Услуги ⌄» — стеклянное выпадающее меню со ссылками на страницы услуг.
+  // Ссылка в шапке: <a data-nav="services" href="…#help">. Путь к корню сайта — <html data-home="../"> (по умолчанию корень рядом).
+  const servicesLink = document.querySelector('.hdr nav a[data-nav="services"], .hdr nav a[href$="#help"]');
   if (servicesLink) {
-    const go = (sel) => () => {
-      const el = document.querySelector(sel);
-      if (el) el.scrollIntoView({ block: sel === "#help" ? "start" : "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    const home = document.documentElement.dataset.home || "";
+    const open = (page) => () => { location.href = home + page; };
+    const toHelp = () => {
+      const el = document.querySelector("#help");
+      if (el) el.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      else location.href = home + "index.html#help";
     };
     const host = document.createElement("span");
     host.className = "nav-menu";
@@ -73,13 +77,13 @@ if (!off) {
     createRoot(host).render(h(Menu, {
       "aria-label": "Услуги",
       align: "start",
-      icon: h("span", { className: "nav-menu__label" }, "Услуги", h("img", { src: "img/chevron.svg", alt: "", width: 8, height: 4 })),
+      icon: h("span", { className: "nav-menu__label" }, "Услуги", h("img", { src: home + "img/chevron.svg", alt: "", width: 8, height: 4 })),
       items: [
-        { label: "Консультация", icon: icons.chat, onSelect: go(".fc--a") },
-        { label: "Работа с кейсом", icon: icons.folder, onSelect: go(".fc--b") },
-        { label: "Сопровождение", icon: icons.route, onSelect: go(".fc--c") },
+        { label: "Консультации", icon: icons.chat, onSelect: open("konsultacii.html") },
+        { label: "Работа с кейсом", icon: icons.folder, onSelect: open("keys.html") },
+        { label: "Сопровождение", icon: icons.route, onSelect: open("soprovozhdenie.html") },
         "separator",
-        { label: "Все услуги", icon: icons.grid, onSelect: go("#help") },
+        { label: "Все услуги", icon: icons.grid, onSelect: toHelp },
       ],
     }));
   }
@@ -129,7 +133,8 @@ if (!off) {
   // Внутренние страницы: <html data-home="../"> — путь до корня сайта; data-page — какая вкладка активна.
   const home = document.documentElement.dataset.home ?? "";
   const onHome = !document.documentElement.dataset.page;
-  const anchor = (id) => (onHome ? "" : home + "index.html") + "#" + id;
+  // якорь есть на этой странице (вопросы и заявка на страницах услуг) — ведем к нему, иначе на главную
+  const anchor = (id) => (onHome || document.getElementById(id) ? "" : home + "index.html") + "#" + id;
   mount((n) => {
     n.className = "tabbar-lg";
     n.addEventListener("click", (e) => {
