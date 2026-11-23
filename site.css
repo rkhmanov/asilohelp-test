@@ -940,3 +940,23 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .kb { padding-top: 64px; }
   .free__note { top: 906px; } .free__arrow { top: 950px; }
 }
+
+/* ===== Проба 23.11 (вечер): на компьютере вместо зернистого бордового фона – ровная красная заливка формой, как у «¿Empezamos?». Телефон (до 600 px) не меняется ===== */
+@media (min-width: 601px) {
+  .bg-burgundy, .bg-free { display: none !important; }
+  .help, .free { position: relative; isolation: isolate; overflow: hidden; max-width: 1393px; margin-inline: auto; border-radius: 40px; background: var(--accent); }
+  .help::before, .help::after, .free::before, .free::after { content: ''; position: absolute; z-index: -1; border-radius: 50%; pointer-events: none; }
+  /* светлые круги, как в «¿Empezamos?» */
+  .help::before { left: -260px; top: auto; bottom: -380px; right: auto; width: 760px; height: 760px; background: rgba(255,255,255,.06); }
+  .help::after { right: -200px; left: auto; top: -260px; bottom: auto; width: 620px; height: 620px; background: rgba(255,255,255,.05); }
+  .free::before { right: -240px; left: auto; top: auto; bottom: -360px; width: 760px; height: 760px; background: rgba(255,255,255,.06); }
+  .free::after { left: -220px; right: auto; top: -240px; bottom: auto; width: 600px; height: 600px; background: rgba(255,255,255,.05); }
+  .help { padding: 72px 0 56px; margin-top: 24px; }
+  .help__more > span { color: #F6DADF; }
+  .free { padding: 72px 0 104px; margin-top: 56px; }
+  .kb { padding-top: 72px; }
+  .free__note { top: auto; bottom: 26px; font-size: 46px; } .free__arrow { display: none; }
+}
+@media (min-width: 601px) and (max-width: 1100px) {
+  .help, .free { margin-inline: 16px; border-radius: 32px; }
+}
