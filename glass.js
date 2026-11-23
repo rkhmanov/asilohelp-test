@@ -1,5 +1,6 @@
 // «Жидкое стекло» на сайте — библиотека Glisse 0.5.0 (npm: glisse, MIT).
-// Сайт статичный, поэтому React берём с esm.sh через importmap, а Glisse лежит в vendor/glisse.
+// Сайт статичный: React 19.1 лежит в vendor/react/react.mjs (одна сборка на react, react/jsx-runtime и react-dom/client,
+// как собрать — vendor/react/README.md), Glisse — в vendor/glisse. Связь — через importmap в index.html.
 // ?glass=0 — выключить всё и посмотреть прежний вид.
 import { createElement as h, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";

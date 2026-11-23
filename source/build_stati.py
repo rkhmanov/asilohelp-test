@@ -43,7 +43,7 @@ def head(title, desc, pre, page):
 <link rel="stylesheet" href="{pre}motion.css?v=17">
 <link rel="stylesheet" href="{pre}site.css?v=23">
 <link rel="stylesheet" href="{pre}pages.css?v={V}">
-<script type="importmap">{{"imports":{{"react":"https://esm.sh/react@19.1.0","react/jsx-runtime":"https://esm.sh/react@19.1.0/jsx-runtime","react-dom/client":"https://esm.sh/react-dom@19.1.0/client?deps=react@19.1.0","glisse":"./{pre}vendor/glisse/index.js"}}}}</script>
+<script type="importmap">{{"imports":{{"react":"./{pre}vendor/react/react.mjs","react/jsx-runtime":"./{pre}vendor/react/react.mjs","react-dom/client":"./{pre}vendor/react/react.mjs","glisse":"./{pre}vendor/glisse/index.js"}}}}</script>
 <script type="module" src="{pre}glass.js?v=8"></script>
 <script>(function(){{var r=document.documentElement;function z(){{var w=window.innerWidth;r.style.setProperty('--z',(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}}z();addEventListener('resize',z);}})();document.documentElement.classList.add('m-js');</script>
 </head>
@@ -59,7 +59,7 @@ def head(title, desc, pre, page):
       <a href="{pre}index.html#faq">Вопросы</a>
     </nav>
     <div class="hdr__cta">
-      <a class="hdr__bot m-btn" href="{BOT}site_home" target="_blank" rel="noopener">Telegram-бот</a>
+      <a class="hdr__bot m-btn" href="{BOT}site_header" target="_blank" rel="noopener">Telegram-бот</a>
       <a class="hdr__main m-btn m-btn--accent" href="{pre}index.html#apply">Оценить шансы</a>
     </div>
   </div>
