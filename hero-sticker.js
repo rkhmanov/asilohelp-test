@@ -12,48 +12,67 @@
   if (!h1 || !fx || !cap) return;
 
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var touch = matchMedia('(hover: none)').matches;
 
-  // Стикеры: Microsoft Fluent Emoji 3D (MIT), см. img/stickers/README.md
-  var S = [
-    ['speech-balloon', 'Консультация'],
-    ['clipboard', 'Проверим готовый кейс'],
-    ['page-facing-up', 'Текст кейса'],
-    ['bookmark-tabs', 'Доказательства'],
-    ['world-map', 'Отчет о стране'],
-    ['open-book', 'Перевод на испанский'],
-    ['spiral-calendar', 'Подготовка к интервью'],
-    ['airplane', 'Виза и перелет'],
-    ['luggage', 'Переезд'],
-    ['classical-building', 'Подача в Испании'],
-    ['key', 'Первые месяцы'],
-    ['handshake', 'Сопровождение'],
-    ['balance-scale', 'Юрист в команде'],
-    ['rainbow-flag', 'Для ЛГБТ-людей'],
-    ['shield', 'Конфиденциально'],
-    ['tangerine', 'Испания']
-  ];
+  // Стикеры: [картинка, подпись, эмодзи]. Картинки – Microsoft Fluent Emoji 3D (MIT), см. img/stickers/README.md.
   // Вариант hero-sticker-emoji.html (<h1 data-emoji>): вместо картинок системные эмодзи –
   // на iPhone и Mac это эмодзи Apple, на Android – Google, на Windows – Microsoft. Картинок не грузим.
-  var E = ['💬', '📋', '📄', '📑', '🗺️', '📖', '🗓️', '✈️', '🧳', '🏛️', '🔑', '🤝', '⚖️', '🏳️‍🌈', '🛡️', '🍊'];
+  // Пар в Fluent Emoji нет, поэтому они только в варианте с эмодзи (картинка null).
+  var ALL = [
+    ['speech-balloon', 'Консультация', '💬'],
+    ['clipboard', 'Проверим готовый кейс', '📋'],
+    ['page-facing-up', 'Текст кейса', '📄'],
+    ['bookmark-tabs', 'Доказательства', '📑'],
+    ['world-map', 'Отчет о стране', '🗺️'],
+    ['open-book', 'Перевод на испанский', '📖'],
+    ['spiral-calendar', 'Подготовка к интервью', '🗓️'],
+    ['airplane', 'Виза и перелет', '✈️'],
+    ['luggage', 'Переезд', '🧳'],
+    ['classical-building', 'Подача в Испании', '🏛️'],
+    ['key', 'Первые месяцы', '🔑'],
+    ['handshake', 'Сопровождение', '🤝'],
+    ['balance-scale', 'Юрист в команде', '⚖️'],
+    ['rainbow-flag', 'Для ЛГБТ-людей', '🏳️‍🌈'],
+    ['shield', 'Конфиденциально', '🛡️'],
+    ['tangerine', 'Испания', '🍊'],
+    ['identification-card', 'Паспорт и документы', '🪪'],
+    ['transgender-flag', 'Для транс-людей', '🏳️‍⚧️'],
+    [null, 'Для геев', '👬'],
+    [null, 'Для лесбиянок', '👭'],
+    [null, 'Для пар', '👨‍❤️‍👨'],
+    [null, 'Для пар', '👩‍❤️‍👩']
+  ];
   var emoji = h1.hasAttribute('data-emoji');
+  var S = ALL.filter(function (x) { return emoji || x[0]; });
   var src = function (i) { return 'img/stickers/' + S[i][0] + '.webp'; };
   // Заранее грузим картинки, чтобы стикер не мигал пустым местом при первом наведении
   if (!emoji) S.forEach(function (_, i) { var im = new Image(); im.src = src(i); });
   function sticker(k, cls) {
     var e;
-    if (emoji) { e = document.createElement('span'); e.className = 'sk-e' + (cls ? ' ' + cls : ''); e.textContent = E[k]; }
+    if (emoji) { e = document.createElement('span'); e.className = 'sk-e' + (cls ? ' ' + cls : ''); e.textContent = S[k][2]; }
     else { e = document.createElement('img'); e.src = src(k); e.alt = ''; e.decoding = 'async'; e.draggable = false; if (cls) e.className = cls; }
     return e;
   }
 
   // --- Разбиваем заголовок на буквы ---------------------------------------------------------
   var letters = [];
-  var order = [8, 2, 13, 5, 0, 11, 7, 3, 14, 9, 1, 12, 4, 10, 6, 15]; // соседние буквы получают разные стикеры
+  // Порядок стикеров по буквам: перемешан с постоянным зерном, соседние буквы получают разные стикеры
+  var order = (function () {
+    var seed = 7, rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    var out = [];
+    for (var pass = 0; pass < 4; pass++) {
+      var a = S.map(function (_, i) { return i; });
+      for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rnd() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+      if (out.length && a[0] === out[out.length - 1]) a.push(a.shift());
+      out = out.concat(a);
+    }
+    return out;
+  })();
+  var markAt = -1; // буквы ASILO без стикеров: плашка остается как есть
   function split(node) {
     Array.prototype.slice.call(node.childNodes).forEach(function (n) {
       if (n.nodeType === 1) { split(n); return; }
       if (n.nodeType !== 3) return;
+      if (n.parentNode.closest('.mark')) { if (markAt < 0) markAt = letters.length; return; }
       var frag = document.createDocumentFragment();
       n.textContent.split(/(\s+)/).forEach(function (word) {
         if (!word) return;
@@ -84,7 +103,9 @@
   Array.prototype.forEach.call(h1.children, function (ch) { ch.setAttribute('aria-hidden', 'true'); });
 
   // --- Геометрия -------------------------------------------------------------------------------
+  var K = 2.3; // размер стикера в долях кегля, из --st-k в hero-sticker.css
   function measure() {
+    K = parseFloat(getComputedStyle(h1).getPropertyValue('--st-k')) || 2.3;
     letters.forEach(function (L) {
       var r = L.el.getBoundingClientRect();
       L.cx = r.left + r.width / 2; L.cy = r.top + r.height / 2; L.em = r.height;
@@ -104,8 +125,8 @@
     if (!ptr || !L.em) return 0;
     var dx = (L.cx - ptr.x) / L.em, dy = (L.cy - ptr.y) / L.em * 1.5;
     var d = Math.sqrt(dx * dx + dy * dy);
-    var f = 1 - d / 1.35;
-    return f <= 0 ? 0 : Math.pow(f, 1.4);
+    var f = 1 - d / (0.55 * K);
+    return f <= 0 ? 0 : Math.pow(f, 1.2);
   }
 
   function frame() {
@@ -114,7 +135,7 @@
     for (var i = 0; i < letters.length; i++) {
       var L = letters[i];
       var inf = influence(L);
-      L.hold = Math.max(L.hold * (reduce ? 0.8 : 0.94), inf);
+      L.hold = Math.max(L.hold * (reduce ? 0.8 : 0.9), inf);
       var target = L.hold < 0.04 ? 0 : L.hold;
       if (reduce) { L.x = target; L.v = 0; }
       else { L.v = (L.v + (target - L.x) * 0.2) * 0.7; L.x += L.v; }
@@ -143,7 +164,7 @@
     if (focus >= 0) {
       var L2 = letters[focus], w = cap.offsetWidth, vw = document.documentElement.clientWidth;
       var left = Math.min(Math.max(L2.cx, w / 2 + 8), vw - w / 2 - 8);
-      cap.style.transform = 'translate(' + (left - w / 2) + 'px,' + (L2.cy + L2.em * 0.92) + 'px)';
+      cap.style.transform = 'translate(' + (left - w / 2) + 'px,' + (L2.cy + L2.em / 1.14 * K * 0.5 * Math.min(1, L2.x) + 6) + 'px)';
     }
     if (active) requestAnimationFrame(frame); else running = false;
   }
@@ -165,38 +186,45 @@
   });
 
   // --- «Призрак»: сам пробегает по строке (подсказка, а на телефоне — постоянно, пока не трогают) ---
-  var ghost = null;
-  function ghostStop() { if (ghost) { cancelAnimationFrame(ghost); ghost = null; } }
-  var lineNo = 1;
+  var ghost = null, busy = false;
+  function ghostStop() { sweepId++; busy = false; if (ghost) { cancelAnimationFrame(ghost); ghost = null; } }
+  var sweepId = 0;
+  // Пробегает по всем строкам змейкой (слева направо, следующая – справа налево), буквы ASILO пропускает
   function sweep(done) {
     measure();
-    // строки — по тому, как буквы стоят на экране (на телефоне первая строка разбита на две)
+    // строки – по тому, как буквы стоят на экране (на телефоне первая строка разбита на две)
     var rows = [];
     letters.forEach(function (L) {
       var r = rows.filter(function (R) { return Math.abs(R[0].cy - L.cy) < L.em * 0.5; })[0];
       if (r) r.push(L); else rows.push([L]);
     });
-    if (lineNo < 0) rows.forEach(function (R, i) { if (R[0].el.closest('.sk-line') === h1.querySelector('.mark').closest('.sk-line')) lineNo = i; });
-    if (lineNo < 0) lineNo = 0;
-    var cs = rows[lineNo % rows.length]; lineNo++;
-    if (!cs.length) return;
-    var a = cs[0], b = cs[cs.length - 1];
-    var t0 = performance.now(), dur = 380 + cs.length * 95;
-    (function step(now) {
-      var p = Math.min(1, (now - t0) / dur);
-      var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-      ptr = { x: a.cx - a.em * 0.6 + (b.cx - a.cx + a.em * 1.2) * e, y: a.cy + Math.sin(p * Math.PI * 2) * a.em * 0.12 };
-      kick();
-      if (p < 1) ghost = requestAnimationFrame(step);
-      else { ghost = null; ptr = null; kick(); if (done) done(); }
-    })(t0);
+    var i = 0, id = sweepId;
+    (function row() {
+      if (id !== sweepId) return;
+      if (i >= rows.length) { ghost = null; ptr = null; kick(); if (done) done(); return; }
+      var cs = rows[i], back = i % 2 === 1; i++;
+      var a = cs[0], b = cs[cs.length - 1];
+      var x0 = a.cx - a.em * 0.5, x1 = b.cx + b.em * 0.5;
+      if (back) { var t = x0; x0 = x1; x1 = t; }
+      var t0 = performance.now(), dur = 300 + cs.length * 85;
+      (function step(now) {
+        if (id !== sweepId) return;
+        var p = Math.min(1, (now - t0) / dur);
+        var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+        ptr = { x: x0 + (x1 - x0) * e, y: a.cy + Math.sin(p * Math.PI * 2) * a.em * 0.1 };
+        kick();
+        if (p < 1) ghost = requestAnimationFrame(step);
+        else { ptr = null; kick(); ghost = requestAnimationFrame(function () { setTimeout(row, 90); }); }
+      })(t0);
+    })();
   }
+  // Пока страницу не трогают, волна повторяется: пауза 3 с после конца прохода
   function idleLoop() {
     if (reduce) return;
     setTimeout(function () {
-      if (!document.hidden && Date.now() - lastUser > 5000 && !ghost) sweep();
+      if (!document.hidden && Date.now() - lastUser > 4000 && !busy) { busy = true; sweep(function () { busy = false; }); }
       idleLoop();
-    }, 4500);
+    }, 3000);
   }
 
   // --- Заставка: кольцо из стикеров → в заголовок ----------------------------------------------
@@ -206,7 +234,7 @@
     var cx = hr.left + hr.width / 2, cy = hr.top + hr.height / 2;
     var vw = innerWidth, vh = innerHeight;
     var R = Math.min(vw * 0.36, vh * 0.3, 300);
-    var size = Math.max(54, Math.min(100, R * 0.36));
+    var size = Math.max(64, Math.min(130, R * 0.45));
     var n = 12, ring = [];
     fx.querySelectorAll('.sk-ring').forEach(function (e) { e.remove(); });
     for (var i = 0; i < n; i++) {
@@ -251,7 +279,7 @@
     });
     var mk = h1.querySelector('.mark');
     if (mk) {
-      var first = letters.findIndex(function (L) { return mk.contains(L.el); });
+      var first = Math.max(0, markAt);
       mk.animate([
         { opacity: 0, transform: 'rotate(-8deg) scale(.4)' },
         { opacity: 1, transform: 'rotate(4deg) scale(1.08)', offset: 0.65 },
@@ -262,7 +290,7 @@
     if (hint) hint.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 400, delay: end, fill: 'backwards' });
     setTimeout(function () {
       fx.querySelectorAll('.sk-ring').forEach(function (e) { e.remove(); });
-      if (Date.now() - lastUser > 1500) { lineNo = -1; sweep(); }
+      if (Date.now() - lastUser > 1500) { busy = true; sweep(function () { busy = false; }); }
     }, end + 150);
   }
 
@@ -276,7 +304,7 @@
 
   function start() {
     measure();
-    if (!reduce) { intro(); if (touch) idleLoop(); }
+    if (!reduce) { intro(); idleLoop(); }
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else addEventListener('load', start);
 })();

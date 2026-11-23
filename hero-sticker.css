@@ -1,18 +1,18 @@
 /* Проба «буквы-стикеры» (идея – motionsites.ai, «Sticker Type»). Только эта страница, главная не тронута.
    Размеры – в координатах макета: телефон 390 и компьютер 1440, остальное масштабирует --z, как на главной. */
 .sk { position: relative; min-height: calc(100svh / var(--z, 1)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; padding: 120px 16px 90px; overflow: hidden; background: #F3F2EF; }
-.sk-h { font-weight: 500; font-size: 84px; line-height: 1.12; letter-spacing: -.03em; color: var(--ink-2); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px;
+.sk-h { --st-k: 2.3; --st: calc(var(--st-k) * 1em); font-weight: 500; font-size: 84px; line-height: 1.12; letter-spacing: -.03em; color: var(--ink-2); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px;
         user-select: none; -webkit-user-select: none; touch-action: none; cursor: default; }
 .sk-line { white-space: nowrap; }
 .sk-w { display: inline-block; white-space: nowrap; }
 .sk-c { position: relative; display: inline-block; }
 .sk-t { display: inline-block; transform-origin: 50% 60%; }
-.sk-c img { position: absolute; left: 50%; top: 50%; width: 1.7em; height: 1.7em; max-width: none; margin: -.85em 0 0 -.85em; transform: scale(0); pointer-events: none;
+.sk-c img { position: absolute; left: 50%; top: 50%; width: var(--st); height: var(--st); max-width: none; margin: calc(var(--st) / -2) 0 0 calc(var(--st) / -2); transform: scale(0); pointer-events: none;
             filter: drop-shadow(0 .06em .08em rgba(34,34,34,.22)); will-change: transform; }
 .sk-c:not(.is-on) img, .sk-c:not(.is-on) .sk-e { visibility: hidden; }
-/* вариант с системными эмодзи (hero-sticker-emoji.html): размер как у картинки 1.7em */
+/* вариант с системными эмодзи (hero-sticker-emoji.html): размер как у картинки, --st */
 .sk-e { font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; font-weight: 400; letter-spacing: 0; color: #000; text-align: center; }
-.sk-c .sk-e { position: absolute; left: 50%; top: 50%; font-size: 1.4em; width: 1.2143em; height: 1.2143em; line-height: 1.2143em; margin: -.607em 0 0 -.607em; transform: scale(0); pointer-events: none;
+.sk-c .sk-e { position: absolute; left: 50%; top: 50%; font-size: calc(var(--st) * .8); width: 1.25em; height: 1.25em; line-height: 1.25em; margin: -.625em 0 0 -.625em; transform: scale(0); pointer-events: none;
               filter: drop-shadow(0 .05em .06em rgba(34,34,34,.22)); will-change: transform; }
 .sk-e.sk-ring { display: flex; align-items: center; justify-content: center; line-height: 1; }
 .sk .mark { padding: 0 .22em .06em; border-radius: .4em; margin-left: .08em; }
@@ -32,7 +32,7 @@
 @media (max-width: 760px) { .sk-h { font-size: 7.4vw; } .sk-br { display: inline; } }
 @media (max-width: 480px) {
   .sk { gap: 22px; padding: 96px 12px 110px; }
-  .sk-h { font-size: 35px; line-height: 1.16; gap: 2px; }
+  .sk-h { --st-k: 2.8; font-size: 35px; line-height: 1.16; gap: 2px; }
   .sk-hint { font-size: 11px; }
   .sk-replay { right: 50%; transform: translateX(50%); bottom: 96px; padding: 8px 14px; font-size: 12px; }
   .sk-cap { font-size: 11px; padding: 6px 10px 7px; }
