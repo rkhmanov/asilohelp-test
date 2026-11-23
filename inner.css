@@ -107,8 +107,8 @@
 .gets > div { width: 236px; min-height: 160px; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: 0 24px 48px -24px rgba(33,33,41,.28); transform: rotate(var(--r, 0deg)); display: flex; flex-direction: column; justify-content: space-between; gap: 18px; }
 .gets > div:nth-child(odd) { --r: -2deg; } .gets > div:nth-child(even) { --r: 2deg; translate: 0 18px; }
 .gets i { width: 42px; height: 52px; border-radius: 8px 16px 8px 8px; background: linear-gradient(160deg, #F7E9EB, #F2CFD6); position: relative; }
-.gets i::after { content: 'PDF'; position: absolute; left: 6px; bottom: 6px; font-style: normal; font-weight: 600; font-size: 9px; color: var(--accent); }
-.gets b { font-weight: 600; font-size: 16px; line-height: 1.3; letter-spacing: -.02em; }
+.gets i::after { content: ''; position: absolute; left: 6px; bottom: 6px; font-style: normal; font-weight: 600; font-size: 9px; color: var(--accent); }
+.gets b { font-weight: 600; font-size: 16px; line-height: 1.3; letter-spacing: -.02em; hyphens: auto; -webkit-hyphens: auto; }
 
 /* ── 8. Команда ── */
 .team { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 16px; }
@@ -195,6 +195,36 @@
 /* ── форма на внутренних страницах: заголовок поменьше, отступ сверху ── */
 .page .apply { padding-top: 110px; }
 
+/* от 1100 px страница масштабируется целиком (zoom в head), поэтому размеры заголовков – в px, без vw */
+@media (min-width: 1101px) {
+  .ph h1 { font-size: 100px; } .ph h1 small { font-size: 32px; } .ph h1.ph__t--long { font-size: 68px; } .ph h1.ph__t--mid { font-size: 80px; }
+  .band h2, .privacy h2 { font-size: 44px; }
+}
+
+/* ── 15. Таблица пакетов: колонки, подписи; полоса без PDF: факты справа ── */
+ul.note { display: grid; gap: 6px; padding-left: 18px; list-style: disc; }
+.ptable thead th:first-child span { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.ptable th:not(:first-child), .ptable td:not(:first-child) { width: 22%; }
+.ptable tfoot .btn { padding: 0 12px; }
+.band__small { display: block; margin-top: 14px; font-size: 12px; color: #9A9CA6; }
+.band__facts { display: grid; gap: 12px; align-self: center; }
+.band__facts > div { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); border-radius: 18px; padding: 18px 22px; }
+.band__facts b { display: block; font-weight: 600; font-size: 26px; letter-spacing: -.04em; line-height: 1.1; }
+.band__facts span { display: block; margin-top: 4px; font-size: 13px; color: #C3C5CE; }
+@media (max-width: 600px) {
+  .ptable-wrap { border-radius: 18px; }
+  .ptable { min-width: 0; table-layout: fixed; font-size: 12px; border-radius: 18px; }
+  .ptable th, .ptable td { padding: 12px 4px; }
+  .ptable th:first-child, .ptable td:first-child { width: 36%; padding-left: 14px; }
+  .ptable thead th { padding: 20px 4px 14px; vertical-align: top; } .ptable thead th:first-child { vertical-align: bottom; }
+  .ptable th:not(:first-child), .ptable td:not(:first-child) { width: auto; }
+  .ptable thead b { font-size: 16px; white-space: nowrap; letter-spacing: -.04em; } .ptable thead th:not(:first-child) span { display: none; }
+  .ptable .yes { width: 18px; height: 18px; background-size: 18px; border-radius: 6px; }
+  .ptable tfoot td { padding: 14px 4px; } .ptable tfoot td:first-child { padding: 0; }
+  .ptable tfoot .btn { height: 40px; font-size: 10px; padding: 0 2px; border-radius: 12px; letter-spacing: 0; }
+  .band__facts b { font-size: 22px; }
+}
+
 /* ── планшет и телефон ── */
 @media (max-width: 1100px) {
   .ph { border-radius: 0 0 32px 32px; }
@@ -211,10 +241,10 @@
 }
 @media (max-width: 600px) {
   .ph__in { padding: 104px 0 40px; }
-  .ph h1 { font-size: 46px; } .ph h1.ph__t--long { font-size: 30px; line-height: 1.05; }
+  .ph h1 { font-size: min(46px, 9vw); } .ph h1.ph__t--long { font-size: min(30px, 7.4vw); line-height: 1.05; }
   .ph h1 small { font-size: 19px; margin-top: 14px; }
   .ph__lead { font-size: 15px; }
-  .ph__btns .btn { width: 100%; }
+  .ph__btns .btn, .band .btn { width: 100%; white-space: normal; text-align: center; height: auto; min-height: 56px; padding-block: 10px; }
   .ph__nums { gap: 18px 28px; } .ph__nums b { font-size: 30px; }
   .ph__art { height: 340px; }
   .steps, .plans, .team, .guar { grid-template-columns: minmax(0, 1fr); }
