@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ru" data-theme="light" data-home="" data-page="help">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Консультации – asilohelp (тестовая версия)</title>
+<meta name="description" content="Консультации по международной защите в Испании: бесплатная оценка шансов за сутки, консультации по вашим вопросам, с юристом, по готовому кейсу и репетиция интервью. От 50 €.">
+<link rel="icon" href="img/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="motion.css?v=17">
+<link rel="stylesheet" href="site.css?v=23">
+<link rel="stylesheet" href="inner.css?v=2">
+<script type="importmap">{"imports":{"react":"https://esm.sh/react@19.1.0","react/jsx-runtime":"https://esm.sh/react@19.1.0/jsx-runtime","react-dom/client":"https://esm.sh/react-dom@19.1.0/client?deps=react@19.1.0","glisse":"./vendor/glisse/index.js"}}</script>
+<script type="module" src="glass.js?v=8"></script>
+<script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot')</script>
+<style>.shot *,.shot *::before{transition:none!important;animation:none!important}</style>
+<style>
+/* мелочи только этой страницы */
+.plan__fine { font-size: 12px; line-height: 1.55; margin-top: 16px; opacity: .78; }
+.step p a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.step--dark p a { color: #F2A9B6; }
+</style>
+</head>
+<body class="page page--konsult">
+
+<header class="m-header m-header--stay">
+  <div class="hdr">
+    <a class="hdr__logo" href="index.html" aria-label="asilohelp – на главную"><img src="img/logo.svg" alt="asilohelp" width="197" height="32"></a>
+    <nav aria-label="Меню">
+      <a href="index.html#help" data-nav="services">Услуги <img src="img/chevron.svg" alt="" width="8" height="4"></a>
+      <a href="stati.html">Статьи</a>
+      <a href="o-nas.html">О нас</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <div class="hdr__cta">
+      <a class="hdr__bot m-btn" href="https://t.me/ASILOhelperBot?start=site_konsult_menu" target="_blank" rel="noopener">Telegram-бот</a>
+      <a class="hdr__main m-btn m-btn--accent" href="#apply">Оценить шансы</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- 1 · Первый экран -->
+<section class="ph">
+  <div class="ph__in">
+    <div>
+      <nav class="crumbs" aria-label="Вы здесь"><a href="index.html">Главная</a><i>/</i><a href="index.html#help">Услуги</a><i>/</i><span aria-current="page">Консультации</span></nav>
+      <h1 class="ph__t--mid">Консультации<small>по международной защите в Испании</small></h1>
+      <p class="ph__lead">Начните с бесплатной оценки шансов: по анкете скажем, подходит ли вам защита, и ответим в течение суток. Дальше консультация под ваш вопрос, от 50 €.</p>
+      <div class="ph__btns">
+        <a class="btn btn--white m-btn" href="https://t.me/ASILOhelperBot?start=site_konsult_chances" target="_blank" rel="noopener">Оценить шансы бесплатно</a>
+        <a class="btn btn--ghost m-btn" href="#formats">Выбрать консультацию ↓</a>
+      </div>
+      <div class="ph__nums">
+        <div><b>Бесплатно</b><span>оценка шансов</span></div>
+        <div><b>от 50 €</b><span>консультация</span></div>
+        <div><b>24 ч</b><span>ответ на анкету</span></div>
+      </div>
+    </div>
+    <div class="ph__art" aria-hidden="true">
+      <div class="ph__photo m-float" style="--dur:11s;--lift:-8px"><img src="img/v2-card-consult.jpg" alt=""></div>
+      <div class="ph__price"><small>ОЦЕНКА ШАНСОВ</small><b>0 €</b></div>
+      <div class="ph__badge">Оценка шансов – бесплатно, ответ за сутки</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · Как это устроено -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sh sh--sm" data-reveal><h2>Как это устроено<span>три шага, первый бесплатный</span></h2></div>
+    <div class="steps steps--3" data-reveal-group="0.08">
+      <article class="step m-card" data-reveal><h3>Анкета</h3><p>На сайте или в боте <a href="https://t.me/ASILOhelperBot?start=site_konsult_menu" target="_blank" rel="noopener">@ASILOhelperBot</a>: несколько вопросов о вашей ситуации. Подробности истории писать не нужно.</p></article>
+      <article class="step m-card" data-reveal><h3>Оценка шансов, бесплатно</h3><p>В течение суток Саша, координатор проекта, разберет анкету и честно скажет, подходит ли вам защита и что в вашей истории важно. Проценты не называем: решение принимает только Испания.</p></article>
+      <article class="step step--dark m-card" data-reveal><h3>Консультация</h3><p>Выбираете <a href="#formats">формат ниже</a>, оплачиваете в рублях, евро или USDT и созваниваетесь онлайн. После получаете материалы.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · Какая консультация нужна вам -->
+<section class="sec" id="formats">
+  <div class="wrap">
+    <div class="sh sh--sm" data-reveal><h2>Какая консультация нужна вам<span>четыре формата, от 50 €</span></h2></div>
+    <div class="plans" data-reveal-group="0.08">
+      <article class="plan plan--main" data-reveal>
+        <span class="plan__tag">С нее начинают чаще всего</span>
+        <h3>По вашим вопросам</h3>
+        <p class="plan__sit">Есть вопросы, и хочется понять свой следующий шаг</p>
+        <p class="plan__txt">Присылаете вопросы заранее. На созвоне разбираем вашу ситуацию и отвечаем и на новые вопросы, если появятся. После встречи присылаем конспект.</p>
+        <div class="plan__meta"><div><small>Кто ведет</small>Саша, координатор проекта</div><div><small>Длительность</small>от 30 минут до 2 часов, советуем час</div></div>
+        <p class="plan__fine">За 30 минут обычно успеваем ответить на несколько вопросов, а за час спокойно разобрать всю ситуацию и составить план. Задержались – доплатить можно после.</p>
+        <div class="plan__price">50 €<small>за 30 минут</small></div>
+        <a class="btn btn--white m-btn" href="https://t.me/ASILOhelperBot?start=site_konsult_questions" target="_blank" rel="noopener">Записаться <img src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
+      </article>
+      <article class="plan" data-reveal>
+        <h3>Общая с юристом</h3>
+        <p class="plan__sit">Только начинаете и хотите разобраться во всем процессе</p>
+        <p class="plan__txt">Индивидуальная лекция юриста: плюсы и минусы защиты, маршрут и подача, план переезда, кейс и доказательства, интервью. В конце ваши вопросы. Можно прийти вдвоем.</p>
+        <div class="plan__meta"><div><small>Кто ведет</small>Юрист</div><div><small>Длительность</small>1,5 часа</div></div>
+        <div class="plan__price">150 €</div>
+        <a class="btn btn--dark m-btn" href="https://t.me/ASILOhelperBot?start=site_konsult_general" target="_blank" rel="noopener">Записаться <img src="img/arrow-white46.svg" alt="" width="44" height="44"></a>
+      </article>
+      <article class="plan" data-reveal>
+        <h3>По готовому кейсу</h3>
+        <p class="plan__sit">Кейс уже написан, но вы в нем не уверены</p>
+        <p class="plan__txt">Загружаете текст в Google Docs, юрист и координатор читают его заранее. На созвоне разбираем, что усилить и исправить, какие доказательства нужны и где их искать.</p>
+        <div class="plan__meta"><div><small>Кто ведет</small>Юрист и координатор</div><div><small>Длительность</small>3 часа</div></div>
+        <div class="plan__price">250 €</div>
+        <a class="btn btn--dark m-btn" href="https://t.me/ASILOhelperBot?start=site_konsult_caseconsult" target="_blank" rel="noopener">Отправить кейс <img src="img/arrow-white46.svg" alt="" width="44" height="44"></a>
+      </article>
+      <article class="plan plan--dark" data-reveal>
+        <h3>Репетиция интервью</h3>
+        <p class="plan__sit">Скоро интервью в полиции</p>
+        <p class="plan__txt">Два созвона. Первый – интервью как в Испании: вопросы, просьба рассказать историю, уточнения, иногда вас торопят. Второй – подробный разбор ответов. После – расшифровка, письменный разбор и материалы.</p>
+        <div class="plan__meta"><div><small>Длительность</small>2 созвона</div></div>
+        <div class="plan__price">250 €</div>
+        <a class="btn btn--white m-btn" href="https://t.me/ASILOhelperBot?start=site_konsult_interview" target="_blank" rel="noopener">Записаться <img src="img/arrow-dark.svg" alt="" width="44" height="44"></a>
+      </article>
+    </div>
+    <p class="note" data-reveal>Сумму за консультацию вычитаем из любой следующей нашей услуги. Оплата в рублях, евро или USDT.</p>
+  </div>
+</section>
+
+<!-- 4 · Что вы получите -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sh sh--sm" data-reveal><h2>Что вы получите<span>после любой консультации</span></h2></div>
+    <div class="gets" data-reveal-group="0.08">
+      <div class="m-float" style="--rot:-2deg;--dur:9s" data-reveal><i></i><b>Пример кейса, который получил одобрение</b></div>
+      <div class="m-float" style="--rot:2deg;--dur:10s;--delay:-2s" data-reveal><i></i><b>Дорожную карту получения международной защиты</b></div>
+      <div class="m-float" style="--rot:-2deg;--dur:11s;--delay:-4s" data-reveal><i></i><b>Список дел перед отъездом</b></div>
+      <div class="m-float" style="--rot:2deg;--dur:9.5s;--delay:-6s" data-reveal><i></i><b>Полезные ссылки для эмигранта</b></div>
+      <div class="m-float" style="--rot:-2deg;--dur:10.5s;--delay:-3s" data-reveal><i></i><b>Приложения для жизни в Испании</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · Кто консультирует -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sh sh--sm" data-reveal><h2>Кто консультирует<span>люди, которые знают путь изнутри</span></h2></div>
+    <div class="team" data-reveal-group="0.08">
+      <div class="person" data-reveal><span class="person__ava" aria-hidden="true">С</span><b>Саша Рахманов</b><strong>Основатель и координатор проекта</strong><p>Сам получил защиту в Испании зимой 2023/24. Оценка шансов и консультации по вашим вопросам.</p></div>
+      <div class="person" data-reveal><span class="person__ava" aria-hidden="true">А</span><b>Александр Сергеевич</b><strong>Юрист, 15 лет опыта</strong><p>Общие консультации и разбор кейсов.</p></div>
+      <div class="team__num" data-reveal>
+        <b><span data-count="187">187</span></b>
+        <p>человек переехали и запросили защиту вместе с нами с конца 2022 года</p>
+        <a class="btn btn--white m-btn" href="https://t.me/ASILOhelperBot?start=site_konsult_chances" target="_blank" rel="noopener">Оценить шансы <img src="img/arrow-dark.svg" alt="" width="38" height="38"></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · Что мы гарантируем -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sh sh--sm" data-reveal><h2>Что мы гарантируем</h2></div>
+    <div class="guar" data-reveal-group="0.08">
+      <div data-reveal>Все, что входит в выбранную услугу, будет сделано</div>
+      <div data-reveal>Не передаем ваши данные третьим лицам</div>
+      <div data-reveal>Общение с нами не нарушает законы России</div>
+      <div data-reveal>Скажем честно, если защита вам не подходит, еще до оплаты</div>
+    </div>
+    <p class="note" data-reveal>Одобрение не может гарантировать никто: решение принимают органы Испании. Если кто-то обещает 100 %, это повод насторожиться.</p>
+  </div>
+</section>
+
+<!-- 7 · Отзывы -->
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="sh sh--sm" data-reveal><h2>Истории тех, кто уже в Испании<span>реальные люди – реальные отзывы</span></h2></div>
+    <div class="reviews__nav"><button type="button" data-dir="-1" aria-label="Назад"><img src="img/btn-prev.svg" alt="" width="52" height="52"></button><button type="button" data-dir="1" aria-label="Вперед"><img src="img/btn-next.svg" alt="" width="52" height="52"></button></div>
+  </div>
+  <div class="reel" id="reel">
+    <div class="rv rv--c"><img src="img/help-sopr.jpg" alt=""><span class="sticker" style="--r:2deg">Консультация</span></div>
+    <div class="rv rv--a"><img src="img/rv-sasha-dog.jpg" alt=""><span class="sticker" style="--r:3deg">Сопровождение</span></div>
+    <div class="rv rv--b"><img src="img/help-case.jpg" alt=""><span class="sticker" style="--r:-2deg">Консультация по кейсу</span></div>
+    <div class="rv rv--d"><img src="img/rv-friends.jpg" alt=""><span class="sticker" style="--r:-3deg">Шенгенская виза</span></div>
+    <div class="rv rv--you"><span>Здесь может<br>быть ваше фото</span><span class="sticker" style="--r:3deg">Вы?</span></div>
+    <div class="rv rv--e"><img src="img/rv-gothic.jpg" alt=""><span class="sticker" style="--r:-2deg">Готический квартал</span></div>
+  </div>
+  <div class="wrap reviews__foot">
+    <p>Это реальные люди. Напишите нам – пришлем ссылку на Telegram-канал с отзывами, где видно их авторов.</p>
+    <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<!-- 8 · Вопросы о консультациях -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sh sh--sm" data-reveal><h2>Вопросы о консультациях<span>коротко и честно</span></h2></div>
+    <div class="acc" data-reveal>
+      <details open><summary>Какую консультацию выбрать?</summary><div>Если сомневаетесь, начните с консультации по вашим вопросам: за час обычно успеваем разобрать ситуацию и составить план. Если потом понадобится разбор кейса или репетиция, уже оплаченную сумму вычтем.</div></details>
+      <details><summary>Нужно ли готовиться заранее?</summary><div>К консультации по вашим вопросам пришлите вопросы заранее. К консультации по кейсу загрузите текст в Google Docs, чтобы мы успели его прочитать. К общей консультации готовиться не нужно.</div></details>
+      <details><summary>Можно прийти вдвоем с партнером?</summary><div>На общую консультацию – да. Про другие форматы спросите при записи.</div></details>
+      <details><summary>Засчитывается ли консультация, если потом возьму кейс или сопровождение?</summary><div>Да. Сумму за консультацию вычитаем из стоимости любой следующей нашей услуги: <a href="keys.html">работы с кейсом</a> или <a href="soprovozhdenie.html">сопровождения</a>.</div></details>
+      <details><summary>Как оплатить?</summary><div>В рублях, евро или USDT. Реквизиты пришлем при записи.</div></details>
+      <details><summary>Я не из России. Вы поможете?</summary><div>Мы работаем в основном с заявителями из России, поэтому шансы для других стран сами не оцениваем. Можно взять <a href="#formats">консультацию по вашим вопросам</a>: разберем, что известно о вашей ситуации.</div></details>
+      <details><summary>А если защита мне не подходит?</summary><div>Мы скажем это на бесплатной оценке шансов, до любой оплаты. Защиту дают, если причина переезда – угроза, а не желание улучшить условия жизни.</div></details>
+    </div>
+    <p class="acc__more" data-reveal>Не нашли ответ? <a href="https://t.me/ASILOhelperBot?start=site_konsult_menu" target="_blank" rel="noopener">Спросите в боте →</a></p>
+  </div>
+</section>
+
+<!-- 9 · Форма -->
+<section class="apply" id="apply">
+  <div class="apply__box" data-reveal>
+    <div class="apply__left">
+      <h2>¿Empezamos?</h2>
+      <p>Оставьте контакт – в течение суток пришлем оценку шансов. Если уже выбрали консультацию, напишите какую – запишем вас на удобное время.</p>
+      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_konsult_chances" target="_blank" rel="noopener">Удобнее в Telegram? Откройте бота <span>@ASILOhelperBot</span></a>
+      <div class="arch"><img src="img/rv-sasha-dog.jpg" alt=""><span class="sticker">Ответим пн–пт</span></div>
+    </div>
+    <form class="form" id="form" data-interest="Консультация" novalidate>
+      <div class="form__body">
+        <h3>Куда вам написать?</h3>
+        <p>Оставьте контакт – менеджер напишет с понедельника по пятницу и запишет вас на бесплатную оценку шансов.</p>
+        <div class="field"><label for="f-name">Как к вам обращаться</label><input id="f-name" name="name" placeholder="Имя или псевдоним" autocomplete="off" maxlength="80" aria-describedby="err-name"><p class="field__err" id="err-name" hidden></p></div>
+        <div class="field"><span class="lbl" id="l-contact">Как с вами связаться</span>
+          <div class="contact"><div class="seg" role="group" aria-label="Способ связи"><button type="button" class="on" aria-pressed="true" data-type="telegram">Telegram</button><button type="button" aria-pressed="false" data-type="email">E-mail</button></div><input id="f-contact" name="contact" placeholder="@username или +34…" aria-labelledby="l-contact" aria-describedby="err-contact" autocomplete="off" maxlength="254"></div>
+          <input type="hidden" name="contact_type" value="telegram">
+          <p class="field__err" id="err-contact" hidden></p></div>
+        <div class="field"><span class="lbl" id="l-interest">Что вас интересует</span>
+          <div class="chips" data-single role="group" aria-labelledby="l-interest"><button type="button" aria-pressed="false">Оценка шансов</button><button type="button" class="on" aria-pressed="true">Консультация</button><button type="button" aria-pressed="false">Работа с кейсом</button><button type="button" aria-pressed="false">Сопровождение</button><button type="button" aria-pressed="false">Пока не знаю</button></div></div>
+        <div class="field"><label class="lbl" for="f-about">Коротко о ситуации <small>необязательно</small></label>
+          <textarea id="f-about" name="about" maxlength="2000" aria-describedby="err-about" placeholder="Где вы сейчас и когда планируете переезд. Без подробностей истории и документов – их обсудим лично."></textarea><p class="field__err" id="err-about" hidden></p></div>
+        <div class="hp" aria-hidden="true"><label for="f-website">Не заполняйте это поле</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <label class="consent"><input type="checkbox" name="consent" id="f-consent" aria-describedby="err-consent"><span>Я ознакомился(-ась) с <a href="privacy.html" target="_blank" rel="noopener">Политикой конфиденциальности</a> и согласен(-на) на обработку данных для ответа на заявку.</span></label>
+        <p class="field__err field__err--consent" id="err-consent" hidden></p>
+        <label class="consent"><input type="checkbox" name="sensitive_consent" id="f-sensitive"><span>Если я укажу сведения об ориентации, гендерной идентичности или здоровье – даю явное согласие на их обработку для ответа на заявку (см. <a href="privacy.html#what" target="_blank" rel="noopener">Политику конфиденциальности</a>). Согласие можно отозвать.</span></label>
+        <div class="ts"><div class="cf-turnstile" data-sitekey="0x4AAAAAAGN1oWk5fZGZETVJ" data-language="ru" data-theme="light" data-callback="asiloTsOk" data-expired-callback="asiloTsReset" data-error-callback="asiloTsReset"></div><script>if(innerWidth<400)document.currentScript.previousElementSibling.dataset.size='compact'</script>
+          <p class="field__err" id="err-ts" hidden></p></div>
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+        <p class="form__err" id="form-err" role="alert" hidden></p>
+        <button class="submit m-btn" type="submit">Отправить заявку</button>
+        <p class="form__note">Общение с нами не нарушает законы РФ. Мы не передаем данные третьим лицам.</p>
+      </div>
+      <div class="form__ok" role="status" tabindex="-1"><b>Спасибо, заявка у нас!</b><p class="form__code" hidden>Номер заявки: <span></span></p><p class="form__next">Менеджер напишет вам в рабочий день. Если за два рабочих дня никто не ответил – напишите нам в <a href="https://t.me/ASILOhelperBot?start=site_konsult_menu" target="_blank" rel="noopener">@ASILOhelperBot</a> и назовите номер заявки.</p></div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="foot__card">
+    <div class="foot__top">
+      <div class="foot__about"><img src="img/logo-footer.svg" alt="asilohelp" width="234" height="38">
+        <p>Помогаем ЛГБТ-людям из России и постсоветских стран переехать в Испанию и запросить международную защиту.</p>
+        <p>Мы не адвокатское бюро. Материалы сайта – информация, а не юридическая консультация.</p></div>
+      <div class="foot__col"><b>Услуги</b><a href="konsultacii.html">Консультации</a><a href="keys.html">Работа с кейсом</a><a href="soprovozhdenie.html">Сопровождение</a><a href="stati.html">Статьи и база знаний</a><a href="o-nas.html">О нас</a></div>
+      <div class="foot__col"><b>Мы в сети</b><a href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Telegram-канал</a><a href="https://www.instagram.com/rkhmanov/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@rkhmanov/" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@rkhmanov" target="_blank" rel="noopener">TikTok</a><a href="https://t.me/+GRq-QZJDqDNlNDEy" target="_blank" rel="noopener">Чат по Барселоне</a></div>
+      <div class="foot__col"><b>Документы</b><a href="legal.html">Правовая информация</a><a href="privacy.html">Политика конфиденциальности</a><a href="cookies.html">Политика cookie</a></div>
+    </div>
+    <div class="foot__bottom">© 2026 asilohelp.com</div>
+  </div>
+</footer>
+
+<div class="test-banner">Тестовая версия · не индексируется</div>
+
+<script src="motion.js"></script>
+<script src="form.js?v=1"></script>
+<script>
+  // отзывы: листание (без стекла; со стеклом кнопки заменяет glass.js)
+  const reel = document.getElementById('reel');
+  document.querySelectorAll('.reviews__nav button').forEach(b => b.addEventListener('click', () => reel.scrollBy({ left: +b.dataset.dir * 275 * 2, behavior: 'smooth' })));
+</script>
+</body>
+</html>
