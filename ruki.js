@@ -105,7 +105,7 @@
     var w = band.clientWidth;
     if (!w) return false;
     var mobile = w <= 600;
-    s = mobile ? w / 540 : Math.min(0.92, Math.max(0.62, w / 1500));
+    s = mobile ? w / 540 : Math.min(0.84, Math.max(0.62, w / 1500));
     sp = mobile ? 3.4 : 5.2;
     W = w;
     band.style.height = Math.round((BOTTOM - TOP) * s + 40) + 'px';
@@ -128,7 +128,8 @@
   function exRect() {
     var btn = document.querySelector('.hero--ruki .hero__btns'), cr = cv.getBoundingClientRect();
     EX = null;
-    if (!btn || !cr.width) return;
+    // компьютер (решение Саши 23.11, ночь): руки не обрезаем у кнопки, полоса с руками стоит ниже кнопки
+    if (!btn || !cr.width || W > 600) return;
     var br = btn.getBoundingClientRect(), q = W / cr.width, m = 28;
     EX = [(br.left - cr.left) * q - m, (br.top - cr.top) * q - m, (br.right - cr.left) * q + m, (br.bottom - cr.top) * q + m];
   }
