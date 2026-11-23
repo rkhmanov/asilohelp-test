@@ -36,7 +36,9 @@ def head(title, desc, pre, page):
 <meta name="robots" content="noindex, nofollow">
 <title>{html.escape(title)} — asilohelp (тестовая версия)</title>
 <meta name="description" content="{html.escape(desc)}">
-<link rel="icon" href="{pre}img/logo.svg">
+<link rel="icon" href="{pre}img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{pre}img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="{pre}img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
