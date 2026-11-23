@@ -102,7 +102,7 @@
     var w = band.clientWidth;
     if (!w) return false;
     var mobile = w <= 600;
-    s = mobile ? w / 540 : Math.min(1.15, Math.max(0.62, w / 1250));
+    s = mobile ? w / 540 : Math.min(0.92, Math.max(0.62, w / 1500));
     sp = mobile ? 3.4 : 5.2;
     W = w;
     H = Math.round((BOTTOM - TOP) * s + 40);
