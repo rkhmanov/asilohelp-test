@@ -22,6 +22,8 @@ lab, n = ndimage.label(mask)
 sizes = ndimage.sum(mask, lab, range(1, n + 1))
 mask = np.isin(lab, np.argsort(sizes)[-2:] + 1)   # только две руки
 
+EXT = {'left': (330, 0.55), 'right': (330, -0.18)}   # на сколько пикселей и с каким наклоном продлить плечо
+
 for name, (x0, x1) in {'left': (0, 548), 'right': (548, 1140)}.items():
     m = mask[:, x0:x1]
     ys, xs = np.where(m)
@@ -33,6 +35,30 @@ for name, (x0, x1) in {'left': (0, 548), 'right': (548, 1140)}.items():
     while not M[:, col].any():
         col += -1 if name == 'left' else 1
     tip = (col, int(np.where(M[:, col])[0].mean()))
+    # «дорастить» руку: продлеваем плечо за обрез исходника вдоль его направления
+    # (столбец у обреза сдвигается вниз/вверх по наклону руки), ruki.js потом плавно гасит его
+    E, slope = EXT[name]
+    src = 6 if name == 'left' else M.shape[1] - 7          # столбец рядом с обрезом
+    colL, colM = L[:, src - 3:src + 4].mean(1), M[:, src]
+    shift = int(round(abs(slope) * E))
+    H2 = L.shape[0] + shift
+    L2 = np.full((H2, L.shape[1] + E), 255, np.uint8); M2 = np.zeros_like(L2)
+    off_old = 0 if slope > 0 else shift                     # рука уходит вниз (левая) или вверх (правая)
+    xo = E if name == 'left' else 0
+    L2[off_old:off_old + L.shape[0], xo:xo + L.shape[1]] = L
+    M2[off_old:off_old + L.shape[0], xo:xo + L.shape[1]] = M
+    for i in range(E + 6):                                  # +6: закрываем светлый шов на самом обрезе
+        if name == 'left':
+            x, dist = i, E - i
+        else:
+            x, dist = xo + L.shape[1] - 6 + i, i - 5
+        dy = off_old + int(round(slope * max(dist, 0)))
+        L2[dy:dy + L.shape[0], x] = colL
+        M2[dy:dy + L.shape[0], x] = colM
+    L, M = L2, M2
+    oy = y0 - (shift if slope < 0 else 0)
+    ox = (x0 + xa - E) if name == 'left' else x0 + xa
+    tip = (tip[0] + (E if name == 'left' else 0), tip[1] + (shift if slope < 0 else 0))
     img = Image.fromarray(np.dstack([L, M]), 'LA')
     img.save(root / f'img/ruki-{name}.png', optimize=True)
-    print(name, 'size', img.size, 'origin', (x0 + xa, y0), 'tip', tip)
+    print(name, 'size', img.size, 'origin', (int(ox), int(oy)), 'tip (в вырезке)', tip)

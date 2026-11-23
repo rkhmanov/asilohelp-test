@@ -45,7 +45,7 @@
   .hero--ruki .hero__es, .hero--ruki .hero__kb { display: none; }
   .hero--ruki { padding: 116px 0 40px; }
   .hero--ruki .hero__center { gap: 24px; }
-  .hero--ruki .ruki { margin-top: calc(70px - var(--tip)); }
+  .hero--ruki .ruki { margin-top: calc(84px - var(--tip)); }
   .hero--ruki .hero__nums { margin-top: -22px; }
 }
 @media (min-width: 481px) and (max-width: 1100px) { .hero--ruki { padding-top: 120px; } }
