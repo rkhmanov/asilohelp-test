@@ -43,7 +43,7 @@ def head(title, desc, pre, page):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{pre}motion.css?v=17">
-<link rel="stylesheet" href="{pre}site.css?v=25">
+<link rel="stylesheet" href="{pre}site.css?v=26">
 <link rel="stylesheet" href="{pre}pages.css?v={V}">
 <script type="importmap">{{"imports":{{"react":"./{pre}vendor/react/react.mjs","react/jsx-runtime":"./{pre}vendor/react/react.mjs","react-dom/client":"./{pre}vendor/react/react.mjs","glisse":"./{pre}vendor/glisse/index.js"}}}}</script>
 <script type="module" src="{pre}glass.js?v=9"></script>
@@ -85,7 +85,6 @@ def foot(pre, extra_js=""):
   </div>
 </footer>
 
-<div class="test-banner">Тестовая версия · не индексируется</div>
 
 <script src="{pre}motion.js"></script>
 {extra_js}

@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="motion.css?v=17">
-<link rel="stylesheet" href="site.css?v=25">
+<link rel="stylesheet" href="site.css?v=26">
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <link rel="stylesheet" href="inner.css?v=2">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
@@ -207,7 +207,7 @@
     <div class="apply__left">
       <h2>¿Empezamos?</h2>
       <p>Оставьте контакт – в течение суток пришлем оценку шансов. Расскажите коротко, где вы сейчас и что с кейсом: есть ли текст или начинаем с нуля.</p>
-      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_keys_case" target="_blank" rel="noopener">Удобнее в Telegram? Откройте бота <span>@ASILOhelperBot</span></a>
+      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_keys_case" target="_blank" rel="noopener"><span class="tg__ava" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M21.4 4.1 2.9 11.3c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.4-1.6Zm-3.7 3.4-8.4 7.6-.3 3.3-1.5-4.7 9.8-6.2c.5-.3.8 0 .4 0Z"/></svg></span><span class="tg__txt"><small>Удобнее в Telegram?</small><b>Напишите боту @ASILOhelperBot</b></span><img class="tg__go m-arrow" src="img/arrow-red44.svg" alt="" width="40" height="40"></a>
       <div class="arch"><img src="img/rv-sasha-dog.jpg" alt=""><span class="sticker">Ответим пн–пт</span></div>
     </div>
     <form class="form" id="form" data-interest="Работа с кейсом" novalidate>
@@ -215,12 +215,12 @@
         <h3>Куда вам написать?</h3>
         <p>Оставьте контакт – менеджер напишет с понедельника по пятницу и запишет вас на бесплатную оценку шансов.</p>
         <div class="field"><label for="f-name">Как к вам обращаться</label><input id="f-name" name="name" placeholder="Имя или псевдоним" autocomplete="off" maxlength="80" aria-describedby="err-name"><p class="field__err" id="err-name" hidden></p></div>
-        <div class="field"><span class="lbl" id="l-contact">Как с вами связаться</span>
-          <div class="contact"><div class="seg" role="group" aria-label="Способ связи"><button type="button" class="on" aria-pressed="true" data-type="telegram">Telegram</button><button type="button" aria-pressed="false" data-type="email">E-mail</button></div><input id="f-contact" name="contact" placeholder="@username или +34…" aria-labelledby="l-contact" aria-describedby="err-contact" autocomplete="off" maxlength="254"></div>
+        <div class="field"><label class="lbl" id="l-contact" for="f-contact">Ваш Telegram</label>
+          <div class="contact"><input id="f-contact" name="contact" placeholder="@username или телефон +34…" aria-labelledby="l-contact" aria-describedby="err-contact" autocomplete="off" maxlength="254"></div>
           <input type="hidden" name="contact_type" value="telegram">
           <p class="field__err" id="err-contact" hidden></p></div>
         <div class="field"><span class="lbl" id="l-interest">Что вас интересует</span>
-          <div class="chips" data-single role="group" aria-labelledby="l-interest"><button type="button" aria-pressed="false">Оценка шансов</button><button type="button" aria-pressed="false">Консультация</button><button type="button" class="on" aria-pressed="true">Работа с кейсом</button><button type="button" aria-pressed="false">Сопровождение</button><button type="button" aria-pressed="false">Пока не знаю</button></div></div>
+          <div class="chips" data-single role="group" aria-labelledby="l-interest"><button type="button" aria-pressed="false">Оценка шансов</button><button type="button" aria-pressed="false">Консультация</button><button type="button" class="on" aria-pressed="true">Работа с кейсом</button><button type="button" aria-pressed="false">Сопровождение</button></div></div>
         <div class="field"><label class="lbl" for="f-about">Коротко о ситуации <small>необязательно</small></label>
           <textarea id="f-about" name="about" maxlength="2000" aria-describedby="err-about" placeholder="Где вы сейчас и когда планируете переезд. Без подробностей истории и документов – их обсудим лично."></textarea><p class="field__err" id="err-about" hidden></p></div>
         <div class="hp" aria-hidden="true"><label for="f-website">Не заполняйте это поле</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
@@ -254,7 +254,6 @@
   </div>
 </footer>
 
-<div class="test-banner">Тестовая версия · не индексируется</div>
 
 <script src="motion.js"></script>
 <script src="form.js?v=1"></script>
