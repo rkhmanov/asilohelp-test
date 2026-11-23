@@ -2,3 +2,4 @@ dl.sh
 .DS_Store
 node_modules/
 tests/shots/
+.reanimate/

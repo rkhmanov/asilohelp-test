@@ -26,4 +26,5 @@
   .sk-h { --st-k: 2.8; font-size: 35px; line-height: 1.16; gap: 2px; }
   .sk-hint { font-size: 11px; }
     }
-@media (prefers-reduced-motion: reduce) { 
+/* до появления заголовок спрятан, чтобы не мигал текст до старта анимации */
+.sk-wait .sk-h { visibility: hidden; }
