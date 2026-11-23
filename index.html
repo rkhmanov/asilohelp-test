@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="motion.css?v=17">
 <link rel="stylesheet" href="site.css?v=23">
 <script type="importmap">{"imports":{"react":"https://esm.sh/react@19.1.0","react/jsx-runtime":"https://esm.sh/react@19.1.0/jsx-runtime","react-dom/client":"https://esm.sh/react-dom@19.1.0/client?deps=react@19.1.0","glisse":"./vendor/glisse/index.js"}}</script>
-<script type="module" src="glass.js?v=6"></script>
+<script type="module" src="glass.js?v=7"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot')</script>
 <style>.shot *,.shot *::before{transition:none!important;animation:none!important} @media (max-width:700px){.br-d{display:none}} .scr, .fl { transform: rotate(var(--rot, 0deg)); } @media (max-width: 1100px) { .fl--inside { animation: none; } }</style>
 </head>
@@ -24,8 +24,8 @@
     <a class="hdr__logo" href="#top" aria-label="asilohelp — на главную"><img src="img/logo.svg" alt="asilohelp" width="197" height="32"></a>
     <nav aria-label="Меню">
       <a href="#help">Услуги <img src="img/chevron.svg" alt="" width="8" height="4"></a>
-      <a href="#news">Статьи</a>
-      <a href="#us">О нас</a>
+      <a href="stati.html">Статьи</a>
+      <a href="o-nas.html">О нас</a>
       <a href="#faq">Вопросы</a>
     </nav>
     <div class="hdr__cta">
@@ -154,14 +154,14 @@
         <span class="dot" aria-hidden="true"></span>
       </div>
       <div class="b b--team" data-reveal>
-        <h3>Команда</h3><span class="sq" aria-hidden="true"><i></i></span>
+        <h3><a href="o-nas.html">Команда</a></h3><span class="sq" aria-hidden="true"><i></i></span>
         <p>Каждый отвечает за свою часть пути — от оценки шансов до интервью.</p>
-        <div class="names"><span>Саша</span><span>Леся</span><span>Артём</span><span>Михаил</span></div>
+        <div class="names"><span>Саша</span><span>Леся</span><span>Илья</span><span>Александр</span></div>
         <div class="roles">
           <div><b>Саша</b><strong>основатель</strong><span>процессы, база знаний, сам получил защиту, отвечает за проект</span></div>
           <div><b>Леся</b><strong>консультантка</strong><span>отвечает на заявки, помогает с оценкой шансов, составляет договор</span></div>
-          <div><b>Артём</b><strong>журналист</strong><span>готовит черновую версию кейса, помогает собирать доказательства</span></div>
-          <div><b>Михаил</b><strong>юрист</strong><span>вычитывает кейс, готовит к интервью и отвечает за юр. часть</span></div>
+          <div><b>Илья</b><strong>журналист</strong><span>пишет текст кейса, помогает собирать доказательства</span></div>
+          <div><b>Александр</b><strong>юрист</strong><span>вычитывает кейс, готовит к интервью и отвечает за юр. часть</span></div>
         </div>
       </div>
     </div>
@@ -269,17 +269,17 @@
   <div class="wrap">
     <h2 data-reveal>Главные новости и материалы<span>читайте на нашем сайте</span></h2>
     <div class="news__grid" data-reveal-group="0.08">
-      <a class="lead-art m-card m-photo" href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener" data-reveal>
+      <a class="lead-art m-card m-photo" href="stati/lgbt-ubezhishche-gid.html" data-reveal>
         <img src="img/rv-oldtown.jpg" alt="">
         <span>Главный гайд</span>
         <h3>Убежище в Испании для ЛГБТ: полный гайд</h3>
         <small>Основания · кейс · доказательства · интервью</small>
       </a>
       <div class="news__list">
-        <a class="art m-card" href="https://t.me/spainLGBTQ" target="_blank" rel="noopener" data-reveal><img src="img/help-case.jpg" alt=""><div><small>Новость</small><b>Транзитная виза для россиян с 12.07.2025</b><span>дата · 5 мин</span></div></a>
-        <a class="art m-card" href="https://t.me/spainLGBTQ" target="_blank" rel="noopener" data-reveal><img src="img/art-interview.jpg" alt=""><div><small class="g">Гайд</small><b>Как проходит интервью в полиции</b><span>дата · 5 мин</span></div></a>
-        <a class="art m-card" href="https://t.me/spainLGBTQ" target="_blank" rel="noopener" data-reveal><img src="img/rv-gothic.jpg" alt=""><div><small>Новость</small><b>Испания — первая в Rainbow Map ILGA-Europe</b><span>дата · 5 мин</span></div></a>
-        <a class="more m-btn" href="https://t.me/spainLGBTQ" target="_blank" rel="noopener" data-reveal>Читать остальные материалы <img class="m-arrow" src="img/arrow-red44.svg" alt="" width="44" height="44"></a>
+        <a class="art m-card" href="stati/podacha-v-aeroportu.html" data-reveal><img src="img/help-case.jpg" alt=""><div><small>Подача</small><b>Подача в аэропорту и транзитная виза ATV</b><span>6 мин чтения</span></div></a>
+        <a class="art m-card" href="stati/intervyu.html" data-reveal><img src="img/art-interview.jpg" alt=""><div><small class="g">Интервью</small><b>Как проходит интервью в полиции</b><span>4 мин чтения</span></div></a>
+        <a class="art m-card" href="stati/dokazatelstva.html" data-reveal><img src="img/flip-case.jpg" alt=""><div><small>Кейс</small><b>Доказательства для ЛГБТ-кейса</b><span>4 мин чтения</span></div></a>
+        <a class="more m-btn" href="stati.html" data-reveal>Читать остальные материалы <img class="m-arrow" src="img/arrow-red44.svg" alt="" width="44" height="44"></a>
       </div>
     </div>
   </div>
@@ -349,7 +349,7 @@
       <div class="foot__about"><img src="img/logo-footer.svg" alt="asilohelp" width="234" height="38">
         <p>Помогаем ЛГБТ-людям из России и постсоветских стран переехать в Испанию и запросить международную защиту.</p>
         <p>Мы не адвокатское бюро. Материалы сайта — информация, а не юридическая консультация.</p></div>
-      <div class="foot__col"><b>Сайт</b><a href="#help">Сопровождение</a><a href="#news">Статьи и база знаний</a><a href="#us">О нас</a><a href="#faq">Частые вопросы</a><a href="#apply">Оставить заявку</a></div>
+      <div class="foot__col"><b>Сайт</b><a href="#help">Сопровождение</a><a href="stati.html">Статьи и база знаний</a><a href="o-nas.html">О нас</a><a href="#faq">Частые вопросы</a><a href="#apply">Оставить заявку</a></div>
       <div class="foot__col"><b>Мы в сети</b><a href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Telegram-канал</a><a href="https://www.instagram.com/rkhmanov/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@rkhmanov/" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@rkhmanov" target="_blank" rel="noopener">TikTok</a><a href="https://t.me/+GRq-QZJDqDNlNDEy" target="_blank" rel="noopener">Чат по Барселоне</a></div>
       <div class="foot__col"><b>Документы</b><a href="legal.html">Правовая информация</a><a href="privacy.html">Политика конфиденциальности</a><a href="cookies.html">Политика cookie</a></div>
     </div>
