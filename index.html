@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="motion.css?v=17">
-<link rel="stylesheet" href="site.css?v=25">
+<link rel="stylesheet" href="site.css?v=26">
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=9"></script>
@@ -104,17 +104,17 @@
     <div class="sh sh--sm" data-reveal><h2>Мы справимся,<span>даже если кейс кажется слабым</span></h2>
       <p>Международную защиту дают не только активистам. Но если вы не подвергались открытому преследованию, то важно быть особенно внимательным при работе над кейсом.</p></div>
     <div class="tiles3" data-reveal-group="0.08">
-      <article class="tile m-card" data-reveal>
+      <article class="tile m-card" data-acc data-reveal>
         <div class="mini"><div class="basis"><small>ОСНОВАНИЕ ДЛЯ ЗАЩИТЫ</small><b>ориентация</b><em>и гендерная идентичность — Ley 4/2023</em></div></div>
         <div class="tile__head"><h3>Нет преследования</h3><img class="m-arrow" src="img/arrow-diag.svg" alt="" width="44" height="44"></div>
         <p>Лично к вам никто не подошёл с ножом, не уволил с работы и не сдал в полицию. Это не значит, что вы не можете запросить защиту — пока это происходит с людьми вокруг вас, вы можете стать следующим.</p>
       </article>
-      <article class="tile m-card" data-reveal>
+      <article class="tile m-card" data-acc data-reveal>
         <div class="mini mini--img"><img src="img/v2-who-secret.jpg" alt=""></div>
         <div class="tile__head"><h3>О вас никто не знает</h3><img class="m-arrow" src="img/arrow-diag.svg" alt="" width="44" height="44"></div>
         <p>Вы жили скрытно, поэтому не было проблем. Это усложняет задачу, но не делает её невозможной. Ведь есть причины, почему вы выбрали такую жизнь.</p>
       </article>
-      <article class="tile m-card" data-reveal>
+      <article class="tile m-card" data-acc data-reveal>
         <div class="mini"><div class="chron"><small>ХРОНОЛОГИЯ · ПРИМЕР</small>
           <div><i></i><b>2022</b><span>новый закон</span></div><div><i></i><b>2023</b><span>давление на работе</span></div><div class="on"><i></i><b>2024</b><span>решение уехать</span></div></div></div>
         <div class="tile__head"><h3>Вам просто страшно</h3><img class="m-arrow" src="img/arrow-diag.svg" alt="" width="44" height="44"></div>
@@ -124,9 +124,9 @@
     <div class="dark" data-reveal>
       <div class="dark__art" aria-hidden="true">
         <img class="dark__photo" src="img/hero-sasha.jpg" alt="">
-        <span class="chip chip--1"><img src="img/chip-icon.svg" alt="" width="34" height="34">Кейс</span>
-        <span class="chip chip--2"><img src="img/chip-icon.svg" alt="" width="34" height="34">Интервью</span>
-        <span class="chip chip--3"><img src="img/chip-icon.svg" alt="" width="34" height="34">Документы</span>
+        <span class="chip chip--1 m-float" style="--rot:-4deg;--dur:7s;--lift:-8px"><img src="img/chip-icon.svg" alt="" width="34" height="34">Кейс</span>
+        <span class="chip chip--2 m-float" style="--rot:5deg;--dur:8s;--delay:-3s;--lift:-10px"><img src="img/chip-icon.svg" alt="" width="34" height="34">Интервью</span>
+        <span class="chip chip--3 m-float" style="--rot:-3deg;--dur:9s;--delay:-5s;--lift:-7px"><img src="img/chip-icon.svg" alt="" width="34" height="34">Документы</span>
       </div>
       <div class="dark__text">
         <span class="pill-dark">Первый шаг</span>
@@ -134,7 +134,7 @@
         <p>Расскажете о ситуации — честно скажем, подходит ли вам защита и с чего начать. Не нужно быть активистом или журналистом.</p>
         <div class="facts"><div><small>ФОРМАТ</small><span>онлайн-созвон</span></div><div><small>ЯЗЫК</small><span>русский</span></div><div><small>КОГДА</small><span>пн–пт</span></div></div>
         <div class="dark__bottom">
-          <div class="price"><small>СТОИМОСТЬ</small><b>39€</b><em>бесплатно</em></div>
+          <div class="price"><small>СТОИМОСТЬ</small><span class="price__row"><s>39€</s><em>бесплатно</em></span></div>
           <a class="btn btn--white m-btn" href="#apply">Записаться <img class="m-arrow" src="img/arrow-diag40.svg" alt="" width="40" height="40"></a>
         </div>
       </div>
@@ -150,40 +150,36 @@
     <div class="bento" data-reveal-group="0.08">
       <div class="b b--red" data-reveal>
         <div class="big big--xl" data-count="187">187</div>
-        <p>человека переехали в Испанию<br>и запросили защиту вместе с нами.</p>
+        <p>человека переехали в Испанию <br>и запросили защиту вместе с нами.</p>
         <a class="link" href="#reviews">Истории клиентов <img src="img/arrow-small-white.svg" alt="" width="8" height="8"></a>
         <div class="stack" aria-hidden="true"><i></i><i></i>
           <div class="status"><small>ВАШ СТАТУС</small><b>protección</b><span>международная защита</span><div class="bar"><i></i></div><em>карта резидента на 5 лет</em></div></div>
         <span class="dot" aria-hidden="true"></span>
       </div>
-      <div class="b b--team" data-reveal>
-        <h3><a href="o-nas.html">Команда</a></h3><span class="sq" aria-hidden="true"><i></i></span>
-        <p>Каждый отвечает за свою часть пути — от оценки шансов до интервью.</p>
-        <div class="names"><span>Саша</span><span>Леся</span><span>Илья</span><span>Александр</span></div>
-        <div class="roles">
-          <div><b>Саша</b><strong>основатель</strong><span>процессы, база знаний, сам получил защиту, отвечает за проект</span></div>
-          <div><b>Леся</b><strong>консультантка</strong><span>отвечает на заявки, помогает с оценкой шансов, составляет договор</span></div>
-          <div><b>Илья</b><strong>журналист</strong><span>пишет текст кейса, помогает собирать доказательства</span></div>
-          <div><b>Александр</b><strong>юрист</strong><span>вычитывает кейс, готовит к интервью и отвечает за юр. часть</span></div>
-        </div>
-      </div>
+      <a class="b b--crew" href="o-nas.html" data-reveal>
+        <div class="crew__top"><h3>Команда</h3><span class="crew__n"><b>8</b> человек</span></div>
+        <div class="crew__faces" aria-hidden="true"><i>С</i><i>Л</i><i>И</i><i>А</i><i class="more">+4</i></div>
+        <p>Каждый отвечает за свою часть пути – от оценки шансов до интервью в полиции.</p>
+        <ul class="crew__roles">
+          <li><b>Саша</b><span>основатель, сам получил защиту</span></li>
+          <li><b>Леся</b><span>консультантка, оценка шансов и договор</span></li>
+          <li><b>Илья</b><span>журналист, текст кейса и доказательства</span></li>
+          <li><b>Александр</b><span>юрист, проверка кейса и подготовка к интервью</span></li>
+        </ul>
+        <span class="crew__more">Подробнее о нас <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="40" height="40"></span>
+      </a>
     </div>
-    <div class="bento3" data-reveal-group="0.08">
-      <div class="b b3 b3--pink" data-reveal>
+    <div class="b b--trust" data-reveal>
+      <div class="trust__col">
         <h3>Официально</h3>
-        <p>Мы работаем по договору<br>и зарегистрированы в Испании. Оплатить любые услуги можно<br>в нескольких валютах по официальным реквизитам.</p>
-        <div class="doc" aria-hidden="true"><b>Договор об оказании услуг</b><i></i><i></i><i style="width:120px"></i><span>Подписан</span></div>
+        <p>Работаем по договору и зарегистрированы в Испании. Оплатить можно в нескольких валютах по официальным реквизитам.</p>
       </div>
-      <div class="b b3 b3--dark" data-reveal>
-        <h3>8 человек</h3>
-        <p>в команде: проверяют кейс и готовят к интервью в полиции.</p>
-        <ul><li>Проверка кейса юристом</li><li>Тренинг к интервью</li><li>Ответы на вопросы в чате</li></ul>
-      </div>
-      <div class="b b3 b3--gray" data-reveal>
+      <div class="trust__col">
         <h3>Конфиденциально</h3>
-        <p>Мы не передаём ваши данные третьим лицам и храним их на защищённых серверах. Общение и работа с нами не нарушает законы России.</p>
+        <p>Не передаём ваши данные третьим лицам и храним их на защищённых серверах. Работа с нами не нарушает законы России.</p>
         <a href="privacy.html">Политика конфиденциальности →</a>
       </div>
+      <div class="doc" aria-hidden="true"><b>Договор об оказании услуг</b><i></i><i></i><i style="width:120px"></i><span>Подписан</span></div>
     </div>
   </div>
 </section>
@@ -195,17 +191,42 @@
     <div class="reviews__nav"><button type="button" data-dir="-1" aria-label="Назад"><img src="img/btn-prev.svg" alt="" width="52" height="52"></button><button type="button" data-dir="1" aria-label="Вперёд"><img src="img/btn-next.svg" alt="" width="52" height="52"></button></div>
   </div>
   <div class="reel" id="reel">
-    <figure class="rv rv--q rv--q-r"><blockquote>Мы с девушкой были на жутком стрессе из-за переезда. Саша нас успокоил, поддержал и ответил на все-все вопросы</blockquote><figcaption><b>Anna</b><span class="sticker" style="--r:2deg">Консультация</span></figcaption></figure>
-    <div class="rv rv--a"><img src="img/rv-sasha-dog.jpg" alt=""><span class="sticker" style="--r:3deg">Сопровождение</span></div>
-    <figure class="rv rv--q rv--q-dark"><blockquote>Удалось при наличии шенгена сдаться в аэропорту, пройти интервью в полиции и получить красную карту через неделю в Испании</blockquote><figcaption><b>Alexey</b><span class="sticker" style="--r:-2deg">Сопровождение</span></figcaption></figure>
-    <div class="rv rv--b"><img src="img/help-case.jpg" alt=""><span class="sticker" style="--r:-2deg">Консультация</span></div>
-    <figure class="rv rv--q"><blockquote>Советы помогли внести правки в кейс. Я подался на убежище неделю назад и теперь нахожусь в стране легально</blockquote><figcaption><b>Ross</b><span class="sticker" style="--r:3deg">Работа с кейсом</span></figcaption></figure>
-    <div class="rv rv--c"><img src="img/help-sopr.jpg" alt=""><span class="sticker" style="--r:2deg">Работа с кейсом</span></div>
-    <figure class="rv rv--q rv--q-r"><blockquote>Визу получала впервые и очень боялась напортачить. Ребята были на связи постоянно и даже помогли поймать слот в моем регионе</blockquote><figcaption><b>Angelina</b><span class="sticker" style="--r:-2deg">Виза</span></figcaption></figure>
-    <div class="rv rv--d"><img src="img/rv-friends.jpg" alt=""><span class="sticker" style="--r:-3deg">Шенгенская виза</span></div>
-    <figure class="rv rv--q rv--q-dark"><blockquote>До крайнего срока оставался ровно месяц. За этот месяц мы собрали все нужные документы и доказательства</blockquote><figcaption><b>Валентин</b><span class="sticker" style="--r:2deg">Работа с кейсом</span></figcaption></figure>
-    <div class="rv rv--e"><img src="img/rv-gothic.jpg" alt=""><span class="sticker" style="--r:-2deg">Готический квартал</span></div>
-    <figure class="rv rv--q"><blockquote>Многие страхи ушли после диалога. Как будто поговорил с другом, который просто делится полезной информацией</blockquote><figcaption><b>Макс</b><span class="sticker" style="--r:-2deg">Консультация</span></figcaption></figure>
+    <figure class="rv rv--flip rv--a" tabindex="0" aria-label="Отзыв: Anna, Консультация. Нажмите, чтобы прочитать">
+      <div class="rv__in">
+        <div class="rv__f"><img src="img/rv-sasha-dog.jpg" alt="" loading="lazy"><span class="sticker" style="--r:2deg">Консультация</span><span class="rv__tap">«» Отзыв</span></div>
+        <div class="rv__b rv--q rv--q-r"><blockquote>Мы с девушкой были на жутком стрессе из-за переезда. Саша нас успокоил, поддержал и ответил на все-все вопросы</blockquote><figcaption><b>Anna</b><span class="sticker" style="--r:2deg">Консультация</span></figcaption></div>
+      </div>
+    </figure>
+    <figure class="rv rv--flip rv--b" tabindex="0" aria-label="Отзыв: Alexey, Сопровождение. Нажмите, чтобы прочитать">
+      <div class="rv__in">
+        <div class="rv__f"><img src="img/help-case.jpg" alt="" loading="lazy"><span class="sticker" style="--r:-2deg">Сопровождение</span><span class="rv__tap">«» Отзыв</span></div>
+        <div class="rv__b rv--q rv--q-dark"><blockquote>Удалось при наличии шенгена сдаться в аэропорту, пройти интервью в полиции и получить красную карту через неделю в Испании</blockquote><figcaption><b>Alexey</b><span class="sticker" style="--r:-2deg">Сопровождение</span></figcaption></div>
+      </div>
+    </figure>
+    <figure class="rv rv--flip rv--c" tabindex="0" aria-label="Отзыв: Ross, Работа с кейсом. Нажмите, чтобы прочитать">
+      <div class="rv__in">
+        <div class="rv__f"><img src="img/help-sopr.jpg" alt="" loading="lazy"><span class="sticker" style="--r:3deg">Работа с кейсом</span><span class="rv__tap">«» Отзыв</span></div>
+        <div class="rv__b rv--q"><blockquote>Советы помогли внести правки в кейс. Я подался на убежище неделю назад и теперь нахожусь в стране легально</blockquote><figcaption><b>Ross</b><span class="sticker" style="--r:3deg">Работа с кейсом</span></figcaption></div>
+      </div>
+    </figure>
+    <figure class="rv rv--flip rv--d" tabindex="0" aria-label="Отзыв: Angelina, Виза. Нажмите, чтобы прочитать">
+      <div class="rv__in">
+        <div class="rv__f"><img src="img/rv-friends.jpg" alt="" loading="lazy"><span class="sticker" style="--r:-2deg">Виза</span><span class="rv__tap">«» Отзыв</span></div>
+        <div class="rv__b rv--q rv--q-r"><blockquote>Визу получала впервые и очень боялась напортачить. Ребята были на связи постоянно и даже помогли поймать слот в моем регионе</blockquote><figcaption><b>Angelina</b><span class="sticker" style="--r:-2deg">Виза</span></figcaption></div>
+      </div>
+    </figure>
+    <figure class="rv rv--flip rv--e" tabindex="0" aria-label="Отзыв: Валентин, Работа с кейсом. Нажмите, чтобы прочитать">
+      <div class="rv__in">
+        <div class="rv__f"><img src="img/rv-gothic.jpg" alt="" loading="lazy"><span class="sticker" style="--r:2deg">Работа с кейсом</span><span class="rv__tap">«» Отзыв</span></div>
+        <div class="rv__b rv--q rv--q-dark"><blockquote>До крайнего срока оставался ровно месяц. За этот месяц мы собрали все нужные документы и доказательства</blockquote><figcaption><b>Валентин</b><span class="sticker" style="--r:2deg">Работа с кейсом</span></figcaption></div>
+      </div>
+    </figure>
+    <figure class="rv rv--flip rv--b" tabindex="0" aria-label="Отзыв: Макс, Консультация. Нажмите, чтобы прочитать">
+      <div class="rv__in">
+        <div class="rv__f"><img src="img/rv-oldtown.jpg" alt="" loading="lazy"><span class="sticker" style="--r:-2deg">Консультация</span><span class="rv__tap">«» Отзыв</span></div>
+        <div class="rv__b rv--q"><blockquote>Многие страхи ушли после диалога. Как будто поговорил с другом, который просто делится полезной информацией</blockquote><figcaption><b>Макс</b><span class="sticker" style="--r:-2deg">Консультация</span></figcaption></div>
+      </div>
+    </figure>
     <div class="rv rv--you"><span>Здесь может<br>быть ваше фото</span><span class="sticker" style="--r:3deg">Вы?</span></div>
     <a class="rv rv--more" href="otzyvy.html"><b>27</b>отзывов целиком →</a>
   </div>
@@ -298,17 +319,15 @@
 <section class="faq" id="faq">
   <div class="wrap faq__grid">
     <div class="faq__col">
-      <div class="faq__intro" data-reveal><h2>Остались<br>вопросы?</h2><p>Собрали то, о чем спрашивают чаще всего. Не нашли ответ – напишите нам, ответим пн–пт.</p><a class="faq__all m-btn" href="voprosy.html">Все 26 вопросов →</a></div>
-      <div class="q m-card" data-reveal><h3>Какие гарантии?</h3><p>Одобрение не может гарантировать никто – решает министерство. Мы гарантируем свою работу: все, что входит в услугу, будет сделано.</p><a href="voprosy.html#q4">Подробнее →</a></div>
-      <div class="q q--beige q--short m-card" data-reveal><h3>Кто увидит мою историю?</h3><p>Только команда, которая работает с кейсом: менеджер, координатор, журналист и юрист. Кейс подается властям Испании, когда решите вы.</p></div>
+      <div class="faq__intro" data-reveal><h2>Остались<br>вопросы?</h2><p>Здесь самые частые. Не нашли ответ – напишите нам, ответим пн–пт.</p><a class="faq__all m-btn" href="voprosy.html">Все 26 вопросов →</a></div>
+      <div class="q m-card" data-acc data-reveal><h3>Сколько стоит?</h3><p>Оценка шансов – бесплатно. Консультация – от 50 €, кейс с нуля – 850 €, сопровождение на полгода – от 990 €.</p><a href="voprosy.html#q1">Все цены →</a></div>
     </div>
     <div class="faq__col">
-      <div class="q m-card" data-reveal><h3>Сколько стоит?</h3><p>Оценка шансов – бесплатно. Консультация – от 50 €, кейс с нуля – 850 €, сопровождение на полгода – от 990 €.</p><a href="voprosy.html#q1">Все цены →</a></div>
-      <div class="q q--beige q--tall m-card" data-reveal><h3>Зачем платить, если есть бесплатный адвокат?</h3><p>Бесплатный адвокат и CEAR помогают уже после подачи, и времени у них немного. Мы работаем до нее: готовим кейс, доказательства и маршрут, на русском. Кейс, который вы привезете с собой, – ваша главная опора.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
+      <div class="q q--beige m-card" data-acc data-reveal><h3>Какие гарантии?</h3><p>Одобрение не может гарантировать никто – решает министерство. Мы гарантируем свою работу: все, что входит в услугу, будет сделано.</p><a href="voprosy.html#q4">Подробнее →</a></div>
+      <div class="q q--short m-card" data-acc data-reveal><h3>Кто увидит мою историю?</h3><p>Только команда, которая работает с кейсом: менеджер, координатор, журналист и юрист. Кейс подается властям Испании, когда решите вы.</p></div>
     </div>
     <div class="faq__col">
-      <div class="q q--pink m-card" data-reveal><h3>Я не активист – мне подойдет?</h3><p>Да. Запросить защиту может любой, кого не защищает собственное государство – например, из-за ориентации или гендерной идентичности.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
-      <div class="q q--br m-card" data-reveal><h3>Боюсь интервью в полиции</h3><p>К нему можно подготовиться. Будет бесплатный переводчик, можно говорить на русском. С юристом разберем типичные вопросы.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
+      <div class="q q--pink m-card" data-acc data-reveal><h3>Я не активист – мне подойдет?</h3><p>Да. Запросить защиту может любой, кого не защищает собственное государство – например, из-за ориентации или гендерной идентичности.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
     </div>
   </div>
 </section>
@@ -319,7 +338,7 @@
     <div class="apply__left">
       <h2>¿Empezamos?</h2>
       <p>Расскажите, где вы сейчас и что вас интересует. На бесплатной оценке шансов честно скажем, подходит ли вам защита и с чего начать.</p>
-      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_apply_chances" target="_blank" rel="noopener">Удобнее в Telegram? Откройте бота <span>@ASILOhelperBot</span></a>
+      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_apply_chances" target="_blank" rel="noopener"><span class="tg__ava" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M21.4 4.1 2.9 11.3c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.4-1.6Zm-3.7 3.4-8.4 7.6-.3 3.3-1.5-4.7 9.8-6.2c.5-.3.8 0 .4 0Z"/></svg></span><span class="tg__txt"><small>Удобнее в Telegram?</small><b>Напишите боту @ASILOhelperBot</b></span><img class="tg__go m-arrow" src="img/arrow-red44.svg" alt="" width="40" height="40"></a>
       <div class="arch"><img src="img/rv-sasha-dog.jpg" alt=""><span class="sticker">Ответим пн–пт</span></div>
     </div>
     <form class="form" id="form" novalidate>
@@ -327,12 +346,12 @@
         <h3>Куда вам написать?</h3>
         <p>Оставьте контакт — менеджерка напишет с понедельника по пятницу и запишет вас на бесплатную оценку шансов.</p>
         <div class="field"><label for="f-name">Как к вам обращаться</label><input id="f-name" name="name" placeholder="Имя или псевдоним" autocomplete="off" maxlength="80" aria-describedby="err-name"><p class="field__err" id="err-name" hidden></p></div>
-        <div class="field"><span class="lbl" id="l-contact">Как с вами связаться</span>
-          <div class="contact"><div class="seg" role="group" aria-label="Способ связи"><button type="button" class="on" aria-pressed="true" data-type="telegram">Telegram</button><button type="button" aria-pressed="false" data-type="email">E-mail</button></div><input id="f-contact" name="contact" placeholder="@username или +34…" aria-labelledby="l-contact" aria-describedby="err-contact" autocomplete="off" maxlength="254"></div>
+        <div class="field"><label class="lbl" id="l-contact" for="f-contact">Ваш Telegram</label>
+          <div class="contact"><input id="f-contact" name="contact" placeholder="@username или телефон +34…" aria-labelledby="l-contact" aria-describedby="err-contact" autocomplete="off" maxlength="254"></div>
           <input type="hidden" name="contact_type" value="telegram">
           <p class="field__err" id="err-contact" hidden></p></div>
         <div class="field"><span class="lbl" id="l-interest">Что вас интересует</span>
-          <div class="chips" data-single role="group" aria-labelledby="l-interest"><button type="button" class="on" aria-pressed="true">Оценка шансов</button><button type="button" aria-pressed="false">Работа с кейсом</button><button type="button" aria-pressed="false">Сопровождение</button><button type="button" aria-pressed="false">Пока не знаю</button></div></div>
+          <div class="chips" data-single role="group" aria-labelledby="l-interest"><button type="button" class="on" aria-pressed="true">Оценка шансов</button><button type="button" aria-pressed="false">Консультация</button><button type="button" aria-pressed="false">Работа с кейсом</button><button type="button" aria-pressed="false">Сопровождение</button></div></div>
         <div class="field"><label class="lbl" for="f-about">Коротко о ситуации <small>необязательно</small></label>
           <textarea id="f-about" name="about" maxlength="2000" aria-describedby="err-about" placeholder="Где вы сейчас и когда планируете переезд. Без подробностей истории и документов — их обсудим лично."></textarea><p class="field__err" id="err-about" hidden></p></div>
         <div class="hp" aria-hidden="true"><label for="f-website">Не заполняйте это поле</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
@@ -346,7 +365,7 @@
         <button class="submit m-btn" type="submit">Отправить заявку</button>
         <p class="form__note">Общение с нами не нарушает законы РФ. Мы не передаём данные третьим лицам.</p>
       </div>
-      <div class="form__ok" role="status" tabindex="-1"><b>Спасибо, заявка у нас!</b><p class="form__code" hidden>Номер заявки: <span></span></p><p class="form__next">Менеджерка напишет вам в рабочий день. Если за два рабочих дня никто не ответил — напишите нам в <a href="https://t.me/ASILOhelperBot?start=site_formok" target="_blank" rel="noopener">@ASILOhelperBot</a> и назовите номер заявки.</p></div>
+      <div class="form__ok" role="status" tabindex="-1"><b>Спасибо, заявка у нас!</b><p class="form__code" hidden>Номер заявки: <span></span></p><p class="form__next">Менеджерка напишет вам в Telegram в рабочий день. Если за два рабочих дня никто не ответил — напишите нам в <a href="https://t.me/ASILOhelperBot?start=site_formok" target="_blank" rel="noopener">@ASILOhelperBot</a> и назовите номер заявки.</p></div>
     </form>
   </div>
 </section>
@@ -366,7 +385,6 @@
   </div>
 </footer>
 
-<div class="test-banner">Тестовая версия · не индексируется</div>
 
 <script src="motion.js"></script>
 <script src="form.js?v=1"></script>
@@ -377,6 +395,18 @@
   // карточки услуг: переворот по нажатию (телефон) и с клавиатуры
   document.querySelectorAll('.flip').forEach(f => { f.addEventListener('click', e => { if (e.target.closest('.flip__btn')) return; if (!matchMedia('(hover: hover)').matches) f.classList.toggle('is-flipped'); }); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f.classList.toggle('is-flipped'); } }); });
   if (!matchMedia('(hover: hover)').matches) document.querySelector('.flip-hint').textContent = 'Нажмите на карточку — узнаете, что входит';
+  // отзывы: фото переворачивается и показывает текст (нажатие или Enter)
+  document.querySelectorAll('.rv--flip').forEach(c => { c.addEventListener('click', () => c.classList.toggle('is-flipped')); c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.classList.toggle('is-flipped'); } }); });
+  // телефон: карточки «Мы справимся» и вопросы раскрываются по нажатию, как FAQ
+  const narrow = matchMedia('(max-width: 600px)');
+  document.querySelectorAll('[data-acc]').forEach(card => {
+    const head = card.querySelector('.tile__head, h3');
+    const sync = () => { if (narrow.matches) { head.setAttribute('role', 'button'); head.tabIndex = 0; head.setAttribute('aria-expanded', card.classList.contains('is-open')); } else { head.removeAttribute('role'); head.removeAttribute('tabindex'); head.removeAttribute('aria-expanded'); } };
+    const toggle = () => { if (!narrow.matches) return; card.classList.toggle('is-open'); sync(); };
+    head.addEventListener('click', toggle);
+    head.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    sync(); narrow.addEventListener('change', sync);
+  });
 </script>
 </body>
 </html>
