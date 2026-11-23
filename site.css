@@ -888,3 +888,50 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   /* точки под отзывами только изображали листание – убираем */
   .reviews__foot .dots { display: none; }
 }
+
+/* ===== Компьютер, правки Саши 23.11 (вечер). Телефон (до 600 px) не меняется ===== */
+/* 2 · кнопка карточки услуги переворачивается вместе с карточкой: копии кнопки лежат на лицевой и обратной стороне */
+.flip__btn--face { display: none; }
+@media (min-width: 601px) {
+  .flip__btn--m { display: none !important; }
+  .flip__btn--face { display: flex; z-index: 2; translate: none !important; }
+  /* «Не знаете, что выбрать?» — текст, под ним белая кнопка по центру */
+  .help__more { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .help .help__more-btn { display: inline-flex; align-items: center; height: 52px; padding: 0 28px; border-radius: 999px; background: #fff; color: var(--ink);
+    font-weight: 500; font-size: 15px; box-shadow: 0 12px 32px -8px rgba(0,0,0,.25); transition: transform .3s var(--m-ease, ease), box-shadow .3s var(--m-ease, ease); }
+  .help .help__more-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -8px rgba(0,0,0,.32); }
+  .help__arr { display: none; }
+  .help__more > span { color: var(--gray-h2); font-size: 16px; }
+  /* шапка уезжает при прокрутке вниз и возвращается при прокрутке вверх */
+  .m-header--stay.is-hidden { transform: translateY(calc(-100% - 16px)); opacity: 0; pointer-events: none; }
+}
+@media (min-width: 1101px) {
+  /* 3 · «Мы справимся» + «Оценим шансы» — в один экран 1440×800 */
+  .who { padding: 24px 0 16px; }
+  .who .sh h2 span { display: inline; }
+  .who .sh h2 span::before { content: ' '; }
+  .who .sh h2 { font-size: 40px; white-space: nowrap; }
+  .who .sh p { margin-top: 12px; max-width: 1000px; font-size: 15px; }
+  .tiles3 { margin-top: 26px; gap: 14px; }
+  .tile { padding: 16px 18px 18px; min-height: 0; }
+  .who .mini { height: 104px; }
+  .who .mini .basis { zoom: .62; top: 10px; }
+  .who .mini .chron { zoom: .78; top: 14px; }
+  .tile__head { margin-top: 12px; height: 40px; }
+  .tile__head h3 { font-size: 22px; }
+  .tile > p { margin-top: 8px; line-height: 1.5; }
+  .dark { margin-top: 14px; min-height: 0; height: 310px; }
+  .dark__art { zoom: .76; }
+  .dark__text { padding: 26px 40px 0 65px; }
+  .dark h3 { margin-top: 10px; font-size: 34px; }
+  .dark__text > p { margin-top: 10px; }
+  .facts { margin-top: 14px; }
+  .dark__bottom { height: 84px; }
+  /* 5–7 · отзывы → бесплатные материалы → база знаний: меньше пустоты между блоками */
+  .reviews { padding: 72px 0 40px; }
+  .free { padding: 130px 0 100px; }
+  /* фон картинкой: сплошной бордовый в ней с 22 % до 75 % высоты, его ставим от заголовка до низа карточек */
+  .bg-free { top: -252px; height: 1608px; }
+  .kb { padding-top: 64px; }
+  .free__note { top: 906px; } .free__arrow { top: 950px; }
+}
