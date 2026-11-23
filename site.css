@@ -857,3 +857,29 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .trust__col h3 { font-size: 24px; }
   .chips button { padding: 8px 9px; font-size: 11.5px; }
 }
+
+/* ===== Без «ИИ-глянца» на телефоне, 23.11.2026 (только до 600 px; компьютер не трогаем) =====
+   Плоские цвета вместо диагональных градиентов с внутренними бликами, без цветных свечений под кнопками,
+   без декоративных элементов, которые ничего не значат, заголовки карточек услуг – целыми словами */
+.up { text-transform: uppercase; }
+@media (max-width: 600px) {
+  .up { text-transform: none; }
+  /* карточки услуг: «Консультации» целым словом, а не «КОН / СУЛЬ / ТАЦИИ» */
+  .ft { font-size: 24px !important; line-height: 1.02; letter-spacing: -.03em; max-width: 62%; }
+  .ft br { display: none; }
+  /* плитки «Мы сами прошли этот путь»: плоский цвет, обычная тень */
+  .b, .b--red, .b--crew, .b--trust { box-shadow: 0 10px 24px -16px rgba(26,28,38,.35); }
+  .b--red { background: var(--accent); border-color: transparent; }
+  .b--red .dot { display: none; } .b--red p { padding-right: 0; }
+  .b--crew { background: #1E2C52; border-color: transparent; }
+  .crew__faces i, .crew__faces i:nth-child(n) { background: #E9ECF5; border-color: #1E2C52; }
+  .crew__faces i.more { background: #34477A; color: #fff; }
+  .b--trust { background: #F8E9EC; border-color: transparent; }
+  /* без свечений под кнопками и карточками */
+  .btn--pill.btn--accent, .btn--red-s { box-shadow: none; }
+  .tg { box-shadow: none; }
+  .kb__box--v2 .fl--inside { box-shadow: none; border: 1px solid #ECE7E3; }
+  .rv__tap { box-shadow: none; }
+  /* точки под отзывами только изображали листание – убираем */
+  .reviews__foot .dots { display: none; }
+}
