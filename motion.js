@@ -35,11 +35,15 @@
   // 8. Шапка прячется при прокрутке вниз и возвращается при прокрутке вверх.
   const header = document.querySelector('.m-header');
   if (header && !reduce) {
-    let last = scrollY;
+    // Саша 23.11: не прятать сразу. Шапка держится, пока не пролистали вниз
+    // примерно полтора экрана подряд, и возвращается после ~80 px прокрутки вверх.
+    let last = scrollY, down = 0, up = 0;
     addEventListener('scroll', () => {
-      const y = scrollY;
-      header.classList.toggle('is-hidden', y > last && y > 120);
+      const y = scrollY, d = y - last;
       last = y;
+      if (y < 120) { down = up = 0; header.classList.remove('is-hidden'); return; }
+      if (d > 0) { down += d; up = 0; if (down > innerHeight * 1.5) header.classList.add('is-hidden'); }
+      else if (d < 0) { up -= d; down = 0; if (up > 80) header.classList.remove('is-hidden'); }
     }, { passive: true });
   }
 
