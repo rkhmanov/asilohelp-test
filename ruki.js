@@ -1,4 +1,4 @@
-/* Руки на первом экране glavnaya-ruki.html.
+/* Руки на первом экране главной (index.html, шире 480 px) и glavnaya-ruki.html (и на телефоне).
    Две руки из «Сотворения Адама» (img/ruki-left.png, img/ruki-right.png — яркость + маска, см. source/ruki.py)
    рисуются полутоном: точка тем крупнее, чем темнее место, плюс пунктирный контур.
    Руки въезжают с краев и собираются из точек, потом медленно тянутся друг к другу;
@@ -197,13 +197,25 @@
   function onResize() {
     clearTimeout(rt);
     rt = setTimeout(function () {
-      if (band.clientWidth === lastW) return;
+      if (!band.clientWidth || band.clientWidth === lastW) return;
       lastW = band.clientWidth;
       if (layout()) { if (window.rukiBg) window.rukiBg(); kick(); }
     }, 120);
   }
 
-  Promise.all([load(SRC.left), load(SRC.right)]).then(function () {
+  // на телефоне (до 480 px) на главной рук нет: картинки не грузим, пока полоса скрыта
+  var started = false;
+  function shown() { return getComputedStyle(band).display !== 'none'; }
+  function tryStart() {
+    if (started || !shown()) return;
+    started = true;
+    removeEventListener('resize', tryStart);
+    init();
+  }
+  addEventListener('resize', tryStart);
+  tryStart();
+
+  function init() { Promise.all([load(SRC.left), load(SRC.right)]).then(function () {
     hands.left = SRC.left; hands.right = SRC.right;
     if (!layout()) return;
     lastW = band.clientWidth;
@@ -222,5 +234,5 @@
     document.addEventListener('visibilitychange', function () { if (!document.hidden) kick(); });
     var onMq = function () { reduce = mq.matches; start = 0; kick(); };
     if (mq.addEventListener) mq.addEventListener('change', onMq);
-  }).catch(function () { band.style.display = 'none'; });
+  }).catch(function () { band.style.display = 'none'; }); }
 })();
