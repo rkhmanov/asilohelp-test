@@ -33,7 +33,7 @@
    Вместо кружков с лицами – стикеры; размер заголовка – как в Figma 4719:2 (27 px). touch-action: pan-y – страницу можно листать пальцем по заголовку. */
 .sk-mbr { display: none; }
 @media (max-width: 480px) {
-  .hero h1[data-sk] { --st-k: 2.8; --st: calc(var(--st-k) * 1em); font-size: 27px; line-height: 30.24px; letter-spacing: -.03em; gap: 6px;
+  .hero h1[data-sk] { --st-k: 2.8; --st: calc(var(--st-k) * 1em); font-size: 33px; line-height: 1.14; letter-spacing: -.03em; gap: 4px;
                       user-select: none; -webkit-user-select: none; touch-action: pan-y; cursor: default; }
   .hero h1[data-sk] .faces { display: none; }
   .hero h1[data-sk] .hero__row { gap: 0 10px; }

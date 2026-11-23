@@ -19,28 +19,29 @@
   // Вариант hero-sticker-emoji.html (<h1 data-emoji>): вместо картинок системные эмодзи –
   // на iPhone и Mac это эмодзи Apple, на Android – Google, на Windows – Microsoft. Картинок не грузим.
   // Чего нет в Fluent Emoji (пары, флаг Испании), есть только в варианте с эмодзи (картинка null).
+  // Люди в эмодзи – со светлыми тонами кожи, блондины и брюнеты, не только желтые (Саша, 23.11.2026).
   var ALL = [
     ['rainbow-flag', '🏳️‍🌈'],
     ['identification-card', '🪪'],
     ['luggage', '🧳'],
     ['airplane', '✈️'],
-    [null, '👬'],
+    [null, '👬🏻'],
     ['globe', '🌍'],
     ['transgender-flag', '🏳️‍⚧️'],
-    [null, '👭'],
+    [null, '👭🏼'],
     ['backpack', '🎒'],
-    ['people-hugging', '🫂'],
+    ['people-hugging', '👩🏻'],
     [null, '🇪🇸'],
     ['airplane-departure', '🛫'],
-    [null, '👨‍❤️‍👨'],
+    [null, '👨🏻‍❤️‍👨🏼'],
     ['compass', '🧭'],
-    ['man', '🧑'],
+    ['man', '👱🏼‍♂️'],
     ['palm-tree', '🌴'],
-    [null, '👩‍❤️‍👩'],
+    [null, '👩🏼‍❤️‍👩🏻'],
     ['world-map', '🗺️'],
-    ['woman', '👩'],
+    ['woman', '👱🏻‍♀️'],
     ['camera', '📸'],
-    [null, '🧑‍🤝‍🧑'],
+    [null, '🧑🏻‍🤝‍🧑🏽'],
     ['beach-with-umbrella', '🏖️'],
     ['key', '🔑'],
     ['desert-island', '🏝️'],
@@ -201,13 +202,14 @@
       })(t0);
     })();
   }
-  // Пока страницу не трогают, волна повторяется: пауза 3 с после конца прохода
+  // Пока страницу не трогают, волна повторяется раз в 15 с (Саша, 23.11.2026: не прыгать без конца)
+  var IDLE = 15000;
   function idleLoop() {
     if (reduce) return;
     setTimeout(function () {
       if (!document.hidden && !off() && Date.now() - lastUser > 4000 && !busy) { busy = true; sweep(function () { busy = false; }); }
       idleLoop();
-    }, 3000);
+    }, IDLE);
   }
 
   // --- Появление (как в оригинале после кольца-загрузки, само кольцо не берем) -----------------------
@@ -269,13 +271,8 @@
   function start() {
     measure();
     if (reduce) { document.documentElement.classList.remove('sk-wait'); return; }
-    // Появление, потом волна по строкам, которая повторяется, пока страницу не трогают
-    entrance(function () {
-      setTimeout(function () {
-        if (!off() && Date.now() - lastUser > 1000 && !busy) { busy = true; sweep(function () { busy = false; }); }
-        idleLoop();
-      }, 700);
-    });
+    // Появление один раз, потом тишина; волна по строкам – раз в 15 с, пока страницу не трогают
+    entrance(function () { idleLoop(); });
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else addEventListener('load', start);
 })();

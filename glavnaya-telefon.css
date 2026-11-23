@@ -5,12 +5,14 @@
   .hm { display: none; }
 
   /* 1 · первый экран: одна кнопка, подписи под цифрами короче */
-  .hero { padding-bottom: 60px; }
+  /* Саша 23.11 вечером: воздух под шапкой, кнопка компактнее, цифры по центру, первый экран до «Как мы помогаем» как раньше */
+  .hero { padding-top: 115px; padding-bottom: 80px; }
   .hero__kb { display: none; }
-  .hero__center { gap: 16px; }
+  .hero__center { gap: 20px; }
   .hero__lead { line-height: 20.3px; }
-  .hero__btns { margin-bottom: 0; }
-  .hero__nums { gap: 16px; } .hero__nums div { width: 101px; flex: none; }
+  .hero__btns { margin: 4px 0 6px; width: auto; }
+  .hero__btns .btn { width: auto; height: 48px; padding: 0 34px; font-size: 15px; }
+  .hero__nums { gap: 16px; justify-content: center; } .hero__nums div { width: 101px; flex: none; }
   .hero__nums span { line-height: 14.85px; }
 
   /* 2 · «Как мы помогаем»: названия услуг крупно по слогам, слева сверху */
