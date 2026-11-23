@@ -1,0 +1,40 @@
+/* Проба «буквы-стикеры» (идея – motionsites.ai, «Sticker Type»). Только эта страница, главная не тронута.
+   Размеры – в координатах макета: телефон 390 и компьютер 1440, остальное масштабирует --z, как на главной. */
+.sk { position: relative; min-height: calc(100svh / var(--z, 1)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; padding: 120px 16px 90px; overflow: hidden; background: #F3F2EF; }
+.sk-h { font-weight: 500; font-size: 84px; line-height: 1.12; letter-spacing: -.03em; color: var(--ink-2); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px;
+        user-select: none; -webkit-user-select: none; touch-action: none; cursor: default; }
+.sk-line { white-space: nowrap; }
+.sk-w { display: inline-block; white-space: nowrap; }
+.sk-c { position: relative; display: inline-block; }
+.sk-t { display: inline-block; transform-origin: 50% 60%; }
+.sk-c img { position: absolute; left: 50%; top: 50%; width: 1.7em; height: 1.7em; max-width: none; margin: -.85em 0 0 -.85em; transform: scale(0); pointer-events: none;
+            filter: drop-shadow(0 .06em .08em rgba(34,34,34,.22)); will-change: transform; }
+.sk-c:not(.is-on) img, .sk-c:not(.is-on) .sk-e { visibility: hidden; }
+/* вариант с системными эмодзи (hero-sticker-emoji.html): размер как у картинки 1.7em */
+.sk-e { font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; font-weight: 400; letter-spacing: 0; color: #000; text-align: center; }
+.sk-c .sk-e { position: absolute; left: 50%; top: 50%; font-size: 1.4em; width: 1.2143em; height: 1.2143em; line-height: 1.2143em; margin: -.607em 0 0 -.607em; transform: scale(0); pointer-events: none;
+              filter: drop-shadow(0 .05em .06em rgba(34,34,34,.22)); will-change: transform; }
+.sk-e.sk-ring { display: flex; align-items: center; justify-content: center; line-height: 1; }
+.sk .mark { padding: 0 .22em .06em; border-radius: .4em; margin-left: .08em; }
+.sk-hint { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--sub); }
+.sk-hint .t { display: none; } .sk-hint .d { display: inline; }
+@media (hover: none) { .sk-hint .t { display: inline; } .sk-hint .d { display: none; } }
+.sk-replay { position: absolute; right: 24px; bottom: 24px; border: 1px solid #DADADF; background: #fff; border-radius: 999px; padding: 10px 18px; font-size: 13px; cursor: pointer; }
+.sk-replay:hover { border-color: var(--ink-2); }
+/* слой над страницей: кольцо заставки и подпись под стикером (без zoom, в пикселях экрана) */
+.sk-fx { position: fixed; inset: 0; pointer-events: none; z-index: 40; overflow: hidden; }
+.sk-ring { position: absolute; left: 0; top: 0; filter: drop-shadow(0 6px 8px rgba(34,34,34,.2)); will-change: transform; transform: scale(0); }
+.sk-cap { position: absolute; left: 0; top: 0; background: var(--ink-2); color: #fff; font-family: 'Unbounded', system-ui, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
+          padding: 7px 12px 8px; border-radius: 8px; white-space: nowrap; opacity: 0; transition: opacity .18s; }
+.sk-cap.is-on { opacity: 1; }
+.sk-br { display: none; }
+@media (max-width: 1100px) { .sk-h { font-size: 5.8vw; } }
+@media (max-width: 760px) { .sk-h { font-size: 7.4vw; } .sk-br { display: inline; } }
+@media (max-width: 480px) {
+  .sk { gap: 22px; padding: 96px 12px 110px; }
+  .sk-h { font-size: 35px; line-height: 1.16; gap: 2px; }
+  .sk-hint { font-size: 11px; }
+  .sk-replay { right: 50%; transform: translateX(50%); bottom: 96px; padding: 8px 14px; font-size: 12px; }
+  .sk-cap { font-size: 11px; padding: 6px 10px 7px; }
+}
+@media (prefers-reduced-motion: reduce) { .sk-replay { display: none; } .sk-cap { transition: none; } }
