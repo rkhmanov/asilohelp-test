@@ -667,11 +667,13 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   background: linear-gradient(135deg, #F7E9EB, #E7B3BC); }
 .crew__faces i:nth-child(2) { background: linear-gradient(135deg, #E5F0FA, #B9CCEA); } .crew__faces i:nth-child(3) { background: linear-gradient(135deg, #F3F2EF, #D9D3C5); }
 .crew__faces i:nth-child(4) { background: linear-gradient(135deg, #FCEDE5, #F0C2A9); }
+.crew__faces i:nth-child(5) { background: linear-gradient(135deg, #FDEBEF, #F2BFCB); }
 .crew__faces i.more { background: rgba(255,255,255,.12); color: #fff; font-size: 15px; }
 .b--crew > p { font-size: 14px; line-height: 1.6; color: #C6CEE6; max-width: 460px; }
 .crew__roles { list-style: none; }
 .crew__roles li { display: grid; grid-template-columns: 96px 1fr; gap: 12px; border-top: 1px solid rgba(255,255,255,.12); padding: 10px 0; font-size: 12px; line-height: 1.45; color: #AEB6CE; }
 .crew__roles b { font-weight: 600; font-size: 13px; color: #fff; }
+.b--crew > .crew__anon { font-size: 12px; line-height: 1.6; color: #AEB6CE; margin-top: -6px; }
 .crew__more { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 12px; padding: 6px 6px 6px 18px; border-radius: 999px; background: rgba(255,255,255,.1); font-weight: 500; font-size: 14px; transition: background .3s; }
 .b--crew:hover .crew__more { background: var(--accent); }
 /* 14 · «Официально» и «Конфиденциально» — одна плитка */
@@ -693,9 +695,9 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 .rv--flip.is-flipped .rv__in { transform: rotateY(180deg); }
 .rv--flip.is-flipped .rv__b { visibility: visible; } .rv--flip.is-flipped .rv__f { visibility: hidden; }
 @media (hover: hover) {
-  .rv--flip:hover .rv__in, .rv--flip:focus-visible .rv__in { transform: rotateY(180deg); }
-  .rv--flip:hover .rv__b, .rv--flip:focus-visible .rv__b { visibility: visible; }
-  .rv--flip:hover .rv__f, .rv--flip:focus-visible .rv__f { visibility: hidden; }
+  .reel:not(.reel--tap) .rv--flip:hover .rv__in, .reel:not(.reel--tap) .rv--flip:focus-visible .rv__in { transform: rotateY(180deg); }
+  .reel:not(.reel--tap) .rv--flip:hover .rv__b, .reel:not(.reel--tap) .rv--flip:focus-visible .rv__b { visibility: visible; }
+  .reel:not(.reel--tap) .rv--flip:hover .rv__f, .reel:not(.reel--tap) .rv--flip:focus-visible .rv__f { visibility: hidden; }
 }
 .rv--flip:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 22px; }
 .rv--a .rv__f, .rv--a .rv__b { border-top-left-radius: 108px; }
@@ -706,6 +708,17 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 .rv__tap { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,.92); color: var(--accent); border-radius: 999px; padding: 6px 11px; font-weight: 600; font-size: 11px; white-space: nowrap; box-shadow: 0 6px 14px -6px rgba(23,23,23,.3); }
 .rv--c .rv__tap { top: 26px; }
 @media (prefers-reduced-motion: reduce) { .rv__in { transition: none; } }
+/* 15а · лента отзывов на главной (otzyvy-lenta.js, Саша 23.11.2026): едет сама, тянется, карточки переворачиваются по нажатию и покачиваются */
+.reel--tap { -webkit-user-select: none; user-select: none; cursor: grab; }
+.reel--tap.is-loop { scroll-snap-type: none; }
+.reel--tap.is-drag { cursor: grabbing; }
+.reel--tap.is-drag .rv--flip { cursor: grabbing; }
+.reel--tap img { -webkit-user-drag: none; pointer-events: none; }
+.reel--tap .rv--flip:nth-child(3n+1) { --nd: -1.2s; } .reel--tap .rv--flip:nth-child(3n+2) { --nd: -3.4s; } .reel--tap .rv--flip:nth-child(3n) { --nd: -5.1s; }
+@keyframes rv-nudge { 0%, 76%, 100% { rotate: y 0deg; } 81% { rotate: y -20deg; } 86% { rotate: y 12deg; } 90% { rotate: y -6deg; } 94% { rotate: y 2deg; } }
+@media (prefers-reduced-motion: no-preference) {
+  .reel--tap .rv--flip:not(.is-flipped):not(.is-touched) .rv__in { animation: rv-nudge 6.5s ease-in-out var(--nd, 0s) infinite; }
+}
 /* 20 · кнопка бота рядом с формой */
 .tg { display: flex; align-items: center; gap: 12px; max-width: 420px; margin-top: 28px; padding: 10px; border-radius: 20px; background: #fff; color: var(--ink); white-space: normal;
   box-shadow: 0 16px 34px -16px rgba(0,0,0,.5); transition: transform .3s var(--m-ease, ease), box-shadow .3s; }

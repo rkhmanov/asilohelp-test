@@ -44,7 +44,9 @@
   .b--red .dot { display: none; }
 
   /* 12 · «Оценим шансы»: колонки фактов как в макете */
-  .facts { gap: 20px; } .facts > div:first-child { width: 131px; }
+  .facts { gap: 12px; justify-content: space-between; }
+  /* тонкая черта по 39€ (Саша 23.11) */
+  .price s::after { height: 1.5px; border-radius: 1px; background: rgba(255,255,255,.9); left: -4px; right: -4px; }
 
   /* 5 · отзывы: ссылка «Читать все 27 отзывов» слева от стрелок, без подписи */
   .reviews__foot, .lg .reviews__foot { position: relative; margin-top: -81px; pointer-events: none; }

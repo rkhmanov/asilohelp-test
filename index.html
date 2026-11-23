@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <link rel="stylesheet" href="ruki.css?v=4">
 <link rel="stylesheet" href="hero-sticker.css?v=7">
-<link rel="stylesheet" href="glavnaya-telefon.css?v=1">
+<link rel="stylesheet" href="glavnaya-telefon.css?v=2">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=9"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot');if(innerWidth<=480&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('sk-wait');setTimeout(function(){document.documentElement.classList.remove('sk-wait')},4000)}</script>
@@ -160,15 +160,17 @@
         <span class="dot" aria-hidden="true"></span>
       </div>
       <a class="b b--crew" href="o-nas.html" data-reveal>
-        <div class="crew__top"><h3>Команда</h3><span class="crew__n"><b>8</b> человек</span></div>
-        <div class="crew__faces" aria-hidden="true"><i>С</i><i>Л</i><i>И</i><i>А</i><i class="more">+4</i></div>
-        <p>У каждого своя часть работы над вашим кейсом.</p>
+        <div class="crew__top"><h3>Команда</h3><span class="crew__n"><b>11</b> человек</span></div>
+        <div class="crew__faces" aria-hidden="true"><i>С</i><i>Л</i><i>И</i><i>А</i><i>А</i><i class="more">+6</i></div>
+        <p>У каждого своя часть работы во время сопровождения.</p>
         <ul class="crew__roles">
           <li><b>Саша</b><span>основатель, сам получил защиту</span></li>
           <li><b>Леся</b><span>консультантка, оценка шансов и договор</span></li>
           <li><b>Илья</b><span>журналист, текст кейса и доказательства</span></li>
           <li><b>Александр</b><span>юрист, проверка кейса и подготовка к интервью</span></li>
+          <li><b>Алина</b><span>помогает получить шенгенскую визу</span></li>
         </ul>
+        <p class="crew__anon">И еще 6 анонимных участников: работают с нами в команде или волонтерят.</p>
         <span class="crew__more">Подробнее о нас <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="40" height="40"></span>
       </a>
     </div>
@@ -193,45 +195,45 @@
     <div class="sh sh--sm" data-reveal><h2>Истории тех, кто уже в Испании<span>что они пишут о работе с нами</span></h2></div>
     <div class="reviews__nav"><button type="button" data-dir="-1" aria-label="Назад"><img src="img/btn-prev.svg" alt="" width="52" height="52"></button><button type="button" data-dir="1" aria-label="Вперёд"><img src="img/btn-next.svg" alt="" width="52" height="52"></button></div>
   </div>
-  <div class="reel" id="reel">
-    <figure class="rv rv--flip rv--a" tabindex="0" aria-label="Отзыв: Anna, Консультация. Нажмите, чтобы прочитать">
+  <div class="reel reel--tap" id="reel">
+    <figure class="rv rv--flip rv--a" tabindex="0" aria-label="Отзыв: Anna, Консультация. Нажмите, чтобы перевернуть">
       <div class="rv__in">
-        <div class="rv__f"><img src="img/rv-sasha-dog.jpg" alt="" loading="lazy"><span class="sticker" style="--r:2deg">Консультация</span><span class="rv__tap">Читать отзыв</span></div>
+        <div class="rv__f"><img src="img/rv-sasha-dog.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:2deg">Консультация</span></div>
         <div class="rv__b rv--q rv--q-r"><blockquote>Мы с девушкой были на жутком стрессе из-за переезда. Саша нас успокоил, поддержал и ответил на все-все вопросы</blockquote><figcaption><b>Anna</b><span class="sticker" style="--r:2deg">Консультация</span></figcaption></div>
       </div>
     </figure>
-    <figure class="rv rv--flip rv--b" tabindex="0" aria-label="Отзыв: Alexey, Сопровождение. Нажмите, чтобы прочитать">
+    <figure class="rv rv--flip rv--b is-flipped" data-auto tabindex="0" aria-label="Отзыв: Alexey, Сопровождение. Нажмите, чтобы перевернуть">
       <div class="rv__in">
-        <div class="rv__f"><img src="img/help-case.jpg" alt="" loading="lazy"><span class="sticker" style="--r:-2deg">Сопровождение</span><span class="rv__tap">Читать отзыв</span></div>
-        <div class="rv__b rv--q rv--q-dark"><blockquote>Удалось при наличии шенгена сдаться в аэропорту, пройти интервью в полиции и получить красную карту через неделю в Испании</blockquote><figcaption><b>Alexey</b><span class="sticker" style="--r:-2deg">Сопровождение</span></figcaption></div>
+        <div class="rv__f"><img src="img/help-case.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:-2deg">Сопровождение</span></div>
+        <div class="rv__b rv--q"><blockquote>Удалось при наличии шенгена сдаться в аэропорту, пройти интервью в полиции и получить красную карту через неделю в Испании</blockquote><figcaption><b>Alexey</b><span class="sticker" style="--r:-2deg">Сопровождение</span></figcaption></div>
       </div>
     </figure>
-    <figure class="rv rv--flip rv--c" tabindex="0" aria-label="Отзыв: Ross, Работа с кейсом. Нажмите, чтобы прочитать">
+    <figure class="rv rv--flip rv--c" tabindex="0" aria-label="Отзыв: Ross, Работа с кейсом. Нажмите, чтобы перевернуть">
       <div class="rv__in">
-        <div class="rv__f"><img src="img/help-sopr.jpg" alt="" loading="lazy"><span class="sticker" style="--r:3deg">Работа с кейсом</span><span class="rv__tap">Читать отзыв</span></div>
-        <div class="rv__b rv--q"><blockquote>Советы помогли внести правки в кейс. Я подался на убежище неделю назад и теперь нахожусь в стране легально</blockquote><figcaption><b>Ross</b><span class="sticker" style="--r:3deg">Работа с кейсом</span></figcaption></div>
-      </div>
-    </figure>
-    <figure class="rv rv--flip rv--d" tabindex="0" aria-label="Отзыв: Angelina, Виза. Нажмите, чтобы прочитать">
-      <div class="rv__in">
-        <div class="rv__f"><img src="img/rv-friends.jpg" alt="" loading="lazy"><span class="sticker" style="--r:-2deg">Виза</span><span class="rv__tap">Читать отзыв</span></div>
-        <div class="rv__b rv--q rv--q-r"><blockquote>Визу получала впервые и очень боялась напортачить. Ребята были на связи постоянно и даже помогли поймать слот в моем регионе</blockquote><figcaption><b>Angelina</b><span class="sticker" style="--r:-2deg">Виза</span></figcaption></div>
-      </div>
-    </figure>
-    <figure class="rv rv--flip rv--e" tabindex="0" aria-label="Отзыв: Валентин, Работа с кейсом. Нажмите, чтобы прочитать">
-      <div class="rv__in">
-        <div class="rv__f"><img src="img/rv-gothic.jpg" alt="" loading="lazy"><span class="sticker" style="--r:2deg">Работа с кейсом</span><span class="rv__tap">Читать отзыв</span></div>
-        <div class="rv__b rv--q rv--q-dark"><blockquote>До крайнего срока оставался ровно месяц. За этот месяц мы собрали все нужные документы и доказательства</blockquote><figcaption><b>Валентин</b><span class="sticker" style="--r:2deg">Работа с кейсом</span></figcaption></div>
-      </div>
-    </figure>
-    <figure class="rv rv--flip rv--b" tabindex="0" aria-label="Отзыв: Макс, Консультация. Нажмите, чтобы прочитать">
-      <div class="rv__in">
-        <div class="rv__f"><img src="img/rv-oldtown.jpg" alt="" loading="lazy"><span class="sticker" style="--r:-2deg">Консультация</span><span class="rv__tap">Читать отзыв</span></div>
-        <div class="rv__b rv--q"><blockquote>Многие страхи ушли после диалога. Как будто поговорил с другом, который просто делится полезной информацией</blockquote><figcaption><b>Макс</b><span class="sticker" style="--r:-2deg">Консультация</span></figcaption></div>
+        <div class="rv__f"><img src="img/help-sopr.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:3deg">Работа с кейсом</span></div>
+        <div class="rv__b rv--q rv--q-dark"><blockquote>Советы помогли внести правки в кейс. Я подался на убежище неделю назад и теперь нахожусь в стране легально</blockquote><figcaption><b>Ross</b><span class="sticker" style="--r:3deg">Работа с кейсом</span></figcaption></div>
       </div>
     </figure>
     <div class="rv rv--you"><span>Здесь может<br>быть ваше фото</span><span class="sticker" style="--r:3deg">Вы?</span></div>
-    <a class="rv rv--more" href="otzyvy.html"><b>27</b>отзывов целиком →</a>
+    <figure class="rv rv--flip rv--d" tabindex="0" aria-label="Отзыв: Angelina, Виза. Нажмите, чтобы перевернуть">
+      <div class="rv__in">
+        <div class="rv__f"><img src="img/rv-friends.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:-2deg">Виза</span></div>
+        <div class="rv__b rv--q rv--q-r"><blockquote>Визу получала впервые и очень боялась напортачить. Ребята были на связи постоянно и даже помогли поймать слот в моем регионе</blockquote><figcaption><b>Angelina</b><span class="sticker" style="--r:-2deg">Виза</span></figcaption></div>
+      </div>
+    </figure>
+    <figure class="rv rv--flip rv--e is-flipped" data-auto tabindex="0" aria-label="Отзыв: Валентин, Работа с кейсом. Нажмите, чтобы перевернуть">
+      <div class="rv__in">
+        <div class="rv__f"><img src="img/rv-gothic.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:2deg">Работа с кейсом</span></div>
+        <div class="rv__b rv--q"><blockquote>До крайнего срока оставался ровно месяц. За этот месяц мы собрали все нужные документы и доказательства</blockquote><figcaption><b>Валентин</b><span class="sticker" style="--r:2deg">Работа с кейсом</span></figcaption></div>
+      </div>
+    </figure>
+    <figure class="rv rv--flip rv--b" tabindex="0" aria-label="Отзыв: Макс, Консультация. Нажмите, чтобы перевернуть">
+      <div class="rv__in">
+        <div class="rv__f"><img src="img/rv-oldtown.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:-2deg">Консультация</span></div>
+        <div class="rv__b rv--q rv--q-dark"><blockquote>Многие страхи ушли после диалога. Как будто поговорил с другом, который просто делится полезной информацией</blockquote><figcaption><b>Макс</b><span class="sticker" style="--r:-2deg">Консультация</span></figcaption></div>
+      </div>
+    </figure>
+    <a class="rv rv--more" href="otzyvy.html" draggable="false"><b>27</b>отзывов целиком →</a>
   </div>
   <div class="wrap reviews__foot">
     <p>Это реальные люди: отзывы пришли нам после консультаций, работы над кейсом и сопровождения.<br><a class="reviews__all" href="otzyvy.html">Читать все 27 отзывов →</a></p>
@@ -399,7 +401,6 @@
   document.querySelectorAll('.flip').forEach(f => { f.addEventListener('click', e => { if (e.target.closest('.flip__btn')) return; if (!matchMedia('(hover: hover)').matches) f.classList.toggle('is-flipped'); }); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f.classList.toggle('is-flipped'); } }); });
   if (!matchMedia('(hover: hover)').matches) document.querySelector('.flip-hint').textContent = 'Что входит – по нажатию на карточку';
   // отзывы: фото переворачивается и показывает текст (нажатие или Enter)
-  document.querySelectorAll('.rv--flip').forEach(c => { c.addEventListener('click', () => c.classList.toggle('is-flipped')); c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.classList.toggle('is-flipped'); } }); });
   // телефон: карточки «Мы справимся» и вопросы раскрываются по нажатию, как FAQ
   const narrow = matchMedia('(max-width: 600px)');
   document.querySelectorAll('[data-acc]').forEach(card => {
@@ -413,5 +414,6 @@
 </script>
 <script src="ruki.js?v=4" defer></script>
 <script src="hero-sticker.js?v=7" defer></script>
+<script src="otzyvy-lenta.js?v=1" defer></script>
 </body>
 </html>

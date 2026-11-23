@@ -14,7 +14,8 @@
     const io = new IntersectionObserver(entries => entries.forEach(e => {
       if (e.isIntersecting) { shown(e.target); io.unobserve(e.target); countUp(e.target); }
     }), { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
-    document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+    // display: contents (вопросы на телефоне) – у блока нет рамки, наблюдатель его не увидит
+    document.querySelectorAll('[data-reveal]').forEach(el => getComputedStyle(el).display === 'contents' ? shown(el) : io.observe(el));
   }
 
   // 14. Счётчик цифр (по желанию): <span data-count="187">187</span> внутри блока с data-reveal.
