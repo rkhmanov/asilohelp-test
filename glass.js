@@ -62,7 +62,7 @@ if (!off) {
 
   // 2. Шапка: «Услуги ⌄» — стеклянное выпадающее меню со ссылками на страницы услуг.
   // Ссылка в шапке: <a data-nav="services" href="…#help">. Путь к корню сайта — <html data-home="../"> (по умолчанию корень рядом).
-  const servicesLink = document.querySelector('.hdr nav a[data-nav="services"], .hdr nav a[href="#help"]');
+  const servicesLink = document.querySelector('.hdr nav a[data-nav="services"], .hdr nav a[href$="#help"]');
   if (servicesLink) {
     const home = document.documentElement.dataset.home || "";
     const open = (page) => () => { location.href = home + page; };
@@ -130,6 +130,11 @@ if (!off) {
 
   // 8. Телефон: нижнее меню-таббар, как в iOS
   // TabBar сам меняет адрес (#faq), но страницу не прокручивает — докручиваем сами.
+  // Внутренние страницы: <html data-home="../"> — путь до корня сайта; data-page — какая вкладка активна.
+  const home = document.documentElement.dataset.home ?? "";
+  const onHome = !document.documentElement.dataset.page;
+  // якорь есть на этой странице (вопросы и заявка на страницах услуг) — ведем к нему, иначе на главную
+  const anchor = (id) => (onHome || document.getElementById(id) ? "" : home + "index.html") + "#" + id;
   mount((n) => {
     n.className = "tabbar-lg";
     n.addEventListener("click", (e) => {
@@ -141,13 +146,13 @@ if (!off) {
   },
     h(TabBar, {
       "aria-label": "Разделы",
-      defaultValue: null,
+      defaultValue: document.documentElement.dataset.page || null,
       items: [
-        { value: "help", label: "Услуги", icon: icons.help, href: "#help" },
-        { value: "us", label: "О нас", icon: icons.us, href: "#us" },
-        { value: "news", label: "Статьи", icon: icons.news, href: "#news" },
-        { value: "faq", label: "Вопросы", icon: icons.faq, href: "#faq" },
-        { value: "apply", label: "Заявка", icon: icons.apply, href: "#apply" },
+        { value: "help", label: "Услуги", icon: icons.help, href: anchor("help") },
+        { value: "us", label: "О нас", icon: icons.us, href: home + "o-nas.html" },
+        { value: "news", label: "Статьи", icon: icons.news, href: home + "stati.html" },
+        { value: "faq", label: "Вопросы", icon: icons.faq, href: anchor("faq") },
+        { value: "apply", label: "Заявка", icon: icons.apply, href: anchor("apply") },
       ],
     }));
 }
