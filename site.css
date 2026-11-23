@@ -615,3 +615,16 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .lg body { padding-bottom: 96px; }
 }
 @media (prefers-reduced-transparency: reduce) { html { --lg-glass: rgb(255 255 255 / .95); } }
+
+/* ── QA телефона, 23.11.2026: узкие экраны 360–400 px ── */
+@media (max-width: 600px) {
+  /* «ПОЛУЧИТЬ ДОСТУП» на 18 px вылезала за экран на 360 px */
+  .kb__box--v2 > .btn { font-size: 15px; gap: 14px; max-width: 100%; }
+  /* красный квадрат в «Команде» налезал на заголовок */
+  .b--team .sq { width: 52px; height: 52px; right: 20px; top: 22px; border-radius: 14px; }
+  .b--team .sq i { width: 20px; height: 20px; border-radius: 6px; }
+  /* кнопки «Подписаться на канал» / «Вступить в чат» упирались в край плитки */
+  .btn--red-s { font-size: 14px; padding-left: 18px; gap: 10px; }
+  /* текст боковых плиток лежит на 3D-картинке: светлая подложка под текстом, чтобы читалось */
+  .ftile--tr::after, .ftile--br::after { background: linear-gradient(90deg, rgba(255,255,255,.78), rgba(255,255,255,.5) 65%, rgba(255,255,255,.15)); }
+}

@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="motion.css?v=17">
-<link rel="stylesheet" href="site.css?v=23">
-<script type="importmap">{"imports":{"react":"https://esm.sh/react@19.1.0","react/jsx-runtime":"https://esm.sh/react@19.1.0/jsx-runtime","react-dom/client":"https://esm.sh/react-dom@19.1.0/client?deps=react@19.1.0","glisse":"./vendor/glisse/index.js"}}</script>
+<link rel="stylesheet" href="site.css?v=24">
+<script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=8"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot')</script>
 <style>.shot *,.shot *::before{transition:none!important;animation:none!important} @media (max-width:700px){.br-d{display:none}} .scr, .fl { transform: rotate(var(--rot, 0deg)); } @media (max-width: 1100px) { .fl--inside { animation: none; } }</style>
@@ -29,7 +29,7 @@
       <a href="#faq">Вопросы</a>
     </nav>
     <div class="hdr__cta">
-      <a class="hdr__bot m-btn" href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">Telegram-бот</a>
+      <a class="hdr__bot m-btn" href="https://t.me/ASILOhelperBot?start=site_header" target="_blank" rel="noopener">Telegram-бот</a>
       <a class="hdr__main m-btn m-btn--accent" href="#apply">Оценить шансы</a>
     </div>
   </div>
@@ -256,7 +256,7 @@
         <div><b>1800+</b><span>регулярных<br>пользователей</span></div>
         <div><b data-count="37">37</b><span>гайдов<br>и чек-листов</span></div>
       </div>
-      <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">ПОЛУЧИТЬ ДОСТУП <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
+      <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_kb" target="_blank" rel="noopener">ПОЛУЧИТЬ ДОСТУП <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
       <div class="fl fl--screens m-float" style="--dur:10s;--lift:-8px" aria-hidden="true"><img src="img/kb-screens.jpg" alt=""></div>
       <div class="fl fl--timeline m-float" style="--dur:12s;--delay:-4s;--lift:-7px" aria-hidden="true"><img src="img/kb-timeline.jpg" alt=""><p>Весь путь на одной схеме · автор — Мила Юма</p></div>
       <div class="fl fl--inside m-float" style="--dur:9s;--delay:-2s;--lift:-10px" aria-hidden="true"><b>Внутри</b><span>До отъезда</span><span>Кейс</span><span>Доказательства</span><span>Интервью</span><span>Подача в Испании</span></div>
@@ -290,16 +290,16 @@
   <div class="wrap faq__grid">
     <div class="faq__col">
       <div class="faq__intro" data-reveal><h2>Остались<br>вопросы?</h2><p>Собрали то, о чём спрашивают чаще всего. Не нашли ответ — напишите нам, ответим пн–пт.</p></div>
-      <div class="q m-card" data-reveal><h3>Какие гарантии?</h3><p>Одобрение не может гарантировать никто — решает министерство. Мы гарантируем свою работу: всё из пакета будет сделано.</p><a href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">Спросить в боте →</a></div>
+      <div class="q m-card" data-reveal><h3>Какие гарантии?</h3><p>Одобрение не может гарантировать никто — решает министерство. Мы гарантируем свою работу: всё из пакета будет сделано.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
       <div class="q q--beige q--short m-card" data-reveal><h3>Кто увидит мою историю?</h3><p>Только команда, которая работает с кейсом: менеджерка, журналист и юрист. Кейс подаётся испанским властям, когда решите вы.</p></div>
     </div>
     <div class="faq__col">
-      <div class="q m-card" data-reveal><h3>Какие гарантии?</h3><p>Одобрение не может гарантировать никто — решает министерство. Мы гарантируем свою работу: всё из пакета будет сделано.</p><a href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">Спросить в боте →</a></div>
-      <div class="q q--beige q--tall m-card" data-reveal><h3>Кто увидит мою историю?</h3><p>Только команда, которая работает с кейсом: менеджерка, журналист и юрист. Кейс подаётся испанским властям, когда решите вы.</p><a href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">Спросить в боте →</a></div>
+      <div class="q m-card" data-reveal><h3>Какие гарантии?</h3><p>Одобрение не может гарантировать никто — решает министерство. Мы гарантируем свою работу: всё из пакета будет сделано.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
+      <div class="q q--beige q--tall m-card" data-reveal><h3>Кто увидит мою историю?</h3><p>Только команда, которая работает с кейсом: менеджерка, журналист и юрист. Кейс подаётся испанским властям, когда решите вы.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
     </div>
     <div class="faq__col">
-      <div class="q q--pink m-card" data-reveal><h3>Я не активист — мне подойдёт?</h3><p>Да. Запросить защиту может любой, кого не защищает собственное государство — например, из-за ориентации или гендерной идентичности.</p><a href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">Спросить в боте →</a></div>
-      <div class="q q--br m-card" data-reveal><h3>Боюсь интервью в полиции</h3><p>К нему можно подготовиться. Будет бесплатный переводчик, можно говорить на русском. С юристом разберём типичные вопросы.</p><a href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">Спросить в боте →</a></div>
+      <div class="q q--pink m-card" data-reveal><h3>Я не активист — мне подойдёт?</h3><p>Да. Запросить защиту может любой, кого не защищает собственное государство — например, из-за ориентации или гендерной идентичности.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
+      <div class="q q--br m-card" data-reveal><h3>Боюсь интервью в полиции</h3><p>К нему можно подготовиться. Будет бесплатный переводчик, можно говорить на русском. С юристом разберём типичные вопросы.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
     </div>
   </div>
 </section>
@@ -310,7 +310,7 @@
     <div class="apply__left">
       <h2>¿Empezamos?</h2>
       <p>Расскажите, где вы сейчас и что вас интересует. На бесплатной оценке шансов честно скажем, подходит ли вам защита и с чего начать.</p>
-      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">Удобнее в Telegram? Откройте бота <span>@ASILOhelperBot</span></a>
+      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_apply_chances" target="_blank" rel="noopener">Удобнее в Telegram? Откройте бота <span>@ASILOhelperBot</span></a>
       <div class="arch"><img src="img/rv-sasha-dog.jpg" alt=""><span class="sticker">Ответим пн–пт</span></div>
     </div>
     <form class="form" id="form" novalidate>
@@ -337,7 +337,7 @@
         <button class="submit m-btn" type="submit">Отправить заявку</button>
         <p class="form__note">Общение с нами не нарушает законы РФ. Мы не передаём данные третьим лицам.</p>
       </div>
-      <div class="form__ok" role="status" tabindex="-1"><b>Спасибо, заявка у нас!</b><p class="form__code" hidden>Номер заявки: <span></span></p><p class="form__next">Менеджерка напишет вам в рабочий день. Если за два рабочих дня никто не ответил — напишите нам в <a href="https://t.me/ASILOhelperBot?start=site_home" target="_blank" rel="noopener">@ASILOhelperBot</a> и назовите номер заявки.</p></div>
+      <div class="form__ok" role="status" tabindex="-1"><b>Спасибо, заявка у нас!</b><p class="form__code" hidden>Номер заявки: <span></span></p><p class="form__next">Менеджерка напишет вам в рабочий день. Если за два рабочих дня никто не ответил — напишите нам в <a href="https://t.me/ASILOhelperBot?start=site_formok" target="_blank" rel="noopener">@ASILOhelperBot</a> и назовите номер заявки.</p></div>
     </form>
   </div>
 </section>

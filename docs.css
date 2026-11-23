@@ -43,3 +43,6 @@
 }
 .ldoc td small { display: block; font-weight: 400; font-size: 11px; color: var(--muted); margin-top: 4px; }
 .ldoc td:first-child { width: 26%; }
+/* QA 23.11.2026: «конфиденциальности» не влезало в 360 px и раздвигало страницу */
+.ldoc h1 { overflow-wrap: break-word; hyphens: auto; }
+@media (max-width: 600px) { .ldoc h1 { font-size: clamp(22px, 6.6vw, 30px); } }
