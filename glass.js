@@ -136,6 +136,8 @@ if (!off) {
   const onHome = !document.documentElement.dataset.page;
   // якорь есть на этой странице (вопросы и заявка на страницах услуг) — ведем к нему, иначе на главную
   const anchor = (id) => (onHome || document.getElementById(id) ? "" : home + "index.html") + "#" + id;
+  // «Вопросы»: свой блок #faq на странице, иначе страница всех вопросов
+  const faqHref = onHome || document.getElementById("faq") ? "#faq" : home + "voprosy.html";
   mount((n) => {
     n.className = "tabbar-lg";
     n.addEventListener("click", (e) => {
@@ -152,7 +154,7 @@ if (!off) {
         { value: "help", label: "Услуги", icon: icons.help, href: anchor("help") },
         { value: "us", label: "О нас", icon: icons.us, href: home + "o-nas.html" },
         { value: "news", label: "Статьи", icon: icons.news, href: home + "stati.html" },
-        { value: "faq", label: "Вопросы", icon: icons.faq, href: anchor("faq") },
+        { value: "faq", label: "Вопросы", icon: icons.faq, href: faqHref },
         { value: "apply", label: "Заявка", icon: icons.apply, href: anchor("apply") },
       ],
     }));

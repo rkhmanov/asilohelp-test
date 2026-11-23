@@ -12,8 +12,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="motion.css?v=17">
 <link rel="stylesheet" href="site.css?v=25">
+<link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
-<script type="module" src="glass.js?v=8"></script>
+<script type="module" src="glass.js?v=9"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot')</script>
 <style>.shot *,.shot *::before{transition:none!important;animation:none!important} @media (max-width:700px){.br-d{display:none}} .scr, .fl { transform: rotate(var(--rot, 0deg)); } @media (max-width: 1100px) { .fl--inside { animation: none; } }</style>
 </head>
@@ -192,16 +193,22 @@
     <div class="reviews__nav"><button type="button" data-dir="-1" aria-label="Назад"><img src="img/btn-prev.svg" alt="" width="52" height="52"></button><button type="button" data-dir="1" aria-label="Вперёд"><img src="img/btn-next.svg" alt="" width="52" height="52"></button></div>
   </div>
   <div class="reel" id="reel">
+    <figure class="rv rv--q rv--q-r"><blockquote>Мы с девушкой были на жутком стрессе из-за переезда. Саша нас успокоил, поддержал и ответил на все-все вопросы</blockquote><figcaption><b>Anna</b><span class="sticker" style="--r:2deg">Консультация</span></figcaption></figure>
     <div class="rv rv--a"><img src="img/rv-sasha-dog.jpg" alt=""><span class="sticker" style="--r:3deg">Сопровождение</span></div>
+    <figure class="rv rv--q rv--q-dark"><blockquote>Удалось при наличии шенгена сдаться в аэропорту, пройти интервью в полиции и получить красную карту через неделю в Испании</blockquote><figcaption><b>Alexey</b><span class="sticker" style="--r:-2deg">Сопровождение</span></figcaption></figure>
     <div class="rv rv--b"><img src="img/help-case.jpg" alt=""><span class="sticker" style="--r:-2deg">Консультация</span></div>
+    <figure class="rv rv--q"><blockquote>Советы помогли внести правки в кейс. Я подался на убежище неделю назад и теперь нахожусь в стране легально</blockquote><figcaption><b>Ross</b><span class="sticker" style="--r:3deg">Работа с кейсом</span></figcaption></figure>
     <div class="rv rv--c"><img src="img/help-sopr.jpg" alt=""><span class="sticker" style="--r:2deg">Работа с кейсом</span></div>
+    <figure class="rv rv--q rv--q-r"><blockquote>Визу получала впервые и очень боялась напортачить. Ребята были на связи постоянно и даже помогли поймать слот в моем регионе</blockquote><figcaption><b>Angelina</b><span class="sticker" style="--r:-2deg">Виза</span></figcaption></figure>
     <div class="rv rv--d"><img src="img/rv-friends.jpg" alt=""><span class="sticker" style="--r:-3deg">Шенгенская виза</span></div>
-    <div class="rv rv--you"><span>Здесь может<br>быть ваше фото</span><span class="sticker" style="--r:3deg">Вы?</span></div>
+    <figure class="rv rv--q rv--q-dark"><blockquote>До крайнего срока оставался ровно месяц. За этот месяц мы собрали все нужные документы и доказательства</blockquote><figcaption><b>Валентин</b><span class="sticker" style="--r:2deg">Работа с кейсом</span></figcaption></figure>
     <div class="rv rv--e"><img src="img/rv-gothic.jpg" alt=""><span class="sticker" style="--r:-2deg">Готический квартал</span></div>
-    <div class="rv rv--c"><img src="img/rv-oldtown.jpg" alt=""><span class="sticker" style="--r:2deg">Старый город</span></div>
+    <figure class="rv rv--q"><blockquote>Многие страхи ушли после диалога. Как будто поговорил с другом, который просто делится полезной информацией</blockquote><figcaption><b>Макс</b><span class="sticker" style="--r:-2deg">Консультация</span></figcaption></figure>
+    <div class="rv rv--you"><span>Здесь может<br>быть ваше фото</span><span class="sticker" style="--r:3deg">Вы?</span></div>
+    <a class="rv rv--more" href="otzyvy.html"><b>27</b>отзывов целиком →</a>
   </div>
   <div class="wrap reviews__foot">
-    <p>Это реальные люди. Напишите нам — пришлём ссылку на Telegram-канал с отзывами, где видно их авторов.</p>
+    <p>Это реальные люди. Напишите нам — пришлём ссылку на Telegram-канал с отзывами, где видно их авторов.<br><a class="reviews__all" href="otzyvy.html">Читать все 27 отзывов →</a></p>
     <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
   </div>
 </section>
@@ -289,17 +296,17 @@
 <section class="faq" id="faq">
   <div class="wrap faq__grid">
     <div class="faq__col">
-      <div class="faq__intro" data-reveal><h2>Остались<br>вопросы?</h2><p>Собрали то, о чём спрашивают чаще всего. Не нашли ответ — напишите нам, ответим пн–пт.</p></div>
-      <div class="q m-card" data-reveal><h3>Какие гарантии?</h3><p>Одобрение не может гарантировать никто — решает министерство. Мы гарантируем свою работу: всё из пакета будет сделано.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
-      <div class="q q--beige q--short m-card" data-reveal><h3>Кто увидит мою историю?</h3><p>Только команда, которая работает с кейсом: менеджерка, журналист и юрист. Кейс подаётся испанским властям, когда решите вы.</p></div>
+      <div class="faq__intro" data-reveal><h2>Остались<br>вопросы?</h2><p>Собрали то, о чем спрашивают чаще всего. Не нашли ответ – напишите нам, ответим пн–пт.</p><a class="faq__all m-btn" href="voprosy.html">Все 26 вопросов →</a></div>
+      <div class="q m-card" data-reveal><h3>Какие гарантии?</h3><p>Одобрение не может гарантировать никто – решает министерство. Мы гарантируем свою работу: все, что входит в услугу, будет сделано.</p><a href="voprosy.html#q4">Подробнее →</a></div>
+      <div class="q q--beige q--short m-card" data-reveal><h3>Кто увидит мою историю?</h3><p>Только команда, которая работает с кейсом: менеджер, координатор, журналист и юрист. Кейс подается властям Испании, когда решите вы.</p></div>
     </div>
     <div class="faq__col">
-      <div class="q m-card" data-reveal><h3>Какие гарантии?</h3><p>Одобрение не может гарантировать никто — решает министерство. Мы гарантируем свою работу: всё из пакета будет сделано.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
-      <div class="q q--beige q--tall m-card" data-reveal><h3>Кто увидит мою историю?</h3><p>Только команда, которая работает с кейсом: менеджерка, журналист и юрист. Кейс подаётся испанским властям, когда решите вы.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
+      <div class="q m-card" data-reveal><h3>Сколько стоит?</h3><p>Оценка шансов – бесплатно. Консультация – от 50 €, кейс с нуля – 850 €, сопровождение на полгода – от 990 €.</p><a href="voprosy.html#q1">Все цены →</a></div>
+      <div class="q q--beige q--tall m-card" data-reveal><h3>Зачем платить, если есть бесплатный адвокат?</h3><p>Бесплатный адвокат и CEAR помогают уже после подачи, и времени у них немного. Мы работаем до нее: готовим кейс, доказательства и маршрут, на русском. Кейс, который вы привезете с собой, – ваша главная опора.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
     </div>
     <div class="faq__col">
-      <div class="q q--pink m-card" data-reveal><h3>Я не активист — мне подойдёт?</h3><p>Да. Запросить защиту может любой, кого не защищает собственное государство — например, из-за ориентации или гендерной идентичности.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
-      <div class="q q--br m-card" data-reveal><h3>Боюсь интервью в полиции</h3><p>К нему можно подготовиться. Будет бесплатный переводчик, можно говорить на русском. С юристом разберём типичные вопросы.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
+      <div class="q q--pink m-card" data-reveal><h3>Я не активист – мне подойдет?</h3><p>Да. Запросить защиту может любой, кого не защищает собственное государство – например, из-за ориентации или гендерной идентичности.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
+      <div class="q q--br m-card" data-reveal><h3>Боюсь интервью в полиции</h3><p>К нему можно подготовиться. Будет бесплатный переводчик, можно говорить на русском. С юристом разберем типичные вопросы.</p><a href="https://t.me/ASILOhelperBot?start=site_faq_questions" target="_blank" rel="noopener">Спросить в боте →</a></div>
     </div>
   </div>
 </section>
@@ -349,7 +356,7 @@
       <div class="foot__about"><img src="img/logo-footer.svg" alt="asilohelp" width="234" height="38">
         <p>Помогаем ЛГБТ-людям из России и постсоветских стран переехать в Испанию и запросить международную защиту.</p>
         <p>Мы не адвокатское бюро. Материалы сайта — информация, а не юридическая консультация.</p></div>
-      <div class="foot__col"><b>Сайт</b><a href="konsultacii.html">Консультации</a><a href="keys.html">Работа с кейсом</a><a href="soprovozhdenie.html">Сопровождение</a><a href="stati.html">Статьи и база знаний</a><a href="o-nas.html">О нас</a><a href="#faq">Частые вопросы</a><a href="#apply">Оставить заявку</a></div>
+      <div class="foot__col"><b>Сайт</b><a href="konsultacii.html">Консультации</a><a href="keys.html">Работа с кейсом</a><a href="soprovozhdenie.html">Сопровождение</a><a href="stati.html">Статьи и база знаний</a><a href="o-nas.html">О нас</a><a href="otzyvy.html">Отзывы</a><a href="voprosy.html">Частые вопросы</a><a href="#apply">Оставить заявку</a></div>
       <div class="foot__col"><b>Мы в сети</b><a href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Telegram-канал</a><a href="https://www.instagram.com/rkhmanov/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@rkhmanov/" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@rkhmanov" target="_blank" rel="noopener">TikTok</a><a href="https://t.me/+GRq-QZJDqDNlNDEy" target="_blank" rel="noopener">Чат по Барселоне</a></div>
       <div class="foot__col"><b>Документы</b><a href="legal.html">Правовая информация</a><a href="privacy.html">Политика конфиденциальности</a><a href="cookies.html">Политика cookie</a></div>
     </div>

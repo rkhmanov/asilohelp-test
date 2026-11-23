@@ -44,7 +44,7 @@ def head(title, desc, pre, page):
 <link rel="stylesheet" href="{pre}site.css?v=25">
 <link rel="stylesheet" href="{pre}pages.css?v={V}">
 <script type="importmap">{{"imports":{{"react":"./{pre}vendor/react/react.mjs","react/jsx-runtime":"./{pre}vendor/react/react.mjs","react-dom/client":"./{pre}vendor/react/react.mjs","glisse":"./{pre}vendor/glisse/index.js"}}}}</script>
-<script type="module" src="{pre}glass.js?v=8"></script>
+<script type="module" src="{pre}glass.js?v=9"></script>
 <script>(function(){{var r=document.documentElement;function z(){{var w=window.innerWidth;r.style.setProperty('--z',(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}}z();addEventListener('resize',z);}})();document.documentElement.classList.add('m-js');</script>
 </head>
 <body>
@@ -56,7 +56,7 @@ def head(title, desc, pre, page):
       <a href="{pre}index.html#help">Услуги</a>
       <a href="{pre}stati.html"{' aria-current="page"' if page == 'news' else ''}>Статьи</a>
       <a href="{pre}o-nas.html"{' aria-current="page"' if page == 'us' else ''}>О нас</a>
-      <a href="{pre}index.html#faq">Вопросы</a>
+      <a href="{pre}voprosy.html">Вопросы</a>
     </nav>
     <div class="hdr__cta">
       <a class="hdr__bot m-btn" href="{BOT}site_header" target="_blank" rel="noopener">Telegram-бот</a>
@@ -75,7 +75,7 @@ def foot(pre, extra_js=""):
       <div class="foot__about"><img src="{pre}img/logo-footer.svg" alt="asilohelp" width="234" height="38">
         <p>Помогаем ЛГБТ-людям из России и постсоветских стран переехать в Испанию и запросить международную защиту.</p>
         <p>Мы не адвокатское бюро. Материалы сайта — информация, а не юридическая консультация.</p></div>
-      <div class="foot__col"><b>Сайт</b><a href="{pre}index.html#help">Услуги</a><a href="{pre}stati.html">Статьи и база знаний</a><a href="{pre}o-nas.html">О нас</a><a href="{pre}index.html#faq">Частые вопросы</a><a href="{pre}index.html#apply">Оставить заявку</a></div>
+      <div class="foot__col"><b>Сайт</b><a href="{pre}index.html#help">Услуги</a><a href="{pre}stati.html">Статьи и база знаний</a><a href="{pre}o-nas.html">О нас</a><a href="{pre}otzyvy.html">Отзывы</a><a href="{pre}voprosy.html">Частые вопросы</a><a href="{pre}index.html#apply">Оставить заявку</a></div>
       <div class="foot__col"><b>Мы в сети</b><a href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Telegram-канал</a><a href="https://www.instagram.com/rkhmanov/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@rkhmanov/" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@rkhmanov" target="_blank" rel="noopener">TikTok</a><a href="https://t.me/+GRq-QZJDqDNlNDEy" target="_blank" rel="noopener">Чат по Барселоне</a></div>
       <div class="foot__col"><b>Документы</b><a href="{pre}legal.html">Правовая информация</a><a href="{pre}privacy.html">Политика конфиденциальности</a><a href="{pre}cookies.html">Политика cookie</a></div>
     </div>
