@@ -965,7 +965,7 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   html .hero--ruki .hero__nums { margin-top: 2px; }
   /* «Как мы помогаем»: карточки ближе к заголовку, кнопка крупнее */
   .help__grid { margin-top: 25px; }
-  .help { padding-bottom: 64px; }
+  .help { padding-bottom: 69px; }
   .help .help__more-btn { height: 57px; padding: 0 46px; }
   .help .flip__btn { bottom: 12px; }
   /* «Мы справимся»: меньше воздуха сверху, подзаголовок в две строки, карточки без пустоты */
@@ -976,12 +976,11 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .tiles3 .tile__head { margin-top: 9px; }
   .tiles3 .tile > p { margin-top: 0; }
   .dark { margin-top: 53px; }
-  .chip--1 { left: 409px; }
   /* «Мы сами прошли этот путь»: карточки ниже ростом, плашка «Официально» тоньше, договор выступает над ней */
   .bento .b { min-height: 0; height: 560px; }
   .b--crew .crew__roles li { padding: 8px 0; }
   .b--crew > .crew__anon { margin-top: -16px; }
-  .b--crew .crew__more { margin-top: 6px; }
+  .b--crew .crew__more { margin: -6px 0 0 -13px; }
   .b--trust { margin-top: 37px; padding: 27px 44px; align-items: start; }
   .b--trust .trust__col a { display: none; }
   .b--trust .doc { margin: -43px 9px 0 0; }
@@ -1005,14 +1004,10 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .kb__box--v2 .fl--inside { top: 177px; }
 }
 
-/* «Команда»: фото вместо букв (24.11). Телефон и до 1100 px – все пятеро и «+6», шире 1100 px – четверо и «+7» (как в Figma) */
+/* «Команда»: фото вместо букв (24.11), пятеро и «+6» */
 .crew__faces i.face { overflow: hidden; padding: 0; background: #1E2C52; }
 .crew__faces i.face img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 .crew__faces .more--d { display: none; }
-@media (min-width: 1101px) {
-  .crew__faces i.face:nth-child(5) { display: none; }
-  .crew__faces .more--m { display: none; } .crew__faces .more--d { display: inline; }
-}
 
 /* Карточки услуг на компьютере (24.11, по мотивам nexacore-process с motionsites.ai, сделано с нуля): в покое кнопки нет,
    при наведении карточка подсвечивается (свет идет за курсором, --mx из скрипта в index.html), на месте кнопки
@@ -1046,4 +1041,48 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 @media (min-width: 601px) and (hover: hover) and (prefers-reduced-motion: reduce) {
   .flip:hover .flip__spin { animation: none; }
   .help .flip:hover .flip__btn--face { transition: opacity .2s ease; transform: none; }
+}
+
+/* Сверка с Figma 4750:4451 (24.11, второй проход). Тексты из макета – в .only-d (компьютер), прежние – в .only-m (телефон и до 1100 px) */
+.only-d { display: none; }
+@media (min-width: 1101px) {
+  .only-d { display: inline; } p.only-d { display: block; } img.only-d { display: block; }
+  .only-m { display: none !important; }
+  /* первый экран: лица правее, ASILO левее и выше, цифры правее */
+  .hero--ruki .hero__lead { width: 587px; }
+  .hero__row .faces { position: relative; left: 15px; top: -2px; }
+  .hero__row .mark { position: relative; left: -10px; top: -7px; }
+  html .hero--ruki .hero__nums { position: relative; left: 19px; top: 0; }
+  html .hero--ruki .hero__nums span { position: relative; top: -6px; }
+  /* «Как мы помогаем»: подсказки под карточками нет, кнопка «Оставить заявку» */
+  .help .flip-hint { display: none; }
+  .help .help__more-btn { font-size: 18px; justify-content: center; width: 369px; }
+  .help__more { margin-top: 56px; gap: 9px; }
+  /* «Мы справимся»: без стрелок */
+  .tiles3 .tile__head img { display: none; }
+  /* «Оценим шансы»: «бесплатно» на цене, «Записаться» левее */
+  .price em { left: -2px; top: 6px; transform: rotate(-1deg); padding: 5px 12px 6px; }
+  .dark__bottom .btn { margin-right: 28px; }
+  /* «187»: два абзаца, ссылка – кнопка-пилюля, без белого кружка */
+  .b--red .dot { display: none; }
+  .b--red p.b--red__more { margin-top: 25px; max-width: 370px; }
+  .b--red p.b--red__more2 { margin-top: 34px; max-width: 420px; }
+  .b--red .link { left: 31px; bottom: 33px; height: 52px; gap: 0; justify-content: space-between; width: 296px; padding: 6px 8px 6px 18px; border-radius: 999px; background: rgba(255,255,255,.1); font-size: 14px; }
+  .b--red .link img { width: 40px; height: 40px; }
+  /* плашка «Официально»: договор не обрезается */
+  .b--trust { overflow: visible; }
+  /* база знаний: блок на 5 px левее, заголовок на 19 px правее */
+  .kb__box { left: -5px; }
+  .kb .sh h2 { position: relative; left: 19px; }
+  /* «Защиту дают»: во 2-й и 3-й плитке заголовок на 3 px, текст на 10 px ниже */
+  .tiles3 .tile:nth-child(n+2) h3 { position: relative; top: 3px; }
+  .tiles3 .tile:nth-child(n+2) p { position: relative; top: 10px; }
+  /* темный блок: плашка «Кейс» у правого верхнего угла фото, как в макете (464, 2847) */
+  .dark .chip--1 { left: 408px; top: 78px; }
+  /* в макете с «Бесплатных материалов» и до вопросов все на 2 px правее */
+  .free > .wrap, .news > .wrap, .faq > .wrap { position: relative; left: 2px; }
+  /* заявка: форма как в макете (688, 8410) */
+  .apply__box { padding-right: 59px; padding-left: 73px; }
+  .apply .tg { margin-left: -10px; margin-top: 32px; }
+  .apply .form { margin-top: 6px; }
 }
