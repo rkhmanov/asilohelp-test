@@ -979,7 +979,8 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .chip--1 { left: 409px; }
   /* «Мы сами прошли этот путь»: карточки ниже ростом, плашка «Официально» тоньше, договор выступает над ней */
   .bento .b { min-height: 0; height: 560px; }
-  .b--crew > .crew__anon { margin-top: -36px; }
+  .b--crew .crew__roles li { padding: 8px 0; }
+  .b--crew > .crew__anon { margin-top: -16px; }
   .b--crew .crew__more { margin-top: 6px; }
   .b--trust { margin-top: 37px; padding: 27px 44px; align-items: start; }
   .b--trust .trust__col a { display: none; }
@@ -1002,4 +1003,47 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .kb__box { margin-top: 56px; }
   .kb__box--v2 .fl--timeline { top: 352px; }
   .kb__box--v2 .fl--inside { top: 177px; }
+}
+
+/* «Команда»: фото вместо букв (24.11). Телефон и до 1100 px – все пятеро и «+6», шире 1100 px – четверо и «+7» (как в Figma) */
+.crew__faces i.face { overflow: hidden; padding: 0; background: #1E2C52; }
+.crew__faces i.face img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.crew__faces .more--d { display: none; }
+@media (min-width: 1101px) {
+  .crew__faces i.face:nth-child(5) { display: none; }
+  .crew__faces .more--m { display: none; } .crew__faces .more--d { display: inline; }
+}
+
+/* Карточки услуг на компьютере (24.11, по мотивам nexacore-process с motionsites.ai, сделано с нуля): в покое кнопки нет,
+   при наведении карточка подсвечивается (свет идет за курсором, --mx из скрипта в index.html), на месте кнопки
+   прокручивается кружок, потом кнопка выезжает снизу. Клик по любому месту карточки – страница услуги. */
+.flip__spin { display: none; }
+@media (min-width: 601px) and (hover: hover) {
+  .flip__face::before { content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none; border-radius: inherit; opacity: 0;
+    background: radial-gradient(70% 45% at var(--mx, 50%) 0%, rgba(255,92,128,.5), rgba(255,92,128,0) 70%),
+                radial-gradient(60% 30% at var(--mx, 50%) 100%, rgba(255,255,255,.35), rgba(255,255,255,0) 70%);
+    box-shadow: inset 0 0 0 1.5px rgba(255,170,190,.55), inset 0 0 40px rgba(255,120,150,.25);
+    transition: opacity .45s ease; }
+  .flip:hover .flip__face::before, .flip:focus-visible .flip__face::before { opacity: 1; }
+  .flip:hover .flip__face, .flip:focus-visible .flip__face { box-shadow: 0 0 0 1px rgba(255,190,205,.35), 0 30px 80px -18px rgba(255,70,110,.55), 0 12px 24px -12px rgba(33,33,41,.25); }
+  .help .flip__btn--face { opacity: 0; transform: translateY(26px) translateZ(0); pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease, box-shadow var(--m-slow, .5s) var(--m-ease, ease); }
+  .help .flip:hover .flip__btn--face, .help .flip:focus-visible .flip__btn--face { opacity: 1; transform: translateY(0) translateZ(0); pointer-events: auto;
+    transition: opacity .35s ease .95s, transform .55s cubic-bezier(.2,.9,.25,1.15) .95s, box-shadow var(--m-slow, .5s) var(--m-ease, ease); }
+  .flip__spin { display: block; position: absolute; z-index: 6; left: 50%; bottom: 24px; width: 38px; height: 38px; margin-left: -19px; border-radius: 50%; pointer-events: none; opacity: 0;
+    background: conic-gradient(from 0deg, rgba(160,37,56,0) 0 15%, #A02538 75%, rgba(160,37,56,0) 76%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3.5px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3.5px));
+    filter: drop-shadow(0 0 6px rgba(255,90,120,.7)); }
+  .flip:hover .flip__spin, .flip:focus-visible .flip__spin { animation: flip-spin 1s cubic-bezier(.45,.05,.3,1) .1s both; }
+  @keyframes flip-spin {
+    0% { opacity: 0; transform: scale(.6) rotate(0deg); }
+    18% { opacity: 1; transform: scale(1) rotate(80deg); }
+    78% { opacity: 1; transform: scale(1) rotate(560deg); }
+    100% { opacity: 0; transform: scale(1.6) rotate(720deg); }
+  }
+}
+@media (min-width: 601px) and (hover: hover) and (prefers-reduced-motion: reduce) {
+  .flip:hover .flip__spin { animation: none; }
+  .help .flip:hover .flip__btn--face { transition: opacity .2s ease; transform: none; }
 }
