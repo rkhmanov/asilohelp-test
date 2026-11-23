@@ -105,7 +105,7 @@
     var w = band.clientWidth;
     if (!w) return false;
     var mobile = w <= 600;
-    s = mobile ? w / 540 : Math.min(0.84, Math.max(0.62, w / 1500));
+    s = mobile ? w / 540 : Math.min(1.08, Math.max(0.7, w / 1330));
     sp = mobile ? 3.4 : 5.2;
     W = w;
     band.style.height = Math.round((BOTTOM - TOP) * s + 40) + 'px';
