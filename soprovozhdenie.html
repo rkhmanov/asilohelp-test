@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="motion.css?v=17">
 <link rel="stylesheet" href="site.css?v=27">
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
-<link rel="stylesheet" href="inner.css?v=2">
+<link rel="stylesheet" href="inner.css?v=3">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=9"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot')</script>
@@ -101,13 +101,13 @@
   <div class="wrap">
     <div class="sh sh--sm" data-reveal><h2>Пакеты и цены<span>цена фиксируется в договоре</span></h2></div>
     <div class="ptable-wrap" data-reveal>
-      <table class="ptable">
+      <table class="ptable ptable--hl3">
         <thead>
           <tr>
             <th scope="col"><span>Что входит</span></th>
             <th scope="col"><b>990 €</b><span>консультация и кейс</span></th>
             <th scope="col"><b>1290 €</b><span>кейс, интервью и первые дела</span></th>
-            <th scope="col"><b>1790 €</b><span>все, включая визу и ситу</span></th>
+            <th scope="col"><em class="ptable__pop">Чаще всего выбирают</em><b>1790 €</b><span>все, включая визу и ситу</span></th>
           </tr>
         </thead>
         <tbody>
@@ -157,10 +157,11 @@
 <section class="sec">
   <div class="wrap">
     <div class="sh sh--sm" data-reveal><h2>Команда<span>кто будет с вами все полгода</span></h2></div>
-    <div class="team" data-reveal-group="0.08">
+    <div class="team" style="--cols:4" data-reveal-group="0.08">
       <div class="person" data-reveal><div class="person__ava" aria-hidden="true">С</div><b>Саша Рахманов</b><strong>Основатель и координатор</strong><p>Сам получил защиту в Испании зимой 2023/24. Проводит оценку шансов, консультации и интервью для кейса.</p></div>
       <div class="person" data-reveal><div class="person__ava" aria-hidden="true">И</div><b>Илья Андреев</b><strong>Журналист</strong><p>Пишет текст кейса. Выпускающий редактор и автор книг, больше 4 лет живет в Испании и сам прошел процедуру.</p></div>
       <div class="person" data-reveal><div class="person__ava" aria-hidden="true">А</div><b>Александр Сергеевич</b><strong>Юрист, 15 лет практики</strong><p>Проверяет кейс и готовит к интервью.</p></div>
+      <div class="person" data-reveal><div class="person__ava" aria-hidden="true">Л</div><b>Леся Лунина</b><strong>Менеджерка</strong><p>Отвечает на заявки, записывает на консультации и составляет договор.</p></div>
     </div>
   </div>
 </section>
