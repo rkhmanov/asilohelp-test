@@ -213,7 +213,15 @@
     if (!bg || !nums || getComputedStyle(bg).display === 'none') return;
     var y = 0, el = nums;
     while (el && el.tagName !== 'MAIN') { y += el.offsetTop; el = el.offsetParent; }
-    bg.style.top = Math.round(y + nums.offsetHeight - 175) + 'px';
+    var top = Math.round(y + nums.offsetHeight - 175);
+    bg.style.top = top + 'px';
+    // компьютер: блок «Мы справимся» стал компактнее, фон заканчивается у его верхнего края, а не под заголовком
+    var who = document.querySelector('.who');
+    if (who && innerWidth > 1100) {
+      var wy = 0; el = who;
+      while (el && el.tagName !== 'MAIN') { wy += el.offsetTop; el = el.offsetParent; }
+      bg.style.height = Math.max(600, wy + 16 - top) + 'px';
+    } else bg.style.height = '';
   };
   window.rukiBg();
 
