@@ -953,3 +953,53 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 }
 /* шапка на компьютере уходит и возвращается плавно */
 @media (min-width: 601px) { .m-header { transition: transform .5s cubic-bezier(.2,.7,.2,1), opacity .4s ease; } }
+
+/* ===== Компьютер (24.11): расстановка Саши из Figma, фрейм «белая бумага» 4750:4451. Цифры – для ширины 1440 (шире 1100 px страница масштабируется от 1440).
+   Прежняя главная – glavnaya-arhiv-23-11.html. Телефон и 601–1100 px не меняются. */
+@media (min-width: 1101px) {
+  /* первый экран: текст ниже, руки ближе к кнопке */
+  html .hero--ruki { padding: 226px 0 69px; }
+  html .hero--ruki .hero__center { gap: 15px; }
+  html .hero--ruki .hero__btns { margin-top: 11px; }
+  html .hero--ruki .ruki { margin-top: calc(105px - var(--tip)); }
+  html .hero--ruki .hero__nums { margin-top: 2px; }
+  /* «Как мы помогаем»: карточки ближе к заголовку, кнопка крупнее */
+  .help__grid { margin-top: 25px; }
+  .help { padding-bottom: 64px; }
+  .help .help__more-btn { height: 57px; padding: 0 46px; }
+  .help .flip__btn { bottom: 12px; }
+  /* «Мы справимся»: меньше воздуха сверху, подзаголовок в две строки, карточки без пустоты */
+  .who { padding-top: 66px; }
+  .who .tiles3 { margin-top: 54px; }
+  .who .sh p { max-width: 1056px; }
+  .tiles3 .tile { min-height: 0; }
+  .tiles3 .tile__head { margin-top: 9px; }
+  .tiles3 .tile > p { margin-top: 0; }
+  .dark { margin-top: 53px; }
+  .chip--1 { left: 409px; }
+  /* «Мы сами прошли этот путь»: карточки ниже ростом, плашка «Официально» тоньше, договор выступает над ней */
+  .bento .b { min-height: 0; height: 560px; }
+  .b--crew > .crew__anon { margin-top: -36px; }
+  .b--crew .crew__more { margin-top: 6px; }
+  .b--trust { margin-top: 37px; padding: 27px 44px; align-items: start; }
+  .b--trust .trust__col a { display: none; }
+  .b--trust .doc { margin: -43px 9px 0 0; }
+  .us { padding-bottom: 36px; }
+  /* отзывы: под лентой сразу бесплатные материалы */
+  .reel-wrap { margin-top: 11px; }
+  .reviews__foot { display: none; }
+  .reviews { padding-bottom: 64px; }
+  /* «Начните с бесплатных материалов»: плотнее */
+  .free { padding: 48px 0 78px; }
+  .free .sh h2 span { margin-top: -9px; }
+  .free .sh p { margin-top: 3px; }
+  .free__grid { margin-top: 18px; }
+  .free__note { bottom: 10px; margin-left: -35px; }
+  /* база знаний */
+  .kb { padding: 88px 0 52px; }
+  .kb .sh h2 span { margin-top: -8px; }
+  .kb .sh p { margin-top: -6px; }
+  .kb__box { margin-top: 56px; }
+  .kb__box--v2 .fl--timeline { top: 352px; }
+  .kb__box--v2 .fl--inside { top: 177px; }
+}

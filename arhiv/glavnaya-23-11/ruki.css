@@ -1,0 +1,60 @@
+/* Первый экран с руками из точек (ruki.js) поверх site.css.
+   index.html: руки только шире 480 px, на телефоне прежний первый экран (решение Саши 23.11: на компьютере руки, на телефоне эмодзи-стикеры).
+   glavnaya-ruki.html (класс ruki-phone): руки и на телефоне. */
+.ruki { display: none; }
+.ruki canvas { display: block; position: absolute; left: 0; top: 0; }
+
+/* полоса с руками: кончики пальцев сходятся чуть ниже кнопок, руки заходят под текст */
+@media (min-width: 481px) {
+  .hero--ruki { height: auto; padding: 190px 0 64px; overflow: hidden; }
+  .hero--ruki .hero__stage { height: auto; display: flex; flex-direction: column; align-items: center; }
+  .hero--ruki .hero__center { position: relative; z-index: 2; left: auto; top: auto; transform: none; margin: 0 auto; }
+  .hero--ruki .hero__btns { margin-bottom: 0; }
+  .hero--ruki .btn--outline { background: #fff; }
+  .ruki { --tip: 200px; display: block; position: relative; z-index: 1; width: 100%; height: 360px; margin-top: calc(78px - var(--tip)); pointer-events: none;
+    opacity: 0; transition: opacity .6s; }
+  .ruki.is-on { opacity: 1; }
+  .hero--ruki .hero__nums { position: relative; z-index: 2; justify-content: center; text-align: center; margin-top: -10px; }
+}
+@media (min-width: 481px) and (max-width: 1100px) {
+  .hero--ruki { padding-top: 160px; }
+  .hero--ruki .hero__center { padding: 0 16px; }
+}
+@media (min-width: 481px) and (max-width: 600px) {
+  .hero--ruki { padding: 92px 0 28px; }
+  .ruki { margin-top: calc(64px - var(--tip)); }
+  .hero--ruki .hero__nums { width: 100%; padding: 0 16px; margin-top: -4px; }
+}
+
+/* телефон: цифры стоят после полосы с руками, поэтому повторяем отступы из site.css (gap 16 px в .hero__center) */
+@media (max-width: 480px) {
+  .hero--ruki .hero__nums { margin-top: 16px; padding: 0 16px; text-align: center; }
+  /* glavnaya-ruki.html: руки и на телефоне */
+  .ruki-phone .hero__stage { display: flex; flex-direction: column; align-items: stretch; }
+  .ruki-phone .hero__center { position: relative; z-index: 2; left: auto; top: auto; transform: none; }
+  .ruki-phone .btn--outline { background: #fff; }
+  .ruki-phone .ruki { --tip: 200px; display: block; position: relative; z-index: 1; width: 100%; height: 360px; margin-top: calc(64px - var(--tip)); pointer-events: none;
+    opacity: 0; transition: opacity .6s; }
+  .ruki-phone .ruki.is-on { opacity: 1; }
+  .ruki-phone .hero__nums { position: relative; z-index: 2; margin-top: -4px; padding-bottom: 12px; }
+  .ruki-phone.hero--ruki { padding-bottom: 28px; }
+}
+
+/* компьютер (решение Саши 23.11, вечер): без строки «в Испании», одна кнопка, весь первый экран с цифрами — в одно окно */
+@media (min-width: 481px) {
+  .hero--ruki .hero__es, .hero--ruki .hero__kb { display: none; }
+  .hero--ruki { padding: 116px 0 40px; }
+  .hero--ruki .hero__center { gap: 24px; }
+  .hero--ruki .ruki { margin-top: calc(84px - var(--tip)); }
+  .hero--ruki .hero__nums { margin-top: -22px; }
+}
+@media (min-width: 481px) and (max-width: 1100px) { .hero--ruki { padding-top: 120px; } }
+@media (min-width: 481px) and (max-width: 600px) { .hero--ruki { padding-top: 92px; } }
+
+/* компьютер (правки Саши 23.11, ночь): первый экран ниже и просторнее, руки целиком под кнопкой, у кнопки легкое свечение */
+@media (min-width: 601px) {
+  .hero--ruki { padding: 150px 0 36px; }
+  .hero--ruki .ruki { margin-top: calc(150px - var(--tip)); }
+  .hero--ruki .hero__btns .btn { box-shadow: 0 0 0 6px rgba(160,37,56,.08), 0 10px 36px -6px rgba(160,37,56,.45); }
+  .hero--ruki .hero__nums { margin-top: -30px; }
+}
