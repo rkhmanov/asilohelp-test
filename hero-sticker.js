@@ -1,43 +1,46 @@
 // Тестовая страница hero-sticker.html: буквы-стикеры на первом экране.
-// Курсор (или палец) над буквами прячет букву под стикер, соседние буквы дают «хвост» поменьше,
-//    под самым большим стикером подпись. Пока страницу не трогают, эффект сам проходит волной по всем строкам (кроме ASILO).
+// Курсор (или палец) над буквами прячет букву под стикер, соседние буквы дают «хвост» поменьше.
+// Пока страницу не трогают, эффект сам проходит волной по всем строкам (кроме ASILO).
 // prefers-reduced-motion: без автопробега, стикеры появляются без пружины.
 (function () {
   'use strict';
   var h1 = document.querySelector('.sk-h');
-  var fx = document.querySelector('.sk-fx');
-  var cap = document.querySelector('.sk-cap');
   var hint = document.querySelector('.sk-hint');
-  if (!h1 || !fx || !cap) return;
+  if (!h1) return;
 
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Стикеры: [картинка, подпись, эмодзи]. Картинки – Microsoft Fluent Emoji 3D (MIT), см. img/stickers/README.md.
+  // Стикеры: [картинка, эмодзи], по порядку букв (дальше по кругу). Тема как в оригинале – дорога: флаги, документы,
+  // чемодан, перелет, люди и пары, глобус, пляж. Картинки – Microsoft Fluent Emoji 3D (MIT), см. img/stickers/README.md.
   // Вариант hero-sticker-emoji.html (<h1 data-emoji>): вместо картинок системные эмодзи –
   // на iPhone и Mac это эмодзи Apple, на Android – Google, на Windows – Microsoft. Картинок не грузим.
-  // Пар в Fluent Emoji нет, поэтому они только в варианте с эмодзи (картинка null).
+  // Чего нет в Fluent Emoji (пары, флаг Испании), есть только в варианте с эмодзи (картинка null).
   var ALL = [
-    ['speech-balloon', 'Консультация', '💬'],
-    ['clipboard', 'Проверим готовый кейс', '📋'],
-    ['page-facing-up', 'Текст кейса', '📄'],
-    ['bookmark-tabs', 'Доказательства', '📑'],
-    ['world-map', 'Отчет о стране', '🗺️'],
-    ['open-book', 'Перевод на испанский', '📖'],
-    ['spiral-calendar', 'Подготовка к интервью', '🗓️'],
-    ['airplane', 'Виза и перелет', '✈️'],
-    ['luggage', 'Переезд', '🧳'],
-    ['classical-building', 'Подача в Испании', '🏛️'],
-    ['key', 'Первые месяцы', '🔑'],
-    ['handshake', 'Сопровождение', '🤝'],
-    ['balance-scale', 'Юрист в команде', '⚖️'],
-    ['rainbow-flag', 'Для ЛГБТ-людей', '🏳️‍🌈'],
-    ['shield', 'Конфиденциально', '🛡️'],
-    ['identification-card', 'Паспорт и документы', '🪪'],
-    ['transgender-flag', 'Для транс-людей', '🏳️‍⚧️'],
-    [null, 'Для геев', '👬'],
-    [null, 'Для лесбиянок', '👭'],
-    [null, 'Для пар', '👨‍❤️‍👨'],
-    [null, 'Для пар', '👩‍❤️‍👩']
+    ['rainbow-flag', '🏳️‍🌈'],
+    ['identification-card', '🪪'],
+    ['luggage', '🧳'],
+    ['airplane', '✈️'],
+    [null, '👬'],
+    ['globe', '🌍'],
+    ['transgender-flag', '🏳️‍⚧️'],
+    [null, '👭'],
+    ['backpack', '🎒'],
+    ['people-hugging', '🫂'],
+    [null, '🇪🇸'],
+    ['airplane-departure', '🛫'],
+    [null, '👨‍❤️‍👨'],
+    ['compass', '🧭'],
+    ['man', '🧑'],
+    ['palm-tree', '🌴'],
+    [null, '👩‍❤️‍👩'],
+    ['world-map', '🗺️'],
+    ['woman', '👩'],
+    ['camera', '📸'],
+    [null, '🧑‍🤝‍🧑'],
+    ['beach-with-umbrella', '🏖️'],
+    ['key', '🔑'],
+    ['desert-island', '🏝️'],
+    ['house', '🏠']
   ];
   var emoji = h1.hasAttribute('data-emoji');
   var S = ALL.filter(function (x) { return emoji || x[0]; });
@@ -46,19 +49,14 @@
   if (!emoji) S.forEach(function (_, i) { var im = new Image(); im.src = src(i); });
   function sticker(k, cls) {
     var e;
-    if (emoji) { e = document.createElement('span'); e.className = 'sk-e' + (cls ? ' ' + cls : ''); e.textContent = S[k][2]; }
+    if (emoji) { e = document.createElement('span'); e.className = 'sk-e' + (cls ? ' ' + cls : ''); e.textContent = S[k][1]; }
     else { e = document.createElement('img'); e.src = src(k); e.alt = ''; e.decoding = 'async'; e.draggable = false; if (cls) e.className = cls; }
     return e;
   }
 
   // --- Разбиваем заголовок на буквы ---------------------------------------------------------
   var letters = [];
-  // Порядок стикеров по буквам – задан вручную: первые стикеры про ЛГБТ и документы, дальше услуги вперемешку с парами
-  var ORDER = ['rainbow-flag', 'identification-card', 'airplane', '👬', 'page-facing-up', 'transgender-flag', 'speech-balloon', '👭',
-    'luggage', 'balance-scale', '👨‍❤️‍👨', 'classical-building', 'bookmark-tabs', '👩‍❤️‍👩', 'key', 'world-map', 'handshake',
-    'spiral-calendar', 'clipboard', 'open-book', 'shield'];
-  var order = ORDER.map(function (n) { return S.findIndex(function (x) { return x[0] === n || x[2] === n; }); })
-    .filter(function (i) { return i >= 0; });
+  var order = S.map(function (_, i) { return i; }); // порядок – как в списке ALL
   function split(node) {
     Array.prototype.slice.call(node.childNodes).forEach(function (n) {
       if (n.nodeType === 1) { split(n); return; }
@@ -109,7 +107,6 @@
   // --- Указатель и анимация --------------------------------------------------------------------
   var ptr = null;           // {x, y} — где сейчас курсор/палец/«призрак»
   var running = false;
-  var focus = -1;
   var lastUser = 0;
 
   function influence(L) {
@@ -122,7 +119,7 @@
 
   function frame() {
     if (dirty) { measure(); dirty = false; }
-    var active = false, best = -1, bestX = 0;
+    var active = false;
     for (var i = 0; i < letters.length; i++) {
       var L = letters[i];
       var inf = influence(L);
@@ -132,7 +129,6 @@
       else { L.v = (L.v + (target - L.x) * 0.2) * 0.7; L.x += L.v; }
       if (Math.abs(L.x) < 0.002 && Math.abs(L.v) < 0.002 && target === 0) { L.x = 0; L.v = 0; }
       else active = true;
-      if (L.x > bestX) { bestX = L.x; best = i; }
       var x = Math.max(0, L.x);
       var q = Math.round(x * 200) / 200;
       if (q !== L.shown) {
@@ -144,18 +140,6 @@
         L.t.style.transform = o === 1 ? '' : 'scale(' + (1 - 0.25 * (1 - o)) + ')';
         L.el.classList.toggle('is-on', q > 0);
       }
-    }
-    // Подпись — под самым большим стикером, если он почти раскрыт
-    var nf = bestX > 0.55 ? best : -1;
-    if (nf !== focus) {
-      focus = nf;
-      if (nf >= 0) cap.textContent = S[letters[nf].k][1];
-      cap.classList.toggle('is-on', nf >= 0);
-    }
-    if (focus >= 0) {
-      var L2 = letters[focus], w = cap.offsetWidth, vw = document.documentElement.clientWidth;
-      var left = Math.min(Math.max(L2.cx, w / 2 + 8), vw - w / 2 - 8);
-      cap.style.transform = 'translate(' + (left - w / 2) + 'px,' + (L2.cy + L2.em / 1.14 * K * 0.5 * Math.min(1, L2.x) + 6) + 'px)';
     }
     if (active) requestAnimationFrame(frame); else running = false;
   }
