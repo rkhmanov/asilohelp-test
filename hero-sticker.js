@@ -126,8 +126,8 @@
       L.hold = Math.max(L.hold * (reduce ? 0.8 : 0.9), inf);
       var target = L.hold < 0.04 ? 0 : L.hold;
       if (reduce) { L.x = target; L.v = 0; }
-      else { L.v = (L.v + (target - L.x) * 0.2) * 0.7; L.x += L.v; }
-      if (Math.abs(L.x) < 0.002 && Math.abs(L.v) < 0.002 && target === 0) { L.x = 0; L.v = 0; }
+      else { L.v = (L.v + (target - L.x) * 0.22) * 0.74; L.x += L.v; }
+      if (Math.abs(L.x) < 0.003 && Math.abs(L.v) < 0.003 && target === 0) { L.x = 0; L.v = 0; }
       else active = true;
       var x = Math.max(0, L.x);
       var q = Math.round(x * 200) / 200;
@@ -135,15 +135,19 @@
         L.shown = q;
         L.img.style.transform = q ? 'translateY(' + (-0.06 * q) + 'em) rotate(' + (L.r * q) + 'deg) scale(' + q + ')' : '';
         L.img.style.zIndex = Math.round(q * 100);
-        var o = q < 0.15 ? 1 : q > 0.45 ? 0 : 1 - (q - 0.15) / 0.3;
-        L.t.style.opacity = o === 1 ? '' : o;
-        L.t.style.transform = o === 1 ? '' : 'scale(' + (1 - 0.25 * (1 - o)) + ')';
         L.el.classList.toggle('is-on', q > 0);
+      }
+      // Буква: под стикером сжимается в ноль (без прозрачности), а когда стикер уходит, пружина
+      // проскакивает ниже нуля – буква выпрыгивает чуть больше обычного и садится на место (как в оригинале)
+      var ls = Math.round(Math.min(1.18, Math.max(0, 1 - L.x * 2.4)) * 100) / 100;
+      if (ls !== L.ls) {
+        L.ls = ls;
+        L.t.style.transform = ls === 1 ? '' : 'translateY(' + (ls > 1 ? -(ls - 1) * 0.5 : 0) + 'em) scale(' + ls + ')';
       }
     }
     if (active) requestAnimationFrame(frame); else running = false;
   }
-  function kick() { if (!running) { running = true; requestAnimationFrame(frame); } }
+  function kick() { if (entering) return; if (!running) { running = true; requestAnimationFrame(frame); } }
 
   // Мышь: следим по всей странице, эффект включается, только когда курсор рядом с буквами
   addEventListener('pointermove', function (e) {
@@ -202,14 +206,72 @@
     }, 3000);
   }
 
+  // --- Появление (как в оригинале после кольца-загрузки, само кольцо не берем) -----------------------
+  // По каждой строке стикеры выезжают из стопки у первой буквы и встают поезд-рядом поверх букв (шаг 45 мс),
+  // ряд сразу снимается слева направо: стикер сжимается в ноль, буква под ним выпрыгивает (шаг 72 мс).
+  // Тайминги сняты покадрово с видео-образца, см. .reanimate/sticker/spec.md.
+  var entering = false;
+  function entrance(done) {
+    measure();
+    entering = true;
+    // текст до старта спрятан (класс sk-wait из <head>), дальше прячут сами анимации
+    requestAnimationFrame(function () { document.documentElement.classList.remove('sk-wait'); });
+    var z = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--z')) || 1;
+    var rows = [];
+    letters.forEach(function (L) {
+      var r = rows.filter(function (R) { return Math.abs(R[0].cy - L.cy) < L.em * 0.5; })[0];
+      if (r) r.push(L); else rows.push([L]);
+    });
+    var IN = 45, OUT = 72, FLY = 360, POP = 110, ROW = 140, end = 0;
+    var k = 1.15 / K; // стикер в ряду – с букву
+    rows.forEach(function (R, ri) {
+      var base = ri * ROW, first = R[0];
+      var revealAt = base + (R.length - 1) * IN + FLY;
+      R.forEach(function (L, i) {
+        var a = base + i * IN, v = revealAt + i * OUT, dur = v + POP - a;
+        var dx = (first.cx - L.cx) / z;
+        var r = L.r * 0.6;
+        L.el.classList.add('is-on');
+        L.img.style.zIndex = 10 + i;
+        L.img.animate([
+          { transform: 'translateX(' + dx + 'px) rotate(' + (r - 20) + 'deg) scale(0)', offset: 0, easing: 'cubic-bezier(.2,.7,.3,1)' },
+          { transform: 'translateX(' + dx * 0.15 + 'px) rotate(' + (r + 4) + 'deg) scale(' + k * 1.12 + ')', offset: FLY * 0.65 / dur, easing: 'ease-in-out' },
+          { transform: 'translateX(0) rotate(' + r + 'deg) scale(' + k + ')', offset: FLY / dur },
+          { transform: 'translateX(0) rotate(' + r + 'deg) scale(' + k + ')', offset: (v - a) / dur, easing: 'cubic-bezier(.5,0,.9,.4)' },
+          { transform: 'translateX(0) rotate(' + r + 'deg) scale(0)', offset: 1 }
+        ], { duration: dur, delay: a, fill: 'both' }).onfinish = function (e) {
+          L.el.classList.remove('is-on'); L.img.style.zIndex = ''; e.target.cancel();
+        };
+        L.t.animate([
+          { transform: 'translateY(.12em) scale(.4)', opacity: 0 },
+          { transform: 'translateY(-.06em) scale(1.14)', opacity: 1, offset: 0.55 },
+          { transform: 'none', opacity: 1 }
+        ], { duration: 260, delay: v + 20, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'backwards' });
+        end = Math.max(end, v + 280);
+      });
+      // плашка ASILO стоит в строке после «получить» – выпрыгивает следом за последней буквой строки
+      var mk = h1.querySelector('.mark');
+      if (mk && R[R.length - 1].el.closest('.sk-line') === mk.closest('.sk-line') && mk.getBoundingClientRect().left > R[R.length - 1].cx) {
+        mk.animate([
+          { transform: 'rotate(-6deg) scale(.3)', opacity: 0 },
+          { transform: 'rotate(4deg) scale(1.08)', opacity: 1, offset: 0.6 },
+          { transform: 'rotate(2deg)', opacity: 1 }
+        ], { duration: 380, delay: revealAt + R.length * OUT, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'backwards' });
+      }
+    });
+    setTimeout(function () { entering = false; if (done) done(); }, end);
+  }
+
   function start() {
     measure();
-    if (reduce) return;
-    // Без заставки: текст виден сразу, через секунду волна проходит по строкам, потом повторяется, пока страницу не трогают
-    setTimeout(function () {
-      if (Date.now() - lastUser > 1000 && !busy) { busy = true; sweep(function () { busy = false; }); }
-      idleLoop();
-    }, 1000);
+    if (reduce) { document.documentElement.classList.remove('sk-wait'); return; }
+    // Появление, потом волна по строкам, которая повторяется, пока страницу не трогают
+    entrance(function () {
+      setTimeout(function () {
+        if (Date.now() - lastUser > 1000 && !busy) { busy = true; sweep(function () { busy = false; }); }
+        idleLoop();
+      }, 700);
+    });
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else addEventListener('load', start);
 })();
