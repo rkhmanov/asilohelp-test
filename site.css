@@ -56,6 +56,11 @@ section { position: relative; }
 .faces img { width: 52px; height: 52px; border-radius: 50%; border: 3px solid #fff; object-fit: cover; margin-right: -18px; }
 .faces img:last-child { margin-right: 0; }
 .faces { margin-right: 2px; }
+.faces, .faces img { flex-shrink: 0; } /* иначе на 600–1000 px кружки сжимались до невидимых */
+@media (min-width: 481px) and (max-width: 999px) {
+  .hero__row { flex-wrap: wrap; justify-content: center; row-gap: 8px; }
+  .hero__row .faces { flex-basis: 100%; justify-content: center; }
+}
 .mark { display: inline-block; background: var(--accent); color: #fff; border-radius: 26px; padding: 4px 22px 10px; transform: rotate(2deg); }
 .hero__lead { font-size: 17px; line-height: 1.55; color: #525252; }
 .hero__btns { display: flex; gap: 14px; margin-bottom: 8px; }
