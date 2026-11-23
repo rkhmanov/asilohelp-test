@@ -420,7 +420,9 @@ section { position: relative; }
 main, .foot { zoom: var(--z, 1); }
 /* телефон до 480 px: вся страница – это макет 390 (Figma «Главная · телефон 390»), увеличенный или уменьшенный под ширину экрана.
    --z = ширина/390 (скрипт в <head>), переносы строк везде как в макете. Шапка и нижнее меню масштабируются так же. */
-@media (max-width: 480px) { .m-header, .tabbar-lg { zoom: var(--z, 1); } html .tabbar-lg .lg-tab-bar { --lg-tab-width: calc((390px - 32px) / 5); } }
+@media (max-width: 480px) { .m-header, .tabbar-lg { zoom: var(--z, 1); } html .tabbar-lg .lg-tab-bar { --lg-tab-width: calc((390px - 32px) / 5); }
+  /* без «балансировки» строк: Figma переносит заголовки обычным способом, так сайт совпадает с макетом */
+  html .sh h2, html .news h2 { text-wrap: wrap; } }
 
 /* шапка: матовое стекло (как «Regular» в iOS 26), всегда видна; размер фиксирован как в макете 1440 — 1360×68 */
 .m-header--stay.is-hidden { transform: none; opacity: 1; pointer-events: auto; }
