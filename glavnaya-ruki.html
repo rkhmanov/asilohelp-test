@@ -13,9 +13,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="motion.css?v=17">
-<link rel="stylesheet" href="site.css?v=30">
+<link rel="stylesheet" href="site.css?v=31">
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
-<link rel="stylesheet" href="ruki.css?v=4">
+<link rel="stylesheet" href="ruki.css?v=5">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=9"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot')</script>
@@ -394,7 +394,7 @@
   const reel = document.getElementById('reel');
   document.querySelectorAll('.reviews__nav button').forEach(b => b.addEventListener('click', () => reel.scrollBy({ left: +b.dataset.dir * 275 * 2, behavior: 'smooth' })));
   // карточки услуг: переворот по нажатию (телефон) и с клавиатуры
-  document.querySelectorAll('.flip').forEach(f => { f.addEventListener('click', e => { if (e.target.closest('.flip__btn')) return; if (!matchMedia('(hover: hover)').matches) f.classList.toggle('is-flipped'); }); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f.classList.toggle('is-flipped'); } }); });
+  document.querySelectorAll('.flip').forEach(f => { f.addEventListener('click', e => { if (e.target.closest('.flip__btn')) return; if (!matchMedia('(hover: hover)').matches) { f.classList.toggle('is-flipped'); return; } const a = f.querySelector('.flip__btn--face'); if (a && innerWidth > 600) location.href = a.href; }); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f.classList.toggle('is-flipped'); } }); });
   if (!matchMedia('(hover: hover)').matches) document.querySelector('.flip-hint').textContent = 'Что входит – по нажатию на карточку';
   // отзывы: фото переворачивается и показывает текст (нажатие или Enter)
   document.querySelectorAll('.rv--flip').forEach(c => { c.addEventListener('click', () => c.classList.toggle('is-flipped')); c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.classList.toggle('is-flipped'); } }); });
@@ -409,6 +409,6 @@
     sync(); narrow.addEventListener('change', sync);
   });
 </script>
-<script src="ruki.js?v=5" defer></script>
+<script src="ruki.js?v=6" defer></script>
 </body>
 </html>
