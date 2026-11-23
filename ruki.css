@@ -1,0 +1,22 @@
+/* glavnaya-ruki.html — вариант главной: первый экран с руками из точек (ruki.js) поверх site.css */
+.hero--ruki { height: auto; padding: 190px 0 64px; overflow: hidden; }
+.hero--ruki .hero__stage { height: auto; display: flex; flex-direction: column; align-items: center; }
+.hero--ruki .hero__center { position: relative; z-index: 2; left: auto; top: auto; transform: none; margin: 0 auto; }
+.hero--ruki .hero__btns { margin-bottom: 0; }
+.hero--ruki .btn--outline { background: #fff; }
+/* полоса с руками: кончики пальцев сходятся чуть ниже кнопок, руки заходят под текст */
+.ruki { --tip: 200px; position: relative; z-index: 1; width: 100%; height: 360px; margin-top: calc(78px - var(--tip)); pointer-events: none;
+  opacity: 0; transition: opacity .6s; }
+.ruki.is-on { opacity: 1; }
+.ruki canvas { display: block; position: absolute; left: 0; top: 0; }
+.hero--ruki .hero__nums { position: relative; z-index: 2; justify-content: center; text-align: center; margin-top: -10px; }
+
+@media (max-width: 1100px) {
+  .hero--ruki { padding-top: 160px; }
+  .hero--ruki .hero__center { padding: 0 16px; }
+}
+@media (max-width: 600px) {
+  .hero--ruki { padding: 92px 0 28px; }
+  .ruki { margin-top: calc(64px - var(--tip)); }
+  .hero--ruki .hero__nums { width: 100%; padding: 0 16px; margin-top: -4px; }
+}
