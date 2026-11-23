@@ -230,7 +230,7 @@
   </section>
   <footer>asilohelp · карта анимаций · страница скрыта от поисковиков</footer>
 </main>
-<script src="../motion.js"></script>
+<script src="../motion.js?v=2"></script>
 <script>
   function replay(){ const els=[...document.querySelectorAll('#revDemo [data-reveal]')]; els.forEach(e=>e.classList.remove('is-shown')); requestAnimationFrame(()=>requestAnimationFrame(()=>els.forEach(e=>e.classList.add('is-shown')))); }
   function rePop(){ document.querySelectorAll('#popDemo .m-pop').forEach(e=>{ e.style.animation='none'; void e.offsetWidth; e.style.animation=''; }); }

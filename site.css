@@ -951,3 +951,5 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .reel-nav { bottom: -82px; }
   .reviews__foot .dots { visibility: hidden; }
 }
+/* шапка на компьютере уходит и возвращается плавно */
+@media (min-width: 601px) { .m-header { transition: transform .5s cubic-bezier(.2,.7,.2,1), opacity .4s ease; } }
