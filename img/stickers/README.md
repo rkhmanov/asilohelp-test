@@ -1,0 +1,6 @@
+# Стикеры для пробы «буквы-стикеры» (`hero-sticker.html`)
+
+Картинки — Microsoft Fluent Emoji, стиль 3D (https://github.com/microsoft/fluentui-emoji), лицензия MIT, © Microsoft Corporation.
+Исходники 256×256 PNG уменьшены до 200×200 и пересохранены в WebP (качество 82), 16 штук, всего около 70 КБ.
+
+Новый стикер: взять `assets/<Название>/3D/<название>_3d.png` из репозитория Fluent Emoji, уменьшить до 200 px, сохранить сюда как `<название-через-дефис>.webp` и добавить строку с подписью в список `S` в `hero-sticker.js`.
