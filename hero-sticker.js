@@ -1,8 +1,7 @@
 // Тестовая страница hero-sticker.html: буквы-стикеры на первом экране.
-// 1) Заставка: стикеры собираются в кольцо и улетают в заголовок, буквы проявляются.
-// 2) Курсор (или палец) над буквами прячет букву под стикер, соседние буквы дают «хвост» поменьше,
-//    под самым большим стикером подпись. На телефоне без касания эффект сам пробегает по строке раз в несколько секунд.
-// prefers-reduced-motion: без заставки и автопробега, стикеры появляются без пружины.
+// Курсор (или палец) над буквами прячет букву под стикер, соседние буквы дают «хвост» поменьше,
+//    под самым большим стикером подпись. Пока страницу не трогают, эффект сам проходит волной по всем строкам (кроме ASILO).
+// prefers-reduced-motion: без автопробега, стикеры появляются без пружины.
 (function () {
   'use strict';
   var h1 = document.querySelector('.sk-h');
@@ -33,7 +32,6 @@
     ['balance-scale', 'Юрист в команде', '⚖️'],
     ['rainbow-flag', 'Для ЛГБТ-людей', '🏳️‍🌈'],
     ['shield', 'Конфиденциально', '🛡️'],
-    ['tangerine', 'Испания', '🍊'],
     ['identification-card', 'Паспорт и документы', '🪪'],
     ['transgender-flag', 'Для транс-людей', '🏳️‍⚧️'],
     [null, 'Для геев', '👬'],
@@ -55,24 +53,17 @@
 
   // --- Разбиваем заголовок на буквы ---------------------------------------------------------
   var letters = [];
-  // Порядок стикеров по буквам: перемешан с постоянным зерном, соседние буквы получают разные стикеры
-  var order = (function () {
-    var seed = 7, rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
-    var out = [];
-    for (var pass = 0; pass < 4; pass++) {
-      var a = S.map(function (_, i) { return i; });
-      for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rnd() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
-      if (out.length && a[0] === out[out.length - 1]) a.push(a.shift());
-      out = out.concat(a);
-    }
-    return out;
-  })();
-  var markAt = -1; // буквы ASILO без стикеров: плашка остается как есть
+  // Порядок стикеров по буквам – задан вручную: первые стикеры про ЛГБТ и документы, дальше услуги вперемешку с парами
+  var ORDER = ['rainbow-flag', 'identification-card', 'airplane', '👬', 'page-facing-up', 'transgender-flag', 'speech-balloon', '👭',
+    'luggage', 'balance-scale', '👨‍❤️‍👨', 'classical-building', 'bookmark-tabs', '👩‍❤️‍👩', 'key', 'world-map', 'handshake',
+    'spiral-calendar', 'clipboard', 'open-book', 'shield'];
+  var order = ORDER.map(function (n) { return S.findIndex(function (x) { return x[0] === n || x[2] === n; }); })
+    .filter(function (i) { return i >= 0; });
   function split(node) {
     Array.prototype.slice.call(node.childNodes).forEach(function (n) {
       if (n.nodeType === 1) { split(n); return; }
       if (n.nodeType !== 3) return;
-      if (n.parentNode.closest('.mark')) { if (markAt < 0) markAt = letters.length; return; }
+      if (n.parentNode.closest('.mark')) return; // буквы ASILO без стикеров
       var frag = document.createDocumentFragment();
       n.textContent.split(/(\s+)/).forEach(function (word) {
         if (!word) return;
@@ -227,84 +218,14 @@
     }, 3000);
   }
 
-  // --- Заставка: кольцо из стикеров → в заголовок ----------------------------------------------
-  function intro() {
-    measure();
-    var hr = h1.getBoundingClientRect();
-    var cx = hr.left + hr.width / 2, cy = hr.top + hr.height / 2;
-    var vw = innerWidth, vh = innerHeight;
-    var R = Math.min(vw * 0.36, vh * 0.3, 300);
-    var size = Math.max(64, Math.min(130, R * 0.45));
-    var n = 12, ring = [];
-    fx.querySelectorAll('.sk-ring').forEach(function (e) { e.remove(); });
-    for (var i = 0; i < n; i++) {
-      var im = sticker(order[i], 'sk-ring');
-      im.style.width = im.style.height = size + 'px';
-      if (emoji) im.style.fontSize = (size * 0.82) + 'px';
-      var ang = -Math.PI / 2 + i / n * Math.PI * 2;
-      var x = cx + Math.cos(ang) * R - size / 2, y = cy + Math.sin(ang) * R - size / 2;
-      im.style.left = '0'; im.style.top = '0';
-      fx.appendChild(im);
-      ring.push({ el: im, x: x, y: y, r: Math.random() * 30 - 15 });
-    }
-    var T = 0;
-    ring.forEach(function (s, i) {
-      s.el.animate([
-        { transform: 'translate(' + s.x + 'px,' + s.y + 'px) scale(0) rotate(' + (s.r - 40) + 'deg)' },
-        { transform: 'translate(' + s.x + 'px,' + s.y + 'px) scale(1.12) rotate(' + (s.r + 6) + 'deg)', offset: 0.7 },
-        { transform: 'translate(' + s.x + 'px,' + s.y + 'px) scale(1) rotate(' + s.r + 'deg)' }
-      ], { duration: 420, delay: i * 70, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'both' });
-    });
-    T = n * 70 + 420 + 250;
-    // летим в буквы: равномерно по заголовку
-    ring.forEach(function (s, i) {
-      var L = letters[Math.round(i * (letters.length - 1) / (n - 1))];
-      var k = (L.em * 1.3) / size;
-      var tx = L.cx - size / 2, ty = L.cy - size / 2;
-      var mx = (s.x + tx) / 2 + (cx - (s.x + tx) / 2) * 0.35, my = (s.y + ty) / 2 + (cy - (s.y + ty) / 2) * 0.35;
-      s.el.animate([
-        { transform: 'translate(' + s.x + 'px,' + s.y + 'px) scale(1) rotate(' + s.r + 'deg)' },
-        { transform: 'translate(' + mx + 'px,' + my + 'px) scale(' + (1 + k) / 2 + ') rotate(' + (s.r * 0.5 + 20) + 'deg)', offset: 0.5 },
-        { transform: 'translate(' + tx + 'px,' + ty + 'px) scale(' + k + ') rotate(' + L.r + 'deg)', offset: 0.82 },
-        { transform: 'translate(' + tx + 'px,' + ty + 'px) scale(0) rotate(' + L.r + 'deg)' }
-      ], { duration: 900, delay: T + i * 35, easing: 'cubic-bezier(.6,0,.3,1)', fill: 'forwards' });
-    });
-    var reveal = T + 560;
-    letters.forEach(function (L, i) {
-      L.t.animate([
-        { opacity: 0, transform: 'translateY(.35em) scale(.6)' },
-        { opacity: 1, transform: 'translateY(-.04em) scale(1.06)', offset: 0.7 },
-        { opacity: 1, transform: 'none' }
-      ], { duration: 520, delay: reveal + i * 16, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'backwards' });
-    });
-    var mk = h1.querySelector('.mark');
-    if (mk) {
-      var first = Math.max(0, markAt);
-      mk.animate([
-        { opacity: 0, transform: 'rotate(-8deg) scale(.4)' },
-        { opacity: 1, transform: 'rotate(4deg) scale(1.08)', offset: 0.65 },
-        { opacity: 1, transform: 'rotate(2deg)' }
-      ], { duration: 560, delay: reveal + first * 16 - 120, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'backwards' });
-    }
-    var end = reveal + letters.length * 16 + 520;
-    if (hint) hint.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 400, delay: end, fill: 'backwards' });
-    setTimeout(function () {
-      fx.querySelectorAll('.sk-ring').forEach(function (e) { e.remove(); });
-      if (Date.now() - lastUser > 1500) { busy = true; sweep(function () { busy = false; }); }
-    }, end + 150);
-  }
-
-  var replay = document.querySelector('.sk-replay');
-  if (replay) replay.addEventListener('click', function () {
-    letters.forEach(function (L) { L.hold = 0; L.x = 0; L.v = 0; });
-    ptr = null; kick();
-    if (reduce) return;
-    lastUser = 0; intro();
-  });
-
   function start() {
     measure();
-    if (!reduce) { intro(); idleLoop(); }
+    if (reduce) return;
+    // Без заставки: текст виден сразу, через секунду волна проходит по строкам, потом повторяется, пока страницу не трогают
+    setTimeout(function () {
+      if (Date.now() - lastUser > 1000 && !busy) { busy = true; sweep(function () { busy = false; }); }
+      idleLoop();
+    }, 1000);
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else addEventListener('load', start);
 })();
