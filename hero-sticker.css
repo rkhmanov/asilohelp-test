@@ -1,4 +1,4 @@
-/* Проба «буквы-стикеры» (идея – motionsites.ai, «Sticker Type»). Только эта страница, главная не тронута.
+/* Буквы-стикеры (идея – motionsites.ai, «Sticker Type»). Пробные страницы hero-sticker*.html и главная на телефоне (блок в конце).
    Размеры – в координатах макета: телефон 390 и компьютер 1440, остальное масштабирует --z, как на главной. */
 .sk { position: relative; min-height: calc(100svh / var(--z, 1)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; padding: 120px 16px 90px; overflow: hidden; background: #F3F2EF; }
 .sk-h { --st-k: 2.3; --st: calc(var(--st-k) * 1em); font-weight: 500; font-size: 84px; line-height: 1.12; letter-spacing: -.03em; color: var(--ink-2); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -28,3 +28,15 @@
     }
 /* до появления заголовок спрятан, чтобы не мигал текст до старта анимации */
 .sk-wait .sk-h { visibility: hidden; }
+
+/* Главная (index.html, <h1 data-sk="phone">): эмодзи-стикеры только на телефоне, на компьютере руки (ruki.css).
+   Вместо кружков с лицами – стикеры, заголовок крупнее. touch-action: pan-y – страницу можно листать пальцем по заголовку. */
+.sk-mbr { display: none; }
+@media (max-width: 480px) {
+  .hero h1[data-sk] { --st-k: 2.8; --st: calc(var(--st-k) * 1em); font-size: 33px; line-height: 1.14; gap: 2px;
+                      user-select: none; -webkit-user-select: none; touch-action: pan-y; cursor: default; }
+  .hero h1[data-sk] .faces { display: none; }
+  .hero h1[data-sk] .hero__row { gap: 0 10px; }
+  .sk-mbr { display: inline; }
+  .sk-wait .hero h1[data-sk] { visibility: hidden; }
+}

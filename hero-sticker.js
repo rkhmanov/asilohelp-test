@@ -4,9 +4,13 @@
 // prefers-reduced-motion: без автопробега, стикеры появляются без пружины.
 (function () {
   'use strict';
-  var h1 = document.querySelector('.sk-h');
-  var hint = document.querySelector('.sk-hint');
+  // Главная (index.html): <h1 data-sk="phone"> – стикеры только на телефоне (до 480 px), на компьютере там руки
+  var h1 = document.querySelector('.sk-h, [data-sk]');
   if (!h1) return;
+  var phoneOnly = h1.getAttribute('data-sk') === 'phone';
+  var phoneMq = matchMedia('(max-width: 480px)');
+  if (phoneOnly && !phoneMq.matches) { document.documentElement.classList.remove('sk-wait'); return; }
+  var off = function () { return phoneOnly && !phoneMq.matches; }; // телефон повернули – эффект выключаем
 
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -147,7 +151,7 @@
     }
     if (active) requestAnimationFrame(frame); else running = false;
   }
-  function kick() { if (entering) return; if (!running) { running = true; requestAnimationFrame(frame); } }
+  function kick() { if (entering) return; if (off()) { ptr = null; } if (!running) { running = true; requestAnimationFrame(frame); } }
 
   // Мышь: следим по всей странице, эффект включается, только когда курсор рядом с буквами
   addEventListener('pointermove', function (e) {
@@ -201,7 +205,7 @@
   function idleLoop() {
     if (reduce) return;
     setTimeout(function () {
-      if (!document.hidden && Date.now() - lastUser > 4000 && !busy) { busy = true; sweep(function () { busy = false; }); }
+      if (!document.hidden && !off() && Date.now() - lastUser > 4000 && !busy) { busy = true; sweep(function () { busy = false; }); }
       idleLoop();
     }, 3000);
   }
@@ -250,8 +254,8 @@
         end = Math.max(end, v + 280);
       });
       // плашка ASILO стоит в строке после «получить» – выпрыгивает следом за последней буквой строки
-      var mk = h1.querySelector('.mark');
-      if (mk && R[R.length - 1].el.closest('.sk-line') === mk.closest('.sk-line') && mk.getBoundingClientRect().left > R[R.length - 1].cx) {
+      var mk = h1.querySelector('.mark'), mr = mk && mk.getBoundingClientRect();
+      if (mk && Math.abs(mr.top + mr.height / 2 - R[0].cy) < R[0].em * 0.6 && mr.left > R[R.length - 1].cx) {
         mk.animate([
           { transform: 'rotate(-6deg) scale(.3)', opacity: 0 },
           { transform: 'rotate(4deg) scale(1.08)', opacity: 1, offset: 0.6 },
@@ -268,7 +272,7 @@
     // Появление, потом волна по строкам, которая повторяется, пока страницу не трогают
     entrance(function () {
       setTimeout(function () {
-        if (Date.now() - lastUser > 1000 && !busy) { busy = true; sweep(function () { busy = false; }); }
+        if (!off() && Date.now() - lastUser > 1000 && !busy) { busy = true; sweep(function () { busy = false; }); }
         idleLoop();
       }, 700);
     });
