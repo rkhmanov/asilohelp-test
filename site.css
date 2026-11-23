@@ -906,27 +906,6 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .m-header--stay.is-hidden { transform: translateY(calc(-100% - 16px)); opacity: 0; pointer-events: none; }
 }
 @media (min-width: 1101px) {
-  /* 3 · «Мы справимся» + «Оценим шансы» — в один экран 1440×800 */
-  .who { padding: 24px 0 16px; }
-  .who .sh h2 span { display: inline; }
-  .who .sh h2 span::before { content: ' '; }
-  .who .sh h2 { font-size: 40px; white-space: nowrap; }
-  .who .sh p { margin-top: 12px; max-width: 1000px; font-size: 15px; }
-  .tiles3 { margin-top: 26px; gap: 14px; }
-  .tile { padding: 16px 18px 18px; min-height: 0; }
-  .who .mini { height: 104px; }
-  .who .mini .basis { zoom: .62; top: 10px; }
-  .who .mini .chron { zoom: .78; top: 14px; }
-  .tile__head { margin-top: 12px; height: 40px; }
-  .tile__head h3 { font-size: 22px; }
-  .tile > p { margin-top: 8px; line-height: 1.5; }
-  .dark { margin-top: 14px; min-height: 0; height: 310px; }
-  .dark__art { zoom: .76; }
-  .dark__text { padding: 26px 40px 0 65px; }
-  .dark h3 { margin-top: 10px; font-size: 34px; }
-  .dark__text > p { margin-top: 10px; }
-  .facts { margin-top: 14px; }
-  .dark__bottom { height: 84px; }
   /* 5–7 · отзывы → бесплатные материалы → база знаний: меньше пустоты между блоками */
   .reviews { padding: 72px 0 40px; }
   .free { padding: 130px 0 100px; }
@@ -954,4 +933,21 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 }
 @media (min-width: 601px) and (max-width: 1100px) {
   .help, .free { margin-inline: 16px; border-radius: 32px; }
+}
+
+/* компьютер (правки Саши 23.11, ночь): вся карточка услуги – ссылка; без переключения visibility (из-за него при быстром проходе мышью карточки пропадали) */
+@media (min-width: 601px) and (hover: hover) {
+  .flip { cursor: pointer; }
+  .flip__front, .flip__back { visibility: visible !important; transition: box-shadow .5s ease; }
+  .flip__front { transform: rotateY(0deg) translateZ(1px); }
+  .flip__back { transform: rotateY(180deg) translateZ(1px); }
+}
+/* компьютер: тонкая черта по 39€, «бесплатно» наклейкой на правом краю цены (как на телефоне) */
+@media (min-width: 601px) {
+  .price s::after { height: 1.5px; border-radius: 1px; background: rgba(255,255,255,.9); left: -4px; right: -4px; }
+}
+/* компьютер: стрелки ленты отзывов не лежат на фото – стоят под лентой справа, вместо точек */
+@media (min-width: 601px) {
+  .reel-nav { bottom: -82px; }
+  .reviews__foot .dots { visibility: hidden; }
 }
