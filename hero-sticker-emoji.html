@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Проба: буквы-эмодзи на первом экране · asilohelp (тестовая версия)</title>
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css?v=27">
+<script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
+<script type="module" src="glass.js?v=9"></script>
+<script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.6):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js')</script>
+<link rel="stylesheet" href="hero-sticker.css?v=1">
+<!-- Вариант hero-sticker.html с системными эмодзи вместо картинок: на iPhone видны эмодзи Apple -->
+</head>
+<body>
+
+<header class="m-header m-header--stay">
+  <div class="hdr">
+    <a class="hdr__logo" href="index.html" aria-label="asilohelp – на главную"><img src="img/logo.svg" alt="asilohelp" width="197" height="32"></a>
+    <nav aria-label="Меню">
+      <a href="index.html#help" data-nav="services">Услуги <img src="img/chevron.svg" alt="" width="8" height="4"></a>
+      <a href="stati.html">Статьи</a>
+      <a href="o-nas.html">О нас</a>
+      <a href="voprosy.html">Вопросы</a>
+    </nav>
+    <div class="hdr__cta">
+      <a class="hdr__bot m-btn" href="https://t.me/ASILOhelperBot?start=site_header" target="_blank" rel="noopener">Telegram-бот</a>
+      <a class="hdr__main m-btn m-btn--accent" href="index.html#apply">Оценить шансы</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="sk">
+  <h1 class="sk-h" data-emoji>
+    <span class="sk-line">Поможем <br class="sk-br">ЛГБТ‑людям</span>
+    <span class="sk-line">получить <span class="mark">ASILO</span></span>
+    <span class="sk-line">в Испании</span>
+  </h1>
+  <p class="sk-hint"><span class="d">Проведите курсором по буквам</span><span class="t">Проведите пальцем по буквам</span></p>
+  <button class="sk-replay" type="button">Повторить заставку</button>
+</section>
+</main>
+
+<div class="sk-fx" aria-hidden="true"><div class="sk-cap"></div></div>
+<script src="hero-sticker.js?v=2"></script>
+</body>
+</html>

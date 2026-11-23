@@ -33,9 +33,19 @@
     ['shield', 'Конфиденциально'],
     ['tangerine', 'Испания']
   ];
+  // Вариант hero-sticker-emoji.html (<h1 data-emoji>): вместо картинок системные эмодзи –
+  // на iPhone и Mac это эмодзи Apple, на Android – Google, на Windows – Microsoft. Картинок не грузим.
+  var E = ['💬', '📋', '📄', '📑', '🗺️', '📖', '🗓️', '✈️', '🧳', '🏛️', '🔑', '🤝', '⚖️', '🏳️‍🌈', '🛡️', '🍊'];
+  var emoji = h1.hasAttribute('data-emoji');
   var src = function (i) { return 'img/stickers/' + S[i][0] + '.webp'; };
   // Заранее грузим картинки, чтобы стикер не мигал пустым местом при первом наведении
-  S.forEach(function (_, i) { var im = new Image(); im.src = src(i); });
+  if (!emoji) S.forEach(function (_, i) { var im = new Image(); im.src = src(i); });
+  function sticker(k, cls) {
+    var e;
+    if (emoji) { e = document.createElement('span'); e.className = 'sk-e' + (cls ? ' ' + cls : ''); e.textContent = E[k]; }
+    else { e = document.createElement('img'); e.src = src(k); e.alt = ''; e.decoding = 'async'; e.draggable = false; if (cls) e.className = cls; }
+    return e;
+  }
 
   // --- Разбиваем заголовок на буквы ---------------------------------------------------------
   var letters = [];
@@ -58,8 +68,7 @@
           t.textContent = ch;
           c.appendChild(t);
           var k = order[letters.length % order.length];
-          var img = document.createElement('img');
-          img.src = src(k); img.alt = ''; img.decoding = 'async'; img.draggable = false;
+          var img = sticker(k);
           c.appendChild(img);
           w.appendChild(c);
           // r — наклон стикера, d — сдвиг вверх; x — текущее значение 0..1, v — скорость пружины, hold — «хвост»
@@ -201,9 +210,9 @@
     var n = 12, ring = [];
     fx.querySelectorAll('.sk-ring').forEach(function (e) { e.remove(); });
     for (var i = 0; i < n; i++) {
-      var im = document.createElement('img');
-      im.className = 'sk-ring'; im.alt = ''; im.src = src(order[i]);
+      var im = sticker(order[i], 'sk-ring');
       im.style.width = im.style.height = size + 'px';
+      if (emoji) im.style.fontSize = (size * 0.82) + 'px';
       var ang = -Math.PI / 2 + i / n * Math.PI * 2;
       var x = cx + Math.cos(ang) * R - size / 2, y = cy + Math.sin(ang) * R - size / 2;
       im.style.left = '0'; im.style.top = '0';
