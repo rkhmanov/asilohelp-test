@@ -1,18 +1,22 @@
 /* Главная на телефоне (до 600 px) по макету Figma «Главная · телефон 390» (узел 4719:2), 23.11.2026.
    Компьютер этот файл не трогает. Размеры – в координатах макета 390, до 480 px страницу масштабирует --z. */
 .hm { display: contents; }
+.tel { display: none; }
 @media (max-width: 600px) {
   .hm { display: none; }
+  /* .tel – только телефон (макет «ФИНАЛ · телефон 390», 4762:5035), .notel – все, кроме телефона */
+  .tel { display: inline; } em.tel, p.tel { display: block; } .notel { display: none !important; }
 
   /* 1 · первый экран: одна кнопка, подписи под цифрами короче */
   /* Саша 23.11 вечером: воздух под шапкой, кнопка компактнее, цифры по центру, первый экран до «Как мы помогаем» как раньше */
-  .hero { padding-top: 115px; padding-bottom: 80px; }
+  /* 24.11 по макету «ФИНАЛ»: заголовок с 137 px, абзац ниже, кнопка 45 px, цифры с 534 px, синяя плашка с 660 px */
+  .hero { padding-top: 137px; padding-bottom: 62px; }
   .hero__kb { display: none; }
   .hero__center { gap: 20px; }
-  .hero__lead { line-height: 20.3px; }
-  .hero__btns { margin: 4px 0 6px; width: auto; }
-  .hero__btns .btn { width: auto; height: 48px; padding: 0 34px; font-size: 15px; }
-  .hero__nums { gap: 16px; justify-content: center; } .hero__nums div { width: 101px; flex: none; }
+  .hero__lead { line-height: 23px; margin-top: 19px; }
+  .hero__btns { margin: -18px 0 0; width: auto; }
+  .hero__btns .btn { width: auto; height: 45px; padding: 0 30px; font-size: 15px; }
+  html .hero--ruki .hero__nums { gap: 16px; justify-content: center; margin-top: 53px; left: 0; } .hero__nums div { width: 101px; flex: none; }
   .hero__nums span { line-height: 14.85px; }
 
   /* 2 · «Как мы помогаем»: названия услуг крупно по слогам, слева сверху */
@@ -22,36 +26,45 @@
   .help__more { margin-top: 12px; font-size: 15px; line-height: normal; }
   .help__more a { display: block; }
 
-  /* 3 · «Мы справимся»: плитки-аккордеон, у каждой свой большой угол; нажатие по плитке раскрывает и сворачивает */
-  .tile { background: #F5F5F7; padding: 18px 18px 18px 20px; cursor: pointer; }
-  .tiles3 .tile:nth-child(1) { border-radius: 16px 38px 16px 16px !important; }
-  .tiles3 .tile:nth-child(2) { border-radius: 38px 16px 38px 16px !important; }
-  .tiles3 .tile:nth-child(3) { border-radius: 16px 16px 16px 38px !important; }
-  .tiles3 .tile.is-open { padding: 24px; }
-  .tiles3 .tile.is-open:nth-child(1) { border-radius: 16px 68px 16px 16px !important; }
-  .tiles3 .tile.is-open:nth-child(2) { border-radius: 68px 16px 68px 16px !important; }
-  .tiles3 .tile.is-open:nth-child(3) { border-radius: 16px 16px 16px 68px !important; }
+  /* 3 · «Мы справимся»: по макету «ФИНАЛ» три карточки сразу открыты, у каждой свой большой угол */
+  .tiles3 { gap: 12px; margin-top: 30px; }
+  .tiles3 .tile { background: #F5F5F7; padding: 24px; cursor: default; }
+  .tiles3 .tile:nth-child(1) { border-radius: 16px 68px 16px 16px !important; }
+  .tiles3 .tile:nth-child(2) { border-radius: 68px 16px 68px 16px !important; }
+  .tiles3 .tile:nth-child(3) { border-radius: 16px 16px 16px 68px !important; }
+  .tiles3 .tile .mini { display: block !important; height: 210px; }
+  .tiles3 .tile:nth-child(1) .mini { border-radius: 10px 44px 10px 10px; } .tiles3 .tile:nth-child(2) .mini { border-radius: 44px 10px 10px 10px; }
+  .tiles3 .tile:nth-child(3) .mini { border-radius: 10px; background: #fff; height: 174px; margin: -16px -16px 0; }
+  .tiles3 .tile__head { margin-top: 24px; min-height: 0; cursor: default; }
+  .tiles3 .tile:nth-child(3) .tile__head { margin-top: 13px; }
   .tile__head h3 { font-size: 20px; letter-spacing: -.8px; }
-  .tile__head img { display: none; }
-  .tile__head::after { content: ''; flex: none; width: 36px; height: 36px; border-radius: 50%;
-    background: linear-gradient(#fff, #fff) center / 14px 2px no-repeat, linear-gradient(#fff, #fff) center / 2px 14px no-repeat, #25262A; }
-  .tile.is-open .mini { display: block; height: 210px; }
-  .tile.is-open .tile__head { margin-top: 24px; }
-  .tile.is-open .tile__head::after { display: none; }
-  .tile:nth-child(1) .mini { border-radius: 10px 44px 10px 10px; } .tile:nth-child(2) .mini { border-radius: 44px 10px 10px 10px; } .tile:nth-child(3) .mini { border-radius: 10px; }
+  .tile__head img, .tile__head::after { display: none !important; }
   .tile .basis { left: 53px; top: 12px; }
-  .tile.is-open > p { margin-top: 20px; font-size: 13px; line-height: 20.8px; color: #66666B; }
+  .tiles3 .tile > p { display: block !important; margin-top: 10px; font-size: 13px; line-height: 20.8px; color: #66666B; }
 
   /* 4 · «Мы сами прошли этот путь»: без белой точки на красной плитке */
   .b--red .dot { display: none; }
+  /* «187» длиннее: два абзаца из макета (на компьютере они в .only-d) */
+  .b--red .b--red__more { display: block !important; margin-top: 14px; } .b--red .b--red__more br { display: none; }
+  /* «Команда»: «11» крупно справа, под ним «человек»; «Подробнее о нас ↗» – простая ссылка */
+  .crew__top { position: relative; display: block; }
+  .crew__n { position: absolute; right: 0; top: -26px; display: flex; flex-direction: column; align-items: flex-end; line-height: 1; }
+  .crew__n b { font-size: 72px; line-height: 89px; letter-spacing: -1.7px; margin: 0; }
+  .crew__n { font-size: 14px; } 
+  .b--crew .crew__more { background: none !important; padding: 0; gap: 6px; font-size: 14px; margin-top: 6px; }
+  .b--crew .crew__more img { content: url(img/arrow-small-white.svg); width: 8px; height: 8px; }
 
   /* 12 · «Оценим шансы»: колонки фактов как в макете */
   .facts { gap: 12px; justify-content: space-between; }
   /* тонкая черта по 39€ (Саша 23.11) */
+  .dark__bottom { flex-wrap: nowrap; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 0 24px; }
+  .dark .btn--white { flex: none; width: 201px; height: 56px; justify-content: space-between; }
+  .price__row { position: relative; }
+  .price em { left: -10px; top: 50%; transform: translateY(-10%) rotate(-6deg); padding: 0 12px; height: 17px; line-height: 17px; font-size: 14px; border-radius: 8px; box-shadow: 0 6px 18px -6px rgba(60,8,18,.6); }
   .price s::after { height: 1.5px; border-radius: 1px; background: rgba(255,255,255,.9); left: -4px; right: -4px; }
 
   /* 5 · отзывы: ссылка «Читать все 27 отзывов» слева от стрелок, без подписи */
-  .reviews__foot, .lg .reviews__foot { position: relative; margin-top: -81px; pointer-events: none; }
+  .reviews__foot, .lg .reviews__foot { position: relative; margin-top: -36px; pointer-events: none; }
   .reviews { padding-bottom: 36px; }
   .reviews__foot p { font-size: 0; line-height: 0; } .reviews__foot p br { display: none; }
   .reviews__foot .reviews__all { pointer-events: auto; margin-left: 11px; font-size: 15px; line-height: 21px; }
@@ -71,7 +84,6 @@
 
   /* 7 · база знаний: без вводного абзаца в карточке */
   .kb__lead { display: none; }
-  .kb__nums { margin-top: 100px; }
 
   /* 9 · вопросы: свои углы у каждой плитки, кнопка «Все 26 вопросов» под вопросами */
   .faq__grid { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
@@ -86,4 +98,27 @@
 
   /* 10 · кнопка бота: «Оставьте заявку в @ASILOhelperBot» */
   .tg__txt b { font-weight: 400; line-height: 18.2px; }
+}
+
+/* Макет «ФИНАЛ · телефон 390» (Figma 4762:5035, Саша 24.11.2026): сплошные красные плашки вместо зерна,
+   карточка с экранами базы знаний, «удобнее в telegram?» у кнопки бота */
+@media (max-width: 600px) {
+  .help, .free { background: #A02538 !important; border-radius: 40px; overflow: hidden; position: relative; }
+  .help { padding: 56px 0 40px; }
+  .free { padding: 28px 0 40px; margin-top: 10px; }
+  .help::before, .help::after, .free::before, .free::after { content: ''; position: absolute; right: auto; bottom: auto; border-radius: 50%; pointer-events: none; z-index: 0; }
+  .help::before, .free::before { left: -150px; top: 479px; width: 420px; height: 420px; background: rgba(255,255,255,.06); }
+  .free::before { top: 645px; }
+  .help::after, .free::after { left: 220px; top: -120px; width: 320px; height: 320px; background: rgba(255,255,255,.05); }
+  .who { padding-top: 86px; }
+
+  .kb { padding-top: 34px; } .kb .sh p { display: none; } .kb .kb__box { margin-top: 18px; }
+  .kb__box--v2 { padding: 30px 20px 22px; }
+  .kb__box--v2 .kb__nums { margin-top: 14px; }
+  .kb__box--v2 .fl--inside, .kb__box--v2 .fl--timeline { display: none !important; }
+  .kb__box--v2 .fl--screens { display: block !important; order: 4; position: static; transform: none !important; animation: none; width: 337px; max-width: calc(100% + 28px); margin: 25px -14px 0; padding: 11px 18px 12px; border-radius: 32px; box-shadow: 0 32px 72px -24px rgba(33,33,33,.28); }
+  .kb__box--v2 .fl--screens img { display: block; width: 100%; height: 197px; object-fit: cover; border-radius: 19px; }
+  .kb__box--v2 > .btn { margin-top: 15px; }
+
+  .tg__q { font-style: normal; font-weight: 600; font-size: 14px; line-height: 1.2; color: var(--ink); }
 }
