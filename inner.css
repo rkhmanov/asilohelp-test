@@ -1,7 +1,8 @@
 /* asilohelp — общие блоки внутренних страниц (услуги, статьи, «О нас»).
    Подключается после site.css: шапка, подвал, кнопки, .sh, .dark, .q, форма заявки берутся оттуда.
    Блоки: .ph (первый экран с зерном), .crumbs, .sec, .steps, .stk (стикеры), .plans, .band (темная полоса с ценой),
-   .gets (что получите), .team, .guar, .acc (вопросы-аккордеон), .ptable (таблица пакетов), .tl (таймлайн), .alt (другие услуги). */
+   .gets (что получите), .team, .guar, .acc (вопросы-аккордеон), .ptable (таблица пакетов), .tl (таймлайн), .alt (другие услуги),
+   .plans--sopr (тарифы сопровождения). */
 
 /* ── 1. Первый экран: бордовое зерно, белый текст, фото справа ── */
 .ph { position: relative; color: #fff; background: linear-gradient(180deg, rgba(146,30,50,.9), rgba(156,42,62,.35) 45%, rgba(146,30,50,.6)), #9c2a3e url(img/bg-dust.jpg) center 30% / cover no-repeat; border-radius: 0 0 48px 48px; overflow: hidden; }
@@ -230,6 +231,20 @@ ul.note { display: grid; gap: 6px; padding-left: 18px; list-style: disc; }
 .ptable--hl3 thead tr > *:nth-child(4) { border-radius: 20px 20px 0 0; }
 .ptable__pop { display: inline-block; margin-bottom: 10px; background: var(--accent); color: #fff; border-radius: 999px; padding: 5px 10px; font-style: normal; font-weight: 500; font-size: 11px; white-space: nowrap; }
 @media (max-width: 600px) { .ptable__pop { display: block; font-size: 8px; padding: 3px 6px; white-space: normal; margin-bottom: 6px; } .ptable--hl3 thead th { vertical-align: bottom; } }
+
+/* ── 16. Тарифы сопровождения: 4 карточки с общим списком из 12 пунктов, не входящие – серые ── */
+.plans--sopr { gap: 14px; }
+.plans--sopr .plan { padding: 26px 22px 22px; }
+.plans--sopr .ticks { gap: 9px; margin-top: 0; font-size: 13px; line-height: 1.4; }
+.plans--sopr .plan__tag { white-space: nowrap; font-size: 10.5px; padding: 6px 10px; max-width: 100%; }
+.plan__tag--acc { background: var(--accent); color: #fff; }
+.plan__tag--none { visibility: hidden; }
+.ticks li.off { color: #A9AAB2; }
+.ticks li.off::before { background: #E3E3E8; }
+.plan--main .ticks li.off { color: rgba(255,255,255,.5); }
+.plan--main .ticks li.off::before { background: rgba(255,255,255,.2); }
+.plan__price sup { font-size: .45em; vertical-align: top; margin-left: 2px; letter-spacing: 0; }
+@media (max-width: 600px) { .plan__tag--none { display: none; } }
 
 /* ── планшет и телефон ── */
 @media (max-width: 1100px) {
