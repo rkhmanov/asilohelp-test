@@ -17,9 +17,10 @@
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <link rel="stylesheet" href="ruki.css?v=5">
 <link rel="stylesheet" href="hero-sticker.css?v=8">
-<link rel="stylesheet" href="glavnaya-telefon.css?v=5">
+<link rel="stylesheet" href="glavnaya-telefon.css?v=6">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=10"></script>
+<script>(function(){var r=document.documentElement,lw=0;function v(){var w=innerWidth;if(w===lw)return;lw=w;r.style.setProperty('--vh-z',Math.round(innerHeight/(w<=480?w/390:1))+'px');}v();addEventListener('resize',v);})();</script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.2):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot');if(innerWidth<=480&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('sk-wait');setTimeout(function(){document.documentElement.classList.remove('sk-wait')},4000)}</script>
 <style>.shot *,.shot *::before{transition:none!important;animation:none!important} @media (max-width:700px){.br-d{display:none}} .scr, .fl { transform: rotate(var(--rot, 0deg)); } @media (max-width: 1100px) { .fl--inside { animation: none; } }</style>
 </head>
@@ -97,7 +98,7 @@
       </div>
     </div>
     <p class="flip-hint">Что входит – при наведении на карточку</p>
-    <p class="help__more" data-reveal><span>Не знаете, что выбрать?</span> <a class="help__more-btn" href="#apply"><span class="only-m">Оставьте заявку, подскажем</span><span class="only-d">Оставить заявку</span><span class="help__arr"> →</span></a></p>
+    <p class="help__more" data-reveal><span>Не знаете, что выбрать?</span> <a class="help__more-btn" href="#apply"><span class="only-m notel">Оставьте заявку, подскажем</span><span class="only-d">Оставить заявку</span><span class="tel">Оставить заявку</span><span class="help__arr notel"> →</span></a></p>
   </div>
 </section>
 
@@ -105,7 +106,7 @@
 <section class="who">
   <div class="wrap">
     <div class="sh sh--sm" data-reveal><h2>Мы справимся,<span>даже если кейс кажется слабым</span></h2>
-      <p><span class="notel">Защиту дают не только активистам. Но если вы</span><span class="tel">Если вы</span> не подвергались открытому преследованию, то важно быть особенно внимательным при&nbsp;работе над кейсом. Мы работаем именно с такими случаями.</p></div>
+      <p><span class="notel">Защиту дают не только активистам. Но если вы</span><span class="tel">Если вы</span> не подвергались открытому преследованию, то важно быть особенно внимательным<br class="tel"> при&nbsp;работе над кейсом. Мы работаем именно с такими случаями.</p></div>
     <div class="tiles3" data-reveal-group="0.08">
       <article class="tile m-card" data-acc data-reveal>
         <div class="mini"><div class="basis"><small>ОСНОВАНИЕ ДЛЯ ЗАЩИТЫ</small><b>ориентация</b><em>и гендерная идентичность, Ley 4/2023</em></div></div>
@@ -133,8 +134,8 @@
       </div>
       <div class="dark__text">
         <span class="pill-dark">Первый шаг</span>
-        <h3>Оценим шансы на успех</h3>
-        <p>Расскажете о ситуации, а мы скажем, подходит ли вам защита и с чего начать. Быть активистом или журналистом не нужно.</p>
+        <h3>Оценим шансы на&nbsp;успех</h3>
+        <p>Расскажете о ситуации, а мы скажем, подходит ли вам защита<br class="tel"> и с чего начать. Быть активистом или журналистом не нужно.</p>
         <div class="facts"><div><small>ФОРМАТ</small><span>онлайн<span class="hm">-созвон</span></span></div><div><small>ЯЗЫК</small><span>русский</span></div><div><small>КОГДА</small><span>пн–пт</span></div></div>
         <div class="dark__bottom">
           <div class="price"><small>СТОИМОСТЬ</small><span class="price__row"><s>39€</s><em>бесплатно</em></span></div>
@@ -153,9 +154,9 @@
     <div class="bento" data-reveal-group="0.08">
       <div class="b b--red" data-reveal>
         <div class="big big--xl" data-count="187">187</div>
-        <p>человека переехали в Испанию <br>и запросили защиту вместе с нами.</p>
-        <p class="only-d b--red__more">за 4 года мы не получили ни одного <br>отказа как в шенгенской визе, так <br>и при подаче на беженство</p>
-        <p class="only-d b--red__more b--red__more2">Вместе с нами переезжают одиночки, пары, семьи с детьми и домашними животными. Все они начали жизнь с нуля</p>
+        <p><span class="notel">человека переехали в Испанию <br>и запросили защиту вместе с нами.</span><span class="tel">человека переехали<br class="tel"> в Испанию и запросили защиту вместе с нами.</span></p>
+        <p class="only-d b--red__more">за 4 года мы не получили<br class="tel"> ни одного <br class="notel">отказа как<br class="tel"> в шенгенской визе, так<br class="tel"> <br class="notel">и при подаче на беженство</p>
+        <p class="only-d b--red__more b--red__more2">Вместе с нами переезжают одиночки, пары, семьи<br class="tel"> с детьми и домашними животными. Все они<br class="tel"> начали жизнь с нуля</p>
         <a class="link" href="#reviews">Отзывы о нашей работе <img class="only-m" src="img/arrow-small-white.svg" alt="" width="8" height="8"><img class="only-d m-arrow" src="img/arrow-white46.svg" alt="" width="40" height="40"></a>
         <div class="stack" aria-hidden="true"><i></i><i></i>
           <div class="status"><small>ВАШ СТАТУС</small><b>protección</b><span>международная защита</span><div class="bar"><i></i></div><em>карта резидента на 5 лет</em></div></div>
@@ -183,8 +184,8 @@
       </div>
       <div class="trust__col">
         <h3>Конфиденциально</h3>
-        <p>Не передаем ваши данные третьим лицам и храним их на защищенных серверах. Работа с нами не нарушает законы России.</p>
-        <a href="privacy.html">Политика конфиденциальности →</a>
+        <p>Не передаем ваши данные третьим лицам и храним их на защищенных серверах. Работа с нами<br class="tel"> не нарушает законы России.</p>
+        <a class="notel" href="privacy.html">Политика конфиденциальности →</a>
       </div>
       <div class="doc" aria-hidden="true"><b>Договор об оказании услуг</b><i></i><i></i><i style="width:120px"></i><span>Подписан</span></div>
     </div>
@@ -244,7 +245,7 @@
     <a class="rv rv--more" href="otzyvy.html" draggable="false"><b>27</b>отзывов целиком →</a>
   </div>
   <div class="wrap reviews__foot">
-    <p>Это реальные люди: отзывы пришли нам после консультаций, работы над кейсом и сопровождения.<br><a class="reviews__all" href="otzyvy.html">Читать все 27 отзывов →</a></p>
+    <p>Это реальные люди: отзывы пришли нам после консультаций, работы над кейсом и сопровождения.<br><a class="reviews__all" href="otzyvy.html">Читать все отзывы →</a></p>
     <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
   </div>
 </section>
@@ -310,7 +311,7 @@
 <!-- 8 · Главные новости и материалы -->
 <section class="news" id="news">
   <div class="wrap">
-    <h2 data-reveal>Главные новости и материалы<span>статьи и гайды</span></h2>
+    <h2 data-reveal>Главные новости<br class="tel"> и материалы<span>статьи и гайды</span></h2>
     <div class="news__grid" data-reveal-group="0.08">
       <a class="lead-art m-card m-photo" href="stati/lgbt-ubezhishche-gid.html" data-reveal>
         <img src="img/rv-oldtown.jpg" alt="">
@@ -419,6 +420,13 @@
   // карточки услуг: подсветка идет за курсором
   document.querySelectorAll('.flip').forEach(f => f.addEventListener('pointermove', e => { const r = f.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width * 100; f.style.setProperty('--mx', x.toFixed(1) + '%'); }));
   // отзывы: фото переворачивается и показывает текст (нажатие или Enter)
+  // Телефон: короткие предлоги и союзы не висят в конце строки, тире не начинает строку (Саша 24.11, как в макете)
+  if (matchMedia('(max-width: 600px)').matches) {
+    const short = /(^|[\s(«"„])(в|во|с|со|к|ко|и|а|о|об|обо|у|на|не|ни|за|по|до|из|от|для|при|без|над|под|про|но|да)\s+(?=[^\s–—-])/gi;
+    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement.closest('script, style, [data-sk], textarea, .tabbar-lg, .hdr') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+    const list = []; while (w.nextNode()) list.push(w.currentNode);
+    list.forEach(t => { let v = t.nodeValue, o; do { o = v; v = v.replace(short, '$1$2\u00A0'); } while (v !== o); v = v.replace(/ ([–—]) /g, '\u00A0$1 '); if (v !== t.nodeValue) t.nodeValue = v; });
+  }
   // Перезагрузка не кидает вниз (Саша 24.11): ссылки-якоря не пишут #… в адрес, браузер не восстанавливает прокрутку сам
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   if (location.hash) setTimeout(() => history.replaceState(null, '', location.pathname + location.search), 0);
@@ -436,7 +444,19 @@
   document.querySelectorAll('[data-acc]').forEach(card => {
     const head = card.querySelector('.tile__head, h3');
     const sync = () => { if (narrow.matches) { head.setAttribute('role', 'button'); head.tabIndex = 0; head.setAttribute('aria-expanded', card.classList.contains('is-open')); } else { head.removeAttribute('role'); head.removeAttribute('tabindex'); head.removeAttribute('aria-expanded'); } };
-    const toggle = () => { if (!narrow.matches) return; card.classList.toggle('is-open'); sync(); };
+    const toggle = () => {
+      if (!narrow.matches) return;
+      // раскрытие с анимацией высоты (Саша 24.11: «открываются без анимации»)
+      const h0 = card.offsetHeight;
+      card.classList.toggle('is-open'); sync();
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !card.animate) return;
+      const h1 = card.offsetHeight;
+      if (card._anim) card._anim.cancel();
+      card.style.overflow = 'hidden';
+      card._anim = card.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 380, easing: 'cubic-bezier(.3,.7,.2,1)' });
+      card._anim.onfinish = card._anim.oncancel = () => { card.style.overflow = ''; card._anim = null; };
+      if (card.classList.contains('is-open')) [...card.children].forEach(c => { if (!c.matches('.tile__head, h3')) c.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 320, delay: 80, easing: 'ease-out', fill: 'backwards' }); });
+    };
     (card.classList.contains('tile') ? card : head).addEventListener('click', toggle);
     head.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
     sync(); narrow.addEventListener('change', sync);
