@@ -226,3 +226,9 @@
 .rvf__in > .rv { position: absolute; inset: 0; margin: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .rvf__in > .rvf__back { transform: rotateY(180deg); }
 @media (prefers-reduced-motion: reduce) { .rvf__in { transition: none; } }
+
+/* ===== Невысокие экраны компьютера (MacBook 13 и т. п., Саша 24.11): первый экран целиком в окне =====
+   Масштаб в index.html берет меньшее из ширина/1440 и высота/890, а здесь первый экран чуть плотнее сверху. */
+@media (min-width: 1101px) and (max-height: 960px) {
+  html .hero--ruki { padding-top: 142px; padding-bottom: 24px; }
+}
