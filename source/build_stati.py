@@ -46,7 +46,7 @@ def head(title, desc, pre, page):
 <link rel="stylesheet" href="{pre}site.css?v=42">
 <link rel="stylesheet" href="{pre}pages.css?v={V}">
 <script type="importmap">{{"imports":{{"react":"./{pre}vendor/react/react.mjs","react/jsx-runtime":"./{pre}vendor/react/react.mjs","react-dom/client":"./{pre}vendor/react/react.mjs","glisse":"./{pre}vendor/glisse/index.js"}}}}</script>
-<script type="module" src="{pre}glass.js?v=10"></script>
+<script type="module" src="{pre}glass.js?v=11"></script>
 <script>(function(){{var r=document.documentElement;function z(){{var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.2):1);}}z();addEventListener('resize',z);}})();document.documentElement.classList.add('m-js');</script>
 </head>
 <body>
@@ -62,7 +62,7 @@ def head(title, desc, pre, page):
     </nav>
     <div class="hdr__cta">
       <a class="hdr__bot m-btn" href="{BOT}site_header" target="_blank" rel="noopener">Telegram-бот</a>
-      <a class="hdr__main m-btn m-btn--accent" href="{pre}index.html#apply">Оценить шансы</a>
+      <a class="hdr__main m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_statya_header_chances" target="_blank" rel="noopener">Оценить шансы</a>
     </div>
   </div>
 </header>
@@ -77,7 +77,7 @@ def foot(pre, extra_js=""):
       <div class="foot__about"><img src="{pre}img/logo-footer.svg" alt="asilohelp" width="234" height="38">
         <p>Помогаем ЛГБТ-людям из России и постсоветских стран переехать в Испанию и запросить международную защиту.</p>
         <p>Мы не адвокатское бюро. Материалы сайта — информация, а не юридическая консультация.</p></div>
-      <div class="foot__col"><b>Сайт</b><a href="{pre}index.html#help">Услуги</a><a href="{pre}stati.html">Статьи и база знаний</a><a href="{pre}o-nas.html">О нас</a><a href="{pre}otzyvy.html">Отзывы</a><a href="{pre}voprosy.html">Частые вопросы</a><a href="{pre}index.html#apply">Оставить заявку</a></div>
+      <div class="foot__col"><b>Сайт</b><a href="{pre}index.html#help">Услуги</a><a href="{pre}stati.html">Статьи и база знаний</a><a href="{pre}o-nas.html">О нас</a><a href="{pre}otzyvy.html">Отзывы</a><a href="{pre}voprosy.html">Частые вопросы</a><a href="https://t.me/ASILOhelperBot?start=site_statya_footer_chances" target="_blank" rel="noopener">Оставить заявку</a></div>
       <div class="foot__col"><b>Мы в сети</b><a href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Telegram-канал</a><a href="https://www.instagram.com/rkhmanov/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@rkhmanov/" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@rkhmanov" target="_blank" rel="noopener">TikTok</a><a href="https://t.me/+GRq-QZJDqDNlNDEy" target="_blank" rel="noopener">Чат по Барселоне</a></div>
       <div class="foot__col"><b>Документы</b><a href="{pre}legal.html">Правовая информация</a><a href="{pre}privacy.html">Политика конфиденциальности</a><a href="{pre}cookies.html">Политика cookie</a></div>
     </div>
@@ -99,7 +99,7 @@ def cta(pre, place):
         <h2>Хотите пройти этот путь<br class="br-d"> с командой?</h2>
         <p>Оценка шансов — бесплатно. Расскажите о ситуации, и мы честно скажем, подходит ли вам защита и с чего начать.</p>
         <div class="btns">
-          <a class="btn btn--dark m-btn" href="{pre}index.html#apply">Оставить заявку <span class="dot-arr" aria-hidden="true">↗</span></a>
+          <a class="btn btn--dark m-btn" href="https://t.me/ASILOhelperBot?start=site_statya_cta_chances" target="_blank" rel="noopener">Оставить заявку <span class="dot-arr" aria-hidden="true">↗</span></a>
           <a class="btn btn--glass m-btn" href="{BOT}site_{place}_chances" target="_blank" rel="noopener">Оценить шансы в боте</a>
         </div>
       </div>
@@ -398,9 +398,9 @@ def main():
         old.unlink()
     for a in arts:
         (OUT / f"{a['slug']}.html").write_text(article_page(a, arts), encoding="utf-8")
-    (ROOT / "stati.html").write_text(list_page(arts), encoding="utf-8")
+    (ROOT / "stati.html").write_text(list_page(arts).replace("start=site_statya_", "start=site_stati_"), encoding="utf-8")  # метка кнопок: site_stati_…
     if (ROOT / "source" / "o-nas.body.html").exists():
-        (ROOT / "o-nas.html").write_text(about_page(), encoding="utf-8")
+        (ROOT / "o-nas.html").write_text(about_page().replace("start=site_statya_", "start=site_onas_"), encoding="utf-8")  # метка кнопок: site_onas_…
     print(f"статей: {len(arts)} → stati/, stati.html" + (", o-nas.html" if (ROOT / 'o-nas.html').exists() else ""))
 
 

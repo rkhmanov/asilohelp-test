@@ -17,9 +17,10 @@
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <link rel="stylesheet" href="ruki.css?v=5">
 <link rel="stylesheet" href="hero-sticker.css?v=8">
-<link rel="stylesheet" href="glavnaya-telefon.css?v=7">
+<link rel="stylesheet" href="glavnaya-telefon.css?v=8">
+<link rel="stylesheet" href="glavnaya-final.css?v=1">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
-<script type="module" src="glass.js?v=10"></script>
+<script type="module" src="glass.js?v=11"></script>
 <script>(function(){var r=document.documentElement,lw=0;function v(){var w=innerWidth;if(w===lw)return;lw=w;r.style.setProperty('--vh-z',Math.round(innerHeight/(w<=480?w/390:1))+'px');}v();addEventListener('resize',v);})();</script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.2):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot');if(innerWidth<=480&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('sk-wait');setTimeout(function(){document.documentElement.classList.remove('sk-wait')},4000)}</script>
 <style>.shot *,.shot *::before{transition:none!important;animation:none!important} @media (max-width:700px){.br-d{display:none}} .scr, .fl { transform: rotate(var(--rot, 0deg)); } @media (max-width: 1100px) { .fl--inside { animation: none; } }</style>
@@ -37,7 +38,7 @@
     </nav>
     <div class="hdr__cta">
       <a class="hdr__bot m-btn" href="https://t.me/ASILOhelperBot?start=site_header" target="_blank" rel="noopener">Telegram-бот</a>
-      <a class="hdr__main m-btn m-btn--accent" href="#apply">Оценить шансы</a>
+      <a class="hdr__main m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_header_chances" target="_blank" rel="noopener">Оценить шансы</a>
     </div>
   </div>
 </header>
@@ -58,7 +59,7 @@
     </h1>
     <p class="hero__lead"><span class="only-m">Консультируем, проверяем готовые кейсы и ведем с нуля:<br class="br-d"> виза, текст кейса, доказательства, подготовка<br class="br-d"> к интервью и первые месяцы в Испании.</span><span class="only-d">Консультируем, готовим к интервью и ведем с нуля:<br> виза, кейс, доказательства, подготовка к интервью<br> и помощь с адаптацией в Испании</span></p>
     <div class="hero__btns">
-      <a class="btn btn--accent m-btn m-btn--accent" href="#apply">Оценить шансы</a>
+      <a class="btn btn--accent m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_hero_chances" target="_blank" rel="noopener">Оценить шансы</a>
       <a class="btn btn--outline m-btn hero__kb" href="#kb">База знаний</a>
     </div>
   </div>
@@ -98,7 +99,7 @@
       </div>
     </div>
     <p class="flip-hint">Что входит – при наведении на карточку</p>
-    <p class="help__more" data-reveal><span>Не знаете, что выбрать?</span> <a class="help__more-btn" href="#apply"><span class="only-m notel">Оставьте заявку, подскажем</span><span class="only-d">Оставить заявку</span><span class="tel">Оставить заявку</span><span class="help__arr notel"> →</span></a></p>
+    <p class="help__more" data-reveal><span>Не знаете, что выбрать?</span> <a class="help__more-btn" href="https://t.me/ASILOhelperBot?start=site_help_general" target="_blank" rel="noopener"><span class="only-m notel">Оставьте заявку, подскажем</span><span class="only-d">Оставить заявку</span><span class="tel">Оставить заявку</span><span class="help__arr notel"> →</span></a></p>
   </div>
 </section>
 
@@ -132,13 +133,13 @@
         <span class="chip chip--3 m-float" style="--rot:-3deg;--dur:9s;--delay:-5s;--lift:-7px"><img src="img/chip-icon.svg" alt="" width="34" height="34">Документы</span>
       </div>
       <div class="dark__text">
-        <span class="pill-dark">Первый шаг</span>
-        <h3>Оценим шансы на&nbsp;успех</h3>
+        <span class="pill-dark">первый шаг</span>
+        <h3><span class="only-m">Оценим</span><span class="only-d">Оцените</span> шансы<br class="tel"> на&nbsp;успех</h3>
         <p>Расскажете о ситуации, а мы скажем, подходит ли вам защита<br class="tel"> и с чего начать. Быть активистом или журналистом не нужно.</p>
-        <div class="facts"><div><small>ФОРМАТ</small><span>онлайн<span class="hm">-созвон</span></span></div><div><small>ЯЗЫК</small><span>русский</span></div><div><small>КОГДА</small><span>пн–пт</span></div></div>
+        <div class="facts"><div><small>Формат</small><span>онлайн<span class="hm">-созвон</span></span></div><div><small>Язык</small><span>русский</span></div><div><small>Когда</small><span>пн–пт</span></div></div>
         <div class="dark__bottom">
-          <div class="price"><small>СТОИМОСТЬ</small><span class="price__row"><s>39€</s><em>бесплатно</em></span></div>
-          <a class="btn btn--white m-btn" href="#apply">Записаться <img class="m-arrow" src="img/arrow-diag40.svg" alt="" width="40" height="40"></a>
+          <div class="price"><small>Стоимость</small><span class="price__row"><s>39€</s><em>бесплатно</em></span></div>
+          <a class="btn btn--white m-btn" href="https://t.me/ASILOhelperBot?start=site_shans_chances" target="_blank" rel="noopener">Записаться <img class="m-arrow" src="img/arrow-diag40.svg" alt="" width="40" height="40"></a>
         </div>
       </div>
     </div>
@@ -198,49 +199,21 @@
     <div class="reviews__nav"><button type="button" data-dir="-1" aria-label="Назад"><img src="img/btn-prev.svg" alt="" width="52" height="52"></button><button type="button" data-dir="1" aria-label="Вперед"><img src="img/btn-next.svg" alt="" width="52" height="52"></button></div>
   </div>
   <div class="reel reel--tap" id="reel">
-    <figure class="rv rv--flip rv--a" tabindex="0" aria-label="Отзыв: Анна, Консультация. Нажмите, чтобы перевернуть">
-      <div class="rv__in">
-        <div class="rv__f"><img src="img/rv/anna.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:2deg">Анна</span></div>
-        <div class="rv__b rv--q rv--q-r"><blockquote>Мы с девушкой были на жутком стрессе из-за переезда. Саша нас успокоил, поддержал и ответил на все-все вопросы<span class="rv__x">, а их было много. Мы окончательно определились со страной, и теперь осталось только исполнить эту мечту</span></blockquote><figcaption><b>Анна</b><span class="sticker" style="--r:2deg">Консультация</span></figcaption></div>
-      </div>
-    </figure>
-    <figure class="rv rv--flip rv--b is-flipped" tabindex="0" aria-label="Отзыв: Алексей, Сопровождение. Нажмите, чтобы перевернуть">
-      <div class="rv__in">
-        <div class="rv__f"><img src="img/rv/aleksej.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:-2deg">Алексей</span></div>
-        <div class="rv__b rv--q"><blockquote>Удалось при наличии шенгена сдаться в аэропорту, пройти интервью в полиции и получить красную карту всего через неделю в Испании<span class="rv__x">. На каждом этапе команда чутко отвечала на все вопросы и сомнения. Спасибо за начало новой жизни</span></blockquote><figcaption><b>Алексей</b><span class="sticker" style="--r:-2deg">Сопровождение</span></figcaption></div>
-      </div>
-    </figure>
-    <figure class="rv rv--flip rv--c" tabindex="0" aria-label="Отзыв: Росс, Работа с кейсом. Нажмите, чтобы перевернуть">
-      <div class="rv__in">
-        <div class="rv__f"><img src="img/rv/ross.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:3deg">Росс</span></div>
-        <div class="rv__b rv--q rv--q-dark"><blockquote><span class="rv__x">Пишу отзыв из солнечного Аликанте! </span>Советы помогли внести правки в кейс. Я подался на убежище неделю назад и теперь нахожусь в стране легально<span class="rv__x">, не боясь депортации</span></blockquote><figcaption><b>Росс</b><span class="sticker" style="--r:3deg">Работа с кейсом</span></figcaption></div>
-      </div>
-    </figure>
-    <div class="rv rv--you"><span>Здесь может<br>быть ваше фото</span><span class="sticker" style="--r:3deg">Вы?</span></div>
-    <figure class="rv rv--flip rv--d" tabindex="0" aria-label="Отзыв: Ангелина, Виза. Нажмите, чтобы перевернуть">
-      <div class="rv__in">
-        <div class="rv__f"><img src="img/rv/angelina.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:-2deg">Ангелина</span></div>
-        <div class="rv__b rv--q rv--q-r"><blockquote>Визу получала впервые и очень боялась напортачить.<span class="rv__x"> Подсказали, какие документы собрать, помогли заполнить анкеты.</span> Ребята были на связи постоянно и даже помогли поймать слот в моем регионе</blockquote><figcaption><b>Ангелина</b><span class="sticker" style="--r:-2deg">Виза</span></figcaption></div>
-      </div>
-    </figure>
-    <figure class="rv rv--flip rv--e is-flipped" tabindex="0" aria-label="Отзыв: Валентин, Работа с кейсом. Нажмите, чтобы перевернуть">
-      <div class="rv__in">
-        <div class="rv__f"><img src="img/rv/valentin.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:2deg">Валентин</span></div>
-        <div class="rv__b rv--q"><blockquote><span class="rv__x">Помогли с моим кейсом по ЛГБТ-беженству. </span>До крайнего срока оставался ровно месяц. За этот месяц мы собрали все нужные документы и доказательства<span class="rv__x">, и теперь я получаю красную карту на продление с белой</span></blockquote><figcaption><b>Валентин</b><span class="sticker" style="--r:2deg">Работа с кейсом</span></figcaption></div>
-      </div>
-    </figure>
-    <figure class="rv rv--flip rv--b" tabindex="0" aria-label="Отзыв: Макс, Консультация. Нажмите, чтобы перевернуть">
-      <div class="rv__in">
-        <div class="rv__f"><img src="img/rv/maks.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:-2deg">Макс</span></div>
-        <div class="rv__b rv--q rv--q-dark"><blockquote>Многие страхи ушли после диалога.<span class="rv__x"> Александр ответил на все вопросы, даже на те, что появились по ходу.</span> Как будто поговорил с другом, который просто делится полезной информацией</blockquote><figcaption><b>Макс</b><span class="sticker" style="--r:-2deg">Консультация</span></figcaption></div>
-      </div>
-    </figure>
-    <figure class="rv rv--flip rv--c is-flipped" tabindex="0" aria-label="Отзыв: Саня, Консультация. Нажмите, чтобы перевернуть">
-      <div class="rv__in">
-        <div class="rv__f"><img src="img/rv/sanya.jpg" alt="" loading="lazy" draggable="false"><span class="sticker" style="--r:2deg">Саня</span></div>
-        <div class="rv__b rv--q rv--q-r"><blockquote>Саша очень подробно расписал весь процесс и успокоил на тему наших переживаний<span class="rv__x">. Дал много рекомендаций, стало гораздо понятнее, с чего начать и что делать дальше</span></blockquote><figcaption><b>Саня</b><span class="sticker" style="--r:2deg">Консультация</span></figcaption></div>
-      </div>
-    </figure>
+    <figure class="rv rv--q rv--q-r"><blockquote>Мы с девушкой были на жутком стрессе из-за переезда. Саша нас успокоил, поддержал и ответил на все-все вопросы</blockquote><figcaption><span class="sticker" style="--r:2deg">Консультация</span></figcaption></figure>
+    <figure class="rv rv--ph rv--a"><img src="img/rv/anna.jpg" alt="Фото: Анна" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:2deg">Анна</figcaption></figure>
+    <figure class="rv rv--q rv--q-dark"><blockquote>Удалось при наличии шенгена сдаться в аэропорту, пройти интервью в полиции и получить красную карту через неделю в Испании</blockquote><figcaption><span class="sticker" style="--r:-2deg">Сопровождение</span></figcaption></figure>
+    <figure class="rv rv--ph rv--b"><img src="img/rv/aleksej.jpg" alt="Фото: Алексей" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:-2deg">Алексей</figcaption></figure>
+    <div class="rv rv--you"><span>Здесь может<br>быть ваше фото</span><a class="rv__cta m-btn" href="https://t.me/ASILOhelperBot?start=site_reel_chances" target="_blank" rel="noopener" draggable="false">Оставить заявку</a></div>
+    <figure class="rv rv--ph rv--c"><img src="img/rv/ross.jpg" alt="Фото: Росс" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:3deg">Росс</figcaption></figure>
+    <figure class="rv rv--q "><blockquote>Советы помогли внести правки в кейс. Я подался на убежище неделю назад и теперь нахожусь в стране легально</blockquote><figcaption><span class="sticker" style="--r:-3deg">Работа с кейсом</span></figcaption></figure>
+    <figure class="rv rv--q rv--q-dark"><blockquote>Визу получала впервые и очень боялась напортачить. Ребята были на связи постоянно и даже помогли поймать слот в моем регионе</blockquote><figcaption><span class="sticker" style="--r:2deg">Виза</span></figcaption></figure>
+    <figure class="rv rv--ph rv--d"><img src="img/rv/angelina.jpg" alt="Фото: Ангелина" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:-2deg">Ангелина</figcaption></figure>
+    <figure class="rv rv--q rv--q-r"><blockquote>До крайнего срока оставался ровно месяц. За этот месяц мы собрали все нужные документы и доказательства</blockquote><figcaption><span class="sticker" style="--r:-2deg">Работа с кейсом</span></figcaption></figure>
+    <figure class="rv rv--ph rv--e"><img src="img/rv/valentin.jpg" alt="Фото: Валентин" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:2deg">Валентин</figcaption></figure>
+    <figure class="rv rv--ph rv--b"><img src="img/rv/maks.jpg" alt="Фото: Макс" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:-3deg">Макс</figcaption></figure>
+    <figure class="rv rv--q rv--q-dark"><blockquote>Многие страхи ушли после диалога. Как будто поговорил с другом, который просто делится полезной информацией</blockquote><figcaption><span class="sticker" style="--r:3deg">Консультация</span></figcaption></figure>
+    <figure class="rv rv--q "><blockquote>Саша очень подробно расписал весь процесс и успокоил на тему наших переживаний</blockquote><figcaption><span class="sticker" style="--r:-2deg">Консультация</span></figcaption></figure>
+    <figure class="rv rv--ph rv--c"><img src="img/rv/sanya.jpg" alt="Фото: Саня" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:2deg">Саня</figcaption></figure>
     <a class="rv rv--more" href="otzyvy.html" draggable="false"><b>27</b>отзывов целиком →</a>
   </div>
   <div class="wrap reviews__foot">
@@ -262,7 +235,7 @@
         <div>
           <h3>Оценка шансов</h3>
           <p>Разберем вашу ситуацию и подскажем, есть ли смысл просить защиту и какие шансы на успех.</p>
-          <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="#apply"><span class="up">Оценить шансы</span> <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
+          <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_free_chances" target="_blank" rel="noopener"><span class="up">Оценить шансы</span> <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
         </div>
       </article>
       <div class="free__side">
@@ -288,7 +261,7 @@
 <!-- 7 · База знаний -->
 <section class="kb" id="kb">
   <div class="wrap">
-    <div class="sh sh--sm" data-reveal><h2>База знаний –<span>бесплатно для каждого и каждой</span></h2>
+    <div class="sh sh--sm" data-reveal><h2>База знаний –<span>бесплатно для <br class="tel">каждого и каждой</span></h2>
       <p>Мы не берем деньги за информацию, которую и так можно найти в интернете. Собрали ее в одном месте и дополнили своим опытом.</p></div>
     <div class="kb__box kb__box--v2" data-reveal>
       <div class="kb__title">МЕЖДУНАРОДНАЯ<br>ЗАЩИТА В<span class="mark">Испании</span></div>
@@ -315,7 +288,7 @@
       <a class="lead-art m-card m-photo" href="stati/lgbt-ubezhishche-gid.html" data-reveal>
         <img src="img/stati/lgbt-ubezhishche-gid.webp" alt="">
         <span>Главный гайд</span>
-        <h3>Убежище в Испании для ЛГБТ: полный гайд</h3>
+        <h3>Убежище в <br class="tel">Испании для ЛГБТ: <br class="tel">полный гайд</h3>
         <small>Основания · кейс · доказательства · интервью</small>
       </a>
       <div class="news__list">
@@ -348,38 +321,15 @@
 <!-- 10 · Форма -->
 <section class="apply" id="apply">
   <div class="apply__box" data-reveal>
+    <div class="apply__bg" aria-hidden="true"><span class="apply__ghost">начинаем?</span></div>
+    <div class="arch" aria-hidden="true"><img src="img/rv-sasha-dog.jpg" alt=""></div>
+    <span class="sticker apply__sticker" aria-hidden="true">Ответим пн–пт</span>
     <div class="apply__left">
       <h2>¿Empezamos?</h2>
-      <p>Расскажите, где вы сейчас и что вас интересует. На бесплатной оценке шансов скажем, подходит ли вам защита и с чего начать.<span class="only-d"> Удобнее в телеграм?</span></p>
-      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_apply_chances" target="_blank" rel="noopener"><span class="tg__ava" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M21.4 4.1 2.9 11.3c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.4-1.6Zm-3.7 3.4-8.4 7.6-.3 3.3-1.5-4.7 9.8-6.2c.5-.3.8 0 .4 0Z"/></svg></span><span class="tg__txt"><em class="tel tg__q">удобнее в telegram?</em><small>Оставьте заявку в</small><b>@ASILOhelperBot</b></span><img class="tg__go m-arrow" src="img/arrow-red44.svg" alt="" width="40" height="40"></a>
-      <div class="arch"><img src="img/rv-sasha-dog.jpg" alt=""><span class="sticker">Ответим пн–пт</span></div>
+      <p>Расскажите, где вы сейчас и что вас интересует.<br class="only-d"> На бесплатной оценке шансов скажем, подходит ли<br class="only-d"> вам <span class="only-d">международная </span>защита и с чего начать.</p>
+      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_apply_chances" target="_blank" rel="noopener"><span class="tg__ava" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M21.4 4.1 2.9 11.3c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.4-1.6Zm-3.7 3.4-8.4 7.6-.3 3.3-1.5-4.7 9.8-6.2c.5-.3.8 0 .4 0Z"/></svg></span><span class="tg__txt"><small>Оставьте заявку в</small><b>@ASILOhelperBot</b></span><img class="tg__go m-arrow" src="img/arrow-red44.svg" alt="" width="40" height="40"></a>
+      <p class="apply__note">Общение с нами не нарушает законы РФ. Мы не передаем данные третьим лицам.</p>
     </div>
-    <form class="form" id="form" novalidate>
-      <div class="form__body">
-        <h3>Куда вам написать?</h3>
-        <p>Оставьте контакт: менеджерка напишет с понедельника по пятницу и запишет вас на бесплатную оценку шансов.</p>
-        <div class="field"><label for="f-name">Как к вам обращаться</label><input id="f-name" name="name" placeholder="Имя или псевдоним" autocomplete="off" maxlength="80" aria-describedby="err-name"><p class="field__err" id="err-name" hidden></p></div>
-        <div class="field"><label class="lbl" id="l-contact" for="f-contact">Ваш Telegram</label>
-          <div class="contact"><input id="f-contact" name="contact" placeholder="@username или телефон +34…" aria-labelledby="l-contact" aria-describedby="err-contact" autocomplete="off" maxlength="254"></div>
-          <input type="hidden" name="contact_type" value="telegram">
-          <p class="field__err" id="err-contact" hidden></p></div>
-        <div class="field"><span class="lbl" id="l-interest">Что вас интересует</span>
-          <div class="chips" data-single role="group" aria-labelledby="l-interest"><button type="button" class="on" aria-pressed="true">Оценка шансов</button><button type="button" aria-pressed="false">Консультация</button><button type="button" aria-pressed="false">Работа с кейсом</button><button type="button" aria-pressed="false">Сопровождение</button></div></div>
-        <div class="field"><label class="lbl" for="f-about">Коротко о ситуации <small>необязательно</small></label>
-          <textarea id="f-about" name="about" maxlength="2000" aria-describedby="err-about" placeholder="Где вы сейчас и когда планируете переезд. Без подробностей истории и документов, их обсудим лично."></textarea><p class="field__err" id="err-about" hidden></p></div>
-        <div class="hp" aria-hidden="true"><label for="f-website">Не заполняйте это поле</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-        <label class="consent"><input type="checkbox" name="consent" id="f-consent" aria-describedby="err-consent"><span>Я ознакомился(-ась) с <a href="privacy.html" target="_blank" rel="noopener">Политикой конфиденциальности</a> и согласен(-на) на обработку данных для ответа на заявку.</span></label>
-        <p class="field__err field__err--consent" id="err-consent" hidden></p>
-        <label class="consent"><input type="checkbox" name="sensitive_consent" id="f-sensitive"><span>Если я укажу сведения об ориентации, гендерной идентичности или здоровье, даю явное согласие на их обработку для ответа на заявку (см. <a href="privacy.html#what" target="_blank" rel="noopener">Политику конфиденциальности</a>). Согласие можно отозвать.</span></label>
-        <div class="ts"><div class="cf-turnstile" data-sitekey="0x4AAAAAAGN1oWk5fZGZETVJ" data-language="ru" data-theme="light" data-callback="asiloTsOk" data-expired-callback="asiloTsReset" data-error-callback="asiloTsReset"></div><script>if(innerWidth<400)document.currentScript.previousElementSibling.dataset.size='compact'</script>
-          <p class="field__err" id="err-ts" hidden></p></div>
-        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-        <p class="form__err" id="form-err" role="alert" hidden></p>
-        <button class="submit m-btn" type="submit">Отправить заявку</button>
-        <p class="form__note">Общение с нами не нарушает законы РФ. Мы не передаём данные третьим лицам.</p>
-      </div>
-      <div class="form__ok" role="status" tabindex="-1"><b>Спасибо, заявка у нас!</b><p class="form__code" hidden>Номер заявки: <span></span></p><p class="form__next">Менеджерка напишет вам в Telegram в рабочий день. Если за два рабочих дня никто не ответил, напишите нам в <a href="https://t.me/ASILOhelperBot?start=site_formok" target="_blank" rel="noopener">@ASILOhelperBot</a> и назовите номер заявки.</p></div>
-    </form>
   </div>
 </section>
 </main>
@@ -390,7 +340,7 @@
       <div class="foot__about"><img src="img/logo-footer.svg" alt="asilohelp" width="234" height="38">
         <p>Помогаем ЛГБТ-людям из России и постсоветских стран переехать в Испанию и запросить международную защиту.</p>
         <p>Мы не адвокатское бюро. Материалы сайта – информация, а не юридическая консультация.</p></div>
-      <div class="foot__col"><b>Сайт</b><a href="konsultacii.html">Консультации</a><a href="keys.html">Работа с кейсом</a><a href="soprovozhdenie.html">Сопровождение</a><a href="stati.html">Статьи и база знаний</a><a href="o-nas.html">О нас</a><a href="otzyvy.html">Отзывы</a><a href="voprosy.html">Частые вопросы</a><a href="#apply">Оставить заявку</a></div>
+      <div class="foot__col"><b>Сайт</b><a href="konsultacii.html">Консультации</a><a href="keys.html">Работа с кейсом</a><a href="soprovozhdenie.html">Сопровождение</a><a href="stati.html">Статьи и база знаний</a><a href="o-nas.html">О нас</a><a href="otzyvy.html">Отзывы</a><a href="voprosy.html">Частые вопросы</a><a href="https://t.me/ASILOhelperBot?start=site_footer_chances" target="_blank" rel="noopener">Оставить заявку</a></div>
       <div class="foot__col"><b>Мы в сети</b><a href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Telegram-канал</a><a href="https://www.instagram.com/rkhmanov/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@rkhmanov/" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@rkhmanov" target="_blank" rel="noopener">TikTok</a><a href="https://t.me/+GRq-QZJDqDNlNDEy" target="_blank" rel="noopener">Чат по Барселоне</a></div>
       <div class="foot__col"><b>Документы</b><a href="legal.html">Правовая информация</a><a href="privacy.html">Политика конфиденциальности</a><a href="cookies.html">Политика cookie</a></div>
     </div>
@@ -400,7 +350,6 @@
 
 
 <script src="motion.js?v=3"></script>
-<script src="form.js?v=1"></script>
 <script>
   // отзывы: листание
   const reel = document.getElementById('reel');
@@ -416,7 +365,6 @@
   if (!matchMedia('(hover: hover)').matches) document.querySelector('.flip-hint').textContent = 'Что входит – по нажатию на карточку';
   // карточки услуг: подсветка идет за курсором
   document.querySelectorAll('.flip').forEach(f => f.addEventListener('pointermove', e => { const r = f.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width * 100; f.style.setProperty('--mx', x.toFixed(1) + '%'); }));
-  // отзывы: фото переворачивается и показывает текст (нажатие или Enter)
   // Телефон: короткие предлоги и союзы не висят в конце строки, тире не начинает строку (Саша 24.11, как в макете)
   if (matchMedia('(max-width: 600px)').matches) {
     const short = /(^|[\s(«"„])(в|во|с|со|к|ко|и|а|о|об|обо|у|на|не|ни|за|по|до|из|от|для|при|без|над|под|про|но|да)\s+(?=[^\s–—-])/gi;
@@ -461,6 +409,6 @@
 </script>
 <script src="ruki.js?v=7" defer></script>
 <script src="hero-sticker.js?v=11" defer></script>
-<script src="otzyvy-lenta.js?v=2" defer></script>
+<script src="otzyvy-lenta.js?v=3" defer></script>
 </body>
 </html>

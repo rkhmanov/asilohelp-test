@@ -1,0 +1,217 @@
+/* Главная по финальным макетам Саши в Figma (24.11.2026): компьютер «ФИНАЛ» 4750:4451, телефон «Финал» 4818:5021.
+   Подключается последним. Здесь: «Оценим шансы на успех», лента отзывов, «¿Empezamos?» (только Telegram, без формы),
+   радужные дуги на красных плашках телефона, кнопка «Оставить заявку» на втором экране.
+   Компьютер (шире 1100 px) – координаты макета 1440, телефон (до 600 px) – координаты макета 390. */
+
+/* ===== Лента отзывов: карточки 257×338, фото с именем, текст с услугой, ничего не переворачивается ===== */
+.reviews .reel { gap: 18px; scroll-snap-type: none; }
+.reviews .rv { width: 257px; height: 338px; }
+.rv--ph { margin: 0; overflow: hidden; border-radius: 20.5px; background: #eee; }
+.rv--ph > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rv--ph.rv--a { border-radius: 108px 0 0 0; }
+.rv--ph.rv--b { border-radius: 20.5px; }
+.rv--ph.rv--c { border-radius: 123px 123px 20.5px 20.5px; }
+.rv--ph.rv--d { border-radius: 0 108px 0 62px; }
+.rv--ph.rv--e { border-radius: 20.5px 20.5px 108px 20.5px; }
+.reviews .rv .sticker { font-size: 11px; font-weight: 600; line-height: 14px; padding: 8px 10px; color: var(--ink); border-radius: 3px 5px 4px 2px; box-shadow: 0 2px 4px rgba(0,0,0,.13); }
+.rv--ph > .sticker { bottom: 26px; }
+.reviews .rv--q { margin: 0; padding: 26px 24px 21px; border-radius: 20.5px; box-shadow: 0 10px 30px rgba(0,0,0,.18), 0 0 0 1px var(--line) inset; }
+.reviews .rv--q.rv--q-r { border-radius: 20.5px 108px 20.5px 20.5px; }
+.reviews .rv--q.rv--q-dark { box-shadow: 0 14px 34px rgba(120,20,36,.6); }
+.reviews .rv--q::before { font-size: 44px; line-height: 35.2px; letter-spacing: -3.52px; height: 36px; }
+.reviews .rv--q blockquote { margin-top: 14px; font-size: 15px; line-height: 21.75px; letter-spacing: -.3px; font-weight: 500; }
+.reviews .rv--q figcaption { padding-top: 12px; justify-content: flex-start; }
+.reviews .rv--you { display: block; position: relative; background: var(--pink); border: 1px dashed var(--accent); border-radius: 108px 0 0 0; }
+.rv--you > span { position: absolute; left: 0; right: 0; top: 149px; font-weight: 500; font-size: 14px; line-height: 19.6px; color: var(--accent); text-align: center; }
+.rv__cta { position: absolute; left: 50%; top: 262px; transform: translateX(-50%); height: 42px; padding: 0 20px; display: inline-flex; align-items: center; white-space: nowrap;
+  border-radius: 999px; background: var(--accent); color: #fff; font-weight: 600; font-size: 13px; box-shadow: 0 8px 18px rgba(161,38,56,.35); transition: background-color .3s ease, transform .3s ease; }
+.rv__cta:hover { background: var(--accent-hover); }
+.reel--tap .rv__cta { pointer-events: auto; }
+/* тень карточек не обрезается краем ленты */
+.reviews .reel--tap { padding-top: 30px; padding-bottom: 40px; margin-bottom: -40px; }
+
+@media (min-width: 1101px) {
+  /* макет: заголовок блока кончается на 4572, лента с 4612, слева 33 px */
+  .reviews .reel { padding-left: 33px; }
+  .reel-wrap > .reel--tap, .reviews .reel--tap { margin-top: 10px; }
+}
+@media (max-width: 600px) {
+  /* макет телефона: лента с 16 px, на 24 px ниже заголовка */
+  .reviews .reel { padding-left: 16px; }
+  .reviews .reel--tap { margin-top: -6px; }
+}
+
+/* ===== «Оценим шансы на успех» ===== */
+@media (min-width: 1101px) {
+  /* компьютер: плашка 1328×403, фото 360×449 выступает сверху и снизу (макет 56, 2830) */
+  .who .dark { display: block; height: 403px; min-height: 0; margin-top: 69px; overflow: visible; }
+  .who .dark__art { position: absolute; inset: 0; }
+  .who .dark__photo { left: 122.5px; top: -20px; width: 360px; height: 449px; border-radius: 16px; transform: rotate(3deg); box-shadow: 0 30px 60px rgba(0,0,0,.4); }
+  .who .chip { height: 54px; padding: 0 16px 0 10px; gap: 10px; font-size: 12px; border-radius: 14px; box-shadow: 0 16px 36px rgba(0,0,0,.35); }
+  .who .chip img { width: 34px; height: 34px; }
+  .who .chip--1 { left: 444px !important; top: 51px !important; --rot: -4deg !important; }
+  .who .chip--2 { left: 64px !important; top: 180px !important; --rot: -5.8deg !important; }
+  .who .chip--3 { left: 386px !important; top: 280px !important; --rot: 7.9deg !important; }
+  .who .dark__text { position: absolute; left: 625px; top: 27px; width: 643px; padding: 0; }
+  .who .pill-dark { display: inline-flex; align-items: center; height: 39px; width: 240px; padding: 0 0 2px 25px; font-size: 25px; line-height: 1; color: #C3C5CE; }
+  .who .dark h3 { margin-top: 14px; font-size: 38px; line-height: 41.8px; letter-spacing: -1.9px; }
+  .who .dark__text > p { margin-top: 16px; line-height: 21.7px; max-width: 600px; }
+  .who .facts { margin-top: 20px; gap: 0; }
+  .who .facts > div:nth-child(1) { width: 175px; } .who .facts > div:nth-child(2) { width: 116px; }
+  .who .facts small, .who .price small { text-transform: uppercase; font-size: 10px; letter-spacing: 1.2px; line-height: 12px; margin-bottom: 6px; }
+  .who .facts span { line-height: 17px; }
+}
+
+@media (max-width: 600px) {
+  /* телефон: плашка 358×589, фото 214×266 выступает сверху (макет 16, 3127); воздуха сверху больше (Саша 24.11) */
+  .who .dark { display: block; height: 589px; min-height: 0; margin-top: 52px; overflow: visible; border-radius: 40px 16px 16px 16px; }
+  .who .dark__art { position: absolute; inset: 0; height: auto; overflow: visible; transform: none; }
+  .who .dark__photo { left: 68.8px; top: -20.6px; width: 214px; height: 266px; margin: 0; border-radius: 16px; transform: rotate(3deg); box-shadow: 0 30px 60px rgba(0,0,0,.4); }
+  .who .chip { height: 40px; padding: 0 12px 0 7px; gap: 8px; font-size: 11px; border-radius: 14px; background: rgba(255,255,255,.92); box-shadow: 0 4px 12px rgba(20,20,31,.1); }
+  .who .chip img { width: 26px; height: 26px; }
+  .who .chip--1 { left: 253px !important; right: auto !important; top: 22px !important; --rot: -4deg !important; }
+  .who .chip--2 { left: 13.5px !important; top: 104px !important; --rot: 5deg !important; }
+  .who .chip--3 { left: 198px !important; right: auto !important; top: 186.5px !important; --rot: -3deg !important; }
+  .who .dark__text { position: relative; padding: 263px 24px 0; }
+  .who .pill-dark { display: none; }
+  .who .dark h3 { margin: 0; font-size: 28px; line-height: 30.8px; letter-spacing: -1.4px; }
+  .who .dark__text > p { margin-top: 11px; font-size: 14px; line-height: 21.7px; color: #C3C5CE; }
+  .who .facts { display: grid; grid-template-columns: 127px 1fr auto; gap: 0; margin-top: 20px; }
+  .who .facts > div:nth-child(3) { text-align: right; }
+  .who .facts small { font-size: 12px; font-weight: 500; line-height: 15px; letter-spacing: 0; color: #8F93A3; margin-bottom: 3px; }
+  .who .facts span { display: block; font-size: 14px; line-height: 17px; } .who .facts span.hm { display: none; }
+  .who .dark__bottom { display: block; position: relative; height: 97px; margin-top: 12px; padding: 0; border-top: 1px solid rgba(255,255,255,.08); }
+  .who .price { position: absolute; left: 0; top: 17px; }
+  .who .price small { font-size: 12px; line-height: 15px; letter-spacing: 0; color: #9A9CA6; margin-bottom: 5px; }
+  .who .price s { font-size: 40px; line-height: 40px; letter-spacing: -2px; }
+  .who .price em { left: -9.4px; top: 12.3px; height: 17px; line-height: 17px; padding: 0 12px; transform: rotate(-6deg); font-size: 14px; border-radius: 8px; box-shadow: 0 4px 12px rgba(20,20,31,.1); }
+  .who .dark .btn--white { position: absolute; left: 127px; top: 25px; width: 188px; height: 52px; padding: 0; justify-content: center; font-size: 15px; box-shadow: 0 4px 12px rgba(20,20,31,.1); }
+  .who .dark .btn--white img { display: none; }
+}
+
+/* ===== «¿Empezamos?»: только кнопка бота, как в макете ===== */
+.apply__box { display: block; min-height: 0; }
+.apply__box::before { display: none; }
+.apply__bg { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; }
+.apply__ghost, .apply__sticker { display: none; }
+.apply .apply__note { font-size: 10px; line-height: 12px; color: #F0F0F0; text-align: center; max-width: none; }
+.apply .tg { display: flex; }
+
+@media (min-width: 601px) and (max-width: 1100px) {
+  .apply__box { padding: 48px 40px; }
+  .apply__left > p { max-width: 560px; }
+  .apply .apply__note { text-align: left; margin-top: 16px; }
+}
+
+@media (min-width: 1101px) {
+  /* компьютер: плашка 1392×505 (макет 20, 8578), фото-арка 401×490 выступает сверху */
+  .apply { padding: 112px 24px 24px; }
+  .apply__box { height: 505px; padding: 0; overflow: visible; }
+  .apply__bg::before { content: ''; position: absolute; left: -194px; top: 43px; width: 801px; height: 434px; border-radius: 217px; background: rgba(255,255,255,.06); }
+  .apply__ghost { display: block; position: absolute; left: 589px; top: 81px; white-space: nowrap; font-weight: 600; font-size: 110px; line-height: 70.4px; letter-spacing: -3.2px; color: #C3C5CE; opacity: .2; filter: blur(4px); }
+  .apply .arch { position: absolute; left: 117.5px; top: -54px; width: 401px; height: 490px; margin: 0; transform: rotate(3deg); }
+  .apply .arch img { border-radius: 180px 180px 24px 24px; box-shadow: 0 30px 60px -10px rgba(0,0,0,.3); }
+  .apply__sticker { display: block; position: absolute; left: 373px; top: 338px; bottom: auto; width: 155px; height: 42px; padding: 0; line-height: 42px; text-align: center; transform: rotate(-4deg); font-size: 13px; color: var(--ink); z-index: 2; }
+  .apply__left { position: absolute; left: 709px; top: 128px; width: 620px; padding: 0; }
+  .apply h2 { font-size: 64px; line-height: 70.4px; letter-spacing: -3.2px; }
+  .apply__left > p { margin-top: 24.6px; max-width: none; font-size: 16px; line-height: 26.4px; color: #F6DDE2; }
+  .apply .tg { width: 420px; max-width: none; height: 64px; margin: 30px 0 0 -10px; padding: 10px; gap: 12px; border-radius: 20px; box-shadow: 0 16px 34px -16px rgba(0,0,0,.5); }
+  .apply .tg__txt small { font-weight: 500; font-size: 12px; line-height: 15px; color: #777880; }
+  .apply .tg__txt b { font-weight: 600; font-size: 14px; line-height: 18.2px; }
+  .apply .apply__note { display: none; }
+}
+
+@media (max-width: 600px) {
+  /* телефон: плашка 358×340 (макет 16, 9182) */
+  .apply { padding: 40px 16px 24px; }
+  .apply__box { padding: 32px 20px 32px; border-radius: 40px; }
+  .apply .arch { display: none; }
+  .apply h2 { font-size: 34px; line-height: 37.4px; letter-spacing: -1.7px; }
+  .apply__left { padding: 0; }
+  .apply__left > p { margin-top: 7px; font-size: 14px; line-height: 23.1px; color: #F6DDE2; }
+  .apply .tg { height: 78px; margin: 20px 0 0; padding: 0 10px; gap: 12px; border-radius: 20px; flex-wrap: nowrap; box-shadow: 0 4px 12px rgba(20,20,31,.1); }
+  .apply .tg__txt { gap: 0; }
+  .apply .tg__txt small { font-weight: 500; font-size: 12px; line-height: 14px; color: #777880; }
+  .apply .tg__txt b { font-weight: 400; font-size: 14px; line-height: 18.2px; }
+  .apply .apply__note { margin: 16px 8px 0; }
+}
+
+/* ===== Радужные дуги из логотипа на красных плашках телефона (как на компьютере, Figma 4813:4582) ===== */
+@media (max-width: 600px) {
+  .help { background: url(img/arki.svg) center bottom / 780px auto no-repeat, #A02538 !important; }
+  .free::before { left: 0; top: 0; right: 0; bottom: 0; width: auto; height: auto; border-radius: 0; background: url(img/arki.svg) center bottom / 780px auto no-repeat; transform: scaleY(-1); }
+  .free::after { display: none; }
+  .free > .wrap { position: relative; z-index: 1; }
+}
+
+/* ===== «Оставить заявку» на втором экране: при наведении не красная на красном ===== */
+@media (min-width: 601px) and (hover: hover) {
+  .help .help__more-btn:hover { background: var(--ink) !important; color: #fff; }
+}
+
+/* ===== Телефон: остальные блоки по макету «Финал» (4818:5021) ===== */
+@media (max-width: 600px) {
+  /* «Как мы помогаем»: стрелка в правом нижнем углу карточки (макет: 40×40, отступ 16) */
+  .help .flip .flip__btn { top: auto; bottom: 16px; right: 16px; }
+  /* «Мы сами прошли этот путь»: без вводного абзаца, как в макете */
+  .us .sh p { display: none; }
+  /* «Начните с наших бесплатных материалов»: подзаголовок в одну строку, без абзаца */
+  .free .sh h2 span { font-size: 25px; }
+  .free .sh p { display: none; }
+  /* «Остались вопросы?» 30 px, как остальные заголовки */
+  .faq__intro h2 { font-size: 30px; line-height: 34.6px; }
+  /* «Как мы помогаем»: «Не знаете…» на 28 ниже карточек, кнопка на 12 под текстом (наполовину за краем плашки) */
+  .help .help__more { margin-top: 28px; }
+  .help .help__more-btn { margin-top: -12px; }
+  /* «Мы справимся»: абзац 16 под заголовком, плитки 24 под абзацем */
+  .who .sh p { margin-top: 16px; }
+  .who .tiles3 { margin-top: 24px; }
+  /* «Мы сами прошли этот путь, поэтому говорим честно» – три строки, подзаголовок продолжает строку */
+  .us .sh h2 span { display: inline; }
+  .us .sh h2 span::before { content: " "; }
+  /* 187: абзацы через 16, ссылка 33 под текстом */
+  .b--red .b--red__more { margin-top: 16px; }
+  .b--red .link { margin-top: 33px; }
+  /* «Команда»: строки ролей с шагом 48, тексты по макету */
+  .b--crew .crew__top { margin-top: 4px; }
+  .b--crew .crew__faces { margin-top: 4px; }
+  .b--crew .crew__roles li { padding: 8px 0 4px; }
+  .b--crew > .crew__anon { margin-top: -12px; line-height: 22.4px; }
+  .b--crew .crew__more { margin-top: -4px; font-size: 12px; }
+  /* «Официально / Конфиденциально»: 42 между колонками */
+  .b--trust { row-gap: 42px; }
+  .b--crew { padding-bottom: 24px; }
+  .b--trust { padding-bottom: 29px; }
+  /* отзывы: 72 от плашки «Официально» до заголовка */
+  .reviews { padding-top: 32px !important; }
+  /* «Начните с наших бесплатных материалов»: 56 сверху, строки по 33 */
+  .free { padding-top: 56px; }
+  .free .sh h2, .free .sh h2 span { line-height: 33px; }
+  .reviews .reviews__all { margin-top: 5px; }
+  .reviews { padding-bottom: 70px !important; }
+  .free { padding-bottom: 43px; }
+  .kb { padding-top: 72px; }
+  /* база знаний: цифры 32, подписи 16,5; карточка со скриншотами 345×233; «Получить доступ» строчными */
+  .kb__box--v2 .kb__nums b { line-height: 32px; }
+  .kb__box--v2 .fl--screens { width: 345px; max-width: none; margin: 12px -13px 0 -14px; padding: 12px 16px 13px; }
+  .kb__box--v2 .fl--screens img { height: 208px; }
+  .kb__box .btn .up { text-transform: none; font-size: 15px; letter-spacing: 0; }
+  .kb__box { padding-bottom: 19px; }
+  /* новости: строки 101 через 12 */
+  .news__list { gap: 12px; }
+  .art div > small, .art div > span { display: block; line-height: normal; }
+  .news { padding-bottom: 40px; }
+  /* вопросы: 24 от абзаца до первого вопроса */
+  .faq__intro + .q { margin-top: 8px; }
+  .kb__box--v2 .kb__nums span { display: block; margin-top: 0; }
+  .kb .kb__box { margin-top: 24px; }
+  .kb__box .btn { width: 282px; }
+  .news { padding-top: 72px; }
+  .news .news__grid { margin-top: 25px; }
+  /* «Все 26 вопросов» на 34 ниже последнего вопроса, до «¿Empezamos?» 56 */
+  .faq .faq__all { margin-top: 24px; }
+  .apply { padding-top: 23px; }
+  /* «11 человек»: цифра и подпись выше, как в макете */
+  .b--crew .crew__n { top: -17px; }
+  .b--crew .crew__n b { margin-bottom: -7px; }
+}
