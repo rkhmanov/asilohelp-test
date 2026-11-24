@@ -11,25 +11,39 @@
   if (reduce || !('IntersectionObserver' in window)) {
     document.querySelectorAll('[data-reveal]').forEach(shown);
   } else {
+    // Саша 24.11: блоки одной группы (data-reveal-group) появляются вместе, лесенкой, как только
+    // показался верх группы, – нижние карточки («Сообщество», третья новость) больше не ждут своей очереди.
     const io = new IntersectionObserver(entries => entries.forEach(e => {
-      if (e.isIntersecting) { shown(e.target); io.unobserve(e.target); countUp(e.target); }
-    }), { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+      if (!e.isIntersecting) return;
+      const t = e.target; io.unobserve(t);
+      if (t.hasAttribute('data-reveal')) shown(t);
+      if (t.hasAttribute('data-reveal-group')) t.querySelectorAll('[data-reveal]').forEach(shown);
+    }), { rootMargin: '0px 0px -10% 0px', threshold: 0 });
     // display: contents (вопросы на телефоне) – у блока нет рамки, наблюдатель его не увидит
-    document.querySelectorAll('[data-reveal]').forEach(el => getComputedStyle(el).display === 'contents' ? shown(el) : io.observe(el));
+    document.querySelectorAll('[data-reveal-group]').forEach(g => io.observe(g));
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      if (el.parentElement && el.parentElement.closest('[data-reveal-group]')) return;
+      getComputedStyle(el).display === 'contents' ? shown(el) : io.observe(el);
+    });
   }
 
-  // 14. Счётчик цифр (по желанию): <span data-count="187">187</span> внутри блока с data-reveal.
-  function countUp(root) {
-    root.querySelectorAll('[data-count]').forEach(el => {
-      const to = parseInt(el.dataset.count, 10); if (!to || reduce) return;
-      const t0 = performance.now(), dur = 1200;
+  // 14. Счетчик цифр: <b data-count="187">187</b>, по желанию data-suffix="+".
+  // Считает, когда сама цифра видна на экране (а не когда показался весь блок), – 24.11.
+  const counters = document.querySelectorAll('[data-count]');
+  if (!reduce && counters.length && 'IntersectionObserver' in window) {
+    const fmt = (el, n) => { el.textContent = (n >= 10000 ? n.toLocaleString('ru-RU') : String(n)) + (el.dataset.suffix || ''); };
+    const cio = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target; cio.unobserve(el);
+      const to = parseInt(el.dataset.count, 10), t0 = performance.now(), dur = to > 50 ? 1400 : 1000;
       const tick = t => {
         const p = Math.min(1, (t - t0) / dur), eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(to * eased).toLocaleString('ru-RU');
+        fmt(el, Math.round(to * eased));
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
-    });
+    }), { rootMargin: '0px 0px -12% 0px', threshold: 0.6 });
+    counters.forEach(el => { if (parseInt(el.dataset.count, 10) > 0) { fmt(el, 0); cio.observe(el); } });
   }
 
   // 8. Шапка прячется при прокрутке вниз и возвращается при прокрутке вверх.

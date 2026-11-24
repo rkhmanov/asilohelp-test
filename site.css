@@ -109,7 +109,7 @@ section { position: relative; }
 .tile { position: relative; background: var(--tile); border-radius: 16px; padding: 24px; min-height: 448px; overflow: hidden; }
 .tiles3 .tile:nth-child(1) { border-top-right-radius: 68px; } .tiles3 .tile:nth-child(2) { border-top-left-radius: 68px; } .tiles3 .tile:nth-child(3) { border-bottom-right-radius: 68px; }
 .mini { background: #fff; height: 210px; border-radius: 10px; position: relative; overflow: hidden; }
-.tile:nth-child(1) .mini { border-radius: 16px 48px 10px 10px; } .tile:nth-child(2) .mini { border-radius: 48px 10px 10px 10px; } .tile:nth-child(3) .mini { background: #F7F7F8; }
+.tile:nth-child(1) .mini { border-radius: 16px 48px 10px 10px; } .tile:nth-child(2) .mini { border-radius: 48px 10px 10px 10px; } .tile:nth-child(3) .mini { background: #fff; } /* как в Figma (24.11) */
 .tile__head { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; height: 44px; }
 .tile__head h3 { font-weight: 600; font-size: 24px; letter-spacing: -.04em; }
 .tile > p { font-size: 13px; line-height: 1.6; color: var(--body); margin-top: 20px; min-height: 42px; }
@@ -1016,7 +1016,7 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 
 /* Карточки услуг на компьютере (24.11, по мотивам nexacore-process с motionsites.ai, сделано с нуля; правки Саши 24.11 ночью):
    в покое кнопки нет. При наведении карточка переворачивается, сверху мягкий красно-синий («полицейский») свет за курсором
-   (--mx / --mxb из скрипта в index.html), текст на обороте сначала стоит ниже, потом снизу выезжает кнопка и поднимает его.
+   (--mx из скрипта в index.html; на обороте та же координата – блик идет за курсором), текст на обороте сначала стоит ниже, потом снизу выезжает кнопка и поднимает его.
    Без кружка-«загрузки». Клик по любому месту карточки – страница услуги. */
 @media (min-width: 601px) and (hover: hover) {
   .flip__face::before { content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none; border-radius: inherit; opacity: 0;
@@ -1024,8 +1024,8 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
                 radial-gradient(48% 34% at calc(var(--mx, 50%) + 14%) 0%, rgba(84,120,236,.28), rgba(84,120,236,0) 72%);
     box-shadow: inset 0 0 0 1px rgba(200,190,235,.45);
     transition: opacity .6s ease; }
-  .flip__back::before { background: radial-gradient(48% 34% at calc(var(--mxb, 50%) - 14%) 0%, rgba(232,84,112,.30), rgba(232,84,112,0) 72%),
-                radial-gradient(48% 34% at calc(var(--mxb, 50%) + 14%) 0%, rgba(84,120,236,.28), rgba(84,120,236,0) 72%); }
+  .flip__back::before { background: radial-gradient(48% 34% at calc(var(--mx, 50%) - 14%) 0%, rgba(232,84,112,.30), rgba(232,84,112,0) 72%),
+                radial-gradient(48% 34% at calc(var(--mx, 50%) + 14%) 0%, rgba(84,120,236,.28), rgba(84,120,236,0) 72%); }
   .flip:hover .flip__face::before, .flip:focus-visible .flip__face::before { opacity: 1; }
   .flip:hover .flip__face, .flip:focus-visible .flip__face { box-shadow: 0 30px 70px -24px rgba(110,90,190,.45), 0 18px 40px -22px rgba(220,80,110,.4), 0 12px 24px -12px rgba(33,33,41,.2); }
   .help .flip__btn--face { opacity: 0; transform: translateY(30px) translateZ(0); pointer-events: none;
@@ -1100,4 +1100,33 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .stack > i:nth-child(2) { animation: stack-float 8.5s ease-in-out -4s infinite reverse; }
   .stack .status { animation: stack-float 6s ease-in-out -2.5s infinite; }
   @keyframes stack-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -9px; } }
+}
+
+/* ===== Правки Саши 24.11, второй список ===== */
+/* «+6» непрозрачный: аватарка юриста под ним не просвечивает */
+.crew__faces i.more { background: #394567; }
+@media (min-width: 601px) and (hover: hover) {
+  /* кнопки меняют цвет при наведении: белые – красными, черная «Отправить заявку» – красной */
+  .btn--white, .help .help__more-btn, .submit, .b--red .link { transition: background-color .3s ease, color .3s ease, transform var(--m-slow, .45s) var(--m-ease, ease), box-shadow var(--m-slow, .45s) var(--m-ease, ease); }
+  .btn--white:hover, .help .help__more-btn:hover, .submit:hover { background: var(--accent) !important; color: #fff; }
+  .tg:hover { background: #FBEFF2; }
+  /* «187»: при наведении на карточку загорается «Отзывы о нашей работе», как «Подробнее о нас» у «Команды» */
+  .b--red:hover .link { background: #25262A; }
+  /* «Бесплатные материалы»: карточка целиком кликабельна, кнопка темнеет уже при наведении на карточку */
+  .ftile.is-link { cursor: pointer; }
+  .ftile.is-link:hover .m-btn--accent { background-color: var(--m-accent-hover, #832626); }
+}
+@media (min-width: 601px) and (prefers-reduced-motion: no-preference) {
+  /* «Договор об оказании услуг» парит сам по себе */
+  .b--trust .doc { animation: stack-float 7.5s ease-in-out -3s infinite; }
+}
+@media (min-width: 1101px) {
+  /* «бесплатно» у 39€ – как в Figma: узкая таблетка наискось поперек цены */
+  .price em { left: -4px; top: 53%; transform: translateY(-50%) rotate(-7deg); padding: 0 12px 2px; border-radius: 999px; font-size: 14px; color: #F6DDE3; box-shadow: 0 6px 14px -6px rgba(0,0,0,.45); }
+  /* стрелка у «и главное»: выше от края и ровнее */
+  .free .free__arrow { top: 762px; transform: rotate(104deg); }
+  /* «База знаний»: больше воздуха между строками, блок выше */
+  .kb { padding-top: 72px; }
+  .kb .sh h2 span { margin-top: 0; }
+  .kb .sh p { margin-top: 2px; }
 }
