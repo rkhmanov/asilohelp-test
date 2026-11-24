@@ -5,7 +5,8 @@
    - Едет сама по кругу; пауза, пока ленту тянут, листают стрелками или ходят по ней с клавиатуры.
    - Двигается через transform, а не через прокрутку: на iPhone родная прокрутка с инерцией спорила
      с автопрокруткой и лента дергалась. Тянется пальцем и мышкой, с инерцией; вертикальная прокрутка страницы не мешает.
-   - При prefers-reduced-motion сама не едет и переворачивается без анимации. */
+   - При prefers-reduced-motion сама не едет и переворачивается без анимации.
+   - Переворот плоский (scaleX), без 3D: в Safari 3D внутри ленты рисовался со сдвигом. */
 (function () {
   var reel = document.getElementById('reel');
   if (!reel) return;
@@ -22,30 +23,35 @@
     pair.forEach(function (card, i) {
       var other = pair[1 - i];
       var box = document.createElement('div');
-      box.className = 'rvf';
+      box.className = 'rflip';
       box.setAttribute('role', 'button');
       box.tabIndex = 0;
       box.setAttribute('aria-label', card.classList.contains('rv--ph') ? 'Показать отзыв' : 'Показать фото автора');
       var inner = document.createElement('div');
-      inner.className = 'rvf__in';
+      inner.className = 'rflip__in';
       card.replaceWith(box);
       var back = other.cloneNode(true);
-      back.classList.add('rvf__back');
+      back.classList.add('rflip__back');
       back.setAttribute('aria-hidden', 'true');
       back.removeAttribute('data-pair');
-      card.classList.add('rvf__front');
+      card.classList.add('rflip__front');
       inner.appendChild(card);
       inner.appendChild(back);
       box.appendChild(inner);
     });
   });
-  function flip(box) { box.classList.toggle('is-flipped'); }
+  // плоский переворот: карточка сжимается до ребра, меняется сторона, раскрывается обратно
+  function flip(box) {
+    if (reduce || box.classList.contains('is-turning')) { box.classList.toggle('is-flipped'); return; }
+    box.classList.add('is-turning');
+    setTimeout(function () { box.classList.toggle('is-flipped'); box.classList.remove('is-turning'); }, 220);
+  }
   reel.addEventListener('click', function (e) {
-    var box = e.target.closest && e.target.closest('.rvf');
+    var box = e.target.closest && e.target.closest('.rflip');
     if (box && !e.defaultPrevented) flip(box);
   });
   reel.addEventListener('keydown', function (e) {
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('rvf')) { e.preventDefault(); flip(e.target); }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('rflip')) { e.preventDefault(); flip(e.target); }
   });
 
   // 2. Дорожка и две копии карточек для бесконечной ленты
@@ -117,7 +123,7 @@
 
   // Стрелки (glass.js): на две карточки вперед/назад
   reel.reelGo = function (dir) {
-    var c = track.querySelector('.rvf, .rv');
+    var c = track.querySelector('.rflip, .rv');
     var step = ((c ? c.offsetWidth : 257) + (parseFloat(getComputedStyle(track).columnGap) || 0)) * 2;
     vel = 0;
     var from = anim ? anim.to : x;
