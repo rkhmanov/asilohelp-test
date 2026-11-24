@@ -3,6 +3,7 @@ title: Что сделать до отъезда из России: паспор
 short: Что сделать до отъезда
 cat: До отъезда
 img: stati/do-otezda.webp
+pos: 50% 0%
 lead: Загранпаспорт, шенгенская виза, доверенности, связь, здоровье и доказательства для кейса. Разбираем, что успеть сделать в России, пока это еще просто.
 order: 9
 source: До отъезда | https://asiloinspain.notion.site/312dba7d8a1c819089ccefc0b21c3af7; Что сделать до выезда из РФ? | https://asiloinspain.notion.site/312dba7d8a1c8179acc5d62726818f71; Что сделать перед отъездом | https://asiloinspain.notion.site/334dba7d8a1c80be9055c72938026c98
