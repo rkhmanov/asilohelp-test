@@ -1,9 +1,10 @@
-/* Лента отзывов на главной (Саша, 23.11.2026):
-   - едет сама по кругу, на паузе, пока на ней палец, мышь или фокус;
+/* Лента отзывов на главной (Саша, 23.11.2026; 24.11 – едет всегда, переворачиваются все):
+   - едет сама по кругу и не стоит при наведении мыши; пауза – только пока ее тянут
+     пальцем или мышкой, листают стрелками или ходят по ней с клавиатуры;
    - тянется пальцем (родная прокрутка) и мышкой (перетаскивание);
    - карточка переворачивается по нажатию, без кнопки «Читать отзыв»;
-   - карточки с data-auto начинают с текста и сами переворачиваются, пока их не тронули;
-   - карточки с фото время от времени покачиваются (CSS, .rv__in rotate);
+   - все карточки сами переворачиваются по очереди: фото ~5 с, текст ~12 с, чтобы успеть прочитать;
+     карточку, которую перевернули руками, автомат не трогает 15 с;
    - при prefers-reduced-motion ничего не едет и не переворачивается само. */
 (function () {
   var reel = document.getElementById('reel');
@@ -42,7 +43,7 @@
   if (loop) reel.scrollLeft = pos;
   addEventListener('resize', function () { var r = period ? (reel.scrollLeft % period) / period : 0; measure(); pos = norm(period + r * period); if (loop) reel.scrollLeft = pos; });
 
-  var holdUntil = 0, hovering = false, touching = false, drag = null, justDragged = false, visible = false;
+  var holdUntil = 0, touching = false, drag = null, justDragged = false, visible = false;
   function hold(ms) { holdUntil = Math.max(holdUntil, performance.now() + ms); }
 
   if ('IntersectionObserver' in window) {
@@ -55,7 +56,7 @@
     requestAnimationFrame(tick);
     var dt = last ? Math.min(t - last, 64) : 0; last = t;
     if (!loop) return;
-    if (!visible || document.hidden || hovering || touching || drag || t < holdUntil || reel.contains(document.activeElement)) {
+    if (!visible || document.hidden || touching || drag || t < holdUntil || kbFocus()) {
       pos = reel.scrollLeft;
       return;
     }
@@ -64,9 +65,14 @@
   }
   if (loop) requestAnimationFrame(tick);
 
-  // Мышь: пауза при наведении и перетаскивание
-  reel.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hovering = true; });
-  reel.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { hovering = false; hold(800); } });
+  // Пауза при фокусе – только для клавиатуры (после щелчка мышью лента едет дальше)
+  function kbFocus() {
+    var a = document.activeElement;
+    if (!a || !reel.contains(a)) return false;
+    try { return a.matches(':focus-visible'); } catch (_) { return true; }
+  }
+
+  // Мышь: перетаскивание
   reel.addEventListener('pointerdown', function (e) {
     if (e.pointerType !== 'mouse') { touching = true; return; }
     if (e.button !== 0) return;
@@ -99,27 +105,35 @@
   // Стрелки (glass.js и старая разметка): дать им докрутить
   document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.reel-nav, .reviews__nav')) hold(1800); });
 
-  // Переворот по нажатию
-  function flip(card) { card.classList.toggle('is-flipped'); card.classList.add('is-touched'); hold(3000); }
+  // Переворот по нажатию: лента не останавливается, автомат не трогает карточку 15 с
+  var MANUAL = 15000;
+  function flip(card) { card.classList.toggle('is-flipped'); card.classList.add('is-touched'); card._manual = performance.now() + MANUAL; }
   reel.addEventListener('click', function (e) { var c = e.target.closest('.rv--flip'); if (c) flip(c); });
   reel.addEventListener('keydown', function (e) {
     var c = e.target.closest('.rv--flip');
     if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); flip(c); }
   });
 
-  // Карточки, которые начинают с текста, сами переворачиваются по очереди
+  // Все карточки сами переворачиваются по очереди: фото PHOTO мс, текст TEXT мс.
+  // Сдвиг по фазе – от номера карточки в оригинальном наборе (копии ленты в том же ритме).
   if (!reduce) {
-    var autos = Array.prototype.slice.call(reel.querySelectorAll('.rv--flip[data-auto]'));
-    var origAutos = originals.filter(function (el) { return el.hasAttribute('data-auto'); });
-    var step = 0;
+    var PHOTO = 5000, TEXT = 12000, CYCLE = PHOTO + TEXT, STAGGER = 3700;
+    var cards = Array.prototype.slice.call(reel.querySelectorAll('.rv--flip'));
+    var origFlip = originals.filter(function (el) { return el.classList.contains('rv--flip'); });
+    var t0 = performance.now();
+    cards.forEach(function (c, i) {
+      var k = i % origFlip.length;
+      c._phase = k * STAGGER % CYCLE;
+    });
     setInterval(function () {
       if (!visible || document.hidden) return;
-      autos.forEach(function (c, i) {
-        if (i % origAutos.length !== step % origAutos.length) return;
-        if (c.classList.contains('is-touched')) return;
-        c.classList.toggle('is-flipped');
+      var now = performance.now();
+      cards.forEach(function (c) {
+        if (c._manual && now < c._manual) return;
+        if (c._manual) { c._manual = 0; c._phase = (c.classList.contains('is-flipped') ? PHOTO : 0) - (now - t0); }
+        var want = ((now - t0 + c._phase) % CYCLE + CYCLE) % CYCLE >= PHOTO;
+        if (c.classList.contains('is-flipped') !== want) c.classList.toggle('is-flipped', want);
       });
-      step++;
-    }, 2600);
+    }, 250);
   }
 })();

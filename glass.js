@@ -98,11 +98,13 @@ if (!off) {
     reel.before(wrap);
     wrap.append(reel);
     oldNav.remove();
-    const go = (dir) => reel.scrollBy({ left: dir * 275 * 2, behavior: "smooth" });
+    // шаг – две карточки (ширина карточки + зазор), чтобы не зависеть от размеров в CSS
+    const step = () => { const c = reel.querySelector(".rv"); return ((c ? c.offsetWidth : 257) + (parseFloat(getComputedStyle(reel).columnGap) || 0)) * 2; };
+    const go = (dir) => reel.scrollBy({ left: dir * step(), behavior: "smooth" });
     mount((n) => { n.className = "reel-nav"; wrap.append(n); },
       h("div", { className: "reel-nav__in" },
         h(Button, { icon: icons.prev, "aria-label": "Назад", onClick: () => go(-1) }),
-        h(Button, { icon: icons.next, "aria-label": "Вперёд", onClick: () => go(1) })));
+        h(Button, { icon: icons.next, "aria-label": "Вперед", onClick: () => go(1) })));
   }
 
   // 6. Форма: Telegram / E-mail — сегментированный переключатель iOS
