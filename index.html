@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="motion.css?v=18">
-<link rel="stylesheet" href="site.css?v=38">
+<link rel="stylesheet" href="site.css?v=39">
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <link rel="stylesheet" href="ruki.css?v=5">
 <link rel="stylesheet" href="hero-sticker.css?v=8">
@@ -126,7 +126,7 @@
     </div>
     <div class="dark" data-reveal>
       <div class="dark__art" aria-hidden="true">
-        <img class="dark__photo" src="img/hero-sasha.jpg" alt="">
+        <div class="dark__photo dark__slides"><img class="is-on" src="img/shans/1.jpg" alt=""><img src="img/shans/2.jpg" alt="" loading="lazy"><img src="img/shans/3.jpg" alt="" loading="lazy"><img src="img/shans/4.jpg" alt="" loading="lazy"></div>
         <span class="chip chip--1 m-float" style="--rot:-4deg;--dur:7s;--lift:-8px"><img src="img/chip-icon.svg" alt="" width="34" height="34">Кейс</span>
         <span class="chip chip--2 m-float" style="--rot:5deg;--dur:8s;--delay:-3s;--lift:-10px"><img src="img/chip-icon.svg" alt="" width="34" height="34">Интервью</span>
         <span class="chip chip--3 m-float" style="--rot:-3deg;--dur:9s;--delay:-5s;--lift:-7px"><img src="img/chip-icon.svg" alt="" width="34" height="34">Документы</span>
@@ -406,6 +406,8 @@
   const reel = document.getElementById('reel');
   const step = () => { const c = reel.querySelector('.rv'); return ((c ? c.offsetWidth : 257) + (parseFloat(getComputedStyle(reel).columnGap) || 0)) * 2; };
   document.querySelectorAll('.reviews__nav button').forEach(b => b.addEventListener('click', () => reel.scrollBy({ left: +b.dataset.dir * step(), behavior: 'smooth' })));
+  // «Оценим шансы»: четыре фото сменяют друг друга (Саша 24.11)
+  (() => { const box = document.querySelector('.dark__slides'); if (!box || matchMedia('(prefers-reduced-motion: reduce)').matches) return; const im = box.querySelectorAll('img'); let k = 0; setInterval(() => { if (document.hidden) return; im[k].classList.remove('is-on'); k = (k + 1) % im.length; im[k].classList.add('is-on'); }, 4500); })();
   // «Бесплатные материалы»: вся карточка – ссылка (Саша 24.11)
   document.querySelectorAll('.ftile').forEach(t => { const a = t.querySelector('a[href]'); if (!a) return; t.classList.add('is-link'); t.addEventListener('click', e => { if (e.target.closest('a')) return; a.click(); }); });
   // карточки услуг: переворот по нажатию (телефон) и с клавиатуры
