@@ -2,7 +2,7 @@
 title: Подача в Испании: первый визит в полицию
 short: Первый визит в полицию
 cat: Подача
-img: rv-gothic.jpg
+img: stati/podacha-v-ispanii.webp
 lead: Как взять ситу, что взять с собой в участок и что происходит на первом визите, когда вы регистрируете намерение просить международную защиту.
 order: 5
 source: Подача в Испании | https://asiloinspain.notion.site/312dba7d8a1c812f9485c214ab52e643; Процесс подачи на беженство | https://asiloinspain.notion.site/312dba7d8a1c81bfa40adb515190a62b

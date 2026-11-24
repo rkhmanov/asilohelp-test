@@ -2,7 +2,7 @@
 title: Доказательства для ЛГБТ-кейса
 short: Доказательства для кейса
 cat: Кейс
-img: flip-case.jpg
+img: stati/dokazatelstva.webp
 lead: Какие доказательства можно приложить к кейсу на международную защиту, как оформить письма свидетелей и почему поддельные документы только навредят.
 order: 6
 source: Доказательства | https://asiloinspain.notion.site/312dba7d8a1c8174ac48ead9e1260cb6

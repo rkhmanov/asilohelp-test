@@ -2,7 +2,7 @@
 title: Как получить NIE в Испании и в консульстве
 short: Как получить NIE
 cat: Документы
-img: rv-oldtown.jpg
+img: stati/nie.webp
 lead: NIE – личный номер иностранца в Испании, без него не обойтись в банке, у нотариуса и в госучреждениях. Рассказываем, где его получают, что взять с собой и как оплатить пошлину.
 order: 10
 source: Как получить NIE? | https://asiloinspain.notion.site/312dba7d8a1c810cae54e7f3c984d0bb; Что сделать до выезда из РФ? | https://asiloinspain.notion.site/312dba7d8a1c8179acc5d62726818f71

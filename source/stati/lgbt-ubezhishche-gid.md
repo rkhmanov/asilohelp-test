@@ -2,7 +2,7 @@
 title: Убежище в Испании для ЛГБТ: полный гайд
 short: Убежище для ЛГБТ: полный гайд
 cat: Основы
-img: rv-oldtown.jpg
+img: stati/lgbt-ubezhishche-gid.webp
 lead: Весь путь от решения уехать до карты резидента и гражданства: кто может просить защиту, как подготовиться, подать запрос, пройти интервью и дождаться решения.
 order: 1
 source: Основная информация | https://asiloinspain.notion.site/312dba7d8a1c8110917bed34c817b8dd; Процесс подачи на беженство | https://asiloinspain.notion.site/312dba7d8a1c81bfa40adb515190a62b; База знаний: беженство в Испании | https://asiloinspain.notion.site/312dba7d8a1c8177a8c6ff423d86ce2f; Кейс | https://asiloinspain.notion.site/312dba7d8a1c81ebbb8ad267fdc0087e

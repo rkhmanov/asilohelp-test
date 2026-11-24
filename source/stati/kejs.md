@@ -2,7 +2,7 @@
 title: Как написать кейс для международной защиты
 short: Как написать кейс
 cat: Кейс
-img: v2-who-secret.jpg
+img: stati/kejs.webp
 lead: Кейс – письменная история, на которую опирается весь запрос на защиту. Разбираем, из каких частей он состоит, что в нем писать и каких ошибок избегать.
 order: 7
 source: Кейс | https://asiloinspain.notion.site/312dba7d8a1c81ebbb8ad267fdc0087e
