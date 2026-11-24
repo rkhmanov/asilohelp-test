@@ -60,7 +60,7 @@
   .crew__n { position: absolute; right: 0; top: -6px; display: flex; flex-direction: column; align-items: flex-end; line-height: 1; }
   .crew__n b { font-size: 72px; line-height: 72px; letter-spacing: -3.6px; margin: 0 3.6px 4px 0; }
   /* «+6» плотный и лежит поверх Александра (Саша 24.11) */
-  .crew__faces i { position: relative; } .crew__faces i.more { background: #3A4568; z-index: 1; }
+  .crew__faces i { position: relative; } .crew__faces i.more { z-index: 1; }
   .crew__n { font-size: 14px; } 
   .b--crew .crew__more { background: none !important; padding: 0; gap: 6px; font-size: 14px; margin-top: 6px; }
   .b--crew .crew__more img { content: url(img/arrow-small-white.svg); width: 8px; height: 8px; }
