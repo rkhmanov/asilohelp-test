@@ -147,3 +147,39 @@
   html .help .fc--b .flip__front > img { left: 0 !important; top: -142.26% !important; width: 100% !important; height: 283.93% !important; }
   html .help .fc--c .flip__front > img { left: 24.02% !important; top: -46.43% !important; width: 151.96% !important; height: 431.55% !important; }
 }
+
+/* ===== «Начните с наших бесплатных материалов»: фото вместо 3D, кадр и вуали по Figma (Саша 24.11) =====
+   Компьютер – «ФИНАЛ» 4750:4451 (карточки 757×540 и 555×262), телефон – «Финал» 4818:5021 (карточки 358×185).
+   Слой фото задан в процентах от карточки, вуаль – белый градиент поверх фото (::after). */
+.free .ftile > img { max-width: none; }
+@media (min-width: 1101px) {
+  /* «Оценка шансов»: фото 1009×720 со сдвигом −252/0 */
+  .free .ftile--main > img { left: -33.29%; top: 0; width: 133.29%; height: 133.33%; }
+  /* канал и чат: фото на всю карточку, вуаль светлее слева, где текст */
+  .free .ftile--tr::after { background: linear-gradient(234deg, rgba(255,255,255,0) 26.7%, rgba(255,255,255,.33) 44.1%, rgba(255,255,255,.75) 77.7%); }
+  .free .ftile--br::after { background: linear-gradient(243deg, rgba(255,255,255,0) 8.9%, rgba(255,255,255,.52) 32%, rgba(255,255,255,.81) 81.6%); }
+}
+@media (max-width: 600px) {
+  /* «Оценка шансов»: фото 511×264 со сдвигом −129/0; канал: 451×233 со сдвигом −59/−48; чат – на всю карточку */
+  .free .ftile--main > img { left: -36.03%; top: 0; width: 142.74%; height: 142.7%; }
+  .free .ftile--tr > img { left: -16.48%; top: -26.01%; width: 125.98%; height: 126.28%; }
+  /* вуали: прежние градиенты с прозрачностью слоя 66 / 75 / 64 % */
+  .free .ftile--main::after { background: linear-gradient(90deg, rgba(255,255,255,.515), rgba(255,255,255,.33) 65%, rgba(255,255,255,.099)); }
+  .free .ftile--tr::after { background: linear-gradient(90deg, rgba(255,255,255,.585), rgba(255,255,255,.375) 65%, rgba(255,255,255,.113)); }
+  .free .ftile--br::after { background: linear-gradient(90deg, rgba(255,255,255,.589), rgba(255,255,255,.512) 65%, rgba(255,255,255,.32)); }
+  /* кнопки без кружка со стрелкой: 44 в высоту, по 18 слева и справа (Link 177 / 232 / 166) */
+  .free .ftile .m-btn { height: 44px; padding: 0 18px; gap: 0; justify-content: center; }
+  .free .ftile .m-btn .m-arrow { display: none; }
+}
+
+/* ===== Компьютер, правки Саши 24.11 в «ФИНАЛ» ===== */
+@media (min-width: 1101px) {
+  /* «Оцените шансы на успех»: плашка ниже – 344 вместо 403, фото 341×425 по центру плашки по высоте (выступает на 41 сверху и снизу);
+     до «Мы сами прошли этот путь» 112, как между остальными секциями */
+  .who .dark { height: 344px; margin-bottom: 8px; }
+  .who .dark__photo { left: 129.9px; top: -40.7px; width: 341.2px; height: 425.4px; }
+  /* «¿Empezamos?» выше: 32 от нижней карточки вопросов и 32 до подвала. Отступ секции прозрачный – не перекрывает щелчки по карточкам */
+  .faq { padding-bottom: 0; }
+  .apply { padding-top: 32px; padding-bottom: 46px; pointer-events: none; }
+  .apply__box { pointer-events: auto; }
+}
