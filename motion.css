@@ -27,11 +27,7 @@
   .m-btn--accent:hover { background-color: var(--m-accent-hover); }
 }
 
-/* 2. Стрелка в кнопке или карточке уходит по диагонали */
-.m-arrow { transition: transform var(--m-base) var(--m-ease); }
-@media (hover: hover) {
-  .m-btn:hover .m-arrow, .m-card:hover .m-arrow { transform: translate(3px, -3px); }
-}
+/* 2. Кружок со стрелкой в кнопке стоит на месте вместе с кнопкой (Саша 24.11: отдельно не уезжает) */
 
 /* 3. Карточка: подъём + тень растёт */
 .m-card {
