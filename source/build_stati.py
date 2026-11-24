@@ -128,6 +128,8 @@ def parse(path):
     if meta["cat"] not in CATS:
         sys.exit(f"{path.name}: рубрика «{meta['cat']}» не из списка {CATS}")
     meta.setdefault("short", meta["title"])
+    # pos: точка кадрирования обложки (CSS object-position), по умолчанию центр
+    meta["pos_attr"] = f' style="object-position:{html.escape(meta["pos"])}"' if meta.get("pos") else ""
     words = len(re.findall(r"\w+", meta["body"]))
     meta["min"] = max(2, round(words / 180))
     return meta
@@ -193,7 +195,7 @@ def render_body(a, pre):
 def card(a, pre, wide=False):
     cls = "card m-card" + (" card--wide" if wide else "")
     return (f'<a class="{cls}" href="{pre}stati/{a["slug"]}.html" data-cat="{html.escape(a["cat"])}" data-reveal>'
-            f'<div class="card__img"><img src="{pre}img/{a["img"]}" alt="" loading="lazy"><span class="chip">{html.escape(a["cat"])}</span></div>'
+            f'<div class="card__img"><img src="{pre}img/{a["img"]}" alt="" loading="lazy"{a["pos_attr"]}><span class="chip">{html.escape(a["cat"])}</span></div>'
             f'<div class="card__body"><h3>{html.escape(a["short"] if not wide else a["title"])}</h3>'
             f'<p>{html.escape(a["lead"])}</p><small>{a["min"]} мин чтения</small></div></a>')
 
@@ -265,7 +267,7 @@ def article_page(a, arts):
           <p class="paper__lead">{html.escape(a['lead'])}</p>
           <div class="share"><button type="button" data-share>Поделиться</button><button type="button" data-copy>Скопировать ссылку</button><a href="https://t.me/share/url?url=https%3A%2F%2Fasilohelp.com%2Fstati%2F{a['slug']}" target="_blank" rel="noopener">Отправить в Telegram</a></div>
         </header>
-        <div class="paper__img"><img src="{pre}img/{a['img']}" alt=""></div>
+        <div class="paper__img"><img src="{pre}img/{a['img']}" alt=""{a['pos_attr']}></div>
         <div class="prose">
 {body}
         </div>
@@ -360,7 +362,7 @@ def list_page(arts):
           <span class="feat__go">Читать гайд <i aria-hidden="true">↗</i></span>
           <span class="feat__meta">{lead['min']} мин · обновлено {TODAY} · автор: команда asilohelp</span>
         </div>
-        <div class="feat__img"><img src="img/{lead['img']}" alt=""></div>
+        <div class="feat__img"><img src="img/{lead['img']}" alt=""{lead['pos_attr']}></div>
       </a>
       <div class="must" data-reveal><small>Стоит прочитать</small>{must_html}</div>
     </div>

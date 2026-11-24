@@ -3,6 +3,7 @@ title: Полезные приложения и сервисы для жизни
 short: Полезные приложения
 cat: Жизнь в Испании
 img: stati/prilozheniya.webp
+pos: 50% 15%
 lead: Чем пользоваться в первые месяцы в Испании: транспорт, такси, жилье, работа, банки, связь, язык и сообщества. Плюс короткая инструкция, как получить электронную подпись.
 order: 15
 source: Полезные приложения и ссылки | https://asiloinspain.notion.site/334dba7d8a1c800baa40cab5d40b4666; Важные ссылки | https://asiloinspain.notion.site/334dba7d8a1c8081a50dc612be48721b; Как получить электронную подпись? | https://asiloinspain.notion.site/312dba7d8a1c810a870ccff5c464017a
