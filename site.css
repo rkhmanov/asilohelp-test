@@ -774,7 +774,7 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .flip__front { position: relative; height: 168px; transform: none !important; visibility: visible !important; }
   .flip__front::after { background: linear-gradient(90deg, rgba(255,255,255,.94) 32%, rgba(255,255,255,.35) 70%, rgba(255,255,255,0)) !important; }
   .flip__face > img { width: 100% !important; height: 100% !important; left: 0 !important; top: 0 !important; object-fit: cover; object-position: 85% center; }
-  .fc--a .flip__face > img { object-position: 80% 22%; } .fc--b .flip__face > img { object-position: 70% 66%; } .fc--c .flip__face > img { object-position: 75% 18%; } /* фото 24.11 */
+  .fc--a .flip__face > img { object-position: 80% 8%; } .fc--b .flip__face > img { object-position: 70% 66%; } .fc--c .flip__face > img { object-position: 75% 18%; } /* фото 24.11 */
   .ft { font-size: 30px !important; line-height: .98; top: auto !important; bottom: 18px; left: 20px !important; }
   .flip__back { display: none; position: relative; transform: none !important; visibility: visible !important; background: #fff; }
   .flip__back > img, .flip__back::after { display: none; }
@@ -933,6 +933,15 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 }
 @media (min-width: 601px) and (max-width: 1100px) {
   .help, .free { margin-inline: 16px; border-radius: 32px; }
+}
+
+/* подложка «Арки» (выбор Саши 24.11, Figma 4813:4582): у «Как мы помогаем» дуги из логотипа расходятся снизу, у «Бесплатных материалов» – сверху. Шире 600 px */
+@media (min-width: 601px) {
+  .help { background: linear-gradient(180deg, #A72A3E, #8E1C30); }
+  .free { background: linear-gradient(0deg, #A72A3E, #8E1C30); }
+  .help::before, .free::before { inset: 0; width: auto; height: auto; border-radius: 0; background: url(img/arki.svg) center bottom / 1393px auto no-repeat; }
+  .free::before { transform: scaleY(-1); }
+  .help::after, .free::after { display: none; }
 }
 
 /* компьютер (правки Саши 23.11, ночь): вся карточка услуги – ссылка; без переключения visibility (из-за него при быстром проходе мышью карточки пропадали) */
