@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="motion.css?v=18">
-<link rel="stylesheet" href="site.css?v=37">
+<link rel="stylesheet" href="site.css?v=38">
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <link rel="stylesheet" href="ruki.css?v=5">
 <link rel="stylesheet" href="hero-sticker.css?v=8">
@@ -162,7 +162,7 @@
         <span class="dot" aria-hidden="true"></span>
       </div>
       <a class="b b--crew" href="o-nas.html" data-reveal>
-        <div class="crew__top"><h3>Команда</h3><span class="crew__n"><b>11</b> человек</span></div>
+        <div class="crew__top"><h3>Команда</h3><span class="crew__n"><b data-count="11">11</b> человек</span></div>
         <div class="crew__faces" aria-hidden="true"><i class="face"><img src="img/team/sasha.jpg" alt="" width="56" height="56" loading="lazy"></i><i class="face"><img src="img/team/lesya.jpg" alt="" width="56" height="56" loading="lazy"></i><i class="face"><img src="img/team/alina.jpg" alt="" width="56" height="56" loading="lazy"></i><i class="face"><img src="img/team/ilya.jpg" alt="" width="56" height="56" loading="lazy"></i><i class="face"><img src="img/team/aleksandr.jpg" alt="" width="56" height="56" loading="lazy"></i><i class="more">+6</i></div>
         <p>У каждого своя часть работы во время сопровождения.</p>
         <ul class="crew__roles">
@@ -296,7 +296,7 @@
       <p class="kb__lead">Все, что мы узнали на своем опыте: загранпаспорт и виза, интервью, красная карта и гражданство.</p>
       <div class="kb__nums">
         <div><b data-count="12">12</b><span>авторов<br>и редакторов</span></div>
-        <div><b>1800+</b><span>регулярных<br>пользователей</span></div>
+        <div><b data-count="1800" data-suffix="+">1800+</b><span>регулярных<br>пользователей</span></div>
         <div><b data-count="37">37</b><span>гайдов<br>и чек-листов</span></div>
       </div>
       <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_kb" target="_blank" rel="noopener"><span class="up">Получить доступ</span> <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
@@ -399,18 +399,20 @@
 </footer>
 
 
-<script src="motion.js?v=2"></script>
+<script src="motion.js?v=3"></script>
 <script src="form.js?v=1"></script>
 <script>
   // отзывы: листание
   const reel = document.getElementById('reel');
   const step = () => { const c = reel.querySelector('.rv'); return ((c ? c.offsetWidth : 257) + (parseFloat(getComputedStyle(reel).columnGap) || 0)) * 2; };
   document.querySelectorAll('.reviews__nav button').forEach(b => b.addEventListener('click', () => reel.scrollBy({ left: +b.dataset.dir * step(), behavior: 'smooth' })));
+  // «Бесплатные материалы»: вся карточка – ссылка (Саша 24.11)
+  document.querySelectorAll('.ftile').forEach(t => { const a = t.querySelector('a[href]'); if (!a) return; t.classList.add('is-link'); t.addEventListener('click', e => { if (e.target.closest('a')) return; a.click(); }); });
   // карточки услуг: переворот по нажатию (телефон) и с клавиатуры
   document.querySelectorAll('.flip').forEach(f => { f.addEventListener('click', e => { if (e.target.closest('.flip__btn')) return; if (!matchMedia('(hover: hover)').matches) { f.classList.toggle('is-flipped'); return; } const a = f.querySelector('.flip__btn--face'); if (a && innerWidth > 600) location.href = a.href; }); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f.classList.toggle('is-flipped'); } }); });
   if (!matchMedia('(hover: hover)').matches) document.querySelector('.flip-hint').textContent = 'Что входит – по нажатию на карточку';
   // карточки услуг: подсветка идет за курсором
-  document.querySelectorAll('.flip').forEach(f => f.addEventListener('pointermove', e => { const r = f.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width * 100; f.style.setProperty('--mx', x.toFixed(1) + '%'); f.style.setProperty('--mxb', (100 - x).toFixed(1) + '%'); }));
+  document.querySelectorAll('.flip').forEach(f => f.addEventListener('pointermove', e => { const r = f.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width * 100; f.style.setProperty('--mx', x.toFixed(1) + '%'); }));
   // отзывы: фото переворачивается и показывает текст (нажатие или Enter)
   // телефон: карточки «Мы справимся» и вопросы раскрываются по нажатию, как FAQ
   const narrow = matchMedia('(max-width: 600px)');
