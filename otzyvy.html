@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="site.css?v=42">
 <link rel="stylesheet" href="pages.css?v=1">
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
+<link rel="stylesheet" href="bloki.css?v=1">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=12"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.2):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot')</script>
@@ -95,42 +96,21 @@
     </div>
 
   </div>
+<!-- blok:zayavka -->
 <section class="apply" id="apply">
   <div class="apply__box" data-reveal>
+    <div class="apply__bg" aria-hidden="true"><span class="apply__ghost">начинаем?</span></div>
+    <div class="arch" aria-hidden="true"><img src="img/rv-sasha-dog.jpg" alt=""></div>
+    <span class="sticker apply__sticker" aria-hidden="true">Ответим пн–пт</span>
     <div class="apply__left">
       <h2>¿Empezamos?</h2>
-      <p>Расскажите, где вы сейчас и что вас интересует. На бесплатной оценке шансов скажем, подходит ли вам защита и с чего начать.</p>
-      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_reviews_chances" target="_blank" rel="noopener"><span class="tg__ava" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M21.4 4.1 2.9 11.3c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.4-1.6Zm-3.7 3.4-8.4 7.6-.3 3.3-1.5-4.7 9.8-6.2c.5-.3.8 0 .4 0Z"/></svg></span><span class="tg__txt"><small>Удобнее в Telegram?</small><b>Напишите боту @ASILOhelperBot</b></span><img class="tg__go m-arrow" src="img/arrow-red44.svg" alt="" width="40" height="40"></a>
-      <div class="arch"><img src="img/rv-sasha-dog.jpg" alt=""><span class="sticker">Ответим пн–пт</span></div>
+      <p>Расскажите, где вы сейчас и что вас интересует.<br class="only-d"> На бесплатной оценке шансов скажем, подходит ли<br class="only-d"> вам <span class="only-d">международная </span>защита и с чего начать.</p>
+      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_reviews_apply_chances" target="_blank" rel="noopener"><span class="tg__ava" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M21.4 4.1 2.9 11.3c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.4-1.6Zm-3.7 3.4-8.4 7.6-.3 3.3-1.5-4.7 9.8-6.2c.5-.3.8 0 .4 0Z"/></svg></span><span class="tg__txt"><small>Оставьте заявку в</small><b>@ASILOhelperBot</b></span><img class="tg__go m-arrow" src="img/arrow-red44.svg" alt="" width="40" height="40"></a>
+      <p class="apply__note">Общение с нами не нарушает законы РФ. Мы не передаем данные третьим лицам.</p>
     </div>
-    <form class="form" id="form" novalidate>
-      <div class="form__body">
-        <h3>Куда вам написать?</h3>
-        <p>Оставьте контакт: менеджерка напишет с понедельника по пятницу и запишет вас на бесплатную оценку шансов.</p>
-        <div class="field"><label for="f-name">Как к вам обращаться</label><input id="f-name" name="name" placeholder="Имя или псевдоним" autocomplete="off" maxlength="80" aria-describedby="err-name"><p class="field__err" id="err-name" hidden></p></div>
-        <div class="field"><label class="lbl" id="l-contact" for="f-contact">Ваш Telegram</label>
-          <div class="contact"><input id="f-contact" name="contact" placeholder="@username или телефон +34…" aria-labelledby="l-contact" aria-describedby="err-contact" autocomplete="off" maxlength="254"></div>
-          <input type="hidden" name="contact_type" value="telegram">
-          <p class="field__err" id="err-contact" hidden></p></div>
-        <div class="field"><span class="lbl" id="l-interest">Что вас интересует</span>
-          <div class="chips" data-single role="group" aria-labelledby="l-interest"><button type="button" class="on" aria-pressed="true">Оценка шансов</button><button type="button" aria-pressed="false">Консультация</button><button type="button" aria-pressed="false">Работа с кейсом</button><button type="button" aria-pressed="false">Сопровождение</button></div></div>
-        <div class="field"><label class="lbl" for="f-about">Коротко о ситуации <small>необязательно</small></label>
-          <textarea id="f-about" name="about" maxlength="2000" aria-describedby="err-about" placeholder="Где вы сейчас и когда планируете переезд. Без подробностей истории и документов, их обсудим лично."></textarea><p class="field__err" id="err-about" hidden></p></div>
-        <div class="hp" aria-hidden="true"><label for="f-website">Не заполняйте это поле</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-        <label class="consent"><input type="checkbox" name="consent" id="f-consent" aria-describedby="err-consent"><span>Я ознакомился(-ась) с <a href="privacy.html" target="_blank" rel="noopener">Политикой конфиденциальности</a> и согласен(-на) на обработку данных для ответа на заявку.</span></label>
-        <p class="field__err field__err--consent" id="err-consent" hidden></p>
-        <label class="consent"><input type="checkbox" name="sensitive_consent" id="f-sensitive"><span>Если я укажу сведения об ориентации, гендерной идентичности или здоровье, даю явное согласие на их обработку для ответа на заявку (см. <a href="privacy.html#what" target="_blank" rel="noopener">Политику конфиденциальности</a>). Согласие можно отозвать.</span></label>
-        <div class="ts"><div class="cf-turnstile" data-sitekey="0x4AAAAAAGN1oWk5fZGZETVJ" data-language="ru" data-theme="light" data-callback="asiloTsOk" data-expired-callback="asiloTsReset" data-error-callback="asiloTsReset"></div><script>if(innerWidth<400)document.currentScript.previousElementSibling.dataset.size='compact'</script>
-          <p class="field__err" id="err-ts" hidden></p></div>
-        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-        <p class="form__err" id="form-err" role="alert" hidden></p>
-        <button class="submit m-btn" type="submit">Отправить заявку</button>
-        <p class="form__note">Общение с нами не нарушает законы РФ. Мы не передаём данные третьим лицам.</p>
-      </div>
-      <div class="form__ok" role="status" tabindex="-1"><b>Спасибо, заявка у нас!</b><p class="form__code" hidden>Номер заявки: <span></span></p><p class="form__next">Менеджерка напишет вам в Telegram в рабочий день. Если за два рабочих дня никто не ответил, напишите нам в <a href="https://t.me/ASILOhelperBot?start=site_formok" target="_blank" rel="noopener">@ASILOhelperBot</a> и назовите номер заявки.</p></div>
-    </form>
   </div>
 </section>
+<!-- /blok:zayavka -->
 
 </main>
 
@@ -150,7 +130,6 @@
 
 
 <script src="motion.js?v=3"></script>
-<script src="form.js?v=1"></script>
 <script>
   // фильтр по услуге и «Читать полностью»
   const cards = [...document.querySelectorAll('.rvc')];

@@ -13,6 +13,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Общие блоки (отзывы, «¿Empezamos?») совпадают с source/bloki.py
+        run: python3 source/bloki.py --check
       - name: Playwright и Chromium
         run: |
           npm i --no-save --no-package-lock playwright@1.63.0

@@ -17,8 +17,9 @@
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <link rel="stylesheet" href="ruki.css?v=5">
 <link rel="stylesheet" href="hero-sticker.css?v=8">
-<link rel="stylesheet" href="glavnaya-telefon.css?v=8">
-<link rel="stylesheet" href="glavnaya-final.css?v=3">
+<link rel="stylesheet" href="glavnaya-telefon.css?v=9">
+<link rel="stylesheet" href="bloki.css?v=1">
+<link rel="stylesheet" href="glavnaya-final.css?v=4">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=12"></script>
 <script>(function(){var r=document.documentElement,lw=0;function v(){var w=innerWidth;if(w===lw)return;lw=w;r.style.setProperty('--vh-z',Math.round(innerHeight/(w<=480?w/390:1))+'px');}v();addEventListener('resize',v);})();</script>
@@ -193,6 +194,7 @@
 </section>
 
 <!-- 5 · Отзывы -->
+<!-- blok:otzyvy -->
 <section class="reviews" id="reviews">
   <div class="wrap">
     <div class="sh sh--sm" data-reveal><h2>Истории тех, кто уже в Испании<span>что они пишут о работе с нами</span></h2></div>
@@ -205,14 +207,14 @@
     <figure class="rv rv--ph rv--b" data-pair="aleksej"><img src="img/rv/aleksej.jpg" alt="Фото: Алексей" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:-2deg">Алексей</figcaption></figure>
     <div class="rv rv--you"><span>Здесь может<br>быть ваше фото</span><a class="rv__cta m-btn" href="https://t.me/ASILOhelperBot?start=site_reel_chances" target="_blank" rel="noopener" draggable="false">Оставить заявку</a></div>
     <figure class="rv rv--ph rv--c" data-pair="ross"><img src="img/rv/ross.jpg" alt="Фото: Росс" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:3deg">Росс</figcaption></figure>
-    <figure class="rv rv--q " data-pair="ross"><blockquote>Советы помогли внести правки в кейс. Я подался на убежище неделю назад и теперь нахожусь в стране легально</blockquote><figcaption><span class="sticker" style="--r:-3deg">Работа с кейсом</span></figcaption></figure>
+    <figure class="rv rv--q" data-pair="ross"><blockquote>Советы помогли внести правки в кейс. Я подался на убежище неделю назад и теперь нахожусь в стране легально</blockquote><figcaption><span class="sticker" style="--r:-3deg">Работа с кейсом</span></figcaption></figure>
     <figure class="rv rv--q rv--q-dark" data-pair="angelina"><blockquote>Визу получала впервые и очень боялась напортачить. Ребята были на связи постоянно и даже помогли поймать слот в моем регионе</blockquote><figcaption><span class="sticker" style="--r:2deg">Виза</span></figcaption></figure>
     <figure class="rv rv--ph rv--d" data-pair="angelina"><img src="img/rv/angelina.jpg" alt="Фото: Ангелина" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:-2deg">Ангелина</figcaption></figure>
     <figure class="rv rv--q rv--q-r" data-pair="valentin"><blockquote>До крайнего срока оставался ровно месяц. За этот месяц мы собрали все нужные документы и доказательства</blockquote><figcaption><span class="sticker" style="--r:-2deg">Работа с кейсом</span></figcaption></figure>
     <figure class="rv rv--ph rv--e" data-pair="valentin"><img src="img/rv/valentin.jpg" alt="Фото: Валентин" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:2deg">Валентин</figcaption></figure>
     <figure class="rv rv--ph rv--b" data-pair="maks"><img src="img/rv/maks.jpg" alt="Фото: Макс" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:-3deg">Макс</figcaption></figure>
     <figure class="rv rv--q rv--q-dark" data-pair="maks"><blockquote>Многие страхи ушли после диалога. Как будто поговорил с другом, который просто делится полезной информацией</blockquote><figcaption><span class="sticker" style="--r:3deg">Консультация</span></figcaption></figure>
-    <figure class="rv rv--q " data-pair="sanya"><blockquote>Саша очень подробно расписал весь процесс и успокоил на тему наших переживаний</blockquote><figcaption><span class="sticker" style="--r:-2deg">Консультация</span></figcaption></figure>
+    <figure class="rv rv--q" data-pair="sanya"><blockquote>Саша очень подробно расписал весь процесс и успокоил на тему наших переживаний</blockquote><figcaption><span class="sticker" style="--r:-2deg">Консультация</span></figcaption></figure>
     <figure class="rv rv--ph rv--c" data-pair="sanya"><img src="img/rv/sanya.jpg" alt="Фото: Саня" loading="lazy" draggable="false"><figcaption class="sticker" style="--r:2deg">Саня</figcaption></figure>
     <a class="rv rv--more" href="otzyvy.html" draggable="false"><b>27</b>отзывов целиком →</a>
   </div>
@@ -221,6 +223,7 @@
     <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
   </div>
 </section>
+<!-- /blok:otzyvy -->
 
 <!-- 6 · Бесплатно -->
 <section class="free">
@@ -319,6 +322,7 @@
 </section>
 
 <!-- 10 · Форма -->
+<!-- blok:zayavka -->
 <section class="apply" id="apply">
   <div class="apply__box" data-reveal>
     <div class="apply__bg" aria-hidden="true"><span class="apply__ghost">начинаем?</span></div>
@@ -332,6 +336,7 @@
     </div>
   </div>
 </section>
+<!-- /blok:zayavka -->
 </main>
 
 <footer class="foot">

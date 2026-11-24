@@ -1,45 +1,7 @@
 /* Главная по финальным макетам Саши в Figma (24.11.2026): компьютер «ФИНАЛ» 4750:4451, телефон «Финал» 4818:5021.
-   Подключается последним. Здесь: «Оценим шансы на успех», лента отзывов, «¿Empezamos?» (только Telegram, без формы),
-   радужные дуги на красных плашках телефона, кнопка «Оставить заявку» на втором экране.
+   Подключается последним. Здесь: «Оценим шансы на успех», отступы телефона, радужные дуги на красных плашках телефона, кнопка «Оставить заявку» на втором экране. Лента отзывов и «¿Empezamos?» – в bloki.css (общие для всех страниц).
    Компьютер (шире 1100 px) – координаты макета 1440, телефон (до 600 px) – координаты макета 390. */
 
-/* ===== Лента отзывов: карточки 257×338, фото с именем, текст с услугой, ничего не переворачивается ===== */
-.reviews .reel { gap: 18px; scroll-snap-type: none; }
-.reviews .rv { width: 257px; height: 338px; }
-.rv--ph { margin: 0; overflow: hidden; border-radius: 20.5px; background: #eee; }
-.rv--ph > img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.rv--ph.rv--a { border-radius: 108px 0 0 0; }
-.rv--ph.rv--b { border-radius: 20.5px; }
-.rv--ph.rv--c { border-radius: 123px 123px 20.5px 20.5px; }
-.rv--ph.rv--d { border-radius: 0 108px 0 62px; }
-.rv--ph.rv--e { border-radius: 20.5px 20.5px 108px 20.5px; }
-.reviews .rv .sticker { font-size: 11px; font-weight: 600; line-height: 14px; padding: 8px 10px; color: var(--ink); border-radius: 3px 5px 4px 2px; box-shadow: 0 2px 4px rgba(0,0,0,.13); }
-.rv--ph > .sticker { bottom: 26px; }
-.reviews .rv--q { margin: 0; padding: 26px 24px 21px; border-radius: 20.5px; box-shadow: 0 10px 30px rgba(0,0,0,.18), 0 0 0 1px var(--line) inset; }
-.reviews .rv--q.rv--q-r { border-radius: 20.5px 108px 20.5px 20.5px; }
-.reviews .rv--q.rv--q-dark { box-shadow: 0 14px 34px rgba(120,20,36,.6); }
-.reviews .rv--q::before { font-size: 44px; line-height: 35.2px; letter-spacing: -3.52px; height: 36px; }
-.reviews .rv--q blockquote { margin-top: 14px; font-size: 15px; line-height: 21.75px; letter-spacing: -.3px; font-weight: 500; }
-.reviews .rv--q figcaption { padding-top: 12px; justify-content: flex-start; }
-.reviews .rv--you { display: block; position: relative; background: var(--pink); border: 1px dashed var(--accent); border-radius: 108px 0 0 0; }
-.rv--you > span { position: absolute; left: 0; right: 0; top: 149px; font-weight: 500; font-size: 14px; line-height: 19.6px; color: var(--accent); text-align: center; }
-.rv__cta { position: absolute; left: 50%; top: 262px; transform: translateX(-50%); height: 42px; padding: 0 20px; display: inline-flex; align-items: center; white-space: nowrap;
-  border-radius: 999px; background: var(--accent); color: #fff; font-weight: 600; font-size: 13px; box-shadow: 0 8px 18px rgba(161,38,56,.35); transition: background-color .3s ease, transform .3s ease; }
-.rv__cta:hover { background: var(--accent-hover); }
-.reel--tap .rv__cta { pointer-events: auto; }
-/* тень карточек не обрезается краем ленты */
-.reviews .reel--tap { padding-top: 30px; padding-bottom: 40px; margin-bottom: -40px; }
-
-@media (min-width: 1101px) {
-  /* макет: заголовок блока кончается на 4572, лента с 4612, слева 33 px */
-  .reviews .reel { padding-left: 33px; }
-  .reel-wrap > .reel--tap, .reviews .reel--tap { margin-top: 10px; }
-}
-@media (max-width: 600px) {
-  /* макет телефона: лента с 16 px, на 24 px ниже заголовка */
-  .reviews .reel { padding-left: 16px; }
-  .reviews .reel--tap { margin-top: -6px; }
-}
 
 /* ===== «Оценим шансы на успех» ===== */
 @media (min-width: 1101px) {
@@ -89,52 +51,6 @@
   .who .dark .btn--white img { display: none; }
 }
 
-/* ===== «¿Empezamos?»: только кнопка бота, как в макете ===== */
-.apply__box { display: block; min-height: 0; }
-.apply__box::before { display: none; }
-.apply__bg { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; }
-.apply__ghost, .apply__sticker { display: none; }
-.apply .apply__note { font-size: 10px; line-height: 12px; color: #F0F0F0; text-align: center; max-width: none; }
-.apply .tg { display: flex; }
-
-@media (min-width: 601px) and (max-width: 1100px) {
-  .apply__box { padding: 48px 40px; }
-  .apply__left > p { max-width: 560px; }
-  .apply .apply__note { text-align: left; margin-top: 16px; }
-}
-
-@media (min-width: 1101px) {
-  /* компьютер: плашка 1392×505 (макет 20, 8578), фото-арка 401×490 выступает сверху */
-  .apply { padding: 112px 24px 24px; }
-  .apply__box { height: 505px; padding: 0; overflow: visible; }
-  .apply__bg::before { content: ''; position: absolute; left: -194px; top: 43px; width: 801px; height: 434px; border-radius: 217px; background: rgba(255,255,255,.06); }
-  .apply__ghost { display: block; position: absolute; left: 589px; top: 81px; white-space: nowrap; font-weight: 600; font-size: 110px; line-height: 70.4px; letter-spacing: -3.2px; color: #C3C5CE; opacity: .2; filter: blur(4px); }
-  .apply .arch { position: absolute; left: 117.5px; top: -54px; width: 401px; height: 490px; margin: 0; transform: rotate(3deg); }
-  .apply .arch img { border-radius: 180px 180px 24px 24px; box-shadow: 0 30px 60px -10px rgba(0,0,0,.3); }
-  .apply__sticker { display: block; position: absolute; left: 373px; top: 338px; bottom: auto; width: 155px; height: 42px; padding: 0; line-height: 42px; text-align: center; transform: rotate(-4deg); font-size: 13px; color: var(--ink); z-index: 2; }
-  .apply__left { position: absolute; left: 709px; top: 128px; width: 620px; padding: 0; }
-  .apply h2 { font-size: 64px; line-height: 70.4px; letter-spacing: -3.2px; }
-  .apply__left > p { margin-top: 24.6px; max-width: none; font-size: 16px; line-height: 26.4px; color: #F6DDE2; }
-  .apply .tg { width: 420px; max-width: none; height: 64px; margin: 30px 0 0 -10px; padding: 10px; gap: 12px; border-radius: 20px; box-shadow: 0 16px 34px -16px rgba(0,0,0,.5); }
-  .apply .tg__txt small { font-weight: 500; font-size: 12px; line-height: 15px; color: #777880; }
-  .apply .tg__txt b { font-weight: 600; font-size: 14px; line-height: 18.2px; }
-  .apply .apply__note { display: none; }
-}
-
-@media (max-width: 600px) {
-  /* телефон: плашка 358×340 (макет 16, 9182) */
-  .apply { padding: 40px 16px 24px; }
-  .apply__box { padding: 32px 20px 32px; border-radius: 40px; }
-  .apply .arch { display: none; }
-  .apply h2 { font-size: 34px; line-height: 37.4px; letter-spacing: -1.7px; }
-  .apply__left { padding: 0; }
-  .apply__left > p { margin-top: 7px; font-size: 14px; line-height: 23.1px; color: #F6DDE2; }
-  .apply .tg { height: 78px; margin: 20px 0 0; padding: 0 10px; gap: 12px; border-radius: 20px; flex-wrap: nowrap; box-shadow: 0 4px 12px rgba(20,20,31,.1); }
-  .apply .tg__txt { gap: 0; }
-  .apply .tg__txt small { font-weight: 500; font-size: 12px; line-height: 14px; color: #777880; }
-  .apply .tg__txt b { font-weight: 400; font-size: 14px; line-height: 18.2px; }
-  .apply .apply__note { margin: 16px 8px 0; }
-}
 
 /* ===== Радужные дуги из логотипа на красных плашках телефона (как на компьютере, Figma 4813:4582) ===== */
 @media (max-width: 600px) {
@@ -216,16 +132,6 @@
   .b--crew .crew__n b { margin-bottom: -7px; }
 }
 
-/* ===== Лента отзывов 24.11 (днем): движение через transform, переворот по нажатию (otzyvy-lenta.js) ===== */
-.reviews .reel.is-js { overflow: hidden; touch-action: pan-y; scroll-snap-type: none; }
-.reel__track { display: flex; flex: none; gap: 18px; will-change: transform; }
-.rvf { position: relative; flex: none; width: 257px; height: 338px; perspective: 1400px; cursor: pointer; -webkit-tap-highlight-color: transparent; outline-offset: 4px; }
-.reel.is-drag .rvf { cursor: grabbing; }
-.rvf__in { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .65s cubic-bezier(.2,.75,.2,1); }
-.rvf.is-flipped .rvf__in { transform: rotateY(180deg); }
-.rvf__in > .rv { position: absolute; inset: 0; margin: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
-.rvf__in > .rvf__back { transform: rotateY(180deg); }
-@media (prefers-reduced-motion: reduce) { .rvf__in { transition: none; } }
 
 /* ===== Невысокие экраны компьютера (MacBook 13 и т. п., Саша 24.11): первый экран целиком в окне =====
    Масштаб в index.html берет меньшее из ширина/1440 и высота/890, а здесь первый экран чуть плотнее сверху. */
