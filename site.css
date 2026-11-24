@@ -1130,7 +1130,12 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .kb .sh h2 span { margin-top: 0; }
   .kb .sh p { margin-top: 2px; }
 }
-/* «Оценим шансы»: четыре фото в одной рамке сменяют друг друга плавно, раз в 4,5 с (index.html) */
-.dark__slides { overflow: hidden; background: #2a2a30; }
-.dark__slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
-.dark__slides img.is-on { opacity: 1; }
+/* лента отзывов: запас сверху и снизу, чтобы карточка при 3D-перевороте не обрезалась краем ленты
+   (Саша 24.11, телефон и компьютер); отступы вокруг ленты остаются прежними */
+.reel--tap { padding-top: 40px; padding-bottom: 40px; margin-top: -4px; margin-bottom: -40px; }
+.reel-wrap > .reel--tap { margin-bottom: 0; }
+.reel-wrap { margin-bottom: -40px; }
+.reel-wrap > .reel-nav { margin-top: -40px; }
+@media (min-width: 601px) { .reel-wrap > .reel-nav { margin-top: 0; bottom: -42px; } }
+@media (min-width: 1101px) { .reel-wrap > .reel--tap { margin-top: -15px; } .reel-wrap > .reel-nav { bottom: -22px; } }
+@media (max-width: 600px) { .reel-wrap { margin-bottom: -36px; } }
