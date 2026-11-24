@@ -243,7 +243,20 @@ async function checkInteractions(browser, base) {
     await p.waitForTimeout(800);
     const reelX = () => p.evaluate(() => { const t = document.querySelector('#reel .reel__track'); return t ? new DOMMatrix(getComputedStyle(t).transform).m41 : 0; });
     if (!(await p.locator('#reel.reel--pk').count())) err(F, 'на компьютере не включилась компьютерная лента отзывов');
-    if (await p.locator('#reel .rv--turn').count()) err(F, 'на компьютере карточки отзывов снова переворачиваются (телефонный код)');
+    // щелчок по карточке переворачивает пару (фото и текст меняются местами), дублей нет, лента едет дальше
+    for (let i = 0; i < 3; i++) {
+      const pt = await p.evaluate((i) => { const cs = [...document.querySelectorAll('#reel .rv--turn')].filter(c => { const r = c.getBoundingClientRect(); return r.left > 0 && r.right < innerWidth; }); const c = cs[i % cs.length]; if (!c) return null; const r = c.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, k: c.dataset.pair, ph: c.classList.contains('rv--ph') }; }, i);
+      if (!pt) { err(F, 'на компьютере у отзывов нет карточек, которые переворачиваются'); break; }
+      const idx = () => p.evaluate((i) => { const c = document.querySelector('[data-qa-flip="' + i + '"]'); return c ? [...c.parentNode.children].indexOf(c) : -1; }, i);
+      await p.evaluate(([pt, i]) => { document.elementFromPoint(pt.x, pt.y).closest('.rv').setAttribute('data-qa-flip', i); }, [pt, i]);
+      const i0 = await idx();
+      const x0 = await reelX();
+      await p.mouse.click(pt.x, pt.y); await p.waitForTimeout(600);
+      if (Math.abs((await idx()) - i0) !== 1) err(F, 'на компьютере щелчок по отзыву не переворачивает пару');
+      if (Math.abs((await reelX()) - x0) < 5) err(F, 'лента отзывов на компьютере встала после щелчка по карточке');
+      const d = await p.evaluate(() => { const seen = {}, dup = []; for (const c of document.querySelectorAll('#reel .reel__track > .rv[data-pair]')) { const r = c.getBoundingClientRect(); if (r.right < 0 || r.left > innerWidth) continue; const k = c.dataset.pair + (c.classList.contains('rv--ph') ? ' (фото)' : ' (текст)'); if (seen[k]) dup.push(k); seen[k] = 1; } return dup; });
+      if (d.length) { err(F, 'после щелчка в ленте отзывов на компьютере два одинаковых рядом: ' + d.join(', ')); break; }
+    }
     {
       const r = await p.evaluate(() => { const b = document.getElementById('reel').getBoundingClientRect(); return { x: b.left + 400, y: b.top + 150 }; });
       let x0 = await reelX();
