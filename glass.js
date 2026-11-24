@@ -100,7 +100,8 @@ if (!off) {
     oldNav.remove();
     // шаг – две карточки (ширина карточки + зазор), чтобы не зависеть от размеров в CSS
     const step = () => { const c = reel.querySelector(".rv"); return ((c ? c.offsetWidth : 257) + (parseFloat(getComputedStyle(reel).columnGap) || 0)) * 2; };
-    const go = (dir) => reel.scrollBy({ left: dir * step(), behavior: "smooth" });
+    // лента с otzyvy-lenta.js двигается через transform – листаем ее функцией reelGo
+    const go = (dir) => (reel.reelGo ? reel.reelGo(dir) : reel.scrollBy({ left: dir * step(), behavior: "smooth" }));
     mount((n) => { n.className = "reel-nav"; wrap.append(n); },
       h("div", { className: "reel-nav__in" },
         h(Button, { icon: icons.prev, "aria-label": "Назад", onClick: () => go(-1) }),

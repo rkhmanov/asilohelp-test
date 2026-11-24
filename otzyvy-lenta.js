@@ -1,105 +1,169 @@
-/* Лента отзывов на главной (Саша, 23.11.2026; 24.11 – по макету Figma: фото и текст отдельными карточками, без переворота):
-   - едет сама по кругу и не стоит при наведении мыши; пауза – только пока ее тянут
-     пальцем или мышкой, листают стрелками или ходят по ней с клавиатуры;
-   - тянется пальцем (родная прокрутка) и мышкой (перетаскивание);
-   - при prefers-reduced-motion ничего не едет само. */
+/* Лента отзывов на главной (Саша, 23–24.11.2026).
+   - В покое – как в Figma: фото (с именем) и текст (с услугой) отдельными карточками.
+   - Нажатие на карточку переворачивает ее: на обороте фото – текст этого человека, на обороте текста – его фото
+     (пара задается data-pair в index.html). Само ничего не переворачивается.
+   - Едет сама по кругу; пауза, пока ленту тянут, листают стрелками или ходят по ней с клавиатуры.
+   - Двигается через transform, а не через прокрутку: на iPhone родная прокрутка с инерцией спорила
+     с автопрокруткой и лента дергалась. Тянется пальцем и мышкой, с инерцией; вертикальная прокрутка страницы не мешает.
+   - При prefers-reduced-motion сама не едет и переворачивается без анимации. */
 (function () {
   var reel = document.getElementById('reel');
   if (!reel) return;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 1. Переворот по нажатию: карточка + копия парной карточки на обороте
+  var byPair = {};
+  Array.prototype.forEach.call(reel.querySelectorAll('.rv[data-pair]'), function (c) {
+    (byPair[c.dataset.pair] = byPair[c.dataset.pair] || []).push(c);
+  });
+  Object.keys(byPair).forEach(function (k) {
+    var pair = byPair[k];
+    if (pair.length !== 2) return;
+    pair.forEach(function (card, i) {
+      var other = pair[1 - i];
+      var box = document.createElement('div');
+      box.className = 'rvf';
+      box.setAttribute('role', 'button');
+      box.tabIndex = 0;
+      box.setAttribute('aria-label', card.classList.contains('rv--ph') ? 'Показать отзыв' : 'Показать фото автора');
+      var inner = document.createElement('div');
+      inner.className = 'rvf__in';
+      card.replaceWith(box);
+      var back = other.cloneNode(true);
+      back.classList.add('rvf__back');
+      back.setAttribute('aria-hidden', 'true');
+      back.removeAttribute('data-pair');
+      card.classList.add('rvf__front');
+      inner.appendChild(card);
+      inner.appendChild(back);
+      box.appendChild(inner);
+    });
+  });
+  function flip(box) { box.classList.toggle('is-flipped'); }
+  reel.addEventListener('click', function (e) {
+    var box = e.target.closest && e.target.closest('.rvf');
+    if (box && !e.defaultPrevented) flip(box);
+  });
+  reel.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('rvf')) { e.preventDefault(); flip(e.target); }
+  });
+
+  // 2. Дорожка и две копии карточек для бесконечной ленты
   var originals = Array.prototype.slice.call(reel.children);
   var n = originals.length;
-  var loop = !reduce && n > 2;
-
-  // Бесконечная лента: две копии карточек после оригиналов, скрытые от экранного диктора.
-  if (loop) {
-    for (var k = 0; k < 2; k++) {
-      originals.forEach(function (el) {
-        var c = el.cloneNode(true);
-        c.setAttribute('aria-hidden', 'true');
-        c.classList.add('is-clone');
-        if (c.hasAttribute('tabindex') || c.tagName === 'A') c.tabIndex = -1;
-        reel.appendChild(c);
-      });
-    }
-    reel.classList.add('is-loop');
+  var track = document.createElement('div');
+  track.className = 'reel__track';
+  originals.forEach(function (el) { track.appendChild(el); });
+  for (var k = 0; k < 2; k++) {
+    originals.forEach(function (el) {
+      var c = el.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      c.classList.add('is-clone');
+      Array.prototype.forEach.call(c.querySelectorAll('a, [tabindex]'), function (a) { a.tabIndex = -1; });
+      if (c.tabIndex >= 0 || c.tagName === 'A') c.tabIndex = -1;
+      track.appendChild(c);
+    });
   }
+  reel.appendChild(track);
+  reel.classList.add('is-loop', 'is-js');
 
-  var period = 0;
-  function measure() { period = loop ? reel.children[n].offsetLeft - reel.children[0].offsetLeft : 0; }
+  var period = 0, x = 0;
   function zoomOf() { return reel.getBoundingClientRect().width / (reel.offsetWidth || 1) || 1; }
-  function norm(x) {
-    if (!loop || period <= 0) return x;
-    while (x < period) x += period;
-    while (x >= 2 * period) x -= period;
-    return x;
+  function measure() {
+    var a = track.children[0].getBoundingClientRect().left, b = track.children[n].getBoundingClientRect().left;
+    period = (b - a) / zoomOf();
   }
-
+  function norm(v) {
+    if (period <= 0) return v;
+    v = ((v - period) % period + period) % period + period;
+    return v;
+  }
+  function render() { track.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)'; }
   measure();
-  var pos = loop ? period : reel.scrollLeft;
-  if (loop) reel.scrollLeft = pos;
-  addEventListener('resize', function () { var r = period ? (reel.scrollLeft % period) / period : 0; measure(); pos = norm(period + r * period); if (loop) reel.scrollLeft = pos; });
+  x = norm(period);
+  render();
+  addEventListener('resize', function () { var r = period ? ((x - period) / period) : 0; measure(); x = norm(period + r * period); render(); });
+  // Фокус с клавиатуры на карточке за краем: браузер прокручивает контейнер – переводим это в сдвиг дорожки
+  reel.addEventListener('scroll', function () { if (reel.scrollLeft) { x = norm(x + reel.scrollLeft); reel.scrollLeft = 0; render(); } });
 
-  var holdUntil = 0, touching = false, drag = null, justDragged = false, visible = false;
+  var holdUntil = 0, visible = true, vel = 0, anim = null, drag = null, dragged = false;
   function hold(ms) { holdUntil = Math.max(holdUntil, performance.now() + ms); }
-
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(reel);
-  } else visible = true;
-
-  // Автопрокрутка
-  var SPEED = 26, last = 0;
-  function tick(t) {
-    requestAnimationFrame(tick);
-    var dt = last ? Math.min(t - last, 64) : 0; last = t;
-    if (!loop) return;
-    if (!visible || document.hidden || touching || drag || t < holdUntil || kbFocus()) {
-      pos = reel.scrollLeft;
-      return;
-    }
-    pos = norm(pos + SPEED * dt / 1000);
-    reel.scrollLeft = pos;
-  }
-  if (loop) requestAnimationFrame(tick);
-
-  // Пауза при фокусе – только для клавиатуры (после щелчка мышью лента едет дальше)
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(reel);
   function kbFocus() {
     var a = document.activeElement;
     if (!a || !reel.contains(a)) return false;
     try { return a.matches(':focus-visible'); } catch (_) { return true; }
   }
 
-  // Мышь: перетаскивание
+  // 3. Движение: автопрокрутка, инерция после броска, докрутка стрелками
+  var SPEED = 26, last = 0;
+  function tick(t) {
+    requestAnimationFrame(tick);
+    var dt = last ? Math.min(t - last, 64) : 0; last = t;
+    if (!visible || document.hidden || drag) return;
+    if (anim) {
+      var p = Math.min(1, (t - anim.t0) / anim.d), e = 1 - Math.pow(1 - p, 3);
+      x = anim.from + (anim.to - anim.from) * e;
+      if (p >= 1) { anim = null; x = norm(x); }
+    } else if (Math.abs(vel) > 0.01) {
+      x = norm(x + vel * dt);
+      vel *= Math.pow(0.94, dt / 16);
+    } else if (!reduce && t >= holdUntil && !kbFocus()) {
+      x = norm(x + SPEED * dt / 1000);
+    } else return;
+    render();
+  }
+  requestAnimationFrame(tick);
+
+  // Стрелки (glass.js): на две карточки вперед/назад
+  reel.reelGo = function (dir) {
+    var c = track.querySelector('.rvf, .rv');
+    var step = ((c ? c.offsetWidth : 257) + (parseFloat(getComputedStyle(track).columnGap) || 0)) * 2;
+    vel = 0;
+    var from = anim ? anim.to : x;
+    from = norm(from); x = from;
+    anim = { from: from, to: from + dir * step, t0: performance.now(), d: reduce ? 1 : 520 };
+    hold(2500);
+  };
+
+  // 4. Перетаскивание пальцем и мышкой
   reel.addEventListener('pointerdown', function (e) {
-    if (e.pointerType !== 'mouse') { touching = true; return; }
-    if (e.button !== 0) return;
-    drag = { id: e.pointerId, x: e.clientX, s: reel.scrollLeft, moved: false, z: zoomOf() };
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    anim = null; vel = 0;
+    drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, x0: x, moved: false, z: zoomOf(), lx: e.clientX, lt: performance.now(), v: 0 };
+    dragged = false;
   });
   reel.addEventListener('pointermove', function (e) {
     if (!drag || e.pointerId !== drag.id) return;
-    var dx = (e.clientX - drag.x) / drag.z;
-    if (!drag.moved && Math.abs(dx) > 5) {
+    var dx = (e.clientX - drag.sx) / drag.z, dy = (e.clientY - drag.sy) / drag.z;
+    if (!drag.moved) {
+      if (Math.abs(dx) < 6 || Math.abs(dx) < Math.abs(dy)) return;
       drag.moved = true;
       reel.classList.add('is-drag');
       try { reel.setPointerCapture(drag.id); } catch (_) {}
     }
-    if (drag.moved) { pos = norm(drag.s - dx); reel.scrollLeft = pos; if (loop && Math.abs(pos - (drag.s - dx)) > 1) { drag.s = pos + dx; } }
+    var now = performance.now(), ddt = Math.max(1, now - drag.lt);
+    drag.v = 0.7 * (-(e.clientX - drag.lx) / drag.z / ddt) + 0.3 * drag.v;
+    drag.lx = e.clientX; drag.lt = now;
+    x = norm(drag.x0 - dx);
+    if (Math.abs(x - (drag.x0 - dx)) > 1) drag.x0 = x + dx;
+    render();
   });
   function endDrag(e) {
-    if (e.pointerType !== 'mouse') { touching = false; hold(2500); return; }
-    if (!drag) return;
-    if (drag.moved) { justDragged = true; setTimeout(function () { justDragged = false; }, 0); }
+    if (!drag || (e.pointerId !== undefined && e.pointerId !== drag.id)) return;
+    if (drag.moved) {
+      dragged = true;
+      vel = performance.now() - drag.lt < 80 ? Math.max(-3, Math.min(3, drag.v)) : 0;
+      setTimeout(function () { dragged = false; }, 0);
+    }
     reel.classList.remove('is-drag');
-    drag = null; hold(1500);
+    drag = null;
+    hold(e.type === 'pointercancel' ? 1500 : 2500);
   }
   reel.addEventListener('pointerup', endDrag);
   reel.addEventListener('pointercancel', endDrag);
-  reel.addEventListener('touchstart', function () { touching = true; }, { passive: true });
-  reel.addEventListener('touchend', function () { touching = false; hold(2500); }, { passive: true });
-  reel.addEventListener('click', function (e) { if (justDragged) { e.preventDefault(); e.stopPropagation(); } }, true);
+  reel.addEventListener('lostpointercapture', endDrag);
+  // после перетаскивания щелчок не срабатывает (не переворачивает и не открывает ссылку)
+  reel.addEventListener('click', function (e) { if (dragged) { e.preventDefault(); e.stopPropagation(); } }, true);
   reel.addEventListener('dragstart', function (e) { e.preventDefault(); });
-
-  // Стрелки (glass.js и старая разметка): дать им докрутить
-  document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.reel-nav, .reviews__nav')) hold(1800); });
-
 })();
