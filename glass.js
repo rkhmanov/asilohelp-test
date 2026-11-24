@@ -4,7 +4,7 @@
 // ?glass=0 — выключить всё и посмотреть прежний вид.
 import { createElement as h, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Glass, SegmentedControl, Switch, Button, TabBar, Menu } from "glisse";
+import { Glass, SegmentedControl, Switch, Button, TabBar } from "glisse";
 
 const off = new URLSearchParams(location.search).get("glass") === "0";
 
@@ -55,39 +55,76 @@ function mount(where, el) {
   return host;
 }
 
+// Шапка: «Услуги ⌄» — выпадающий список страниц услуг (компьютер и планшет; на телефоне пунктов шапки нет).
+// Свой, без React: открывается при наведении и по нажатию, кнопка «Услуги» остается на месте,
+// список появляется под ней и не закрывает ее. До 24.11.2026 здесь было меню Glisse: оно открывалось
+// только по нажатию и ложилось поверх кнопки — второе нажатие на «Услуги» попадало в «Консультации».
+// Ссылка в шапке: <a data-nav="services" href="…#help">. Путь к корню сайта — <html data-home="../">. Работает и с ?glass=0.
+{
+  const link = document.querySelector('.hdr nav a[data-nav="services"], .hdr nav a[href$="#help"]');
+  if (link) {
+    const home = document.documentElement.dataset.home || "";
+    const ico = (...d) => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d.map((x) => `<path d="${x}"/>`).join("")}</svg>`;
+    const help = document.getElementById("help") ? "#help" : home + "index.html#help";
+    const items = [
+      ["Консультации", home + "konsultacii.html", ico("M4 5h16v11H9l-5 4z", "M8 9.5h8", "M8 12.5h5")],
+      ["Работа с кейсом", home + "keys.html", ico("M3.5 6.5h6l2 2h9v10.5h-17z", "M8 13.5h8")],
+      ["Сопровождение", home + "soprovozhdenie.html", ico("M12 21s6.5-5.6 6.5-11a6.5 6.5 0 0 0-13 0c0 5.4 6.5 11 6.5 11z", "M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z")],
+      null,
+      ["Все услуги", help, ico("M4 4h7v7H4z", "M13 4h7v7h-7z", "M4 13h7v7H4z", "M13 13h7v7h-7z")],
+    ];
+    const here = location.pathname.split("/").pop() || "index.html";
+    const dd = document.createElement("div");
+    dd.className = "nav-dd";
+    dd.innerHTML = `<button type="button" class="nav-dd__btn" aria-expanded="false" aria-controls="nav-dd-list">Услуги <img src="${home}img/chevron.svg" alt="" width="8" height="4"></button>`
+      + `<div class="nav-dd__panel" id="nav-dd-list"><div class="nav-dd__card">`
+      + items.map((it) => it ? `<a href="${it[1]}"${it[1] === here ? ' aria-current="page"' : ""}>${it[2]}<span>${it[0]}</span></a>` : '<hr>').join("")
+      + `</div></div>`;
+    link.replaceWith(dd);
+    const btn = dd.querySelector(".nav-dd__btn");
+    const links = [...dd.querySelectorAll(".nav-dd__card a")];
+    let timer = 0, hoverAt = 0;
+    const set = (on) => {
+      clearTimeout(timer);
+      dd.classList.toggle("is-open", on);
+      btn.setAttribute("aria-expanded", String(on));
+    };
+    const isOpen = () => dd.classList.contains("is-open");
+    // наведение: открыть сразу, закрыть с задержкой, чтобы мышь успела дойти до списка
+    const mouse = (e) => e.pointerType === "mouse";
+    dd.addEventListener("pointerenter", (e) => { if (!mouse(e)) return; if (!isOpen()) hoverAt = performance.now(); set(true); });
+    dd.addEventListener("pointerleave", (e) => { if (!mouse(e)) return; clearTimeout(timer); timer = setTimeout(() => set(false), 220); });
+    // нажатие: открыть/закрыть; если список только что открылся от наведения — не закрывать его тем же нажатием
+    btn.addEventListener("click", () => {
+      const fresh = performance.now() - hoverAt < 600;
+      hoverAt = 0;
+      if (isOpen() && fresh) return;
+      set(!isOpen());
+    });
+    btn.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") { e.preventDefault(); set(true); links[0].focus(); }
+    });
+    dd.addEventListener("keydown", (e) => {
+      const i = links.indexOf(document.activeElement);
+      if (e.key === "Escape" && isOpen()) { set(false); btn.focus(); }
+      else if (i > -1 && (e.key === "ArrowDown" || e.key === "ArrowUp")) { e.preventDefault(); links[(i + (e.key === "ArrowDown" ? 1 : -1) + links.length) % links.length].focus(); }
+    });
+    dd.addEventListener("focusout", (e) => { if (!dd.contains(e.relatedTarget)) set(false); });
+    document.addEventListener("pointerdown", (e) => { if (!dd.contains(e.target)) set(false); });
+    // «Все услуги» на главной — плавно к блоку, без # в адресе
+    dd.querySelector(`.nav-dd__card a[href="#help"]`)?.addEventListener("click", (e) => {
+      e.preventDefault();
+      set(false);
+      document.getElementById("help").scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    });
+  }
+}
+
 if (!off) {
   document.documentElement.classList.add("lg");
 
   // 1. Шапка
   glassify(document.querySelector(".hdr"));
-
-  // 2. Шапка: «Услуги ⌄» — стеклянное выпадающее меню со ссылками на страницы услуг.
-  // Ссылка в шапке: <a data-nav="services" href="…#help">. Путь к корню сайта — <html data-home="../"> (по умолчанию корень рядом).
-  const servicesLink = document.querySelector('.hdr nav a[data-nav="services"], .hdr nav a[href$="#help"]');
-  if (servicesLink) {
-    const home = document.documentElement.dataset.home || "";
-    const open = (page) => () => { location.href = home + page; };
-    const toHelp = () => {
-      const el = document.querySelector("#help");
-      if (el) el.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-      else location.href = home + "index.html#help";
-    };
-    const host = document.createElement("span");
-    host.className = "nav-menu";
-    servicesLink.replaceWith(host);
-    createRoot(host).render(h(Menu, {
-      "aria-label": "Услуги",
-      align: "start",
-      icon: h("span", { className: "nav-menu__label" }, "Услуги", h("img", { src: home + "img/chevron.svg", alt: "", width: 8, height: 4 })),
-      items: [
-        { label: "Консультации", icon: icons.chat, onSelect: open("konsultacii.html") },
-        { label: "Работа с кейсом", icon: icons.folder, onSelect: open("keys.html") },
-        { label: "Сопровождение", icon: icons.route, onSelect: open("soprovozhdenie.html") },
-        "separator",
-        { label: "Все услуги", icon: icons.grid, onSelect: toHelp },
-      ],
-    }));
-  }
 
   // 5. Отзывы: круглые стеклянные кнопки поверх ленты с фото
   const reel = document.getElementById("reel");
