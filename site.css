@@ -476,9 +476,10 @@ body { background: #fff; }
 @media (max-width: 600px) { .b--red .big--xl { font-size: 72px; } .b3--dark h3 { font-size: 44px; } }
 /* кадрирование картинок как в Figma */
 .flip__face > img { inset: auto; max-width: none; }
-.fc--a .flip__face > img { width: 117.8%; height: 117.8%; left: 0; top: -17.8%; }
-.fc--b .flip__face > img { width: 131.9%; height: 132%; left: -18.5%; top: -.7%; }
-.fc--c .flip__face > img { width: 176.2%; height: 175.8%; left: -62.5%; top: -18.8%; }
+/* фото 24.11: кадры Саши из Figma (тестовый блок 4805:4554) */
+.fc--a .flip__face > img { width: 125%; height: 120%; left: -25%; top: -1.5%; }
+.fc--b .flip__face > img { width: 125%; height: 120%; left: -12.5%; top: -17%; }
+.fc--c .flip__face > img { width: 125.2%; height: 120.2%; left: -1.85%; top: -10.2%; }
 /* оборот карточки: белая полупрозрачная вуаль, бордовый текст */
 .flip__back::after { background: rgba(255,255,255,.72); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
 .flip__back p { color: #A02538; font-weight: 400; }
@@ -773,6 +774,7 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .flip__front { position: relative; height: 168px; transform: none !important; visibility: visible !important; }
   .flip__front::after { background: linear-gradient(90deg, rgba(255,255,255,.94) 32%, rgba(255,255,255,.35) 70%, rgba(255,255,255,0)) !important; }
   .flip__face > img { width: 100% !important; height: 100% !important; left: 0 !important; top: 0 !important; object-fit: cover; object-position: 85% center; }
+  .fc--a .flip__face > img { object-position: 80% 22%; } .fc--b .flip__face > img { object-position: 70% 66%; } .fc--c .flip__face > img { object-position: 75% 18%; } /* фото 24.11 */
   .ft { font-size: 30px !important; line-height: .98; top: auto !important; bottom: 18px; left: 20px !important; }
   .flip__back { display: none; position: relative; transform: none !important; visibility: visible !important; background: #fff; }
   .flip__back > img, .flip__back::after { display: none; }
