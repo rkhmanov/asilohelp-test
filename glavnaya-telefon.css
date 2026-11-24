@@ -47,8 +47,10 @@
   .tiles3 .tile.is-open .mini { display: block; height: 210px; }
   .tiles3 .tile.is-open .tile__head { margin-top: 24px; }
   .tiles3 .tile:nth-child(1) .mini { border-radius: 10px 44px 10px 10px; } .tiles3 .tile:nth-child(2) .mini { border-radius: 44px 10px 10px 10px; }
+  .tiles3 .tile.is-open:nth-child(3) .mini.mini--img { height: 210px; margin: 0; } /* фото вместо хронологии (24.11) */
   .tiles3 .tile.is-open:nth-child(3) .mini { border-radius: 10px; background: #fff; height: 174px; margin: -16px -16px 0; }
   .tiles3 .tile.is-open:nth-child(3) .tile__head { margin-top: 13px; }
+  .tiles3 .tile.is-open:nth-child(3) .mini--img + .tile__head { margin-top: 24px; }
   .tile .basis { left: 53px; top: 12px; }
   .tiles3 .tile.is-open > p { display: block; margin-top: 10px; font-size: 13px; line-height: 20.8px; color: #66666B; }
 
