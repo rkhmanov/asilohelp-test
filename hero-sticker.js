@@ -190,8 +190,8 @@
       var a = cs[0], b = cs[cs.length - 1];
       var x0 = a.cx - a.em * 0.5, x1 = b.cx + b.em * 0.5;
       if (back) { var t = x0; x0 = x1; x1 = t; }
-      // на 40 % быстрее, чем было (300 + 85 мс на букву), Саша 24.11
-      var t0 = performance.now(), dur = (300 + cs.length * 85) * 0.6;
+      // скорость прежняя (Саша 24.11 утром вернул), паузы между строками нет
+      var t0 = performance.now(), dur = 300 + cs.length * 85;
       (function step(now) {
         if (id !== sweepId) return;
         var p = Math.min(1, (now - t0) / dur);
