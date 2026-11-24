@@ -10,13 +10,14 @@
   /* 1 · первый экран: одна кнопка, подписи под цифрами короче */
   /* Саша 23.11 вечером: воздух под шапкой, кнопка компактнее, цифры по центру, первый экран до «Как мы помогаем» как раньше */
   /* 24.11 по макету «ФИНАЛ»: заголовок с 137 px, абзац ниже, кнопка 45 px, цифры с 534 px, синяя плашка с 660 px */
-  .hero { padding-top: 137px; padding-bottom: 62px; }
+  /* первый экран на всю высоту: бордовый блок начинается ниже нижнего меню (Саша 24.11) */
+  .hero { padding-top: 137px; padding-bottom: 62px; min-height: var(--vh-z, 0px); }
   .hero__kb { display: none; }
   .hero__center { gap: 20px; }
   .hero__lead { line-height: 23px; margin-top: 19px; }
-  .hero__btns { margin: -18px 0 0; width: auto; }
+  .hero__btns { margin: 0 0 0; width: auto; } /* кнопка на 18 px ниже текста, чем в макете: Саша 24.11 «очень близко к тексту» */
   .hero__btns .btn { width: 221px; height: 45px; padding: 0; font-size: 15px; box-shadow: 0 10px 36px -6px rgba(161,38,56,.45); }
-  html .hero--ruki .hero__nums { gap: 16px; justify-content: center; margin-top: 53px; left: 0; } .hero__nums div { width: 101px; flex: none; }
+  html .hero--ruki .hero__nums { gap: 16px; justify-content: center; margin-top: 35px; left: 0; } .hero__nums div { width: 101px; flex: none; }
   .hero__nums span { line-height: 14.85px; }
 
   /* 2 · «Как мы помогаем»: названия услуг крупно по слогам, слева сверху */
@@ -54,7 +55,7 @@
   /* 4 · «Мы сами прошли этот путь»: без белой точки на красной плитке */
   .b--red .dot { display: none; }
   /* «187» длиннее: два абзаца из макета (на компьютере они в .only-d) */
-  .b--red .b--red__more { display: block !important; margin-top: 14px; } .b--red .b--red__more br { display: none; }
+  .b--red .b--red__more { display: block !important; margin-top: 14px; } .b--red p { max-width: 308px; padding-right: 0; } .b--red p:first-of-type { max-width: 252px; } .b--red p br.tel { display: inline; }
   /* «Команда»: «11» крупно справа, под ним «человек»; «Подробнее о нас ↗» – простая ссылка */
   .crew__top { position: relative; display: block; }
   .crew__n { position: absolute; right: 0; top: -6px; display: flex; flex-direction: column; align-items: flex-end; line-height: 1; }
@@ -115,12 +116,20 @@
    карточка с экранами базы знаний, «удобнее в telegram?» у кнопки бота */
 @media (max-width: 600px) {
   .help, .free { background: #A02538 !important; border-radius: 40px; overflow: hidden; position: relative; }
-  .help { padding: 56px 0 40px; }
+  .help { padding: 56px 0 0; overflow: visible; z-index: 2;
+    background: radial-gradient(circle 210px at 60px 689px, rgba(255,255,255,.06) 99.5%, transparent 100%), radial-gradient(circle 160px at 380px 40px, rgba(255,255,255,.05) 99.5%, transparent 100%), #A02538 !important; }
   .free { padding: 28px 0 40px; margin-top: 10px; }
-  .help::before, .help::after, .free::before, .free::after { content: ''; position: absolute; right: auto; bottom: auto; border-radius: 50%; pointer-events: none; z-index: 0; }
-  .help::before, .free::before { left: -150px; top: 479px; width: 420px; height: 420px; background: rgba(255,255,255,.06); }
-  .free::before { top: 645px; }
-  .help::after, .free::after { left: 220px; top: -120px; width: 320px; height: 320px; background: rgba(255,255,255,.05); }
+  .help::before, .help::after { display: none; }
+  .free::before, .free::after { content: ''; position: absolute; right: auto; bottom: auto; border-radius: 50%; pointer-events: none; z-index: 0; }
+  .free::before { left: -150px; top: 645px; width: 420px; height: 420px; background: rgba(255,255,255,.06); }
+  .free::after { left: 220px; top: -120px; width: 320px; height: 320px; background: rgba(255,255,255,.05); }
+  /* «Оставить заявку» – белая пилюля, наполовину выходит за нижний край блока (макет 4765:7101) */
+  .help .help__more { margin: 18px 0 0; gap: 0; font-size: 15px; }
+  .help .help__more > span { font-weight: 600; color: #fff; }
+  .help .help__more-btn { display: flex; align-items: center; margin: 10px auto 0; width: 295px; height: 46px; padding: 0; justify-content: center; border-radius: 999px; font-size: 18px; font-weight: 600; color: var(--ink); background: #fff; box-shadow: 0 12px 30px -10px rgba(0,0,0,.35); transform: translateY(23px); }
+  /* между «Конфиденциально» и отзывами 60 px, как в макете (Саша 24.11: «огромный пробел») */
+  .reviews { padding-top: 20px !important; }
+  .help .help__more-btn:hover { transform: translateY(23px); }
   .who { padding-top: 86px; }
 
   .kb { padding-top: 34px; } .kb .sh p { display: none; } .kb .kb__box { margin-top: 18px; }
