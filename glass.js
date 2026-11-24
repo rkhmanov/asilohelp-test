@@ -143,6 +143,9 @@ if (!off) {
   mount((n) => {
     n.className = "tabbar-lg";
     n.addEventListener("click", (e) => {
+      // «Заявка» ведет в бота (Саша, 24.11.2026): открываем Telegram в новой вкладке, сайт остается открытым
+      const tg = e.target.closest('a[href^="https://t.me/"]');
+      if (tg) { e.preventDefault(); window.open(tg.href, "_blank", "noopener"); return; }
       const a = e.target.closest('a[href^="#"]');
       const to = a && document.querySelector(a.getAttribute("href"));
       if (to) to.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
@@ -157,7 +160,7 @@ if (!off) {
         { value: "us", label: "О нас", icon: icons.us, href: home + "o-nas.html" },
         { value: "news", label: "Статьи", icon: icons.news, href: home + "stati.html" },
         { value: "faq", label: "Вопросы", icon: icons.faq, href: faqHref },
-        { value: "apply", label: "Заявка", icon: icons.apply, href: anchor("apply") },
+        { value: "apply", label: "Заявка", icon: icons.apply, href: "https://t.me/ASILOhelperBot?start=site_tabbar_chances" },
       ],
     }));
 }

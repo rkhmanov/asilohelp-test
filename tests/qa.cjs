@@ -4,12 +4,13 @@
 // Без браузера (по всем *.html в репозитории, кроме source/ и vendor/):
 //   • <meta name="robots" content="noindex…"> на каждой странице;
 //   • локальные ссылки и картинки ведут на существующие файлы, якоря #id есть на странице (#ключ=значение — фильтры, не якоря);
-//   • ссылки на бота несут метку site_<место>[_<цель>] (см. asilo-bot/cloudflare/src/sources.ts).
+//   • ссылки на бота несут метку site_<место>[_<цель>] (см. asilo-bot/cloudflare/src/sources.ts);
+//   • кнопки «Оставить заявку», «Оценить шансы», «Записаться» ведут в бота, а не на форму #apply (Саша, 24.11.2026; архивные и пробные страницы не в счет).
 // В браузере (Chromium из Playwright) на ширине 360, 390, 768 и 1440:
 //   • нет ошибок JavaScript и битых локальных файлов;
 //   • нет горизонтальной прокрутки;
 //   • после прокрутки все блоки с data-reveal показались (анимация появления не застряла);
-//   • главная: стекло подключилось, карточки услуг переворачиваются нажатием, шапка прячется/возвращается, пустая форма показывает ошибки.
+//   • главная: стекло подключилось, «Мы справимся» раскрывается, карточка услуги ведет на страницу услуги, якоря не пишут # в адрес, шапка прячется/возвращается, «Заявка» в нижнем меню ведет в бота.
 // --shots сохраняет скриншоты во tests/shots/ (папка в .gitignore).
 // Сторонние адреса (esm.sh, Turnstile, шрифты) не проверяются: они могут быть недоступны там, где идёт проверка.
 
@@ -68,6 +69,10 @@ function checkStatic(file) {
   if (!/<meta\s+name="viewport"/i.test(html)) err(file, 'нет <meta name="viewport"> – на телефоне будет мелко');
   const body = markup(html);
   const dir = path.dirname(file);
+  // заявки только через бота (Саша, 24.11.2026); архив и пробы первого экрана не трогаем
+  if (!/arhiv|animacii|glavnaya-ruki|hero-sticker/.test(file))
+    for (const m of body.matchAll(/<a\s[^>]*href="([^"]*)"[^>]*>([^<]*)/g))
+      if (/(Оставить заявку|Оценить шансы|Записаться)/.test(m[2]) && !BOT.test(m[1])) err(file, `кнопка «${m[2].trim()}» ведет не в бота: ${m[1]}`);
   for (const m of body.matchAll(/\s(href|src|srcset)="([^"]*)"/g)) {
     const [, attr, raw] = m;
     const urls = attr === 'srcset' ? raw.split(',').map(s => s.trim().split(/\s+/)[0]) : [raw];
@@ -191,7 +196,7 @@ async function checkInteractions(browser, base) {
     await p.waitForTimeout(300);
     if (!(await tile.evaluate(e => e.classList.contains('is-open')))) err(F, 'плитка «Мы справимся» не раскрывается нажатием');
     // ссылки-якоря не пишут #… в адрес (иначе перезагрузка кидает вниз)
-    await p.evaluate(() => document.querySelector('a[href="#apply"]').click());
+    await p.evaluate(() => document.querySelector('a[href="#reviews"]').click());
     await p.waitForTimeout(200);
     if (p.url().includes('#')) err(F, 'якорная ссылка оставила #… в адресе');
     // карточка услуги на телефоне ведет на страницу услуги и не раскрывается (Саша 24.11)
@@ -199,6 +204,8 @@ async function checkInteractions(browser, base) {
     await card.scrollIntoViewIfNeeded();
     await Promise.all([p.waitForURL(/konsultacii\.html/, { timeout: 4000 }).catch(() => {}), card.tap({ position: { x: 40, y: 40 }, force: true })]);
     if (!/konsultacii\.html/.test(p.url())) err(F, 'карточка услуги на телефоне не ведет на страницу услуги');
+    const tabHref = await p.evaluate(() => [...document.querySelectorAll('.tabbar-lg a')].map(a => a.getAttribute('href')).find(h => /t\.me/.test(h || '')) || '');
+    if (!/start=site_tabbar_chances/.test(tabHref)) err(F, '«Заявка» в нижнем меню не ведет в бота');
     await ctx.close();
   }
   // компьютер
@@ -215,10 +222,9 @@ async function checkInteractions(browser, base) {
     const hiddenUp = await hdr();
     if (hiddenUp) err(F, 'шапка не возвращается при прокрутке вверх');
     if (!hiddenDown && !(await p.evaluate(() => document.querySelector('.m-header').classList.contains('m-header--stay')))) warn(F, 'шапка не прячется при прокрутке вниз');
-    await p.locator('#form button[type=submit], #form .submit').first().click();
-    await p.waitForTimeout(300);
-    const shown = await p.evaluate(() => [...document.querySelectorAll('#form .field__err, #form .form__err')].filter(e => !e.hidden && e.textContent.trim()).length);
-    if (!shown) err(F, 'пустая форма отправляется без подсказок об ошибках');
+    // формы на главной нет (Саша, 24.11.2026): в «¿Empezamos?» только кнопка бота
+    if (await p.locator('#apply form').count()) err(F, 'на главной снова форма заявки – должна быть только кнопка бота');
+    if (!(await p.locator('#apply a[href*="t.me/ASILOhelperBot?start=site_"]').count())) err(F, 'в «¿Empezamos?» нет кнопки бота');
     await ctx.close();
   }
 }
