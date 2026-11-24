@@ -1,8 +1,7 @@
 /* Лента отзывов на ТЕЛЕФОНЕ (до 600 px). Компьютер и планшет – отдельный otzyvy-lenta-pk.js (Саша, 24.11.2026).
    Лента отзывов (Саша, 23–24.11.2026).
    - В покое – как в Figma: фото (с именем) и текст (с услугой) отдельными карточками.
-   - Нажатие на карточку переворачивает пару: фото и текст одного человека меняются местами
-     (пара задается data-pair, карточки стоят рядом). Дублей на экране нет. Само ничего не переворачивается.
+   - Нажатие переворачивает карточку на месте: фото ↔ отзыв этого человека (data-pair). Само ничего не переворачивается.
    - Едет сама по кругу и не стоит от наведения или щелчка; пауза только после перетаскивания, стрелок
      и пока по ней ходят с клавиатуры. Бесконечность – две копии ленты за оригиналом (видны через ~3 мин).
    - Двигается через transform, а не через прокрутку: на iPhone родная прокрутка с инерцией спорила
@@ -14,38 +13,46 @@
   if (!reel || matchMedia('(min-width: 601px)').matches) return;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 1. Переворот по нажатию: фото и текст одного человека меняются местами (обе карточки «переворачиваются»).
-  //    Раньше на обороте карточки была копия соседней, и рядом стояли два одинаковых фото или текста (Саша, 24.11).
+  // 1. Переворот по нажатию (Саша, 24.11): одна карточка, на лице фото – на обороте отзыв этого человека,
+  //    на лице текст – на обороте его фото (пара – data-pair). Переворачивается только нажатая карточка, плоско (scaleX).
+  var byPair = {};
   Array.prototype.forEach.call(reel.querySelectorAll('.rv[data-pair]'), function (c) {
-    c.classList.add('rv--turn');
-    c.tabIndex = 0;
-    c.title = c.classList.contains('rv--ph') ? 'Нажмите, чтобы прочитать отзыв' : 'Нажмите, чтобы увидеть фото';
+    (byPair[c.dataset.pair] = byPair[c.dataset.pair] || []).push(c);
   });
-  function partner(card) {
-    var p = card.dataset.pair, a = card.previousElementSibling, b = card.nextElementSibling;
-    if (a && a.dataset && a.dataset.pair === p) return a;
-    if (b && b.dataset && b.dataset.pair === p) return b;
-    return null;
-  }
-  function flip(card) {
-    var other = partner(card);
-    if (!other || card.classList.contains('is-turning')) return;
-    var first = card.compareDocumentPosition(other) & Node.DOCUMENT_POSITION_FOLLOWING ? card : other;
-    var second = first === card ? other : card;
-    function swap() { first.parentNode.insertBefore(second, first); }
-    if (reduce) { swap(); return; }
-    first.classList.add('is-turning'); second.classList.add('is-turning');
-    setTimeout(function () {
-      swap();
-      first.classList.remove('is-turning'); second.classList.remove('is-turning');
-    }, 220);
+  Object.keys(byPair).forEach(function (k) {
+    var pair = byPair[k];
+    if (pair.length !== 2) return;
+    var backs = pair.map(function (c) { return c.cloneNode(true); });
+    pair.forEach(function (card, i) {
+      var box = document.createElement('div');
+      box.className = 'rflip';
+      box.setAttribute('role', 'button');
+      box.tabIndex = 0;
+      box.setAttribute('aria-label', card.classList.contains('rv--ph') ? 'Показать отзыв' : 'Показать фото автора');
+      var inner = document.createElement('div');
+      inner.className = 'rflip__in';
+      card.replaceWith(box);
+      var back = backs[1 - i];
+      back.classList.add('rflip__back');
+      back.setAttribute('aria-hidden', 'true');
+      back.removeAttribute('data-pair');
+      card.classList.add('rflip__front');
+      inner.appendChild(card);
+      inner.appendChild(back);
+      box.appendChild(inner);
+    });
+  });
+  function flip(box) {
+    if (reduce || box.classList.contains('is-turning')) { box.classList.toggle('is-flipped'); return; }
+    box.classList.add('is-turning');
+    setTimeout(function () { box.classList.toggle('is-flipped'); box.classList.remove('is-turning'); }, 220);
   }
   reel.addEventListener('click', function (e) {
-    var card = e.target.closest && e.target.closest('.rv--turn');
-    if (card && !e.defaultPrevented) flip(card);
+    var box = e.target.closest && e.target.closest('.rflip');
+    if (box && !e.defaultPrevented) flip(box);
   });
   reel.addEventListener('keydown', function (e) {
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('rv--turn')) { e.preventDefault(); flip(e.target); }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('rflip')) { e.preventDefault(); flip(e.target); }
   });
 
   // 2. Дорожка и две копии карточек для бесконечной ленты
