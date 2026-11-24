@@ -694,7 +694,7 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 .rv__f, .rv__b { position: absolute; inset: 0; overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .rv__f *, .rv__b * { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .rv__f { border-radius: 20.5px; transform: translateZ(1px); }
-.rv__f > img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--m-ease, ease); }
+.rv__f > img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; transition: transform 1.2s var(--m-ease, ease); } /* radius у самого фото: в 3D-перевороте overflow родителя его не обрезает */
 .rv__b { transform: rotateY(180deg) translateZ(1px); visibility: hidden; transition: visibility 0s linear .35s; }
 .rv__f { transition: visibility 0s linear .35s; }
 .rv--flip.is-flipped .rv__in { transform: rotateY(180deg); }
@@ -719,11 +719,9 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 .reel--tap.is-drag { cursor: grabbing; }
 .reel--tap.is-drag .rv--flip { cursor: grabbing; }
 .reel--tap img { -webkit-user-drag: none; pointer-events: none; }
-.reel--tap .rv--flip:nth-child(3n+1) { --nd: -1.2s; } .reel--tap .rv--flip:nth-child(3n+2) { --nd: -3.4s; } .reel--tap .rv--flip:nth-child(3n) { --nd: -5.1s; }
-@keyframes rv-nudge { 0%, 76%, 100% { rotate: y 0deg; } 81% { rotate: y -20deg; } 86% { rotate: y 12deg; } 90% { rotate: y -6deg; } 94% { rotate: y 2deg; } }
-@media (prefers-reduced-motion: no-preference) {
-  .reel--tap .rv--flip:not(.is-flipped):not(.is-touched) .rv__in { animation: rv-nudge 6.5s ease-in-out var(--nd, 0s) infinite; }
-}
+/* текст отзыва: куски .rv__x видны только шире 600 px (на телефоне карточка меньше) */
+@media (max-width: 600px) { .rv__x { display: none; } }
+/* покачивание фото убрано 24.11: все карточки сами переворачиваются (otzyvy-lenta.js) */
 /* 20 · кнопка бота рядом с формой */
 .tg { display: flex; align-items: center; gap: 12px; max-width: 420px; margin-top: 28px; padding: 10px; border-radius: 20px; background: #fff; color: var(--ink); white-space: normal;
   box-shadow: 0 16px 34px -16px rgba(0,0,0,.5); transition: transform .3s var(--m-ease, ease), box-shadow .3s; }
@@ -950,6 +948,12 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 @media (min-width: 601px) {
   .reel-nav { bottom: -82px; }
   .reviews__foot .dots { visibility: hidden; }
+  /* 24.11: карточки отзывов крупнее, текст длиннее; стрелки заметные – белые с обводкой и тенью */
+  .reel { gap: 20px; }
+  .rv { width: 310px; height: 420px; }
+  .reel .rv--q blockquote { font-size: 15px; line-height: 1.42; }
+  .reel-nav .lg-button { background: #fff; box-shadow: inset 0 0 0 1px var(--line), 0 4px 10px -6px rgba(23,23,23,.35); transition: background-color .3s, color .3s; }
+  .reel-nav .lg-button:hover { background: var(--accent); color: #fff; }
 }
 /* шапка на компьютере уходит и возвращается плавно */
 @media (min-width: 601px) { .m-header { transition: transform .5s cubic-bezier(.2,.7,.2,1), opacity .4s ease; } }
@@ -988,7 +992,8 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   /* отзывы: под лентой сразу бесплатные материалы */
   .reel-wrap { margin-top: 11px; }
   .reviews__foot { display: none; }
-  .reviews { padding-bottom: 64px; }
+  .reviews { padding-bottom: 74px; }
+  .reel-nav { bottom: -62px; }
   /* «Начните с бесплатных материалов»: плотнее */
   .free { padding: 48px 0 78px; }
   .free .sh h2 span { margin-top: -9px; }
