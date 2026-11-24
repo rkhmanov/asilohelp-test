@@ -15,7 +15,7 @@
   .hero__center { gap: 20px; }
   .hero__lead { line-height: 23px; margin-top: 19px; }
   .hero__btns { margin: -18px 0 0; width: auto; }
-  .hero__btns .btn { width: auto; height: 45px; padding: 0 30px; font-size: 15px; }
+  .hero__btns .btn { width: 221px; height: 45px; padding: 0; font-size: 15px; box-shadow: 0 10px 36px -6px rgba(161,38,56,.45); }
   html .hero--ruki .hero__nums { gap: 16px; justify-content: center; margin-top: 53px; left: 0; } .hero__nums div { width: 101px; flex: none; }
   .hero__nums span { line-height: 14.85px; }
 
@@ -26,21 +26,30 @@
   .help__more { margin-top: 12px; font-size: 15px; line-height: normal; }
   .help__more a { display: block; }
 
-  /* 3 · «Мы справимся»: по макету «ФИНАЛ» три карточки сразу открыты, у каждой свой большой угол */
+  /* 3 · «Мы справимся»: аккордеон (решение Саши 24.11). В макете «ФИНАЛ» карточки открыты только для правки,
+     на сайте они свернуты, с плюсом, и раскрываются нажатием на всю плитку */
   .tiles3 { gap: 12px; margin-top: 30px; }
-  .tiles3 .tile { background: #F5F5F7; padding: 24px; cursor: default; }
-  .tiles3 .tile:nth-child(1) { border-radius: 16px 68px 16px 16px !important; }
-  .tiles3 .tile:nth-child(2) { border-radius: 68px 16px 68px 16px !important; }
-  .tiles3 .tile:nth-child(3) { border-radius: 16px 16px 16px 68px !important; }
-  .tiles3 .tile .mini { display: block !important; height: 210px; }
-  .tiles3 .tile:nth-child(1) .mini { border-radius: 10px 44px 10px 10px; } .tiles3 .tile:nth-child(2) .mini { border-radius: 44px 10px 10px 10px; }
-  .tiles3 .tile:nth-child(3) .mini { border-radius: 10px; background: #fff; height: 174px; margin: -16px -16px 0; }
-  .tiles3 .tile__head { margin-top: 24px; min-height: 0; cursor: default; }
-  .tiles3 .tile:nth-child(3) .tile__head { margin-top: 13px; }
+  .tiles3 .tile { background: #F5F5F7; padding: 18px 18px 18px 20px; cursor: pointer; }
+  .tiles3 .tile:nth-child(1) { border-radius: 16px 38px 16px 16px !important; }
+  .tiles3 .tile:nth-child(2) { border-radius: 38px 16px 38px 16px !important; }
+  .tiles3 .tile:nth-child(3) { border-radius: 16px 16px 16px 38px !important; }
+  .tiles3 .tile.is-open { padding: 24px; }
+  .tiles3 .tile.is-open:nth-child(1) { border-radius: 16px 68px 16px 16px !important; }
+  .tiles3 .tile.is-open:nth-child(2) { border-radius: 68px 16px 68px 16px !important; }
+  .tiles3 .tile.is-open:nth-child(3) { border-radius: 16px 16px 16px 68px !important; }
+  .tiles3 .tile__head { min-height: 0; }
   .tile__head h3 { font-size: 20px; letter-spacing: -.8px; }
-  .tile__head img, .tile__head::after { display: none !important; }
+  .tile__head img { display: none !important; }
+  .tile__head::after { content: ''; flex: none; width: 36px; height: 36px; border-radius: 50%; transition: transform .25s;
+    background: linear-gradient(#fff, #fff) center / 14px 2px no-repeat, linear-gradient(#fff, #fff) center / 2px 14px no-repeat, #25262A; }
+  .tiles3 .tile.is-open .tile__head::after { display: none; }
+  .tiles3 .tile.is-open .mini { display: block; height: 210px; }
+  .tiles3 .tile.is-open .tile__head { margin-top: 24px; }
+  .tiles3 .tile:nth-child(1) .mini { border-radius: 10px 44px 10px 10px; } .tiles3 .tile:nth-child(2) .mini { border-radius: 44px 10px 10px 10px; }
+  .tiles3 .tile.is-open:nth-child(3) .mini { border-radius: 10px; background: #fff; height: 174px; margin: -16px -16px 0; }
+  .tiles3 .tile.is-open:nth-child(3) .tile__head { margin-top: 13px; }
   .tile .basis { left: 53px; top: 12px; }
-  .tiles3 .tile > p { display: block !important; margin-top: 10px; font-size: 13px; line-height: 20.8px; color: #66666B; }
+  .tiles3 .tile.is-open > p { display: block; margin-top: 10px; font-size: 13px; line-height: 20.8px; color: #66666B; }
 
   /* 4 · «Мы сами прошли этот путь»: без белой точки на красной плитке */
   .b--red .dot { display: none; }
@@ -48,8 +57,10 @@
   .b--red .b--red__more { display: block !important; margin-top: 14px; } .b--red .b--red__more br { display: none; }
   /* «Команда»: «11» крупно справа, под ним «человек»; «Подробнее о нас ↗» – простая ссылка */
   .crew__top { position: relative; display: block; }
-  .crew__n { position: absolute; right: 0; top: -26px; display: flex; flex-direction: column; align-items: flex-end; line-height: 1; }
-  .crew__n b { font-size: 72px; line-height: 89px; letter-spacing: -1.7px; margin: 0; }
+  .crew__n { position: absolute; right: 0; top: -6px; display: flex; flex-direction: column; align-items: flex-end; line-height: 1; }
+  .crew__n b { font-size: 72px; line-height: 72px; letter-spacing: -3.6px; margin: 0 3.6px 4px 0; }
+  /* «+6» плотный и лежит поверх Александра (Саша 24.11) */
+  .crew__faces i { position: relative; } .crew__faces i.more { background: #3A4568; z-index: 1; }
   .crew__n { font-size: 14px; } 
   .b--crew .crew__more { background: none !important; padding: 0; gap: 6px; font-size: 14px; margin-top: 6px; }
   .b--crew .crew__more img { content: url(img/arrow-small-white.svg); width: 8px; height: 8px; }
@@ -121,4 +132,7 @@
   .kb__box--v2 > .btn { margin-top: 15px; }
 
   .tg__q { font-style: normal; font-weight: 600; font-size: 14px; line-height: 1.2; color: var(--ink); }
+  /* 2 · «Как мы помогаем»: карточки не раскрываются, нажатие ведет на страницу услуги */
+  .flip.is-flipped .flip__back { display: none !important; }
+  .flip { cursor: pointer; }
 }

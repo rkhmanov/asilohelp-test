@@ -19,13 +19,14 @@
   }
 
   // 14. Счётчик цифр (по желанию): <span data-count="187">187</span> внутри блока с data-reveal.
+  //     Хвост после числа (data-suffix="+") остается на месте: <b data-count="1800" data-suffix="+">1800+</b>.
   function countUp(root) {
     root.querySelectorAll('[data-count]').forEach(el => {
       const to = parseInt(el.dataset.count, 10); if (!to || reduce) return;
       const t0 = performance.now(), dur = 1200;
       const tick = t => {
         const p = Math.min(1, (t - t0) / dur), eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(to * eased).toLocaleString('ru-RU');
+        el.textContent = Math.round(to * eased) + (el.dataset.suffix || '');
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
