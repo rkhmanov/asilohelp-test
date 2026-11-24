@@ -199,16 +199,15 @@ async function checkInteractions(browser, base) {
     await p.evaluate(() => document.querySelector('a[href="#reviews"]').click());
     await p.waitForTimeout(200);
     if (p.url().includes('#')) err(F, 'якорная ссылка оставила #… в адресе');
-    // лента отзывов на телефоне: нажатие меняет местами фото и текст одного человека – двух одинаковых рядом нет
+    // лента отзывов на телефоне: нажатие переворачивает саму карточку (фото ↔ отзыв этого человека, Саша 24.11)
     {
       await p.evaluate(() => document.getElementById('reviews').scrollIntoView({ block: 'center' }));
       await p.waitForTimeout(600);
-      for (let i = 0; i < 3; i++) {
-        const pt = await p.evaluate((i) => { const cs = [...document.querySelectorAll('#reel .rv--turn')].filter(c => { const r = c.getBoundingClientRect(); const m = r.left + r.width / 2; return m > 0 && m < innerWidth; }); const c = cs[i % cs.length]; if (!c) return null; const r = c.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, i);
-        if (!pt) { err(F, 'в ленте отзывов на телефоне нет карточек, которые переворачиваются'); break; }
+      const pt = await p.evaluate(() => { const c = [...document.querySelectorAll('#reel .rflip')].find(c => { const r = c.getBoundingClientRect(); const m = r.left + r.width / 2; return m > 20 && m < innerWidth - 20; }); if (!c) return null; c.setAttribute('data-qa-flip', 'm'); const r = c.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+      if (!pt) err(F, 'в ленте отзывов на телефоне нет карточек, которые переворачиваются');
+      else {
         await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(600);
-        const d = await p.evaluate(() => { const seen = {}, dup = []; for (const c of document.querySelectorAll('#reel .reel__track > .rv[data-pair]')) { const r = c.getBoundingClientRect(); if (r.right < 0 || r.left > innerWidth) continue; const k = c.dataset.pair + (c.classList.contains('rv--ph') ? ' (фото)' : ' (текст)'); if (seen[k]) dup.push(k); seen[k] = 1; } return dup; });
-        if (d.length) { err(F, 'после нажатия в ленте отзывов на телефоне два одинаковых рядом: ' + d.join(', ')); break; }
+        if (!(await p.evaluate(() => document.querySelector('[data-qa-flip="m"]').classList.contains('is-flipped')))) err(F, 'карточка отзыва на телефоне не переворачивается нажатием');
       }
     }
     // карточка услуги на телефоне ведет на страницу услуги и не раскрывается (Саша 24.11)
@@ -238,24 +237,19 @@ async function checkInteractions(browser, base) {
     if (await p.locator('#apply form').count()) err(F, 'на главной снова форма заявки – должна быть только кнопка бота');
     if (!(await p.locator('#apply a[href*="t.me/ASILOhelperBot?start=site_"]').count())) err(F, 'в «¿Empezamos?» нет кнопки бота');
     // лента отзывов на компьютере – отдельная (otzyvy-lenta-pk.js, Саша 24.11): едет всегда, щелчок и нажатие
-    // с отпусканием за лентой ее не останавливают, карточки не переворачиваются, стрелки листают
+    // с отпусканием за лентой ее не останавливают, стрелки листают
     await p.evaluate(() => document.getElementById('reviews').scrollIntoView({ block: 'center' }));
     await p.waitForTimeout(800);
     const reelX = () => p.evaluate(() => { const t = document.querySelector('#reel .reel__track'); return t ? new DOMMatrix(getComputedStyle(t).transform).m41 : 0; });
     if (!(await p.locator('#reel.reel--pk').count())) err(F, 'на компьютере не включилась компьютерная лента отзывов');
-    // щелчок по карточке переворачивает пару (фото и текст меняются местами), дублей нет, лента едет дальше
+    // щелчок переворачивает саму карточку (фото ↔ отзыв этого человека), лента едет дальше
     for (let i = 0; i < 3; i++) {
-      const pt = await p.evaluate((i) => { const cs = [...document.querySelectorAll('#reel .rv--turn')].filter(c => { const r = c.getBoundingClientRect(); return r.left > 0 && r.right < innerWidth; }); const c = cs[i % cs.length]; if (!c) return null; const r = c.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, k: c.dataset.pair, ph: c.classList.contains('rv--ph') }; }, i);
+      const pt = await p.evaluate((i) => { const cs = [...document.querySelectorAll('#reel .rflip')].filter(c => { const r = c.getBoundingClientRect(); return r.left > 0 && r.right < innerWidth; }); const c = cs[i % cs.length]; if (!c) return null; c.setAttribute('data-qa-flip', i); const r = c.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, i);
       if (!pt) { err(F, 'на компьютере у отзывов нет карточек, которые переворачиваются'); break; }
-      const idx = () => p.evaluate((i) => { const c = document.querySelector('[data-qa-flip="' + i + '"]'); return c ? [...c.parentNode.children].indexOf(c) : -1; }, i);
-      await p.evaluate(([pt, i]) => { document.elementFromPoint(pt.x, pt.y).closest('.rv').setAttribute('data-qa-flip', i); }, [pt, i]);
-      const i0 = await idx();
       const x0 = await reelX();
       await p.mouse.click(pt.x, pt.y); await p.waitForTimeout(600);
-      if (Math.abs((await idx()) - i0) !== 1) err(F, 'на компьютере щелчок по отзыву не переворачивает пару');
+      if (!(await p.evaluate((i) => document.querySelector('[data-qa-flip="' + i + '"]').classList.contains('is-flipped'), i))) err(F, 'на компьютере щелчок не переворачивает карточку отзыва');
       if (Math.abs((await reelX()) - x0) < 5) err(F, 'лента отзывов на компьютере встала после щелчка по карточке');
-      const d = await p.evaluate(() => { const seen = {}, dup = []; for (const c of document.querySelectorAll('#reel .reel__track > .rv[data-pair]')) { const r = c.getBoundingClientRect(); if (r.right < 0 || r.left > innerWidth) continue; const k = c.dataset.pair + (c.classList.contains('rv--ph') ? ' (фото)' : ' (текст)'); if (seen[k]) dup.push(k); seen[k] = 1; } return dup; });
-      if (d.length) { err(F, 'после щелчка в ленте отзывов на компьютере два одинаковых рядом: ' + d.join(', ')); break; }
     }
     {
       const r = await p.evaluate(() => { const b = document.getElementById('reel').getBoundingClientRect(); return { x: b.left + 400, y: b.top + 150 }; });
