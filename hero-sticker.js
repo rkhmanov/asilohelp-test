@@ -202,14 +202,15 @@
       })(t0);
     })();
   }
-  // Пока страницу не трогают, волна повторяется раз в 15 с (Саша, 23.11.2026: не прыгать без конца)
-  var IDLE = 15000;
-  function idleLoop() {
+  // Пока страницу не трогают, волна идет первый раз через 7 с после открытия страницы, дальше каждые 10 с
+  // (Саша, 24.11.2026; раньше раз в 15 с). Если трогали страницу последние 4 с, волна пропускается.
+  var FIRST = 7000, IDLE = 10000, t0 = performance.now();
+  function idleLoop(delay) {
     if (reduce) return;
     setTimeout(function () {
       if (!document.hidden && !off() && Date.now() - lastUser > 4000 && !busy) { busy = true; sweep(function () { busy = false; }); }
-      idleLoop();
-    }, IDLE);
+      idleLoop(IDLE);
+    }, delay == null ? Math.max(0, FIRST - (performance.now() - t0)) : delay);
   }
 
   // --- Появление (как в оригинале после кольца-загрузки, само кольцо не берем) -----------------------
@@ -271,7 +272,7 @@
   function start() {
     measure();
     if (reduce) { document.documentElement.classList.remove('sk-wait'); return; }
-    // Появление один раз, потом тишина; волна по строкам – раз в 15 с, пока страницу не трогают
+    // Появление один раз, потом тишина; волна по строкам – через 7 с, потом каждые 10 с, пока страницу не трогают
     entrance(function () { idleLoop(); });
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else addEventListener('load', start);
