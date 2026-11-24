@@ -1,0 +1,44 @@
+/* ===== Параллакс радужных дуг на красных плашках главной («Как мы помогаем», «Бесплатные материалы»), Саша 24.11 =====
+   Дуги («Подложка · Арки», img/arki*.svg) при прокрутке едут чуть медленнее плашки и текста.
+   SVG дорисованы на 120 px ниже прежнего края (1015 → 1135), чтобы при сдвиге не был виден срез дуг;
+   --arki-e – эти 120 px в масштабе картинки, им прежний край возвращается ровно на край плашки.
+   Слой с дугами выступает за плашку на --arki-d сверху и снизу и сдвигается в пределах ±--arki-d (--arki-d не больше --arki-e, иначе покажется срез).
+   Двигает CSS (animation-timeline: view(), Chrome и Safari 26+, без JS и без дерганья на iPhone);
+   где этого нет – arki-parallax.js. prefers-reduced-motion: reduce – дуги стоят. */
+
+/* картинка и ее место – для всех, в том числе без анимации */
+@media (min-width: 601px) {
+  .help, .free { --arki-d: 110px; --arki-e: 120px; }
+  .help::before, .free::before { inset: calc(-1 * var(--arki-d)) 0; background-position: center calc(100% + var(--arki-e) - var(--arki-d)); }
+}
+@media (max-width: 600px) {
+  .help, .free { --arki-d: 80px; --arki-e: 129.2px; } /* картинка 1500 px вместо 1393: 120 × 1500 / 1393 */
+  /* у «Как мы помогаем» белая кнопка заявки заходит за нижний край, поэтому плашку не обрезаем:
+     дуги – отдельным слоем ::after по размеру плашки, едут через background-position */
+  .help { background: #A02538 !important; }
+  .help::after { display: block; content: ''; position: absolute; inset: 0; z-index: 0; height: auto; border-radius: inherit; pointer-events: none;
+    background: url(img/arki-tel.svg) no-repeat center calc(100% + var(--arki-e)) / 1500px auto; }
+  .free::before { inset: calc(-1 * var(--arki-d)) 0; background-position: center calc(100% + var(--arki-e) - var(--arki-d)); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .help { view-timeline: --arki-help block; }
+    .free { view-timeline: --arki-free block; }
+    .help::before, .free::before, .help::after { animation: arki-y linear both; }
+    .help::before, .help::after { animation-timeline: --arki-help; }
+    .free::before { animation-timeline: --arki-free; }
+    @media (max-width: 600px) {
+      .help::before { animation: none; }
+      .help::after { animation-name: arki-bg; }
+    }
+  }
+  /* запасной путь: arki-parallax.js пишет --arki-p от -1 до 1 */
+  html.arki-js .help::before, html.arki-js .free::before { translate: 0 calc(var(--arki-p, 0) * var(--arki-d)); will-change: translate; }
+  @media (max-width: 600px) {
+    html.arki-js .help::before { translate: none; will-change: auto; }
+    html.arki-js .help::after { background-position-y: calc(100% + var(--arki-e) + var(--arki-p, 0) * var(--arki-d)); }
+  }
+}
+@keyframes arki-y { from { translate: 0 calc(-1 * var(--arki-d)); } to { translate: 0 var(--arki-d); } }
+@keyframes arki-bg { from { background-position-y: calc(100% + var(--arki-e) - var(--arki-d)); } to { background-position-y: calc(100% + var(--arki-e) + var(--arki-d)); } }
