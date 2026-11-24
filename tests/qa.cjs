@@ -199,6 +199,18 @@ async function checkInteractions(browser, base) {
     await p.evaluate(() => document.querySelector('a[href="#reviews"]').click());
     await p.waitForTimeout(200);
     if (p.url().includes('#')) err(F, 'якорная ссылка оставила #… в адресе');
+    // лента отзывов на телефоне: нажатие меняет местами фото и текст одного человека – двух одинаковых рядом нет
+    {
+      await p.evaluate(() => document.getElementById('reviews').scrollIntoView({ block: 'center' }));
+      await p.waitForTimeout(600);
+      for (let i = 0; i < 3; i++) {
+        const pt = await p.evaluate((i) => { const cs = [...document.querySelectorAll('#reel .rv--turn')].filter(c => { const r = c.getBoundingClientRect(); const m = r.left + r.width / 2; return m > 0 && m < innerWidth; }); const c = cs[i % cs.length]; if (!c) return null; const r = c.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, i);
+        if (!pt) { err(F, 'в ленте отзывов на телефоне нет карточек, которые переворачиваются'); break; }
+        await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(600);
+        const d = await p.evaluate(() => { const seen = {}, dup = []; for (const c of document.querySelectorAll('#reel .reel__track > .rv[data-pair]')) { const r = c.getBoundingClientRect(); if (r.right < 0 || r.left > innerWidth) continue; const k = c.dataset.pair + (c.classList.contains('rv--ph') ? ' (фото)' : ' (текст)'); if (seen[k]) dup.push(k); seen[k] = 1; } return dup; });
+        if (d.length) { err(F, 'после нажатия в ленте отзывов на телефоне два одинаковых рядом: ' + d.join(', ')); break; }
+      }
+    }
     // карточка услуги на телефоне ведет на страницу услуги и не раскрывается (Саша 24.11)
     const card = p.locator('.flip').first();
     await card.scrollIntoViewIfNeeded();
@@ -225,33 +237,37 @@ async function checkInteractions(browser, base) {
     // формы на главной нет (Саша, 24.11.2026): в «¿Empezamos?» только кнопка бота
     if (await p.locator('#apply form').count()) err(F, 'на главной снова форма заявки – должна быть только кнопка бота');
     if (!(await p.locator('#apply a[href*="t.me/ASILOhelperBot?start=site_"]').count())) err(F, 'в «¿Empezamos?» нет кнопки бота');
-    // лента отзывов (Саша 24.11): нажатие не дает дублей на экране, лента не стоит после щелчка и не замирает,
-    // если кнопку мыши отпустили за лентой
+    // лента отзывов на компьютере – отдельная (otzyvy-lenta-pk.js, Саша 24.11): едет всегда, щелчок и нажатие
+    // с отпусканием за лентой ее не останавливают, карточки не переворачиваются, стрелки листают
     await p.evaluate(() => document.getElementById('reviews').scrollIntoView({ block: 'center' }));
     await p.waitForTimeout(800);
-    const reelX = () => p.evaluate(() => { const m = (document.querySelector('#reel .reel__track') || {}).style; return m ? parseFloat((m.transform.match(/\((-?[\d.]+)/) || [0, 0])[1]) : 0; });
-    const reelDups = () => p.evaluate(() => {
-      const seen = {}, dup = [];
-      for (const c of document.querySelectorAll('#reel .reel__track > .rv[data-pair]')) {
-        const r = c.getBoundingClientRect(); if (r.right < 0 || r.left > innerWidth) continue;
-        const k = c.dataset.pair + (c.classList.contains('rv--ph') ? ' (фото)' : ' (текст)');
-        if (seen[k]) dup.push(k); seen[k] = 1;
-      }
-      return dup;
-    });
+    const reelX = () => p.evaluate(() => { const t = document.querySelector('#reel .reel__track'); return t ? new DOMMatrix(getComputedStyle(t).transform).m41 : 0; });
+    if (!(await p.locator('#reel.reel--pk').count())) err(F, 'на компьютере не включилась компьютерная лента отзывов');
+    // щелчок по карточке переворачивает пару (фото и текст меняются местами), дублей нет, лента едет дальше
     for (let i = 0; i < 3; i++) {
-      const pt = await p.evaluate((i) => { const cs = [...document.querySelectorAll('#reel .rv--turn')].filter(c => { const r = c.getBoundingClientRect(); return r.left > 0 && r.right < innerWidth; }); const c = cs[i % cs.length]; if (!c) return null; const r = c.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, i);
-      if (!pt) { err(F, 'в ленте отзывов нет карточек, которые переворачиваются'); break; }
+      const pt = await p.evaluate((i) => { const cs = [...document.querySelectorAll('#reel .rv--turn')].filter(c => { const r = c.getBoundingClientRect(); return r.left > 0 && r.right < innerWidth; }); const c = cs[i % cs.length]; if (!c) return null; const r = c.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, k: c.dataset.pair, ph: c.classList.contains('rv--ph') }; }, i);
+      if (!pt) { err(F, 'на компьютере у отзывов нет карточек, которые переворачиваются'); break; }
+      const idx = () => p.evaluate((i) => { const c = document.querySelector('[data-qa-flip="' + i + '"]'); return c ? [...c.parentNode.children].indexOf(c) : -1; }, i);
+      await p.evaluate(([pt, i]) => { document.elementFromPoint(pt.x, pt.y).closest('.rv').setAttribute('data-qa-flip', i); }, [pt, i]);
+      const i0 = await idx();
       const x0 = await reelX();
-      await p.mouse.click(pt.x, pt.y); await p.waitForTimeout(700);
-      if (Math.abs((await reelX()) - x0) < 5) err(F, 'лента отзывов остановилась после щелчка по карточке');
-      const d = await reelDups(); if (d.length) { err(F, 'после нажатия в ленте два одинаковых отзыва рядом: ' + d.join(', ')); break; }
+      await p.mouse.click(pt.x, pt.y); await p.waitForTimeout(600);
+      if (Math.abs((await idx()) - i0) !== 1) err(F, 'на компьютере щелчок по отзыву не переворачивает пару');
+      if (Math.abs((await reelX()) - x0) < 5) err(F, 'лента отзывов на компьютере встала после щелчка по карточке');
+      const d = await p.evaluate(() => { const seen = {}, dup = []; for (const c of document.querySelectorAll('#reel .reel__track > .rv[data-pair]')) { const r = c.getBoundingClientRect(); if (r.right < 0 || r.left > innerWidth) continue; const k = c.dataset.pair + (c.classList.contains('rv--ph') ? ' (фото)' : ' (текст)'); if (seen[k]) dup.push(k); seen[k] = 1; } return dup; });
+      if (d.length) { err(F, 'после щелчка в ленте отзывов на компьютере два одинаковых рядом: ' + d.join(', ')); break; }
     }
     {
       const r = await p.evaluate(() => { const b = document.getElementById('reel').getBoundingClientRect(); return { x: b.left + 400, y: b.top + 150 }; });
-      await p.mouse.move(r.x, r.y); await p.mouse.down(); await p.mouse.move(r.x, r.y - 300, { steps: 4 }); await p.mouse.up();
-      const x0 = await reelX(); await p.waitForTimeout(700);
-      if (Math.abs((await reelX()) - x0) < 5) err(F, 'лента отзывов замерла, когда кнопку мыши отпустили за ней');
+      let x0 = await reelX();
+      await p.mouse.move(r.x, r.y); await p.mouse.click(r.x, r.y); await p.waitForTimeout(700);
+      if (Math.abs((await reelX()) - x0) < 5) err(F, 'лента отзывов на компьютере стоит после щелчка');
+      x0 = await reelX();
+      await p.mouse.down(); await p.mouse.move(r.x, r.y - 300, { steps: 4 }); await p.mouse.up(); await p.waitForTimeout(700);
+      if (Math.abs((await reelX()) - x0) < 5) err(F, 'лента отзывов на компьютере замерла, когда кнопку мыши отпустили за ней');
+      x0 = await reelX();
+      await p.locator('.reel-nav button').nth(1).click(); await p.waitForTimeout(800);
+      if (Math.abs((await reelX()) - x0) < 200) err(F, 'стрелка «вперед» не листает ленту отзывов на компьютере');
     }
     await ctx.close();
   }

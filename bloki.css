@@ -100,3 +100,7 @@
 .rv--turn.is-turning { transform: scaleX(0); }
 .rv--turn:focus:not(:focus-visible) { outline: none; }
 @media (prefers-reduced-motion: reduce) { .rv--turn { transition: none; } }
+/* Компьютер и планшет (otzyvy-lenta-pk.js, 24.11 вечер): лента просто едет и не тянется; пары переворачиваются по щелчку */
+.reviews .reel--pk { cursor: default; }
+.reviews .reel--pk .rv--turn { cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .reviews .reel--pk { overflow-x: auto; } }
