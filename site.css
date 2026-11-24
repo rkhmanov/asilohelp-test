@@ -1076,6 +1076,7 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .free > .wrap, .news > .wrap, .faq > .wrap { position: relative; left: 2px; }
   /* «Команда»: «11» крупно справа, как в макете 24.11 (1217, 3506 при строке 186) */
   .b--crew .crew__top { min-height: 55px; }
+  .b--crew .crew__roles span { white-space: nowrap; } /* роли в одну строку, как в макете */
   .b--crew .crew__n { position: absolute; left: 445px; top: 154px; line-height: 17px; }
   .b--crew .crew__n b { position: absolute; left: -69px; top: -142px; font-size: 150px; line-height: 1; letter-spacing: -2.2px; margin: 0; }
   /* «и главное»: рукописная стрелка вниз к базе знаний, как в макете (1139, 5745, 87×100) */
