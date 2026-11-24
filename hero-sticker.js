@@ -190,7 +190,8 @@
       var a = cs[0], b = cs[cs.length - 1];
       var x0 = a.cx - a.em * 0.5, x1 = b.cx + b.em * 0.5;
       if (back) { var t = x0; x0 = x1; x1 = t; }
-      var t0 = performance.now(), dur = 300 + cs.length * 85;
+      // на 40 % быстрее, чем было (300 + 85 мс на букву), Саша 24.11
+      var t0 = performance.now(), dur = (300 + cs.length * 85) * 0.6;
       (function step(now) {
         if (id !== sweepId) return;
         var p = Math.min(1, (now - t0) / dur);
@@ -198,18 +199,28 @@
         ptr = { x: x0 + (x1 - x0) * e, y: a.cy + Math.sin(p * Math.PI * 2) * a.em * 0.1 };
         kick();
         if (p < 1) ghost = requestAnimationFrame(step);
-        else { ptr = null; kick(); ghost = requestAnimationFrame(function () { setTimeout(row, 90); }); }
+        else row(); // следующая строка начинается сразу, без паузы (Саша 24.11)
       })(t0);
     })();
   }
-  // Пока страницу не трогают, волна повторяется раз в 15 с (Саша, 23.11.2026: не прыгать без конца)
-  var IDLE = 15000;
-  function idleLoop() {
+  // Пока страницу не трогают, волна идет первый раз через 7 с после открытия страницы, дальше каждые 10 с
+  // (Саша, 24.11.2026; раньше раз в 15 с). Если трогали страницу последние 4 с, волна пропускается.
+  var FIRST = 7000, IDLE = 10000, t0 = performance.now();
+  // Вернулись наверх после прокрутки вниз – волна идет еще раз (Саша 24.11)
+  var away = false;
+  addEventListener('scroll', function () {
+    if (scrollY > innerHeight * 0.6) away = true;
+    else if (away && scrollY < 4) {
+      away = false;
+      if (!reduce && !entering && !busy && !document.hidden && !off()) { busy = true; sweep(function () { busy = false; }); }
+    }
+  }, { passive: true });
+  function idleLoop(delay) {
     if (reduce) return;
     setTimeout(function () {
       if (!document.hidden && !off() && Date.now() - lastUser > 4000 && !busy) { busy = true; sweep(function () { busy = false; }); }
-      idleLoop();
-    }, IDLE);
+      idleLoop(IDLE);
+    }, delay == null ? Math.max(0, FIRST - (performance.now() - t0)) : delay);
   }
 
   // --- Появление (как в оригинале после кольца-загрузки, само кольцо не берем) -----------------------
@@ -271,7 +282,7 @@
   function start() {
     measure();
     if (reduce) { document.documentElement.classList.remove('sk-wait'); return; }
-    // Появление один раз, потом тишина; волна по строкам – раз в 15 с, пока страницу не трогают
+    // Появление один раз, потом тишина; волна по строкам – через 7 с, потом каждые 10 с, пока страницу не трогают
     entrance(function () { idleLoop(); });
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else addEventListener('load', start);
