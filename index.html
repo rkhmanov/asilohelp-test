@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <link rel="stylesheet" href="ruki.css?v=5">
 <link rel="stylesheet" href="hero-sticker.css?v=8">
-<link rel="stylesheet" href="glavnaya-telefon.css?v=4">
+<link rel="stylesheet" href="glavnaya-telefon.css?v=5">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=10"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.2):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot');if(innerWidth<=480&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('sk-wait');setTimeout(function(){document.documentElement.classList.remove('sk-wait')},4000)}</script>
@@ -409,11 +409,26 @@
   // «Бесплатные материалы»: вся карточка – ссылка (Саша 24.11)
   document.querySelectorAll('.ftile').forEach(t => { const a = t.querySelector('a[href]'); if (!a) return; t.classList.add('is-link'); t.addEventListener('click', e => { if (e.target.closest('a')) return; a.click(); }); });
   // карточки услуг: переворот по нажатию (телефон) и с клавиатуры
-  document.querySelectorAll('.flip').forEach(f => { f.addEventListener('click', e => { if (e.target.closest('.flip__btn')) return; if (!matchMedia('(hover: hover)').matches) { f.classList.toggle('is-flipped'); return; } const a = f.querySelector('.flip__btn--face'); if (a && innerWidth > 600) location.href = a.href; }); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f.classList.toggle('is-flipped'); } }); });
+  // телефон (до 600 px): карточка – просто ссылка на страницу услуги, ничего не раскрывается (Саша 24.11)
+  const phoneCards = matchMedia('(max-width: 600px)');
+  const goCard = f => { const a = f.querySelector('.flip__btn--m') || f.parentElement.querySelector('.flip__btn--m') || f.querySelector('.flip__btn--face'); if (a) location.href = a.href; };
+  document.querySelectorAll('.flip').forEach(f => { f.addEventListener('click', e => { if (e.target.closest('.flip__btn')) return; if (phoneCards.matches) { f.classList.remove('is-flipped'); goCard(f); return; } if (!matchMedia('(hover: hover)').matches) { f.classList.toggle('is-flipped'); return; } const a = f.querySelector('.flip__btn--face'); if (a && innerWidth > 600) location.href = a.href; }); f.addEventListener('keydown', e => { if (e.target !== f) return; if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (phoneCards.matches) goCard(f); else f.classList.toggle('is-flipped'); } }); });
   if (!matchMedia('(hover: hover)').matches) document.querySelector('.flip-hint').textContent = 'Что входит – по нажатию на карточку';
   // карточки услуг: подсветка идет за курсором
   document.querySelectorAll('.flip').forEach(f => f.addEventListener('pointermove', e => { const r = f.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width * 100; f.style.setProperty('--mx', x.toFixed(1) + '%'); }));
   // отзывы: фото переворачивается и показывает текст (нажатие или Enter)
+  // Перезагрузка не кидает вниз (Саша 24.11): ссылки-якоря не пишут #… в адрес, браузер не восстанавливает прокрутку сам
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (location.hash) setTimeout(() => history.replaceState(null, '', location.pathname + location.search), 0);
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    const id = a.getAttribute('href');
+    const to = id.length > 1 && document.querySelector(id);
+    if (!to) return;
+    e.preventDefault();
+    if (!a.closest('.tabbar-lg')) to.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  });
   // телефон: карточки «Мы справимся» и вопросы раскрываются по нажатию, как FAQ
   const narrow = matchMedia('(max-width: 600px)');
   document.querySelectorAll('[data-acc]').forEach(card => {

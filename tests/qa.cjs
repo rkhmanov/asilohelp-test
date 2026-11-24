@@ -168,7 +168,7 @@ async function checkBrowser() {
   }
 }
 
-// Поведение главной: стекло подключилось, карточки услуг переворачиваются нажатием на телефоне,
+// Поведение главной: стекло подключилось, карточки услуг на телефоне ведут на страницы услуг, «Мы справимся» – аккордеон,
 // шапка прячется при прокрутке вниз и возвращается вверх, пустая форма показывает ошибки и не уходит.
 async function checkInteractions(browser, base) {
   if (!pages.includes('index.html')) return;
@@ -183,11 +183,22 @@ async function checkInteractions(browser, base) {
     if (!(await p.evaluate(() => document.documentElement.classList.contains('lg') && !!document.querySelector('.hdr.lg-on .lg-glass'))))
       err(F, 'жидкое стекло не подключилось к шапке (glass.js / vendor/react)');
     if (!(await p.locator('.tabbar-lg .lg-tab-bar').count())) err(F, 'нет нижнего меню на телефоне');
+    // «Мы справимся»: свернуто, раскрывается нажатием на плитку (Саша 24.11)
+    const tile = p.locator('.tiles3 .tile').first();
+    await tile.scrollIntoViewIfNeeded();
+    if (await tile.evaluate(e => e.classList.contains('is-open'))) err(F, '«Мы справимся» на телефоне не свернуто');
+    await tile.tap({ position: { x: 40, y: 20 }, force: true });
+    await p.waitForTimeout(300);
+    if (!(await tile.evaluate(e => e.classList.contains('is-open')))) err(F, 'плитка «Мы справимся» не раскрывается нажатием');
+    // ссылки-якоря не пишут #… в адрес (иначе перезагрузка кидает вниз)
+    await p.evaluate(() => document.querySelector('a[href="#apply"]').click());
+    await p.waitForTimeout(200);
+    if (p.url().includes('#')) err(F, 'якорная ссылка оставила #… в адресе');
+    // карточка услуги на телефоне ведет на страницу услуги и не раскрывается (Саша 24.11)
     const card = p.locator('.flip').first();
     await card.scrollIntoViewIfNeeded();
-    await card.tap({ position: { x: 40, y: 40 } });
-    await p.waitForTimeout(300);
-    if (!(await card.evaluate(e => e.classList.contains('is-flipped')))) err(F, 'карточка услуги не переворачивается нажатием на телефоне');
+    await Promise.all([p.waitForURL(/konsultacii\.html/, { timeout: 4000 }).catch(() => {}), card.tap({ position: { x: 40, y: 40 }, force: true })]);
+    if (!/konsultacii\.html/.test(p.url())) err(F, 'карточка услуги на телефоне не ведет на страницу услуги');
     await ctx.close();
   }
   // компьютер
