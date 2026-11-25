@@ -13,34 +13,26 @@
   if (!reel || matchMedia('(min-width: 601px)').matches) return;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 1. Переворот по нажатию (Саша, 24.11): одна карточка, на лице фото – на обороте отзыв этого человека,
-  //    на лице текст – на обороте его фото (пара – data-pair). Переворачивается только нажатая карточка, плоско (scaleX).
-  var byPair = {};
-  Array.prototype.forEach.call(reel.querySelectorAll('.rv[data-pair]'), function (c) {
-    (byPair[c.dataset.pair] = byPair[c.dataset.pair] || []).push(c);
-  });
-  Object.keys(byPair).forEach(function (k) {
-    var pair = byPair[k];
-    if (pair.length !== 2) return;
-    var backs = pair.map(function (c) { return c.cloneNode(true); });
-    pair.forEach(function (card, i) {
-      var box = document.createElement('div');
-      box.className = 'rflip';
-      box.setAttribute('role', 'button');
-      box.tabIndex = 0;
-      box.setAttribute('aria-label', card.classList.contains('rv--ph') ? 'Показать отзыв' : 'Показать фото автора');
-      var inner = document.createElement('div');
-      inner.className = 'rflip__in';
-      card.replaceWith(box);
-      var back = backs[1 - i];
-      back.classList.add('rflip__back');
-      back.setAttribute('aria-hidden', 'true');
-      back.removeAttribute('data-pair');
-      card.classList.add('rflip__front');
-      inner.appendChild(card);
-      inner.appendChild(back);
-      box.appendChild(inner);
-    });
+  // 1. Переворот по нажатию (Саша, 25.11): одна карточка = один человек. В ленте лежит лицевая сторона (data-front:
+  //    фото или текст), вторая половина того же человека (hidden) – на обороте, той же формы. Плоский переворот (scaleX).
+  Array.prototype.forEach.call(reel.querySelectorAll('.rv[data-front]'), function (card) {
+    var back = reel.querySelector('.rv[data-pair="' + card.dataset.pair + '"]:not([data-front])');
+    if (!back) return;
+    var box = document.createElement('div');
+    box.className = 'rflip';
+    box.setAttribute('role', 'button');
+    box.tabIndex = 0;
+    box.setAttribute('aria-label', card.classList.contains('rv--ph') ? 'Показать отзыв' : 'Показать фото автора');
+    var inner = document.createElement('div');
+    inner.className = 'rflip__in';
+    card.replaceWith(box);
+    back.hidden = false;
+    back.classList.add('rflip__back');
+    back.setAttribute('aria-hidden', 'true');
+    card.classList.add('rflip__front');
+    inner.appendChild(card);
+    inner.appendChild(back);
+    box.appendChild(inner);
   });
   function flip(box) {
     if (reduce || box.classList.contains('is-turning')) { box.classList.toggle('is-flipped'); return; }

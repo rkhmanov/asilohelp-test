@@ -1,7 +1,8 @@
 /* Лента отзывов на компьютере и планшете (шире 600 px). Отдельно от телефона (otzyvy-lenta.js) – решение Саши 24.11.2026:
    правки одной версии не должны ломать другую.
-   - Дизайн как в Figma «ФИНАЛ» 4750:4451: фото (с именем) и текст (с услугой) отдельными карточками.
-   - Нажатие переворачивает карточку на месте: фото ↔ отзыв этого человека (data-pair). Лента при этом едет дальше.
+   - Одна карточка = один человек (Саша, 25.11): лежит фото (с именем) или текст (с услугой), по очереди.
+   - Нажатие переворачивает карточку на месте: фото ↔ отзыв этого человека, оборот той же формы. Лента при этом едет дальше.
+   - Тянется мышкой (за любое место ленты) и двумя пальцами на тачпаде; после этого едет дальше сама.
    - Едет сама, ровно и всегда: ни наведение, ни щелчок ее не останавливают (движение – анимация браузера на видеокарте,
      без своего цикла и без прокрутки, поэтому не дергается и не залипает).
    - Стрелки (glass.js) плавно листают на две карточки, лента едет дальше.
@@ -13,34 +14,26 @@
   reel.classList.add('reel--pk');
   var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 1. Переворот по нажатию (Саша, 24.11): одна карточка, на лице фото – на обороте отзыв этого человека,
-  //    на лице текст – на обороте его фото (пара – data-pair). Переворачивается только нажатая карточка, плоско (scaleX).
-  var byPair = {};
-  Array.prototype.forEach.call(reel.querySelectorAll('.rv[data-pair]'), function (c) {
-    (byPair[c.dataset.pair] = byPair[c.dataset.pair] || []).push(c);
-  });
-  Object.keys(byPair).forEach(function (k) {
-    var pair = byPair[k];
-    if (pair.length !== 2) return;
-    var backs = pair.map(function (c) { return c.cloneNode(true); });
-    pair.forEach(function (card, i) {
-      var box = document.createElement('div');
-      box.className = 'rflip';
-      box.setAttribute('role', 'button');
-      box.tabIndex = 0;
-      box.setAttribute('aria-label', card.classList.contains('rv--ph') ? 'Показать отзыв' : 'Показать фото автора');
-      var inner = document.createElement('div');
-      inner.className = 'rflip__in';
-      card.replaceWith(box);
-      var back = backs[1 - i];
-      back.classList.add('rflip__back');
-      back.setAttribute('aria-hidden', 'true');
-      back.removeAttribute('data-pair');
-      card.classList.add('rflip__front');
-      inner.appendChild(card);
-      inner.appendChild(back);
-      box.appendChild(inner);
-    });
+  // 1. Переворот по нажатию (Саша, 25.11): одна карточка = один человек. В ленте лежит лицевая сторона (data-front:
+  //    фото или текст), вторая половина того же человека (hidden) – на обороте, той же формы. Плоский переворот (scaleX).
+  Array.prototype.forEach.call(reel.querySelectorAll('.rv[data-front]'), function (card) {
+    var back = reel.querySelector('.rv[data-pair="' + card.dataset.pair + '"]:not([data-front])');
+    if (!back) return;
+    var box = document.createElement('div');
+    box.className = 'rflip';
+    box.setAttribute('role', 'button');
+    box.tabIndex = 0;
+    box.setAttribute('aria-label', card.classList.contains('rv--ph') ? 'Показать отзыв' : 'Показать фото автора');
+    var inner = document.createElement('div');
+    inner.className = 'rflip__in';
+    card.replaceWith(box);
+    back.hidden = false;
+    back.classList.add('rflip__back');
+    back.setAttribute('aria-hidden', 'true');
+    card.classList.add('rflip__front');
+    inner.appendChild(card);
+    inner.appendChild(back);
+    box.appendChild(inner);
   });
   function flip(box) {
     if (reduceMotion || box.classList.contains('is-turning')) { box.classList.toggle('is-flipped'); return; }
@@ -113,6 +106,54 @@
       shift = p < 1 ? requestAnimationFrame(f) : null;
     })(t0);
   };
+
+  // Перетаскивание мышкой и горизонтальная прокрутка тачпадом (Саша, 25.11): сдвигаем время анимации,
+  // пока тянут – лента стоит под рукой, отпустили – едет дальше. После перетаскивания щелчок не переворачивает.
+  function moveBy(px) {
+    var dur = anim.effect.getTiming().duration;
+    anim.currentTime = ((anim.currentTime + px / SPEED * 1000) % dur + dur) % dur;
+  }
+  var drag = null, dragged = false;
+  reel.addEventListener('pointerdown', function (e) {
+    if (!anim || e.button !== 0 || e.pointerType === 'touch') return;
+    if (e.target.closest && e.target.closest('a, button')) return;
+    drag = { id: e.pointerId, x: e.clientX, y: e.clientY, moved: false };
+  });
+  reel.addEventListener('pointermove', function (e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    var dx = e.clientX - drag.x;
+    if (!drag.moved) {
+      if (Math.abs(dx) < 6 || Math.abs(dx) < Math.abs(e.clientY - drag.y)) return;
+      drag.moved = true;
+      anim.pause();
+      reel.classList.add('is-drag');
+      try { reel.setPointerCapture(drag.id); } catch (_) {}
+    }
+    var z = reel.getBoundingClientRect().width / (reel.offsetWidth || 1) || 1;
+    moveBy(-dx / z);
+    drag.x = e.clientX;
+  });
+  function endDrag(e) {
+    if (!drag || (e.pointerId !== undefined && e.pointerId !== drag.id)) return;
+    if (drag.moved) {
+      dragged = true;
+      setTimeout(function () { dragged = false; }, 0);
+      reel.classList.remove('is-drag');
+      anim.play();
+    }
+    drag = null;
+  }
+  reel.addEventListener('pointerup', endDrag);
+  reel.addEventListener('pointercancel', endDrag);
+  reel.addEventListener('lostpointercapture', endDrag);
+  addEventListener('pointerup', endDrag);
+  reel.addEventListener('click', function (e) { if (dragged) { e.preventDefault(); e.stopPropagation(); } }, true);
+  reel.addEventListener('dragstart', function (e) { e.preventDefault(); });
+  reel.addEventListener('wheel', function (e) {
+    if (!anim || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+    e.preventDefault();
+    moveBy(e.deltaX);
+  }, { passive: false });
   // Фокус с клавиатуры на карточке за краем: браузер прокручивает контейнер – возвращаем на место
   reel.addEventListener('scroll', function () { if (reel.scrollLeft) reel.scrollLeft = 0; });
 })();
