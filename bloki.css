@@ -107,3 +107,33 @@
 .reviews .reel--pk { cursor: default; }
 .reviews .reel--pk .rflip { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .reviews .reel--pk { overflow-x: auto; } }
+/* ===== Лента 25.11 (Саша): одна карточка = один человек, оборот той же формы. Формы a–h на обеих сторонах ===== */
+.reviews .rv[hidden] { display: none; }
+.reviews .rv.rv--a { border-radius: 108px 0 0 0; }
+.reviews .rv.rv--b { border-radius: 20.5px; }
+.reviews .rv.rv--c { border-radius: 123px 123px 20.5px 20.5px; }
+.reviews .rv.rv--d { border-radius: 0 108px 0 62px; }
+.reviews .rv.rv--e { border-radius: 20.5px 20.5px 108px 20.5px; }
+.reviews .rv.rv--f { border-radius: 20.5px 108px 20.5px 20.5px; }
+.reviews .rv.rv--g { border-radius: 20.5px 20.5px 20.5px 108px; }
+.reviews .rv.rv--h { border-radius: 62px 20.5px 62px 20.5px; }
+/* текст на обороте фото-формы со скруглением слева сверху – отступ, чтобы «« не срезалось */
+.reviews .rv--q.rv--a { padding-top: 52px; padding-left: 40px; }
+.reviews .rv--q.rv--c { padding-top: 58px; }
+.reviews .rv--q.rv--h { padding-top: 34px; padding-left: 30px; }
+.reviews .rv--q.rv--g figcaption { padding-left: 26px; }
+/* компьютер и планшет: карточки крупнее (288×378, как в Figma), текст 16 px */
+@media (min-width: 601px) {
+  .reviews .rv, .reviews .rflip { width: 288px; height: 378px; }
+  .reviews .rv--q { padding: 30px 27px 24px; }
+  .reviews .rv--q.rv--a { padding-top: 56px; padding-left: 44px; }
+  .reviews .rv--q.rv--c { padding-top: 62px; }
+  .reviews .rv--q.rv--h { padding-top: 38px; padding-left: 32px; }
+  .reviews .rv--q blockquote { font-size: 16px; line-height: 23px; }
+  .rv--you > span { top: 167px; }
+  .rv__cta { top: 294px; }
+  .rv--ph > .sticker { bottom: 29px; }
+  /* тянуть ленту мышкой */
+  .reviews .reel--pk.is-js { cursor: grab; }
+  .reviews .reel--pk.is-drag, .reviews .reel--pk.is-drag .rflip { cursor: grabbing; }
+}
