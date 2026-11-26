@@ -5,7 +5,8 @@
 .reviews .reel { gap: 18px; scroll-snap-type: none; }
 .reviews .rv { width: 257px; height: 338px; }
 .rv--ph { margin: 0; overflow: hidden; border-radius: 20.5px; background: #eee; }
-.rv--ph > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rv--ph > picture { display: contents; }
+.rv--ph > img, .rv--ph > picture > img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .rv--ph.rv--a { border-radius: 108px 0 0 0; }
 .rv--ph.rv--b { border-radius: 20.5px; }
 .rv--ph.rv--c { border-radius: 123px 123px 20.5px 20.5px; }
