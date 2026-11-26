@@ -6,6 +6,7 @@
 //   • локальные ссылки и картинки ведут на существующие файлы, якоря #id есть на странице (#ключ=значение — фильтры, не якоря);
 //   • ссылки на бота несут метку site_<место>[_<цель>] (см. asilo-bot/cloudflare/src/sources.ts);
 //   • на неготовые страницы услуг (konsultacii, keys, soprovozhdenie) ссылок нет – вместо них разделы бота _consult/_caseinfo/_soprinfo (Саша, 26.11.2026);
+//   • нет цен сопровождения (990/1190/1690/1990 €), кроме скрытой soprovozhdenie.html (Саша, 26.11.2026);
 //   • кнопки «Оставить заявку», «Оценить шансы», «Записаться» ведут в бота, а не на форму #apply (Саша, 24.11.2026; архивные и пробные страницы не в счет).
 // В браузере (Chromium из Playwright) на ширине 360, 390, 768 и 1440:
 //   • нет ошибок JavaScript и битых локальных файлов;
@@ -74,6 +75,9 @@ function checkStatic(file) {
   if (!/arhiv|animacii|glavnaya-ruki|hero-sticker/.test(file))
     for (const m of body.matchAll(/<a\s[^>]*href="([^"]*)"[^>]*>([^<]*)/g))
       if (/(Оставить заявку|Оценить шансы|Записаться)/.test(m[2]) && !BOT.test(m[1])) err(file, `кнопка «${m[2].trim()}» ведет не в бота: ${m[1]}`);
+  // цены сопровождения на сайте не публикуем (Саша, 24.11 и 26.11.2026); скрытая страница soprovozhdenie.html пока исключение
+  if (!/arhiv|animacii|soprovozhdenie\.html/.test(file))
+    for (const m of body.matchAll(/\b(990|1190|1690|1790|1990)(?:&nbsp;|\s)?(?:€|евро)/g)) err(file, `цена сопровождения на странице: ${m[0]}`);
   if (!/arhiv|animacii|glavnaya-ruki|hero-sticker/.test(file))
     for (const m of body.matchAll(/<a\s[^>]*href="(?:\.\.\/)*(konsultacii|keys|soprovozhdenie)\.html[^"]*"/g)) err(file, `ссылка на неготовую страницу ${m[1]}.html – нужен раздел бота`);
   for (const m of body.matchAll(/\s(href|src|srcset)="([^"]*)"/g)) {
