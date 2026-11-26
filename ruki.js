@@ -144,7 +144,8 @@
     raf = 0;
     if (!start) start = now;
     var t = (now - start) / 1000;
-    var intro = reduce ? 1 : Math.min(1, t / 2.6);
+    // Саша 26.11: руки должны появляться сразу – сборка из точек за ~1 с (было 2,6 с, пальцы проявлялись к 3-й секунде)
+    var intro = reduce ? 1 : Math.min(1, t / 1.1);
     var ease = 1 - Math.pow(1 - intro, 3);
     var sc = reduce ? 0 : scrollPart();
     // промежуток между кончиками пальцев (исходные пиксели)

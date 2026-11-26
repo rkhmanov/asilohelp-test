@@ -75,10 +75,23 @@ HOME_LOOK = {  # id: (лежит текстом, форма, красный те
     'rostislav': (False, 'c', False, -2), 'vika': (True, 'f', True, 3), 'apollinaria': (False, 'a', True, -3),
     'elena': (True, 'h', False, 2), 'valentin': (False, 'c', True, -3),
 }
-HOME_PK = ['angelina', 'yulia', 'daniil', 'gela', 'you', 'lyubava', 'daniel', 'aleksej', 'kirill', 'dmitrij',
-           'rostislav', 'vika', 'apollinaria', 'elena', 'more']
-HOME_PH = ['angelina', 'yulia', 'you', 'kirill', 'daniil', 'daniel', 'aleksej', 'gela', 'dmitrij', 'rostislav',
-           'vika', 'apollinaria', 'lyubava', 'more']
+# 26.11 поздно вечером Саша убрал из блока Дмитрия, Вику, Аполлинарию и Елену (компьютер), Дмитрия и Любаву (телефон),
+# «27 отзывов» на компьютере перед Ростиславом, на телефоне шестой.
+HOME_PK = ['angelina', 'yulia', 'daniil', 'gela', 'you', 'lyubava', 'daniel', 'aleksej', 'kirill', 'more', 'rostislav']
+HOME_PH = ['angelina', 'yulia', 'you', 'kirill', 'daniil', 'more', 'daniel', 'aleksej', 'gela', 'rostislav',
+           'vika', 'apollinaria']
+# Порядок фото – ряд Саши в Figma 4859:3816 (26.11): фото идут по ленте в этом порядке. Сначала получают фото
+# карточки, которые лежат фото вверх (их видно сразу), потом обороты карточек, лежащих текстом. Свой расчет
+# для компьютера и телефона, имя на наклейке – по-прежнему автор текста.
+HOME_FOTO = ['vika.jpg', 'aleksej-k.jpg', 'yulia.jpg', 'sanya.jpg', 'apollinaria.jpg', 'kirill.jpg', 'daniil.jpg',
+             'aleksandr.jpg', 'valentin.jpg', 'lyubava.jpg', 'elena.jpg', 'daniel.jpg', 'lera.jpg', 'ross.jpg']
+
+
+def home_foto(order):
+    """id -> фото для одной ленты: сначала карточки фото вверх, потом лежащие текстом, каждая группа по ленте."""
+    people = [k for k in order if k in HOME_LOOK]
+    queue = [k for k in people if not HOME_LOOK[k][0]] + [k for k in people if HOME_LOOK[k][0]]
+    return dict(zip(queue, HOME_FOTO))
 
 # Страницы: какие услуги показывать в ленте, куда ведет «N отзывов» (N считается по source/reviews.py вместе с
 # новыми из канала, source/reviews-auto.json; буква – услуга, как в фильтре «Отзывов»), метки ссылок на бота
@@ -119,10 +132,19 @@ def q_card(o, shape, red, r, front):
             f'<figcaption><span class="sticker" style="--r:{r}deg">{e(o["label"])}</span></figcaption></figure>')
 
 
-def ph_card(o, shape, r, front):
+def ph_card(o, shape, r, front, foto=None):
+    """foto=(компьютер, телефон) – на главной у карточки разные фото по экранам: <picture>, телефон до 600 px."""
     attr = ' data-front' if front else ' hidden'
-    return (f'<figure class="rv rv--ph rv--{shape}" data-pair="{o["id"]}"{attr}><img src="img/rv/{o["photo"]}" alt="Фото: {e(o["name"])}" '
-            f'loading="lazy" draggable="false"><figcaption class="sticker" style="--r:{r}deg">{e(o["name"])}</figcaption></figure>')
+    pk, ph = foto or (o['photo'], o['photo'])
+    src = f'<source media="(max-width: 600px)" srcset="img/rv/{ph}">' if ph != pk else ''
+    img = f'<img src="img/rv/{pk}" alt="Фото: {e(o["name"])}" loading="lazy" draggable="false">'
+    return (f'<figure class="rv rv--ph rv--{shape}" data-pair="{o["id"]}"{attr}>{f"<picture>{src}{img}</picture>" if src else img}<figcaption class="sticker" style="--r:{r}deg">{e(o["name"])}</figcaption></figure>')
+
+
+def you_card(cfg, attrs=''):
+    """«Здесь может быть ваше фото»: ссылка в бота – вся карточка (Саша, 26.11), кнопка внутри только для вида."""
+    return (f'<a class="rv rv--you"{attrs} href="{BOT}{cfg["reel_tag"]}" target="_blank" rel="noopener" draggable="false">'
+            f'<span>Здесь может<br>быть ваше фото</span><span class="rv__cta">Оставить заявку</span></a>')
 
 
 def pos(key):
@@ -132,19 +154,21 @@ def pos(key):
 
 def otzyvy_home(cfg):
     by_id = {o['id']: o for o in OTZYVY if o != 'you'}
+    fk, fh = home_foto(HOME_PK), home_foto(HOME_PH)
     cards = []
     for key in HOME_PK + [k for k in HOME_PH if k not in HOME_PK]:
         if key == 'you':
-            cards.append(f'<div class="rv rv--you"{pos(key)}><span>Здесь может<br>быть ваше фото</span><a class="rv__cta m-btn" href="{BOT}{cfg["reel_tag"]}" '
-                         f'target="_blank" rel="noopener" draggable="false">Оставить заявку</a></div>')
+            cards.append(you_card(cfg, pos(key)))
         elif key == 'more':
             href, n, txt = more(cfg['more'])
             cards.append(f'<a class="rv rv--more"{pos(key)} href="{href}" draggable="false"><b>{n}</b>{txt} →</a>')
         else:
             o = by_id[key]
             up, shape, red, r = HOME_LOOK[key]
+            foto = (fk.get(key) or fh[key], fh.get(key) or fk[key])
             q = q_card(o, shape, red, r, up).replace(' data-front', ' data-front' + pos(key)) if up else q_card(o, shape, red, r, up)
-            ph = ph_card(o, shape, -r, not up).replace(' data-front', ' data-front' + pos(key)) if not up else ph_card(o, shape, -r, not up)
+            ph = ph_card(o, shape, -r, not up, foto)
+            ph = ph.replace(' data-front', ' data-front' + pos(key)) if not up else ph
             cards += [q, ph] if up else [ph, q]
     return cards
 
@@ -157,8 +181,7 @@ def otzyvy(page):
     i = 0
     for o in OTZYVY:
         if o == 'you':
-            cards.append(f'<div class="rv rv--you"><span>Здесь может<br>быть ваше фото</span><a class="rv__cta m-btn" href="{BOT}{cfg["reel_tag"]}" '
-                         f'target="_blank" rel="noopener" draggable="false">Оставить заявку</a></div>')
+            cards.append(you_card(cfg))
             continue
         if cfg['s'] is None and o.get('home') is False:
             continue
