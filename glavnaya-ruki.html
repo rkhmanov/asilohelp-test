@@ -15,7 +15,9 @@
 <link rel="stylesheet" href="motion.css?v=18">
 <link rel="stylesheet" href="site.css?v=43">
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
-<link rel="stylesheet" href="ruki.css?v=5">
+<link rel="stylesheet" href="ruki.css?v=6">
+<link rel="preload" as="image" href="img/ruki-left.png">
+<link rel="preload" as="image" href="img/ruki-right.png">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=14"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.2):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');if(location.search.indexOf('shot')>-1)document.documentElement.classList.add('shot')</script>
@@ -60,7 +62,7 @@
     </div>
   </div>
   <div class="ruki" aria-hidden="true"><canvas></canvas></div>
-  <div class="hero__nums" data-reveal>
+  <div class="hero__nums" data-reveal data-count-row>
     <div><b data-count="187">187</b><span>людей переехали<br>с нами в Испанию</span></div>
     <div><b data-count="342">342</b><span>консультации<br>по переезду</span></div>
     <div><b data-count="847">847</b><span>участников<br>сообщества</span></div>
@@ -282,7 +284,7 @@
       <div class="kb__title">МЕЖДУНАРОДНАЯ<br>ЗАЩИТА В<span class="mark">Испании</span></div>
       <p class="kb__ver">База знаний · версия 1.6</p>
       <p class="kb__lead">Все, что мы узнали на своем опыте: загранпаспорт и виза, интервью, красная карта и гражданство.</p>
-      <div class="kb__nums">
+      <div class="kb__nums" data-count-row>
         <div><b data-count="12">12</b><span>авторов<br>и редакторов</span></div>
         <div><b>1800+</b><span>регулярных<br>пользователей</span></div>
         <div><b data-count="37">37</b><span>гайдов<br>и чек-листов</span></div>
@@ -387,7 +389,7 @@
 </footer>
 
 
-<script src="motion.js?v=4"></script>
+<script src="motion.js?v=5"></script>
 <script src="form.js?v=1"></script>
 <script>
   // отзывы: листание
@@ -409,6 +411,6 @@
     sync(); narrow.addEventListener('change', sync);
   });
 </script>
-<script src="ruki.js?v=7" defer></script>
+<script src="ruki.js?v=8" defer></script>
 </body>
 </html>

@@ -86,7 +86,7 @@ def foot(pre, extra_js=""):
 </footer>
 
 
-<script src="{pre}motion.js?v=4"></script>
+<script src="{pre}motion.js?v=5"></script>
 {extra_js}
 </body>
 </html>
