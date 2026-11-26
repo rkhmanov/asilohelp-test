@@ -22,7 +22,7 @@ jobs:
       - name: Есть ли изменения
         id: diff
         run: |
-          git add -A source/reviews-auto.json
+          git add -A source/ *.html
           if git diff --quiet HEAD; then echo "changed=false" >> "$GITHUB_OUTPUT"; echo "Новых отзывов нет" >> "$GITHUB_STEP_SUMMARY";
           else echo "changed=true" >> "$GITHUB_OUTPUT"; git diff --stat HEAD >> "$GITHUB_STEP_SUMMARY"; fi
       - uses: actions/setup-node@v4
