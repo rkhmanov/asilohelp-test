@@ -93,15 +93,16 @@ def home_foto(order):
     queue = [k for k in people if not HOME_LOOK[k][0]] + [k for k in people if HOME_LOOK[k][0]]
     return dict(zip(queue, HOME_FOTO))
 
-# Страницы: какие услуги показывать в ленте, куда ведет «N отзывов», метки ссылок на бота
+# Страницы: какие услуги показывать в ленте, куда ведет «N отзывов» (N считается по source/reviews.py вместе с
+# новыми из канала, source/reviews-auto.json; буква – услуга, как в фильтре «Отзывов»), метки ссылок на бота
 STRANICY = {
-    'index.html':          dict(s=None, more=('otzyvy.html', '27', 'отзывов целиком'), sub='что они пишут о работе с нами',
+    'index.html':          dict(s=None, more=('otzyvy.html', None, 'целиком'), sub='что они пишут о работе с нами',
                                 reel_tag='site_reel_chances', apply_tag='site_apply_chances'),
-    'konsultacii.html':    dict(s='cl', more=('otzyvy.html#konsultacii', '17', 'отзывов о консультациях'), sub='что пишут после консультаций',
+    'konsultacii.html':    dict(s='cl', more=('otzyvy.html#konsultacii', 'c', 'о консультациях'), sub='что пишут после консультаций',
                                 reel_tag='site_konsult_reel_chances', apply_tag='site_konsult_apply_chances'),
-    'keys.html':           dict(s='k', more=('otzyvy.html#keys', '4', 'отзыва о работе с кейсом'), sub='что пишут о работе с кейсом',
+    'keys.html':           dict(s='k', more=('otzyvy.html#keys', 'k', 'о работе с кейсом'), sub='что пишут о работе с кейсом',
                                 reel_tag='site_keys_reel_case', apply_tag='site_keys_apply_case'),
-    'soprovozhdenie.html': dict(s='sv', more=('otzyvy.html#soprovozhdenie', '5', 'отзывов о сопровождении'), sub='что пишут о сопровождении',
+    'soprovozhdenie.html': dict(s='sv', more=('otzyvy.html#soprovozhdenie', 's', 'о сопровождении'), sub='что пишут о сопровождении',
                                 reel_tag='site_soprpage_reel_chances', apply_tag='site_soprpage_apply_chances'),
     'otzyvy.html':         dict(apply_tag='site_reviews_apply_chances'),
     'voprosy.html':        dict(apply_tag='site_faq_apply_chances'),
@@ -159,7 +160,7 @@ def otzyvy_home(cfg):
         if key == 'you':
             cards.append(you_card(cfg, pos(key)))
         elif key == 'more':
-            href, n, txt = cfg['more']
+            href, n, txt = more(cfg['more'])
             cards.append(f'<a class="rv rv--more"{pos(key)} href="{href}" draggable="false"><b>{n}</b>{txt} →</a>')
         else:
             o = by_id[key]
@@ -195,7 +196,7 @@ def otzyvy(page):
         ph = ph_card(o, shape, -r, not text_up)
         cards += [q, ph] if text_up else [ph, q]
         i += 1
-    href, n, txt = cfg['more']
+    href, n, txt = more(cfg['more'])
     cards.append(f'<a class="rv rv--more" href="{href}" draggable="false"><b>{n}</b>{txt} →</a>')
     # «Оставить заявку» – после первых двух отзывов (как в макете), если отзывов мало – ближе к концу
     you = next(i for i, c in enumerate(cards) if 'rv--you' in c)
@@ -249,6 +250,16 @@ def put(s, name, body, page):
         raise SystemExit(f'{page}: нет метки {a}')
     i, j = s.index(a) + len(a), s.index(b)
     return s[:i] + '\n' + body + '\n' + s[j:]
+
+
+def more(cfg):
+    """(ссылка, услуга или None, хвост) → (ссылка, число, «отзывов хвост») по всем отзывам сайта."""
+    sys.dont_write_bytecode = True
+    sys.path.insert(0, str(ROOT / 'source'))
+    import reviews
+    href, s, tail = cfg
+    n = reviews.count(s)
+    return href, str(n), f'{reviews.plural(n)} {tail}'
 
 
 def main():

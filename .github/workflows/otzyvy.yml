@@ -1,0 +1,48 @@
+name: Новые отзывы
+# Раз в две недели (1-го и 15-го числа, 10:00 по Мадриду зимой): новые отзывы из канала «отзывы» → страница «Отзывы».
+# Бот @ASILOhelperBot записывает посты канала (asilo-bot, src/sitereviews.ts), source/reviews_sync.py забирает их
+# с https://crm.asilohelp.com/site/reviews, пересобирает otzyvy.html и счетчики «N отзывов» на главной и страницах услуг.
+# Если есть новые – проверка сайта (tests/qa.cjs) и коммит прямо в main (GitHub Pages выкладывает сам).
+# Запустить сейчас: Actions → «Новые отзывы» → Run workflow.
+on:
+  schedule:
+    - cron: '0 9 1,15 * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: otzyvy
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Забрать отзывы из бота и пересобрать страницы
+        run: python3 source/reviews_sync.py
+      - name: Есть ли изменения
+        id: diff
+        run: |
+          git add -A source/reviews-auto.json
+          if git diff --quiet HEAD; then echo "changed=false" >> "$GITHUB_OUTPUT"; echo "Новых отзывов нет" >> "$GITHUB_STEP_SUMMARY";
+          else echo "changed=true" >> "$GITHUB_OUTPUT"; git diff --stat HEAD >> "$GITHUB_STEP_SUMMARY"; fi
+      - uses: actions/setup-node@v4
+        if: steps.diff.outputs.changed == 'true'
+        with:
+          node-version: 22
+      - name: Общие блоки совпадают с source/bloki.py
+        if: steps.diff.outputs.changed == 'true'
+        run: python3 source/bloki.py --check
+      - name: Проверка сайта
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          npm i --no-save --no-package-lock playwright@1.63.0
+          npx playwright install --with-deps chromium
+          node tests/qa.cjs
+      - name: Отправить в main
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A otzyvy.html index.html konsultacii.html keys.html soprovozhdenie.html source/reviews-auto.json
+          git commit -m "Новые отзывы из канала «отзывы» ($(date -u +%d.%m.%Y))"
+          git push origin HEAD:main

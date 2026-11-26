@@ -9,10 +9,14 @@
 Услуги (s): c — консультация, l — консультация юриста, k — кейс, v — виза, s — сопровождение.
 Первая буква — главная, по ней подпись на карточке.
 
-Запуск: python3 source/reviews.py — перезапишет блок между <!-- reviews:start --> и <!-- reviews:end --> в otzyvy.html
-и счётчики в фильтре.
+Запуск: python3 source/reviews.py — перезапишет блок между <!-- reviews:start --> и <!-- reviews:end --> в otzyvy.html,
+счётчики в фильтре и «N отзывов с 2023 года».
+
+Новые отзывы (с 26.11.2026) — автоматически: бот @ASILOhelperBot записывает каждый новый пост канала, раз в две недели
+GitHub Action «Новые отзывы» (.github/workflows/otzyvy.yml → source/reviews_sync.py) кладёт их в source/reviews-auto.json
+и пересобирает страницу. Эти тексты — как прислали, без правки. Список R ниже — старые 27, набранные руками; новые сюда не дописывать.
 """
-import html, pathlib, re
+import html, json, pathlib, re
 
 LABEL = {'c': 'Консультация', 'l': 'Консультация юриста', 'k': 'Работа с кейсом', 'v': 'Виза', 's': 'Сопровождение'}
 MONTHS = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
@@ -80,6 +84,36 @@ Muchas gracias ❤️"""),
 Саша оказался «целительной таблеткой», если можно так выразиться) Успокоил меня, вселил в меня надежду, что все получится. Дал очень много ценной инфы и дельных советов. Разложил все по полочкам. Консультация прошла в очень спокойной и теплой атмосфере. Был очень внимателен к моим вопросам, иногда больше, чем я. Предостерег меня от лишних трат и возможных мошенников. Чувствуется, что человек старается и хочет помочь […]. В общем, ни разу не пожалел, что обратился к нему. Саша, большое тебе спасибо!"""),
 ]
 
+AUTO = pathlib.Path(__file__).resolve().parent / 'reviews-auto.json'
+NO_NAME = 'Клиент'  # ник вместо имени — имени нет
+
+
+def auto():
+    """Новые отзывы из канала (reviews-auto.json): [(имя, 'ГГГГ-ММ', услуги, текст)]."""
+    if not AUTO.exists():
+        return []
+    items = json.loads(AUTO.read_text(encoding='utf-8'))
+    return [(r['name'] or NO_NAME, r['date'], r['s'], r['text']) for r in items if not r.get('hidden')]
+
+
+def all_reviews():
+    """Все отзывы сайта, новые сверху."""
+    return sorted(auto() + R, key=lambda r: r[1], reverse=True)
+
+
+def count(s=None):
+    """Сколько отзывов (s — буква услуги, как в фильтре)."""
+    return sum(1 for r in all_reviews() if s is None or s in r[2])
+
+
+def plural(n):
+    if n % 10 == 1 and n % 100 != 11:
+        return 'отзыв'
+    if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14:
+        return 'отзыва'
+    return 'отзывов'
+
+
 LONG = 330  # длиннее — сворачиваем с кнопкой «Читать полностью»
 
 
@@ -101,13 +135,15 @@ def main():
     root = pathlib.Path(__file__).resolve().parent.parent
     page = root / 'otzyvy.html'
     src = page.read_text(encoding='utf-8')
-    block = '\n'.join(card(*r) for r in R)
+    rs = all_reviews()
+    block = '\n'.join(card(*r) for r in rs)
     src = re.sub(r'(<!-- reviews:start -->).*?(<!-- reviews:end -->)', lambda m: m.group(1) + '\n' + block + '\n' + m.group(2), src, flags=re.S)
-    for k in 'all' + 'clksv':
-        n = len(R) if k == 'all' else sum(k in r[2] for r in R)
+    for k in ['all', *'clksv']:
+        n = len(rs) if k == 'all' else sum(k in r[2] for r in rs)
         src = re.sub(rf'(data-f="{k}"[^>]*>[^<]*<i>)\d*(</i>)', rf'\g<1>{n}\g<2>', src)
+    src = re.sub(r'(<div class="rv-sum"[^>]*>\s*<div><b>)\d+(</b><span>)[^<]*', lambda m: f'{m.group(1)}{len(rs)}{m.group(2)}{plural(len(rs))} с 2023 года', src)
     page.write_text(src, encoding='utf-8')
-    print(len(R), 'отзывов')
+    print(len(rs), plural(len(rs)), f'(новых из канала: {len(auto())})')
 
 
 if __name__ == '__main__':
