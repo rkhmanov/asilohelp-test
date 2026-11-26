@@ -24,7 +24,7 @@ source: Полезные приложения и ссылки | https://asiloins
 
 ## Жилье
 
-Квартиры и комнаты ищут на [Idealista](https://www.idealista.com/), [Fotocasa](http://www.fotocasa.es/) и [Milanuncios](https://www.milanuncios.com/inmobiliaria/). В Badi сдают комнаты в квартирах, где уже живут другие люди, это часто дешевле. Он работает в Барселоне и Мадриде. На первое время, пока ищете постоянное жилье, подойдут Airbnb и Booking.
+Квартиры и комнаты ищут на [Idealista](https://www.idealista.com/), [Fotocasa](https://www.fotocasa.es/) и [Milanuncios](https://www.milanuncios.com/inmobiliaria/). В Badi сдают комнаты в квартирах, где уже живут другие люди, это часто дешевле. Он работает в Барселоне и Мадриде. На первое время, пока ищете постоянное жилье, подойдут Airbnb и Booking.
 
 ## Еда и покупки
 

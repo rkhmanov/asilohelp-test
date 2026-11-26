@@ -65,11 +65,13 @@ function mount(where, el) {
   if (link) {
     const home = document.documentElement.dataset.home || "";
     const ico = (...d) => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d.map((x) => `<path d="${x}"/>`).join("")}</svg>`;
+    // Страницы услуг пока не готовы (Саша, 26.11.2026): пункты ведут в разделы бота. Вернуть страницы – home + "konsultacii.html" и т. д.
+    const BOT = "https://t.me/ASILOhelperBot?start=";
     const help = document.getElementById("help") ? "#help" : home + "index.html#help";
     const items = [
-      ["Консультации", home + "konsultacii.html", ico("M4 5h16v11H9l-5 4z", "M8 9.5h8", "M8 12.5h5")],
-      ["Работа с кейсом", home + "keys.html", ico("M3.5 6.5h6l2 2h9v10.5h-17z", "M8 13.5h8")],
-      ["Сопровождение", home + "soprovozhdenie.html", ico("M12 21s6.5-5.6 6.5-11a6.5 6.5 0 0 0-13 0c0 5.4 6.5 11 6.5 11z", "M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z")],
+      ["Консультации", BOT + "site_uslugi_consult", ico("M4 5h16v11H9l-5 4z", "M8 9.5h8", "M8 12.5h5")],
+      ["Работа с кейсом", BOT + "site_uslugi_caseinfo", ico("M3.5 6.5h6l2 2h9v10.5h-17z", "M8 13.5h8")],
+      ["Сопровождение", BOT + "site_uslugi_soprinfo", ico("M12 21s6.5-5.6 6.5-11a6.5 6.5 0 0 0-13 0c0 5.4 6.5 11 6.5 11z", "M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z")],
       null,
       ["Все услуги", help, ico("M4 4h7v7H4z", "M13 4h7v7h-7z", "M4 13h7v7H4z", "M13 13h7v7h-7z")],
     ];
@@ -78,7 +80,7 @@ function mount(where, el) {
     dd.className = "nav-dd";
     dd.innerHTML = `<button type="button" class="nav-dd__btn" aria-expanded="false" aria-controls="nav-dd-list">Услуги <img src="${home}img/chevron.svg" alt="" width="8" height="4"></button>`
       + `<div class="nav-dd__panel" id="nav-dd-list"><div class="nav-dd__card">`
-      + items.map((it) => it ? `<a href="${it[1]}"${it[1] === here ? ' aria-current="page"' : ""}>${it[2]}<span>${it[0]}</span></a>` : '<hr>').join("")
+      + items.map((it) => it ? `<a href="${it[1]}"${it[1] === here ? ' aria-current="page"' : ""}${it[1].startsWith("https://") ? ' target="_blank" rel="noopener"' : ""}>${it[2]}<span>${it[0]}</span></a>` : '<hr>').join("")
       + `</div></div>`;
     link.replaceWith(dd);
     const btn = dd.querySelector(".nav-dd__btn");
