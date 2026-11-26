@@ -66,6 +66,20 @@ T_SH = ['f', 'b', 'e', 'g', 'd', 'f', 'h', 'g']
 P_SH = ['a', 'c', 'd', 'h', 'c', 'a', 'e', 'b']
 TILT = [2, -2, 3, -3, 2, -3, 3, -2]
 
+# Главная (Саша, 26.11, расстановка в Figma, блок 5036:3416): своя очередь для компьютера и телефона.
+# Вид карточки (что лежит сверху, форма, красный текст, наклон наклейки) едет вместе с карточкой.
+HOME_LOOK = {  # id: (лежит текстом, форма, красный текст, наклон)
+    'angelina': (True, 'f', False, 2), 'yulia': (False, 'a', False, -2), 'daniil': (True, 'b', True, 3),
+    'gela': (False, 'h', True, -2), 'lyubava': (True, 'e', False, 2), 'daniel': (False, 'd', False, -3),
+    'aleksej': (True, 'g', True, 3), 'kirill': (False, 'e', False, -3), 'dmitrij': (True, 'd', False, 2),
+    'rostislav': (False, 'c', False, -2), 'vika': (True, 'f', True, 3), 'apollinaria': (False, 'a', True, -3),
+    'elena': (True, 'h', False, 2), 'valentin': (False, 'c', True, -3),
+}
+HOME_PK = ['angelina', 'yulia', 'daniil', 'gela', 'you', 'lyubava', 'daniel', 'aleksej', 'kirill', 'dmitrij',
+           'rostislav', 'vika', 'apollinaria', 'elena', 'more']
+HOME_PH = ['angelina', 'yulia', 'you', 'kirill', 'daniil', 'daniel', 'aleksej', 'gela', 'dmitrij', 'rostislav',
+           'vika', 'apollinaria', 'lyubava', 'more']
+
 # Страницы: какие услуги показывать в ленте, куда ведет «N отзывов», метки ссылок на бота
 STRANICY = {
     'index.html':          dict(s=None, more=('otzyvy.html', '27', 'отзывов целиком'), sub='что они пишут о работе с нами',
@@ -110,8 +124,34 @@ def ph_card(o, shape, r, front):
             f'loading="lazy" draggable="false"><figcaption class="sticker" style="--r:{r}deg">{e(o["name"])}</figcaption></figure>')
 
 
+def pos(key):
+    """data-pk / data-ph – место карточки в ленте на компьютере / телефоне (ставит otzyvy-lenta*.js)."""
+    return ''.join(f' data-{d}="{lst.index(key)}"' for d, lst in (('pk', HOME_PK), ('ph', HOME_PH)) if key in lst)
+
+
+def otzyvy_home(cfg):
+    by_id = {o['id']: o for o in OTZYVY if o != 'you'}
+    cards = []
+    for key in HOME_PK + [k for k in HOME_PH if k not in HOME_PK]:
+        if key == 'you':
+            cards.append(f'<div class="rv rv--you"{pos(key)}><span>Здесь может<br>быть ваше фото</span><a class="rv__cta m-btn" href="{BOT}{cfg["reel_tag"]}" '
+                         f'target="_blank" rel="noopener" draggable="false">Оставить заявку</a></div>')
+        elif key == 'more':
+            href, n, txt = cfg['more']
+            cards.append(f'<a class="rv rv--more"{pos(key)} href="{href}" draggable="false"><b>{n}</b>{txt} →</a>')
+        else:
+            o = by_id[key]
+            up, shape, red, r = HOME_LOOK[key]
+            q = q_card(o, shape, red, r, up).replace(' data-front', ' data-front' + pos(key)) if up else q_card(o, shape, red, r, up)
+            ph = ph_card(o, shape, -r, not up).replace(' data-front', ' data-front' + pos(key)) if not up else ph_card(o, shape, -r, not up)
+            cards += [q, ph] if up else [ph, q]
+    return cards
+
+
 def otzyvy(page):
     cfg = STRANICY[page]
+    if page == 'index.html':
+        return wrap_reel(cfg, otzyvy_home(cfg))
     cards = []
     i = 0
     for o in OTZYVY:
@@ -138,6 +178,11 @@ def otzyvy(page):
     you = next(i for i, c in enumerate(cards) if 'rv--you' in c)
     if you > len(cards) - 3:
         cards.insert(len(cards) - 1, cards.pop(you))
+    return wrap_reel(cfg, cards)
+
+
+def wrap_reel(cfg, cards):
+    href = cfg['more'][0]
     reel = '\n    '.join(cards)
     return f'''<section class="reviews" id="reviews">
   <div class="wrap">
