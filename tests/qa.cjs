@@ -5,12 +5,13 @@
 //   • <meta name="robots" content="noindex…"> на каждой странице;
 //   • локальные ссылки и картинки ведут на существующие файлы, якоря #id есть на странице (#ключ=значение — фильтры, не якоря);
 //   • ссылки на бота несут метку site_<место>[_<цель>] (см. asilo-bot/cloudflare/src/sources.ts);
+//   • на неготовые страницы услуг (konsultacii, keys, soprovozhdenie) ссылок нет – вместо них разделы бота _consult/_caseinfo/_soprinfo (Саша, 26.11.2026);
 //   • кнопки «Оставить заявку», «Оценить шансы», «Записаться» ведут в бота, а не на форму #apply (Саша, 24.11.2026; архивные и пробные страницы не в счет).
 // В браузере (Chromium из Playwright) на ширине 360, 390, 768 и 1440:
 //   • нет ошибок JavaScript и битых локальных файлов;
 //   • нет горизонтальной прокрутки;
 //   • после прокрутки все блоки с data-reveal показались (анимация появления не застряла);
-//   • главная: стекло подключилось, «Мы справимся» раскрывается, карточка услуги ведет на страницу услуги, якоря не пишут # в адрес, шапка прячется/возвращается, «Заявка» в нижнем меню ведет в бота.
+//   • главная: стекло подключилось, «Мы справимся» раскрывается, карточка услуги ведет в раздел бота, якоря не пишут # в адрес, шапка прячется/возвращается, «Заявка» в нижнем меню ведет в бота.
 // --shots сохраняет скриншоты во tests/shots/ (папка в .gitignore).
 // Сторонние адреса (esm.sh, Turnstile, шрифты) не проверяются: они могут быть недоступны там, где идёт проверка.
 
@@ -25,7 +26,7 @@ const ONLY = (args.find(a => a.startsWith('--only=')) || '').slice(7);
 const SKIP_DIRS = new Set(['.git', 'node_modules', 'source', 'vendor', 'tests']);
 
 // Цели из asilo-bot/cloudflare/src/sources.ts (DEST). Поменяются там — поправить здесь.
-const DEST = ['kb', 'chances', 'consult', 'cons', 'questions', 'general', 'case', 'casenew', 'caseconsult', 'interview', 'sopr', 'home', 'start', 'menu'];
+const DEST = ['kb', 'chances', 'consult', 'cons', 'questions', 'general', 'case', 'casenew', 'caseconsult', 'interview', 'sopr', 'caseinfo', 'soprinfo', 'home', 'start', 'menu'];
 const BOT = /^https:\/\/t\.me\/ASILOhelperBot(\?start=([^"'#&]*))?$/i;
 
 const errors = [];
@@ -73,6 +74,8 @@ function checkStatic(file) {
   if (!/arhiv|animacii|glavnaya-ruki|hero-sticker/.test(file))
     for (const m of body.matchAll(/<a\s[^>]*href="([^"]*)"[^>]*>([^<]*)/g))
       if (/(Оставить заявку|Оценить шансы|Записаться)/.test(m[2]) && !BOT.test(m[1])) err(file, `кнопка «${m[2].trim()}» ведет не в бота: ${m[1]}`);
+  if (!/arhiv|animacii|glavnaya-ruki|hero-sticker/.test(file))
+    for (const m of body.matchAll(/<a\s[^>]*href="(?:\.\.\/)*(konsultacii|keys|soprovozhdenie)\.html[^"]*"/g)) err(file, `ссылка на неготовую страницу ${m[1]}.html – нужен раздел бота`);
   for (const m of body.matchAll(/\s(href|src|srcset)="([^"]*)"/g)) {
     const [, attr, raw] = m;
     const urls = attr === 'srcset' ? raw.split(',').map(s => s.trim().split(/\s+/)[0]) : [raw];
@@ -210,11 +213,14 @@ async function checkInteractions(browser, base) {
         if (!(await p.evaluate(() => document.querySelector('[data-qa-flip="m"]').classList.contains('is-flipped')))) err(F, 'карточка отзыва на телефоне не переворачивается нажатием');
       }
     }
-    // карточка услуги на телефоне ведет на страницу услуги и не раскрывается (Саша 24.11)
+    // карточка услуги на телефоне открывает раздел бота в новой вкладке и не раскрывается (Саша 24.11, 26.11)
     const card = p.locator('.flip').first();
     await card.scrollIntoViewIfNeeded();
-    await Promise.all([p.waitForURL(/konsultacii\.html/, { timeout: 4000 }).catch(() => {}), card.tap({ position: { x: 40, y: 40 }, force: true })]);
-    if (!/konsultacii\.html/.test(p.url())) err(F, 'карточка услуги на телефоне не ведет на страницу услуги');
+    await p.evaluate(() => { window.__opened = []; window.open = (u) => { window.__opened.push(String(u)); return null; }; });
+    await card.tap({ position: { x: 40, y: 40 }, force: true });
+    await p.waitForTimeout(300);
+    const opened = await p.evaluate(() => window.__opened);
+    if (!opened.some(u => /start=site_help_consult$/.test(u))) err(F, `карточка услуги на телефоне не открывает раздел бота (открыто: ${opened.join(', ') || 'ничего'})`);
     const tabHref = await p.evaluate(() => [...document.querySelectorAll('.tabbar-lg a')].map(a => a.getAttribute('href')).find(h => /t\.me/.test(h || '')) || '');
     if (!/start=site_tabbar_chances/.test(tabHref)) err(F, '«Заявка» в нижнем меню не ведет в бота');
     await ctx.close();
@@ -226,6 +232,8 @@ async function checkInteractions(browser, base) {
     const p = await ctx.newPage();
     await p.goto(base + 'index.html', { waitUntil: 'load' });
     await p.waitForTimeout(500);
+    const dd = await p.evaluate(() => [...document.querySelectorAll('.nav-dd__card a')].map(a => a.getAttribute('href')));
+    for (const g of ['site_uslugi_consult', 'site_uslugi_caseinfo', 'site_uslugi_soprinfo']) if (!dd.some(h => h.endsWith('start=' + g))) err(F, `в меню «Услуги» нет ссылки на бота ${g}`);
     const hdr = () => p.evaluate(() => { const h = document.querySelector('.m-header'); return h.classList.contains('is-hidden') && !h.classList.contains('m-header--stay'); });
     await p.mouse.wheel(0, 1500); await p.waitForTimeout(400);
     const hiddenDown = await hdr();
