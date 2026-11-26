@@ -25,27 +25,55 @@
       if (el.parentElement && el.parentElement.closest('[data-reveal-group]')) return;
       getComputedStyle(el).display === 'contents' ? shown(el) : io.observe(el);
     });
+    // 26.11: что уже стоит в окне при загрузке, проявляем сразу. Иначе на высоких экранах (1728×1000 и т.п.)
+    // цифры первого экрана попадали в нижние 10% окна и оставались невидимыми, пока страницу не прокрутят.
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      if (el.parentElement && el.parentElement.closest('[data-reveal-group]')) return;
+      const r = el.getBoundingClientRect();
+      if (r.height && r.top < innerHeight && r.bottom > 0) { io.unobserve(el); shown(el); }
+    });
   }
 
   // 14. Счетчик цифр: <b data-count="187">187</b>, по желанию data-suffix="+".
-  // Считает, когда сама цифра видна на экране (а не когда показался весь блок), – 24.11.
-  // 26.11: без отступа снизу. На компьютере цифры первого экрана стоят в нижних ~10% окна,
-  // и с прежним rootMargin -12% они не запускались, пока страницу не прокрутят.
-  const counters = document.querySelectorAll('[data-count]');
+  // 26.11 (вечер, Саша): цифры одного ряда (первый экран, база знаний) стартуют вместе и приходят к финишу
+  // одновременно – одна длительность для всех, с заметным замедлением в конце (easeOutQuart).
+  // Старт – когда ряд виден, уже проявился (data-reveal) и вкладка на экране; отсчет времени – с первого кадра,
+  // а не с момента, когда наблюдатель заметил цифры (в фоновой вкладке кадры не идут, и счет «проскакивал»).
+  const counters = [...document.querySelectorAll('[data-count]')].filter(el => parseInt(el.dataset.count, 10) > 0);
   if (!reduce && counters.length && 'IntersectionObserver' in window) {
+    const DUR = 2200;
     const fmt = (el, n) => { el.textContent = (n >= 10000 ? n.toLocaleString('ru-RU') : String(n)) + (el.dataset.suffix || ''); };
-    const cio = new IntersectionObserver(entries => entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      const el = e.target; cio.unobserve(el);
-      const to = parseInt(el.dataset.count, 10), t0 = performance.now(), dur = to > 50 ? 1400 : 1000;
+    const rowOf = el => el.closest('[data-count-row]') || el;  // ряд цифр помечен data-count-row
+    const rows = new Map();
+    counters.forEach(el => { const r = rowOf(el); if (!rows.has(r)) rows.set(r, []); rows.get(r).push(el); fmt(el, 0); });
+    const run = list => {
+      let t0 = 0;
       const tick = t => {
-        const p = Math.min(1, (t - t0) / dur), eased = 1 - Math.pow(1 - p, 3);
-        fmt(el, Math.round(to * eased));
+        if (!t0) t0 = t;
+        const p = Math.min(1, (t - t0) / DUR), eased = 1 - Math.pow(1 - p, 4);
+        list.forEach(el => fmt(el, Math.round(parseInt(el.dataset.count, 10) * eased)));
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
-    }), { threshold: 0.5 });
-    counters.forEach(el => { if (parseInt(el.dataset.count, 10) > 0) { fmt(el, 0); cio.observe(el); } });
+    };
+    // ждем, пока блок с цифрами проявится (иначе счет идет под opacity: 0, и человек видит уже готовые числа)
+    const whenShown = (row, go) => {
+      const hid = rows.get(row)[0].closest('[data-reveal]:not(.is-shown)');
+      if (!hid) return go();
+      const mo = new MutationObserver(() => { if (hid.classList.contains('is-shown')) { mo.disconnect(); setTimeout(go, 150); } });
+      mo.observe(hid, { attributes: true, attributeFilter: ['class'] });
+    };
+    const whenVisible = go => {
+      if (!document.hidden) return go();
+      const on = () => { if (document.hidden) return; document.removeEventListener('visibilitychange', on); go(); };
+      document.addEventListener('visibilitychange', on);
+    };
+    const cio = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const row = e.target; cio.unobserve(row);
+      whenVisible(() => whenShown(row, () => run(rows.get(row))));
+    }), { threshold: 0.4 });
+    rows.forEach((_, row) => cio.observe(row));
   }
 
   // 8. Шапка прячется при прокрутке вниз и возвращается при прокрутке вверх.

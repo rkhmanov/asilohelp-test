@@ -75,10 +75,11 @@ HOME_LOOK = {  # id: (лежит текстом, форма, красный те
     'rostislav': (False, 'c', False, -2), 'vika': (True, 'f', True, 3), 'apollinaria': (False, 'a', True, -3),
     'elena': (True, 'h', False, 2), 'valentin': (False, 'c', True, -3),
 }
-HOME_PK = ['angelina', 'yulia', 'daniil', 'gela', 'you', 'lyubava', 'daniel', 'aleksej', 'kirill', 'dmitrij',
-           'rostislav', 'vika', 'apollinaria', 'elena', 'more']
-HOME_PH = ['angelina', 'yulia', 'you', 'kirill', 'daniil', 'daniel', 'aleksej', 'gela', 'dmitrij', 'rostislav',
-           'vika', 'apollinaria', 'lyubava', 'more']
+# 26.11 поздно вечером Саша убрал из блока Дмитрия, Вику, Аполлинарию и Елену (компьютер), Дмитрия и Любаву (телефон),
+# «27 отзывов» на компьютере перед Ростиславом, на телефоне шестой.
+HOME_PK = ['angelina', 'yulia', 'daniil', 'gela', 'you', 'lyubava', 'daniel', 'aleksej', 'kirill', 'more', 'rostislav']
+HOME_PH = ['angelina', 'yulia', 'you', 'kirill', 'daniil', 'more', 'daniel', 'aleksej', 'gela', 'rostislav',
+           'vika', 'apollinaria']
 
 # Страницы: какие услуги показывать в ленте, куда ведет «N отзывов», метки ссылок на бота
 STRANICY = {
@@ -124,6 +125,12 @@ def ph_card(o, shape, r, front):
             f'loading="lazy" draggable="false"><figcaption class="sticker" style="--r:{r}deg">{e(o["name"])}</figcaption></figure>')
 
 
+def you_card(cfg, attrs=''):
+    """«Здесь может быть ваше фото»: ссылка в бота – вся карточка (Саша, 26.11), кнопка внутри только для вида."""
+    return (f'<a class="rv rv--you"{attrs} href="{BOT}{cfg["reel_tag"]}" target="_blank" rel="noopener" draggable="false">'
+            f'<span>Здесь может<br>быть ваше фото</span><span class="rv__cta">Оставить заявку</span></a>')
+
+
 def pos(key):
     """data-pk / data-ph – место карточки в ленте на компьютере / телефоне (ставит otzyvy-lenta*.js)."""
     return ''.join(f' data-{d}="{lst.index(key)}"' for d, lst in (('pk', HOME_PK), ('ph', HOME_PH)) if key in lst)
@@ -134,8 +141,7 @@ def otzyvy_home(cfg):
     cards = []
     for key in HOME_PK + [k for k in HOME_PH if k not in HOME_PK]:
         if key == 'you':
-            cards.append(f'<div class="rv rv--you"{pos(key)}><span>Здесь может<br>быть ваше фото</span><a class="rv__cta m-btn" href="{BOT}{cfg["reel_tag"]}" '
-                         f'target="_blank" rel="noopener" draggable="false">Оставить заявку</a></div>')
+            cards.append(you_card(cfg, pos(key)))
         elif key == 'more':
             href, n, txt = cfg['more']
             cards.append(f'<a class="rv rv--more"{pos(key)} href="{href}" draggable="false"><b>{n}</b>{txt} →</a>')
@@ -156,8 +162,7 @@ def otzyvy(page):
     i = 0
     for o in OTZYVY:
         if o == 'you':
-            cards.append(f'<div class="rv rv--you"><span>Здесь может<br>быть ваше фото</span><a class="rv__cta m-btn" href="{BOT}{cfg["reel_tag"]}" '
-                         f'target="_blank" rel="noopener" draggable="false">Оставить заявку</a></div>')
+            cards.append(you_card(cfg))
             continue
         if cfg['s'] is None and o.get('home') is False:
             continue
