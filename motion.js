@@ -29,6 +29,8 @@
 
   // 14. Счетчик цифр: <b data-count="187">187</b>, по желанию data-suffix="+".
   // Считает, когда сама цифра видна на экране (а не когда показался весь блок), – 24.11.
+  // 26.11: без отступа снизу. На компьютере цифры первого экрана стоят в нижних ~10% окна,
+  // и с прежним rootMargin -12% они не запускались, пока страницу не прокрутят.
   const counters = document.querySelectorAll('[data-count]');
   if (!reduce && counters.length && 'IntersectionObserver' in window) {
     const fmt = (el, n) => { el.textContent = (n >= 10000 ? n.toLocaleString('ru-RU') : String(n)) + (el.dataset.suffix || ''); };
@@ -42,7 +44,7 @@
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
-    }), { rootMargin: '0px 0px -12% 0px', threshold: 0.6 });
+    }), { threshold: 0.5 });
     counters.forEach(el => { if (parseInt(el.dataset.count, 10) > 0) { fmt(el, 0); cio.observe(el); } });
   }
 
