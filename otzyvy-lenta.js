@@ -13,6 +13,21 @@
   if (!reel || matchMedia('(min-width: 601px)').matches) return;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // 0. Своя очередь карточек для этого экрана (главная, Саша 26.11): data-ph – место в ленте.
+  //    Если у ленты есть такие метки, карточки без метки (и их обороты) убираем, остальные ставим по порядку.
+  if (reel.querySelector('[data-ph]')) {
+    var placed = [];
+    Array.prototype.slice.call(reel.children).forEach(function (c) {
+      if (c.hidden) return;
+      if (c.hasAttribute('data-ph')) { placed.push(c); return; }
+      var pair = c.getAttribute('data-pair');
+      if (pair) Array.prototype.forEach.call(reel.querySelectorAll('[data-pair="' + pair + '"]'), function (x) { x.remove(); });
+      else c.remove();
+    });
+    placed.sort(function (a, b) { return a.getAttribute('data-ph') - b.getAttribute('data-ph'); });
+    placed.forEach(function (c) { reel.appendChild(c); });
+  }
+
   // 1. Переворот по нажатию (Саша, 25.11): одна карточка = один человек. В ленте лежит лицевая сторона (data-front:
   //    фото или текст), вторая половина того же человека (hidden) – на обороте, той же формы. Плоский переворот (scaleX).
   Array.prototype.forEach.call(reel.querySelectorAll('.rv[data-front]'), function (card) {
