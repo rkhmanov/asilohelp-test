@@ -167,7 +167,7 @@
   }
   reel.addEventListener('pointerup', endDrag);
   reel.addEventListener('pointercancel', endDrag);
-  reel.addEventListener('lostpointercapture', endDrag);
+  reel.addEventListener('lostpointercapture', function (e) { if (e.target === reel) endDrag(e); });
   addEventListener('pointerup', endDrag);
   reel.addEventListener('click', function (e) { if (dragged) { e.preventDefault(); e.stopPropagation(); } }, true);
   reel.addEventListener('dragstart', function (e) { e.preventDefault(); });

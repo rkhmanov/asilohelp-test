@@ -128,7 +128,7 @@
       if (p >= 1) { anim = null; x = norm(x); }
     } else if (Math.abs(vel) > 0.01) {
       x = norm(x + vel * dt);
-      vel *= Math.pow(0.94, dt / 16);
+      vel *= Math.pow(0.9975, dt); // замедление как у родной прокрутки iOS (Саша 27.11: «не плавно, как вертикально»)
     } else if (!reduce && t >= holdUntil && !kbFocus()) {
       x = norm(x + SPEED * dt / 1000);
     } else return;
@@ -151,7 +151,7 @@
   reel.addEventListener('pointerdown', function (e) {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     anim = null; vel = 0;
-    drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, x0: x, moved: false, z: zoomOf(), lx: e.clientX, lt: performance.now(), v: 0 };
+    drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, x0: x, moved: false, z: zoomOf(), lt: performance.now(), pts: [] };
     dragged = false;
   });
   reel.addEventListener('pointermove', function (e) {
@@ -163,9 +163,11 @@
       reel.classList.add('is-drag');
       try { reel.setPointerCapture(drag.id); } catch (_) {}
     }
-    var now = performance.now(), ddt = Math.max(1, now - drag.lt);
-    drag.v = 0.7 * (-(e.clientX - drag.lx) / drag.z / ddt) + 0.3 * drag.v;
-    drag.lx = e.clientX; drag.lt = now;
+    var now = e.timeStamp || performance.now();
+    // скорость броска – по последним ~100 мс движения пальца, а не по одному событию (так ровнее)
+    drag.pts.push([now, e.clientX]);
+    while (drag.pts.length > 2 && now - drag.pts[0][0] > 100) drag.pts.shift();
+    drag.lt = performance.now();
     x = norm(drag.x0 - dx);
     if (Math.abs(x - (drag.x0 - dx)) > 1) drag.x0 = x + dx;
     render();
@@ -174,7 +176,9 @@
     if (!drag || (e.pointerId !== undefined && e.pointerId !== drag.id)) return;
     if (drag.moved) {
       dragged = true;
-      vel = performance.now() - drag.lt < 80 ? Math.max(-3, Math.min(3, drag.v)) : 0;
+      var p = drag.pts, a = p[0], b = p[p.length - 1], v = 0;
+      if (a && b && b[0] > a[0]) v = -(b[1] - a[1]) / drag.z / (b[0] - a[0]);
+      vel = performance.now() - drag.lt < 100 ? Math.max(-6, Math.min(6, v)) : 0;
       setTimeout(function () { dragged = false; }, 0);
     }
     reel.classList.remove('is-drag');
@@ -184,7 +188,9 @@
   }
   reel.addEventListener('pointerup', endDrag);
   reel.addEventListener('pointercancel', endDrag);
-  reel.addEventListener('lostpointercapture', endDrag);
+  // Касание сначала само захвачено карточкой; когда захват переходит к ленте, карточка шлет lostpointercapture,
+  // и раньше это обрывало перетаскивание после первых 20 px (на телефоне свайп «не плавный», Саша 27.11)
+  reel.addEventListener('lostpointercapture', function (e) { if (e.target === reel) endDrag(e); });
   // кнопку отпустили уже за лентой – иначе лента замирала до следующего щелчка
   addEventListener('pointerup', endDrag);
   addEventListener('pointercancel', endDrag);
