@@ -7,6 +7,7 @@
 //   • ссылки на бота несут метку site_<место>[_<цель>] (см. asilo-bot/cloudflare/src/sources.ts);
 //   • на неготовые страницы услуг (konsultacii, keys, soprovozhdenie) ссылок нет – вместо них разделы бота _consult/_caseinfo/_soprinfo (Саша, 26.11.2026);
 //   • нет цен сопровождения (990/1190/1690/1990 €), кроме скрытой soprovozhdenie.html (Саша, 26.11.2026);
+//   • FAQ (voprosy.html, главная, страницы услуг) совпадает с единым источником source/voprosy.py (Саша, 27.11.2026);
 //   • кнопки «Оставить заявку», «Оценить шансы», «Записаться» ведут в бота, а не на форму #apply (Саша, 24.11.2026; архивные и пробные страницы не в счет).
 // В браузере (Chromium из Playwright) на ширине 360, 390, 768 и 1440:
 //   • нет ошибок JavaScript и битых локальных файлов;
@@ -286,6 +287,10 @@ async function checkInteractions(browser, base) {
 (async () => {
   if (!pages.length) { console.error('Нет страниц для проверки'); process.exit(1); }
   pages.forEach(checkStatic);
+  if (!ONLY) {
+    try { require('child_process').execFileSync('python3', ['-B', path.join(ROOT, 'source/voprosy.py'), '--check'], { stdio: 'pipe' }); }
+    catch (e) { err('source/voprosy.py', String(e.stderr || e.message).trim()); }
+  }
   await checkBrowser();
   console.log(`Страниц: ${pages.length} (${pages.join(', ')})`);
   if (warns.length) console.log(`\nПредупреждения (${new Set(warns).size}):\n  ` + [...new Set(warns)].sort().join('\n  '));
