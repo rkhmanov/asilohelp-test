@@ -2,6 +2,8 @@
    Лента отзывов (Саша, 23–24.11.2026).
    - В покое – как в Figma: фото (с именем) и текст (с услугой) отдельными карточками.
    - Нажатие переворачивает карточку на месте: фото ↔ отзыв этого человека (data-pair). Само ничего не переворачивается.
+   - Трогается, только когда лента заметно показалась на экране (половина высоты), и стоит, пока ее не видно
+     (Саша, 27.11: «долистал, а они уже давно крутились»).
    - Едет сама по кругу и не стоит от наведения или щелчка; пауза только после перетаскивания, стрелок
      и пока по ней ходят с клавиатуры. Бесконечность – две копии ленты за оригиналом (видны через ~3 мин).
    - Двигается через transform, а не через прокрутку: на iPhone родная прокрутка с инерцией спорила
@@ -104,9 +106,14 @@
   // Фокус с клавиатуры на карточке за краем: браузер прокручивает контейнер – переводим это в сдвиг дорожки
   reel.addEventListener('scroll', function () { if (reel.scrollLeft) { x = norm(x + reel.scrollLeft); reel.scrollLeft = 0; render(); } });
 
-  var holdUntil = 0, visible = true, vel = 0, anim = null, drag = null, dragged = false;
+  var holdUntil = 0, visible = !('IntersectionObserver' in window), vel = 0, anim = null, drag = null, dragged = false;
   function hold(ms) { holdUntil = Math.max(holdUntil, performance.now() + ms); }
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(reel);
+  // старт – когда видна половина ленты; стоп – когда ушла с экрана целиком
+  if (!visible) new IntersectionObserver(function (es) {
+    var e = es[es.length - 1];
+    if (e.intersectionRatio >= 0.5) visible = true;
+    else if (!e.isIntersecting) visible = false;
+  }, { threshold: [0, 0.5] }).observe(reel);
   // стоим, только пока по ленте ходят с клавиатуры (фокус после щелчка мышкой не в счет – в Safari он бывает «видимым»)
   var byKeys = false;
   addEventListener('keydown', function (e) { if (e.key === 'Tab' || e.key === 'Enter' || e.key === ' ' || /^Arrow/.test(e.key)) byKeys = true; }, true);
@@ -121,7 +128,7 @@
   function tick(t) {
     requestAnimationFrame(tick);
     var dt = last ? Math.min(t - last, 64) : 0; last = t;
-    if (!visible || document.hidden || drag) return;
+    if (document.hidden || drag) return;
     if (anim) {
       var p = Math.min(1, (t - anim.t0) / anim.d), e = 1 - Math.pow(1 - p, 3);
       x = anim.from + (anim.to - anim.from) * e;
@@ -129,7 +136,7 @@
     } else if (Math.abs(vel) > 0.01) {
       x = norm(x + vel * dt);
       vel *= Math.pow(0.9975, dt); // замедление как у родной прокрутки iOS (Саша 27.11: «не плавно, как вертикально»)
-    } else if (!reduce && t >= holdUntil && !kbFocus()) {
+    } else if (visible && !reduce && t >= holdUntil && !kbFocus()) {
       x = norm(x + SPEED * dt / 1000);
     } else return;
     render();

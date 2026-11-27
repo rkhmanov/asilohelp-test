@@ -3,7 +3,9 @@
    - Одна карточка = один человек (Саша, 25.11): лежит фото (с именем) или текст (с услугой), по очереди.
    - Нажатие переворачивает карточку на месте: фото ↔ отзыв этого человека, оборот той же формы. Лента при этом едет дальше.
    - Тянется мышкой (за любое место ленты) и двумя пальцами на тачпаде; после этого едет дальше сама.
-   - Едет сама, ровно и всегда: ни наведение, ни щелчок ее не останавливают (движение – анимация браузера на видеокарте,
+   - Трогается, только когда лента заметно показалась на экране (половина высоты), и стоит, пока ее не видно
+     или вкладка в фоне (Саша, 27.11: «долистал, а они уже давно крутились»).
+   - Едет сама и ровно: ни наведение, ни щелчок ее не останавливают (движение – анимация браузера на видеокарте,
      без своего цикла и без прокрутки, поэтому не дергается и не залипает).
    - Стрелки (glass.js) плавно листают на две карточки, лента едет дальше.
    - Бесконечность: копия ленты сразу за оригиналом (видна через ~3 минуты).
@@ -93,7 +95,26 @@
     anim = track.animate([{ transform: 'translate3d(0,0,0)' }, { transform: 'translate3d(' + (-period) + 'px,0,0)' }],
       { duration: d, iterations: Infinity, easing: 'linear' });
     anim.currentTime = (frac || 0) * d;
+    sync();
   }
+  // Едет, только пока лента на экране, вкладка открыта и ее не тянут мышкой
+  var onScreen = !('IntersectionObserver' in window), drag = null, dragged = false;
+  function sync() {
+    if (!anim) return;
+    var go = onScreen && !document.hidden && !(drag && drag.moved);
+    if (go && anim.playState !== 'running') anim.play();
+    else if (!go && anim.playState === 'running') anim.pause();
+  }
+  if (!onScreen) {
+    // старт – когда видна половина ленты; стоп – когда ушла с экрана целиком
+    new IntersectionObserver(function (es) {
+      var e = es[es.length - 1];
+      if (e.intersectionRatio >= 0.5) onScreen = true;
+      else if (!e.isIntersecting) onScreen = false;
+      sync();
+    }, { threshold: [0, 0.5] }).observe(reel);
+  }
+  document.addEventListener('visibilitychange', sync);
   // Старт (Саша, 27.11): экран начинается на 1/3 первой карточки – первая фотка срезана слева на треть
   function startOffset() {
     var r = reel.getBoundingClientRect(), f = track.children[0].getBoundingClientRect();
@@ -135,7 +156,6 @@
     var dur = anim.effect.getTiming().duration;
     anim.currentTime = ((anim.currentTime + px / SPEED * 1000) % dur + dur) % dur;
   }
-  var drag = null, dragged = false;
   reel.addEventListener('pointerdown', function (e) {
     if (!anim || e.button !== 0 || e.pointerType === 'touch') return;
     if (e.target.closest && e.target.closest('a, button')) return;
@@ -161,9 +181,9 @@
       dragged = true;
       setTimeout(function () { dragged = false; }, 0);
       reel.classList.remove('is-drag');
-      anim.play();
     }
     drag = null;
+    sync();
   }
   reel.addEventListener('pointerup', endDrag);
   reel.addEventListener('pointercancel', endDrag);
