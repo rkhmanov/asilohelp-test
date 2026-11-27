@@ -62,7 +62,7 @@ def head(title, desc, pre, page):
     </nav>
     <div class="hdr__cta">
       <a class="hdr__bot m-btn" href="{BOT}site_header" target="_blank" rel="noopener">Telegram-бот</a>
-      <a class="hdr__main m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_statya_header_chances" target="_blank" rel="noopener">Оценить шансы</a>
+      <a class="hdr__main m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_statya_header_start" target="_blank" rel="noopener">Оценить шансы</a>
     </div>
   </div>
 </header>
@@ -100,7 +100,7 @@ def cta(pre, place):
         <p>Оценка шансов — бесплатно. Расскажите о ситуации, и мы честно скажем, подходит ли вам защита и с чего начать.</p>
         <div class="btns">
           <a class="btn btn--dark m-btn" href="https://t.me/ASILOhelperBot?start=site_statya_cta_chances" target="_blank" rel="noopener">Оставить заявку <span class="dot-arr" aria-hidden="true">↗</span></a>
-          <a class="btn btn--glass m-btn" href="{BOT}site_{place}_chances" target="_blank" rel="noopener">Оценить шансы в боте</a>
+          <a class="btn btn--glass m-btn" href="{BOT}site_{place}_start" target="_blank" rel="noopener">Оценить шансы в боте</a>
         </div>
       </div>
       <div class="cta__hola" aria-hidden="true">¿Hablamos?<span>¡Sí, vamos!</span></div>
@@ -275,7 +275,7 @@ def article_page(a, arts):
       </article>
       <aside class="aside">
         <nav class="toc" aria-label="На этой странице"><small>На этой странице</small>{toc_html}<a class="up" href="#top">↑ К началу</a></nav>
-        <div class="hola"><b>¡Hola!</b><p>Хотите пройти путь с командой?</p><span>Оценка шансов — бесплатно, ответим в течение суток.</span><a href="{BOT}site_{place}_chances" target="_blank" rel="noopener">Оценить шансы ↗</a></div>
+        <div class="hola"><b>¡Hola!</b><p>Хотите пройти путь с командой?</p><span>Оценка шансов — бесплатно, ответим в течение суток.</span><a href="{BOT}site_{place}_start" target="_blank" rel="noopener">Оценить шансы ↗</a></div>
       </aside>
     </div>
 
