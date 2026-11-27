@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="motion.css?v=18">
 <link rel="stylesheet" href="site.css?v=44">
 <link rel="stylesheet" href="pages.css?v=1">
-<link rel="stylesheet" href="otzyvy-voprosy.css?v=2">
+<link rel="stylesheet" href="otzyvy-voprosy.css?v=3">
 <link rel="stylesheet" href="bloki.css?v=10">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=15"></script>
@@ -41,6 +41,8 @@
 </header>
 
 <main id="top" class="pg">
+  <!-- якоря фильтров (ссылки otzyvy.html#keys и т.п.) стоят в самом верху: id на кнопках заставлял браузер при загрузке прокручивать страницу к фильтрам -->
+  <span class="rv-anchor" id="konsultacii"></span><span class="rv-anchor" id="yurist"></span><span class="rv-anchor" id="keys"></span><span class="rv-anchor" id="viza"></span><span class="rv-anchor" id="soprovozhdenie"></span>
   <div class="wrap">
     <nav class="crumb" aria-label="Вы здесь"><a href="index.html">Главная</a><span>/</span><span aria-current="page">Отзывы</span></nav>
     <div class="pg-head rv-head" data-reveal style="margin-top:22px">
@@ -56,10 +58,10 @@
 
     <div class="rvf" role="group" aria-label="Показать отзывы об услуге">
       <button type="button" data-f="all" aria-pressed="true">Все <i>27</i></button>
-      <button type="button" id="konsultacii" data-f="cl" aria-pressed="false">Консультации <i>22</i></button>
-      <button type="button" id="keys" data-f="k" aria-pressed="false">Работа с кейсом <i>4</i></button>
-      <button type="button" id="viza" data-f="v" aria-pressed="false">Виза <i>3</i></button>
-      <button type="button" id="soprovozhdenie" data-f="s" aria-pressed="false">Сопровождение <i>5</i></button>
+      <button type="button" data-h="konsultacii" data-f="cl" aria-pressed="false">Консультации <i>22</i></button>
+      <button type="button" data-h="keys" data-f="k" aria-pressed="false">Работа с кейсом <i>4</i></button>
+      <button type="button" data-h="viza" data-f="v" aria-pressed="false">Виза <i>3</i></button>
+      <button type="button" data-h="soprovozhdenie" data-f="s" aria-pressed="false">Сопровождение <i>5</i></button>
     </div>
 
     <div class="rvg" id="reviews" aria-live="polite">
@@ -137,10 +139,17 @@
     btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === f)));
     cards.forEach(c => { c.hidden = f !== 'all' && ![...f].some(ch => c.dataset.s.includes(ch)); if (!c.hidden) c.classList.add('is-shown'); });
   }
-  btns.forEach(b => b.addEventListener('click', () => { show(b.dataset.f); history.replaceState(null, '', b.dataset.f === 'all' ? location.pathname : '#' + b.id); }));
+  btns.forEach(b => b.addEventListener('click', () => { show(b.dataset.f); history.replaceState(null, '', b.dataset.f === 'all' ? location.pathname : '#' + b.dataset.h); }));
   const hash = location.hash === '#yurist' ? '#konsultacii' : location.hash; // «Консультации юриста» слиты с «Консультациями» 27.11
-  const start = btns.find(b => b.id && '#' + b.id === hash);
-  if (start) show(start.dataset.f);
+  const start = btns.find(b => b.dataset.h && '#' + b.dataset.h === hash);
+  if (start) {
+    show(start.dataset.f);
+    // на телефоне ряд фильтров прокручивается вбок: показываем выбранный, страницу по вертикали не трогаем
+    const row = start.parentElement;
+    const toBtn = () => { if (row.scrollWidth > row.clientWidth) row.scrollLeft += start.getBoundingClientRect().left - row.getBoundingClientRect().left - 16; };
+    toBtn();
+    if (document.fonts) document.fonts.ready.then(toBtn); // шрифт шире запасного – пересчитать после загрузки
+  }
   document.querySelectorAll('.rvc__more').forEach(b => b.addEventListener('click', () => {
     const card = b.closest('.rvc'), open = card.classList.toggle('open');
     b.setAttribute('aria-expanded', String(open));

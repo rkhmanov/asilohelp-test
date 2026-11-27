@@ -22,6 +22,8 @@
 
 /* ── «Отзывы»: фильтр ── */
 .rvf { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 44px; }
+.rv-anchor { position: absolute; top: 0; left: 0; width: 1px; height: 1px; pointer-events: none; }
+.rvf button:focus-visible { outline-offset: 2px; border-radius: 999px; }
 .rvf button, .vq-topics a { display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; background: var(--tile-2); color: var(--ink); border-radius: 999px; padding: 11px 16px; font-weight: 500; font-size: 13px; transition: background .2s, color .2s; }
 .rvf button i, .vq-topics a i { font-style: normal; font-size: 11px; min-width: 22px; padding: 2px 7px; border-radius: 999px; background: #fff; color: var(--sub); text-align: center; }
 .rvf button:hover, .vq-topics a:hover { background: var(--beige); }
@@ -130,7 +132,7 @@
   .vq-topics::-webkit-scrollbar { display: none; }
   .vq-topics a { flex: none; }
   .vq-ask { margin-top: 18px; }
-  .rvf { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding: 2px 16px 6px; scrollbar-width: none; margin-top: 28px; }
+  .rvf { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding: 6px 16px 8px; scrollbar-width: none; margin-top: 28px; }
   .rvf::-webkit-scrollbar { display: none; }
   .rvf button { flex: none; }
   .rv-sum { display: none; } /* телефон: строку цифр убрали (Саша, 27.11) */
