@@ -121,7 +121,7 @@
   .faq__intro + .q { margin-top: 8px; }
   .kb__box--v2 .kb__nums span { display: block; margin-top: 0; }
   .kb .kb__box { margin-top: 24px; }
-  .kb__box .btn { width: 282px; }
+  .kb__box .btn { width: 282px; justify-content: space-between; }  /* кружок со стрелкой у правого края, 5 px как сверху и снизу (Саша 27.11: стрелка стояла криво, на 20 px от края) */
   .news { padding-top: 72px; }
   .news .news__grid { margin-top: 25px; }
   /* «Все 26 вопросов» на 34 ниже последнего вопроса, до «¿Empezamos?» 56 */
@@ -201,4 +201,11 @@
   .us .b--trust { margin-left: 13px; margin-right: -15px; margin-top: 56px; }  /* и на 56 ниже карточек, как в макете (было 37) */
   /* «Ваш статус protección» внутри красной карточки на 11 px правее, как в макете (446 от левого края карточки) */
   .us .status { left: 8px; }
+}
+
+/* ===== Телефон, правки Саши 27.11 ===== */
+@media (max-width: 600px) {
+  /* «Главные новости»: обложка ЛГБТ-гайда кадрирована как в «Финале» 4818:5021 – фото 488×463 на карточке 358×340,
+     прижато влево и поднято на 123, пара идет крупно справа (раньше фото стояло по центру карточки) */
+  .news .lead-art > img { inset: auto; left: 0; top: -36.18%; width: 136.31%; height: 136.18%; max-width: none; }
 }
