@@ -94,7 +94,11 @@
   }
   function render() { track.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)'; }
   measure();
-  x = norm(period);
+  // Старт (Саша, 27.11): экран начинается на 1/3 первой карточки – первая фотка срезана слева на треть
+  (function () {
+    var r = reel.getBoundingClientRect(), f = track.children[0].getBoundingClientRect(), z = zoomOf();
+    x = norm(period + ((f.left - r.left) + f.width / 3) / z);
+  })();
   render();
   addEventListener('resize', function () { var r = period ? ((x - period) / period) : 0; measure(); x = norm(period + r * period); render(); });
   // Фокус с клавиатуры на карточке за краем: браузер прокручивает контейнер – переводим это в сдвиг дорожки

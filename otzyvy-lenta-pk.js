@@ -94,7 +94,14 @@
       { duration: d, iterations: Infinity, easing: 'linear' });
     anim.currentTime = (frac || 0) * d;
   }
-  start(0);
+  // Старт (Саша, 27.11): экран начинается на 1/3 первой карточки – первая фотка срезана слева на треть
+  function startOffset() {
+    var r = reel.getBoundingClientRect(), f = track.children[0].getBoundingClientRect();
+    var z = r.width / (reel.offsetWidth || 1) || 1;
+    return ((f.left - r.left) + f.width / 3) / z;
+  }
+  period = track.children[n].offsetLeft - track.children[0].offsetLeft;
+  start(period > 0 ? startOffset() / period : 0);
   var rt;
   addEventListener('resize', function () {
     clearTimeout(rt);
