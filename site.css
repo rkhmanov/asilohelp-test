@@ -692,6 +692,8 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 .b--crew > .crew__anon { font-size: 12px; line-height: 1.6; color: #AEB6CE; margin-top: -6px; }
 .crew__more { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 12px; padding: 6px 6px 6px 18px; border-radius: 999px; background: rgba(255,255,255,.1); font-weight: 500; font-size: 14px; transition: background .3s; }
 .b--crew:hover .crew__more { background: var(--accent); }
+/* «Команда» временно без ссылки на «О нас» (Саша, 27.11.2026): не подпрыгивает и не краснеет при наведении */
+.b--crew:not([href]) { cursor: default; } .b--crew:not([href]):hover { transform: none; } .b--crew:not([href]):hover .crew__more { background: rgba(255,255,255,.1); }
 /* 14 · «Официально» и «Конфиденциально» — одна плитка */
 .b--trust { display: grid; grid-template-columns: 1fr 1fr 280px; gap: 36px; align-items: center; margin-top: 18px; min-height: 0; padding: 40px 44px; color: #5A1522; border-bottom-right-radius: 88px;
   background: linear-gradient(107deg, rgba(255,245,247,.94), rgba(240,209,219,.88) 50%, rgba(252,237,229,.9)); }
