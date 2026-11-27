@@ -75,6 +75,10 @@ function checkStatic(file) {
   if (!/arhiv|animacii|glavnaya-ruki|hero-sticker/.test(file))
     for (const m of body.matchAll(/<a\s[^>]*href="([^"]*)"[^>]*>([^<]*)/g))
       if (/(Оставить заявку|Оценить шансы|Записаться)/.test(m[2]) && !BOT.test(m[1])) err(file, `кнопка «${m[2].trim()}» ведет не в бота: ${m[1]}`);
+  // «Оценить шансы» ведет в главное меню бота, а не сразу в анкету (Саша, 27.11.2026): метка с целью start, например site_header_start
+  if (!/arhiv|animacii|hero-sticker/.test(file))
+    for (const m of body.matchAll(/<a\s[^>]*href="([^"]*)"[^>]*>((?:(?!<\/a>)[\s\S])*?)<\/a>/g))
+      if (/Оценить шансы/.test(m[2]) && /_chances\b/.test(m[1])) err(file, `«Оценить шансы» ведет сразу в анкету, а не в главное меню бота: ${m[1]}`);
   // цены сопровождения на сайте не публикуем (Саша, 24.11 и 26.11.2026); скрытая страница soprovozhdenie.html пока исключение
   if (!/arhiv|animacii|soprovozhdenie\.html/.test(file))
     for (const m of body.matchAll(/\b(990|1190|1690|1790|1990)(?:&nbsp;|\s)?(?:€|евро)/g)) err(file, `цена сопровождения на странице: ${m[0]}`);

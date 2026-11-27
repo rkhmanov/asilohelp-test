@@ -19,7 +19,7 @@
 <link rel="preload" as="image" href="img/ruki-left.png" media="(min-width: 481px)">
 <link rel="preload" as="image" href="img/ruki-right.png" media="(min-width: 481px)">
 <link rel="stylesheet" href="hero-sticker.css?v=8">
-<link rel="stylesheet" href="glavnaya-telefon.css?v=9">
+<link rel="stylesheet" href="glavnaya-telefon.css?v=10">
 <link rel="stylesheet" href="bloki.css?v=10">
 <link rel="stylesheet" href="glavnaya-final.css?v=9">
 <link rel="stylesheet" href="arki-parallax.css?v=1">
@@ -42,7 +42,7 @@
     </nav>
     <div class="hdr__cta">
       <a class="hdr__bot m-btn" href="https://t.me/ASILOhelperBot?start=site_header" target="_blank" rel="noopener">Telegram-бот</a>
-      <a class="hdr__main m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_header_chances" target="_blank" rel="noopener">Оценить шансы</a>
+      <a class="hdr__main m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_header_start" target="_blank" rel="noopener">Оценить шансы</a>
     </div>
   </div>
 </header>
@@ -63,7 +63,7 @@
     </h1>
     <p class="hero__lead"><span class="only-m">Консультируем, проверяем готовые кейсы и ведем с нуля:<br class="br-d"> виза, текст кейса, доказательства, подготовка<br class="br-d"> к интервью и первые месяцы в Испании.</span><span class="only-d">Консультируем, готовим к интервью и ведем с нуля:<br> виза, кейс, доказательства, подготовка к интервью<br> и помощь с адаптацией в Испании</span></p>
     <div class="hero__btns">
-      <a class="btn btn--accent m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_hero_chances" target="_blank" rel="noopener">Оценить шансы</a>
+      <a class="btn btn--accent m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_hero_start" target="_blank" rel="noopener">Оценить шансы</a>
       <a class="btn btn--outline m-btn hero__kb" href="#kb">База знаний</a>
     </div>
   </div>
@@ -247,7 +247,7 @@
         <div>
           <h3>Оценка шансов</h3>
           <p>Разберем вашу ситуацию и подскажем, есть ли смысл просить защиту и какие шансы на успех.</p>
-          <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_free_chances" target="_blank" rel="noopener"><span class="up">Оценить шансы</span> <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
+          <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_free_start" target="_blank" rel="noopener"><span class="up">Оценить шансы</span> <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
         </div>
       </article>
       <div class="free__side">
@@ -414,11 +414,13 @@
       card.style.overflow = 'hidden';
       card._anim = card.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 380, easing: 'cubic-bezier(.3,.7,.2,1)' });
       card._anim.onfinish = card._anim.oncancel = () => { card.style.overflow = ''; card._anim = null; };
-      if (card.classList.contains('is-open')) [...card.children].forEach(c => { if (!c.matches('.tile__head, h3')) c.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 320, delay: 80, easing: 'ease-out', fill: 'backwards' }); });
+      if (card.classList.contains('is-open')) [...card.children].forEach(c => { if (!c.matches('.tile__head, h3, .mini')) c.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 320, delay: 80, easing: 'ease-out', fill: 'backwards' }); });
     };
     (card.classList.contains('tile') ? card : head).addEventListener('click', toggle);
     head.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
-    // фото в свернутой плитке грузим и декодируем заранее, чтобы при раскрытии оно не появлялось с задержкой (Саша 24.11)
+    // фото в свернутой плитке грузим и декодируем заранее, чтобы при раскрытии оно не появлялось с задержкой (Саша 24.11).
+    // 27.11: фото больше не проявляется из прозрачности (раньше выплывало 0,4 с – выглядело как загрузка), а в свернутой плитке
+    // остается отрисованным крошечным невидимым слоем (glavnaya-telefon.css), чтобы iPhone не выбрасывал готовую картинку из памяти
     card.querySelectorAll('img').forEach(img => { const d = () => img.decode && img.decode().catch(() => {}); img.complete ? d() : img.addEventListener('load', d, { once: true }); });
     sync(); narrow.addEventListener('change', sync);
   });
