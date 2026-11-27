@@ -7,12 +7,16 @@
 //   • ссылки на бота несут метку site_<место>[_<цель>] (см. asilo-bot/cloudflare/src/sources.ts);
 //   • на неготовые страницы услуг (konsultacii, keys, soprovozhdenie) ссылок нет – вместо них разделы бота _consult/_caseinfo/_soprinfo (Саша, 26.11.2026);
 //   • нет цен сопровождения (990/1190/1690/1990 €), кроме скрытой soprovozhdenie.html (Саша, 26.11.2026);
+//   • FAQ (voprosy.html, главная, страницы услуг) совпадает с единым источником source/voprosy.py (Саша, 27.11.2026);
+//   • висячих предлогов нет: source/tipograf.py --check (короткие слова, числа, тире привязаны &nbsp; – Саша, 27.11.2026);
+//   • «Оставить заявку» и «Заявка» в нижнем меню ведут в главное меню бота (цель start, Саша, 27.11.2026);
 //   • кнопки «Оставить заявку», «Оценить шансы», «Записаться» ведут в бота, а не на форму #apply (Саша, 24.11.2026; архивные и пробные страницы не в счет).
 // В браузере (Chromium из Playwright) на ширине 360, 390, 768 и 1440:
 //   • нет ошибок JavaScript и битых локальных файлов;
 //   • нет горизонтальной прокрутки;
+//   • в тексте на странице (и в том, что дописал JS) нет короткого слова перед обычным пробелом – висячего предлога;
 //   • после прокрутки все блоки с data-reveal показались (анимация появления не застряла);
-//   • главная: стекло подключилось, «Мы справимся» раскрывается, карточка услуги ведет в раздел бота, якоря не пишут # в адрес, шапка прячется/возвращается, «Заявка» в нижнем меню ведет в бота.
+//   • главная: стекло подключилось, «Мы справимся» раскрывается, карточка услуги ведет в раздел бота, якоря не пишут # в адрес, ссылки index.html#help и т.п. с других страниц открывают главную на этом блоке, шапка прячется/возвращается, «Заявка» в нижнем меню ведет в бота.
 // --shots сохраняет скриншоты во tests/shots/ (папка в .gitignore).
 // Сторонние адреса (esm.sh, Turnstile, шрифты) не проверяются: они могут быть недоступны там, где идёт проверка.
 
@@ -75,6 +79,14 @@ function checkStatic(file) {
   if (!/arhiv|animacii|glavnaya-ruki|hero-sticker/.test(file))
     for (const m of body.matchAll(/<a\s[^>]*href="([^"]*)"[^>]*>([^<]*)/g))
       if (/(Оставить заявку|Оценить шансы|Записаться)/.test(m[2]) && !BOT.test(m[1])) err(file, `кнопка «${m[2].trim()}» ведет не в бота: ${m[1]}`);
+  // «Оценить шансы» ведет в главное меню бота, а не сразу в анкету (Саша, 27.11.2026): метка с целью start, например site_header_start
+  if (!/arhiv|animacii|hero-sticker/.test(file))
+    for (const m of body.matchAll(/<a\s[^>]*href="([^"]*)"[^>]*>((?:(?!<\/a>)[\s\S])*?)<\/a>/g))
+      if (/Оценить шансы/.test(m[2]) && /_chances\b/.test(m[1])) err(file, `«Оценить шансы» ведет сразу в анкету, а не в главное меню бота: ${m[1]}`);
+  // «Оставить заявку» (и «Оставьте заявку…») – тоже в главное меню бота, цель start (Саша, 27.11.2026)
+  if (!/arhiv|animacii|glavnaya-ruki|hero-sticker/.test(file))
+    for (const m of body.matchAll(/<a\s[^>]*href="([^"]*)"[^>]*>((?:(?!<\/a>)[\s\S])*?)<\/a>/g))
+      if (/заявк/i.test(m[2].replace(/<[^>]+>/g, '')) && BOT.test(m[1]) && !/_start$/.test(m[1])) err(file, `«${m[2].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 30)}» ведет не в главное меню бота (нужна цель start): ${m[1]}`);
   // цены сопровождения на сайте не публикуем (Саша, 24.11 и 26.11.2026); скрытая страница soprovozhdenie.html пока исключение
   if (!/arhiv|animacii|soprovozhdenie\.html/.test(file))
     for (const m of body.matchAll(/\b(990|1190|1690|1790|1990)(?:&nbsp;|\s)?(?:€|евро)/g)) err(file, `цена сопровождения на странице: ${m[0]}`);
@@ -162,11 +174,18 @@ async function checkBrowser() {
               }
             }
           }
+          // висячие предлоги: короткое слово, после него обычный (разрывный) пробел – как в source/tipograf.py
+          const hang = /(?<![\p{L}\p{N}_\-’'&])(\p{L}{1,2}|для|без|над|под|про|при|обо|изо|ото|или)[ \t\r\n]+(?=\S)/giu;
+          const num = /(?<![\p{L}\p{N}_.,])(\d+|№)[ \t\r\n]+(?=[\p{L}\p{N}€$%«(])/gu;
+          const hangs = [];
+          const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement.closest('script, style, textarea, pre, code, svg, noscript, [data-sk], [data-notypo]') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+          while (tw.nextNode()) { const v = tw.currentNode.nodeValue; for (const re of [hang, num]) { re.lastIndex = 0; let m; while ((m = re.exec(v)) && hangs.length < 50) hangs.push('…' + v.slice(Math.max(0, m.index - 15), m.index + 25).replace(/\s+/g, ' ') + '…'); } }
           const stuck = [...document.querySelectorAll('[data-reveal]:not(.is-shown)')].filter(e => getComputedStyle(e).display !== 'none').map(e => e.className || e.tagName);
-          return { sw: document.documentElement.scrollWidth, W, wide: wide.slice(0, 5), stuck: stuck.slice(0, 5), stuckN: stuck.length };
+          return { sw: document.documentElement.scrollWidth, W, wide: wide.slice(0, 5), stuck: stuck.slice(0, 5), stuckN: stuck.length, hangs };
         });
         if (process.env.QA_DEBUG) console.log(where, JSON.stringify(r));
         if (r.sw > r.W + 1) err(where, `горизонтальная прокрутка ${r.sw - r.W}px: ${r.wide.join('; ')}`);
+        if (r.hangs.length && !/arhiv|animacii/.test(file)) err(where, `висячие предлоги (${r.hangs.length}): ${r.hangs.slice(0, 3).join('; ')} – запустите python3 source/tipograf.py`);
         if (r.stuckN) err(where, `${r.stuckN} блок(ов) data-reveal не показались: ${r.stuck.join('; ')}`);
         if (SHOTS) await page.screenshot({ path: path.join(__dirname, 'shots', `${file.replace(/[\\/]/g, '_').replace(/\.html$/, '')}-${vp.name}.png`), fullPage: true });
         await page.close();
@@ -177,6 +196,20 @@ async function checkBrowser() {
   } finally {
     await browser.close();
     srv.close();
+  }
+}
+
+// Ссылки с других страниц (index.html#help «Услуги», #news, #us, #reviews…): главная открывается на этом блоке,
+// блок не уходит под шапку, # в адресе не остается (раньше # стирался до прокрутки и открывался верх, 27.11.2026).
+async function checkArrival(p, base, F) {
+  for (const id of ['help', 'reviews', 'news']) {
+    await p.goto('about:blank');
+    await p.goto(base + 'index.html#' + id, { waitUntil: 'load' });
+    await p.waitForTimeout(700);
+    const r = await p.evaluate(id => { const t = document.getElementById(id).getBoundingClientRect().top; const h = document.querySelector('.m-header'); const hb = h && !h.classList.contains('is-hidden') ? h.getBoundingClientRect().bottom : 0; return { t: Math.round(t), hb: Math.round(hb), hash: location.hash }; }, id);
+    if (r.t > 150 || r.t < 0) err(F, `index.html#${id} открылась не на блоке #${id} (блок в ${r.t}px от верха окна)`);
+    else if (r.t < r.hb - 1) err(F, `index.html#${id}: блок уходит под шапку (${r.t} < ${r.hb})`);
+    if (r.hash) err(F, `index.html#${id}: # остался в адресе`);
   }
 }
 
@@ -206,6 +239,7 @@ async function checkInteractions(browser, base) {
     await p.evaluate(() => document.querySelector('a[href="#reviews"]').click());
     await p.waitForTimeout(200);
     if (p.url().includes('#')) err(F, 'якорная ссылка оставила #… в адресе');
+    { const pa = await ctx.newPage(); await checkArrival(pa, base, F + ', телефон'); await pa.close(); }
     // лента отзывов на телефоне: нажатие переворачивает саму карточку (фото ↔ отзыв этого человека, Саша 24.11)
     {
       await p.evaluate(() => document.getElementById('reviews').scrollIntoView({ block: 'center' }));
@@ -226,7 +260,7 @@ async function checkInteractions(browser, base) {
     const opened = await p.evaluate(() => window.__opened);
     if (!opened.some(u => /start=site_help_consult$/.test(u))) err(F, `карточка услуги на телефоне не открывает раздел бота (открыто: ${opened.join(', ') || 'ничего'})`);
     const tabHref = await p.evaluate(() => [...document.querySelectorAll('.tabbar-lg a')].map(a => a.getAttribute('href')).find(h => /t\.me/.test(h || '')) || '');
-    if (!/start=site_tabbar_chances/.test(tabHref)) err(F, '«Заявка» в нижнем меню не ведет в бота');
+    if (!/start=site_tabbar_start/.test(tabHref)) err(F, '«Заявка» в нижнем меню не ведет в бота');
     await ctx.close();
   }
   // компьютер
@@ -236,6 +270,7 @@ async function checkInteractions(browser, base) {
     const p = await ctx.newPage();
     await p.goto(base + 'index.html', { waitUntil: 'load' });
     await p.waitForTimeout(500);
+    { const pa = await ctx.newPage(); await checkArrival(pa, base, F + ', компьютер'); await pa.close(); }
     const dd = await p.evaluate(() => [...document.querySelectorAll('.nav-dd__card a')].map(a => a.getAttribute('href')));
     for (const g of ['site_uslugi_consult', 'site_uslugi_caseinfo', 'site_uslugi_soprinfo']) if (!dd.some(h => h.endsWith('start=' + g))) err(F, `в меню «Услуги» нет ссылки на бота ${g}`);
     const hdr = () => p.evaluate(() => { const h = document.querySelector('.m-header'); return h.classList.contains('is-hidden') && !h.classList.contains('m-header--stay'); });
@@ -280,8 +315,17 @@ async function checkInteractions(browser, base) {
 }
 
 (async () => {
+  // «Заявка» в нижнем меню телефона (glass.js) – в главное меню бота
+  for (const m of fs.readFileSync(path.join(ROOT, 'glass.js'), 'utf8').matchAll(/label: "Заявка"[^}]*href: "([^"]+)"/g))
+    if (!/_start$/.test(m[1])) err('glass.js', `«Заявка» в нижнем меню ведет не в главное меню бота: ${m[1]}`);
   if (!pages.length) { console.error('Нет страниц для проверки'); process.exit(1); }
   pages.forEach(checkStatic);
+  if (!ONLY) {
+    try { require('child_process').execFileSync('python3', ['-B', path.join(ROOT, 'source/voprosy.py'), '--check'], { stdio: 'pipe' }); }
+    catch (e) { err('source/voprosy.py', String(e.stderr || e.message).trim()); }
+    try { require('child_process').execFileSync('python3', ['-B', path.join(ROOT, 'source/tipograf.py'), '--check'], { stdio: 'pipe' }); }
+    catch (e) { err('source/tipograf.py', String(e.stderr || e.message).trim()); }
+  }
   await checkBrowser();
   console.log(`Страниц: ${pages.length} (${pages.join(', ')})`);
   if (warns.length) console.log(`\nПредупреждения (${new Set(warns).size}):\n  ` + [...new Set(warns)].sort().join('\n  '));

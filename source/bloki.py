@@ -13,6 +13,10 @@
 """
 import html, pathlib, re, sys
 
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from tipograf import typo  # noqa: E402
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Лента отзывов (Саша, 25.11.2026): одна карточка = один человек. В покое лежит либо текстом, либо фото,
@@ -103,31 +107,24 @@ HOME_REEL = [
 # новыми из канала, source/reviews-auto.json; буква – услуга, как в фильтре «Отзывов»), метки ссылок на бота
 STRANICY = {
     'index.html':          dict(s=None, more=('otzyvy.html', None, 'целиком'), sub='что они пишут о работе с нами',
-                                reel_tag='site_reel_chances', apply_tag='site_apply_chances'),
+                                reel_tag='site_reel_chances', apply_tag='site_apply_start'),
     'konsultacii.html':    dict(s='cl', more=('otzyvy.html#konsultacii', 'cl', 'о консультациях'), sub='что пишут после консультаций',
-                                reel_tag='site_konsult_reel_chances', apply_tag='site_konsult_apply_chances'),
+                                reel_tag='site_konsult_reel_chances', apply_tag='site_konsult_apply_start'),
     'keys.html':           dict(s='k', more=('otzyvy.html#keys', 'k', 'о работе с кейсом'), sub='что пишут о работе с кейсом',
-                                reel_tag='site_keys_reel_case', apply_tag='site_keys_apply_case'),
+                                reel_tag='site_keys_reel_case', apply_tag='site_keys_apply_start'),
     'soprovozhdenie.html': dict(s='sv', more=('otzyvy.html#soprovozhdenie', 's', 'о сопровождении'), sub='что пишут о сопровождении',
-                                reel_tag='site_soprpage_reel_chances', apply_tag='site_soprpage_apply_chances'),
-    'otzyvy.html':         dict(apply_tag='site_reviews_apply_chances'),
-    'voprosy.html':        dict(apply_tag='site_faq_apply_chances'),
+                                reel_tag='site_soprpage_reel_chances', apply_tag='site_soprpage_apply_start'),
+    'otzyvy.html':         dict(apply_tag='site_reviews_apply_start'),
+    'voprosy.html':        dict(apply_tag='site_faq_apply_start'),
 }
 
 BOT = 'https://t.me/ASILOhelperBot?start='
 e = html.escape
 
 
-def nbsp(t):
-    """Предлоги и короткие слова не висят в конце строки; тире не начинает строку."""
-    for _ in range(2):
-        t = re.sub(r'(^|[\s\u00a0«(])([А-Яа-яЁёA-Za-z]{1,2}) ', '\\1\\2\u00a0', t)
-    return t.replace(' –', '\u00a0–')
-
-
 def rv_text(t):
     """[[…]] – кусок только для компьютера (.rv__x скрыт на телефоне)."""
-    parts = re.split(r'\[\[|\]\]', nbsp(t))
+    parts = re.split(r'\[\[|\]\]', t)
     return ''.join(e(x) if i % 2 == 0 else f'<span class="rv__x">{e(x)}</span>' for i, x in enumerate(parts))
 
 
@@ -250,7 +247,7 @@ def put(s, name, body, page):
     if a not in s:
         raise SystemExit(f'{page}: нет метки {a}')
     i, j = s.index(a) + len(a), s.index(b)
-    return s[:i] + '\n' + body + '\n' + s[j:]
+    return s[:i] + '\n' + typo(body) + '\n' + s[j:]  # висячие предлоги – source/tipograf.py
 
 
 def more(cfg):

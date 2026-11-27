@@ -21,6 +21,7 @@ jobs:
         run: |
           pip install --quiet pillow  # аватарки авторов → img/rv-ava/*.webp
           python3 source/reviews_sync.py
+          python3 source/tipograf.py
       - name: Есть ли изменения
         id: diff
         run: |
@@ -33,7 +34,9 @@ jobs:
           node-version: 22
       - name: Общие блоки совпадают с source/bloki.py
         if: steps.diff.outputs.changed == 'true'
-        run: python3 source/bloki.py --check
+        run: |
+          python3 source/bloki.py --check
+          python3 source/tipograf.py --check
       - name: Проверка сайта
         if: steps.diff.outputs.changed == 'true'
         run: |

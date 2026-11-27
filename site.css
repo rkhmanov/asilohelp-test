@@ -278,6 +278,7 @@ section { position: relative; }
 .q h3 { font-weight: 600; font-size: 19px; line-height: 1.25; letter-spacing: -.03em; }
 .q p { font-size: 13px; line-height: 1.65; color: #5F6068; margin-top: 12px; }
 .q a { margin-top: auto; padding-top: 24px; font-weight: 500; font-size: 12px; color: var(--accent); }
+.q p a { margin: 0; padding: 0; font: inherit; color: var(--accent); text-decoration: underline; text-underline-offset: 2px; } /* ссылка внутри ответа (FAQ из source/voprosy.py) */
 .q--pink { background: var(--pink); border-top-right-radius: 56px; min-height: 326px; } .q--beige { background: var(--beige); border-bottom-left-radius: 56px; }
 .q--tall { min-height: 362px; } .q--br { border-bottom-right-radius: 56px; min-height: 309px; } .q--short { min-height: 223px; }
 
@@ -500,8 +501,8 @@ body { background: #fff; }
 .flip__back { transform: rotateY(180deg) translateZ(1px); }
 .flip__front, .flip__back { transition: visibility 0s linear .4s; }
 /* переход по ссылкам меню: блок встаёт под шапкой, а не под неё (шапка 8 + 68 px + воздух) */
-main section[id] { scroll-margin-top: 96px; }
-@media (max-width: 1100px) { main section[id] { scroll-margin-top: 84px; } }
+main :is(section, article)[id] { scroll-margin-top: 96px; }
+@media (max-width: 1100px) { main :is(section, article)[id] { scroll-margin-top: 84px; } }
 
 /* ===== обновление по «мой прототип» (28.09): блок 6 «Бесплатно» на ярком бордовом, блок 7 «База знаний» ===== */
 .free { padding: 292px 0 310px; }
@@ -692,6 +693,8 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 .b--crew > .crew__anon { font-size: 12px; line-height: 1.6; color: #AEB6CE; margin-top: -6px; }
 .crew__more { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 12px; padding: 6px 6px 6px 18px; border-radius: 999px; background: rgba(255,255,255,.1); font-weight: 500; font-size: 14px; transition: background .3s; }
 .b--crew:hover .crew__more { background: var(--accent); }
+/* «Команда» временно без ссылки на «О нас» (Саша, 27.11.2026): не подпрыгивает и не краснеет при наведении */
+.b--crew:not([href]) { cursor: default; } .b--crew:not([href]):hover { transform: none; } .b--crew:not([href]):hover .crew__more { background: rgba(255,255,255,.1); }
 /* 14 · «Официально» и «Конфиденциально» — одна плитка */
 .b--trust { display: grid; grid-template-columns: 1fr 1fr 280px; gap: 36px; align-items: center; margin-top: 18px; min-height: 0; padding: 40px 44px; color: #5A1522; border-bottom-right-radius: 88px;
   background: linear-gradient(107deg, rgba(255,245,247,.94), rgba(240,209,219,.88) 50%, rgba(252,237,229,.9)); }

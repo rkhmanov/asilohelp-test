@@ -11,6 +11,10 @@
 """
 import html, json, pathlib, re, sys
 
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from tipograf import typo  # noqa: E402  висячие предлоги
+
 try:
     import markdown
 except ImportError:
@@ -43,7 +47,7 @@ def head(title, desc, pre, page):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{pre}motion.css?v=18">
-<link rel="stylesheet" href="{pre}site.css?v=44">
+<link rel="stylesheet" href="{pre}site.css?v=46">
 <link rel="stylesheet" href="{pre}pages.css?v={V}">
 <script type="importmap">{{"imports":{{"react":"./{pre}vendor/react/react.mjs","react/jsx-runtime":"./{pre}vendor/react/react.mjs","react-dom/client":"./{pre}vendor/react/react.mjs","glisse":"./{pre}vendor/glisse/index.js"}}}}</script>
 <script type="module" src="{pre}glass.js?v=15"></script>
@@ -57,12 +61,12 @@ def head(title, desc, pre, page):
     <nav aria-label="Меню">
       <a href="{pre}index.html#help">Услуги</a>
       <a href="{pre}stati.html"{' aria-current="page"' if page == 'news' else ''}>Статьи</a>
-      <a href="{pre}o-nas.html"{' aria-current="page"' if page == 'us' else ''}>О нас</a>
+      <!-- «О нас» временно скрыто (Саша, 27.11.2026): вернуть ссылку на {pre}o-nas.html -->
       <a href="{pre}voprosy.html">Вопросы</a>
     </nav>
     <div class="hdr__cta">
       <a class="hdr__bot m-btn" href="{BOT}site_header" target="_blank" rel="noopener">Telegram-бот</a>
-      <a class="hdr__main m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_statya_header_chances" target="_blank" rel="noopener">Оценить шансы</a>
+      <a class="hdr__main m-btn m-btn--accent" href="https://t.me/ASILOhelperBot?start=site_statya_header_start" target="_blank" rel="noopener">Оценить шансы</a>
     </div>
   </div>
 </header>
@@ -77,7 +81,7 @@ def foot(pre, extra_js=""):
       <div class="foot__about"><img src="{pre}img/logo-footer.svg" alt="asilohelp" width="234" height="38">
         <p>Помогаем ЛГБТ-людям из России и постсоветских стран переехать в Испанию и запросить международную защиту.</p>
         <p>Мы не адвокатское бюро. Материалы сайта — информация, а не юридическая консультация.</p></div>
-      <div class="foot__col"><b>Сайт</b><a href="{pre}index.html#help">Услуги</a><a href="{pre}stati.html">Статьи и база знаний</a><a href="{pre}o-nas.html">О нас</a><a href="{pre}otzyvy.html">Отзывы</a><a href="{pre}voprosy.html">Частые вопросы</a><a href="https://t.me/ASILOhelperBot?start=site_statya_footer_chances" target="_blank" rel="noopener">Оставить заявку</a></div>
+      <div class="foot__col"><b>Сайт</b><a href="{pre}index.html#help">Услуги</a><a href="{pre}stati.html">Статьи и база знаний</a><a href="{pre}o-nas.html">О нас</a><a href="{pre}otzyvy.html">Отзывы</a><a href="{pre}voprosy.html">Частые вопросы</a><a href="https://t.me/ASILOhelperBot?start=site_statya_footer_start" target="_blank" rel="noopener">Оставить заявку</a></div>
       <div class="foot__col"><b>Мы в сети</b><a href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Telegram-канал</a><a href="https://www.instagram.com/rkhmanov/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@rkhmanov/" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@rkhmanov" target="_blank" rel="noopener">TikTok</a><a href="https://t.me/+q-i8YWQhdJ40M2Uy" target="_blank" rel="noopener">Чат по Барселоне</a></div>
       <div class="foot__col"><b>Документы</b><a href="{pre}legal.html">Правовая информация</a><a href="{pre}privacy.html">Политика конфиденциальности</a><a href="{pre}cookies.html">Политика cookie</a></div>
     </div>
@@ -99,8 +103,8 @@ def cta(pre, place):
         <h2>Хотите пройти этот путь<br class="br-d"> с командой?</h2>
         <p>Оценка шансов — бесплатно. Расскажите о ситуации, и мы честно скажем, подходит ли вам защита и с чего начать.</p>
         <div class="btns">
-          <a class="btn btn--dark m-btn" href="https://t.me/ASILOhelperBot?start=site_statya_cta_chances" target="_blank" rel="noopener">Оставить заявку <span class="dot-arr" aria-hidden="true">↗</span></a>
-          <a class="btn btn--glass m-btn" href="{BOT}site_{place}_chances" target="_blank" rel="noopener">Оценить шансы в боте</a>
+          <a class="btn btn--dark m-btn" href="https://t.me/ASILOhelperBot?start=site_statya_cta_start" target="_blank" rel="noopener">Оставить заявку <span class="dot-arr" aria-hidden="true">↗</span></a>
+          <a class="btn btn--glass m-btn" href="{BOT}site_{place}_start" target="_blank" rel="noopener">Оценить шансы в боте</a>
         </div>
       </div>
       <div class="cta__hola" aria-hidden="true">¿Hablamos?<span>¡Sí, vamos!</span></div>
@@ -275,7 +279,7 @@ def article_page(a, arts):
       </article>
       <aside class="aside">
         <nav class="toc" aria-label="На этой странице"><small>На этой странице</small>{toc_html}<a class="up" href="#top">↑ К началу</a></nav>
-        <div class="hola"><b>¡Hola!</b><p>Хотите пройти путь с командой?</p><span>Оценка шансов — бесплатно, ответим в течение суток.</span><a href="{BOT}site_{place}_chances" target="_blank" rel="noopener">Оценить шансы ↗</a></div>
+        <div class="hola"><b>¡Hola!</b><p>Хотите пройти путь с командой?</p><span>Оценка шансов — бесплатно, ответим в течение суток.</span><a href="{BOT}site_{place}_start" target="_blank" rel="noopener">Оценить шансы ↗</a></div>
       </aside>
     </div>
 
@@ -397,10 +401,10 @@ def main():
     for old in OUT.glob("*.html"):
         old.unlink()
     for a in arts:
-        (OUT / f"{a['slug']}.html").write_text(article_page(a, arts), encoding="utf-8")
-    (ROOT / "stati.html").write_text(list_page(arts).replace("start=site_statya_", "start=site_stati_"), encoding="utf-8")  # метка кнопок: site_stati_…
+        (OUT / f"{a['slug']}.html").write_text(typo(article_page(a, arts)), encoding="utf-8")
+    (ROOT / "stati.html").write_text(typo(list_page(arts).replace("start=site_statya_", "start=site_stati_")), encoding="utf-8")  # метка кнопок: site_stati_…
     if (ROOT / "source" / "o-nas.body.html").exists():
-        (ROOT / "o-nas.html").write_text(about_page().replace("start=site_statya_", "start=site_onas_"), encoding="utf-8")  # метка кнопок: site_onas_…
+        (ROOT / "o-nas.html").write_text(typo(about_page().replace("start=site_statya_", "start=site_onas_")), encoding="utf-8")  # метка кнопок: site_onas_…
     print(f"статей: {len(arts)} → stati/, stati.html" + (", o-nas.html" if (ROOT / 'o-nas.html').exists() else ""))
 
 
