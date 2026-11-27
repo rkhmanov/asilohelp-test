@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Общие блоки сайта: лента отзывов и красная заявка «¿Empezamos?» (Саша, 24.11.2026).
 
-Блоки одинаковые на всех страницах, где они стоят. Правка – только здесь, потом
+Блоки одинаковые на всех страницах, где они стоят (заявка – еще на «Статьях» и во всех статьях). Правка – только здесь, потом
     python3 source/bloki.py          – перепишет блоки во всех страницах;
     python3 source/bloki.py --check  – только проверит, что страницы совпадают с этим файлом (так делает CI).
 
@@ -116,7 +116,12 @@ STRANICY = {
                                 reel_tag='site_soprpage_reel_chances', apply_tag='site_soprpage_apply_start'),
     'otzyvy.html':         dict(apply_tag='site_reviews_apply_start'),
     'voprosy.html':        dict(apply_tag='site_faq_apply_start'),
+    # Саша 27.11: на «Статьях» и в каждой статье вместо «¿Hablamos?» – тот же блок заявки (pre – путь до корня сайта)
+    'stati.html':          dict(apply_tag='site_stati_apply_start'),
 }
+for _p in sorted((ROOT / 'source' / 'stati').glob('*.md')):
+    if _p.name != 'FORMAT.md':
+        STRANICY[f'stati/{_p.stem}.html'] = dict(apply_tag='site_art' + _p.stem.replace('-', '')[:40] + '_apply_start', pre='../')
 
 BOT = 'https://t.me/ASILOhelperBot?start='
 e = html.escape
@@ -225,21 +230,35 @@ TG_SVG = ('<svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentCo
           '1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.5c.3-1.3-.5-1.9-1.4-1.5Z"/></svg>')
 
 
-def zayavka(page, tg_svg):
+def zayavka(page, tg_svg=None):
     tag = STRANICY[page]['apply_tag']
+    pre = STRANICY[page].get('pre', '')
+    tg_svg = tg_svg or home_tg_svg()
     return f'''<section class="apply" id="apply">
   <div class="apply__box" data-reveal>
     <div class="apply__bg" aria-hidden="true"><span class="apply__ghost">начинаем?</span></div>
-    <div class="arch" aria-hidden="true"><img src="img/rv-oldtown.jpg" alt=""></div>
+    <div class="arch" aria-hidden="true"><img src="{pre}img/rv-oldtown.jpg" alt=""></div>
     <span class="sticker apply__sticker" aria-hidden="true">Ответим в течение суток</span>
     <div class="apply__left">
       <h2>¿Empezamos?</h2>
       <p>Расскажите, где вы сейчас и что вас интересует.<br class="only-d"> На бесплатной оценке шансов скажем, подходит ли<br class="only-d"> вам <span class="only-d">международная </span>защита и с чего начать.</p>
-      <a class="tg m-btn" href="{BOT}{tag}" target="_blank" rel="noopener"><span class="tg__ava" aria-hidden="true">{tg_svg}</span><span class="tg__txt"><small>Оставьте заявку в</small><b>@ASILOhelperBot</b></span><img class="tg__go m-arrow" src="img/arrow-red44.svg" alt="" width="40" height="40"></a>
+      <a class="tg m-btn" href="{BOT}{tag}" target="_blank" rel="noopener"><span class="tg__ava" aria-hidden="true">{tg_svg}</span><span class="tg__txt"><small>Оставьте заявку в</small><b>@ASILOhelperBot</b></span><img class="tg__go m-arrow" src="{pre}img/arrow-red44.svg" alt="" width="40" height="40"></a>
       <p class="apply__note">Общение с нами не нарушает законы РФ. Мы не передаем данные третьим лицам.</p>
     </div>
   </div>
 </section>'''
+
+
+def home_tg_svg():
+    # иконка Telegram – та же, что сейчас на главной
+    home = (ROOT / 'index.html').read_text(encoding='utf-8')
+    m = re.search(r'<span class="tg__ava" aria-hidden="true">(<svg.*?</svg>)</span>', home)
+    return m.group(1) if m else TG_SVG
+
+
+def blok(name, body):
+    """Блок с метками – так его вставляет source/build_stati.py при сборке статей."""
+    return f'<!-- blok:{name} -->\n{typo(body)}\n<!-- /blok:{name} -->'
 
 
 def put(s, name, body, page):
@@ -263,9 +282,7 @@ def more(cfg):
 def main():
     check = '--check' in sys.argv
     # иконка Telegram – та же, что сейчас на главной
-    home = (ROOT / 'index.html').read_text(encoding='utf-8')
-    m = re.search(r'<span class="tg__ava" aria-hidden="true">(<svg.*?</svg>)</span>', home)
-    tg_svg = m.group(1) if m else TG_SVG
+    tg_svg = home_tg_svg()
     bad = []
     for page, cfg in STRANICY.items():
         p = ROOT / page
