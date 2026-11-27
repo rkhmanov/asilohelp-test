@@ -13,6 +13,10 @@
 """
 import html, pathlib, re, sys
 
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from tipograf import typo  # noqa: E402
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Лента отзывов (Саша, 25.11.2026): одна карточка = один человек. В покое лежит либо текстом, либо фото,
@@ -118,16 +122,9 @@ BOT = 'https://t.me/ASILOhelperBot?start='
 e = html.escape
 
 
-def nbsp(t):
-    """Предлоги и короткие слова не висят в конце строки; тире не начинает строку."""
-    for _ in range(2):
-        t = re.sub(r'(^|[\s\u00a0«(])([А-Яа-яЁёA-Za-z]{1,2}) ', '\\1\\2\u00a0', t)
-    return t.replace(' –', '\u00a0–')
-
-
 def rv_text(t):
     """[[…]] – кусок только для компьютера (.rv__x скрыт на телефоне)."""
-    parts = re.split(r'\[\[|\]\]', nbsp(t))
+    parts = re.split(r'\[\[|\]\]', t)
     return ''.join(e(x) if i % 2 == 0 else f'<span class="rv__x">{e(x)}</span>' for i, x in enumerate(parts))
 
 
@@ -250,7 +247,7 @@ def put(s, name, body, page):
     if a not in s:
         raise SystemExit(f'{page}: нет метки {a}')
     i, j = s.index(a) + len(a), s.index(b)
-    return s[:i] + '\n' + body + '\n' + s[j:]
+    return s[:i] + '\n' + typo(body) + '\n' + s[j:]  # висячие предлоги – source/tipograf.py
 
 
 def more(cfg):

@@ -17,6 +17,11 @@ GitHub Action «Новые отзывы» (.github/workflows/otzyvy.yml → sour
 и пересобирает страницу. Эти тексты — как прислали, без правки. Список R ниже — старые 27, набранные руками; новые сюда не дописывать.
 """
 import html, json, pathlib, re
+import sys
+
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from tipograf import typo  # noqa: E402  висячие предлоги
 
 LABEL = {'c': 'Консультация', 'l': 'Консультация юриста', 'k': 'Работа с кейсом', 'v': 'Виза', 's': 'Сопровождение'}
 MONTHS = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
@@ -152,7 +157,7 @@ def main():
         n = len(rs) if k == 'all' else sum(has(r, k) for r in rs)
         src = re.sub(rf'(data-f="{k}"[^>]*>[^<]*<i>)\d*(</i>)', rf'\g<1>{n}\g<2>', src)
     src = re.sub(r'(<div class="rv-sum"[^>]*>\s*<div><b>)[^<]*(</b><span>)[^<]*', lambda m: f'{m.group(1)}{headline(len(rs))}{m.group(2)}открытых отзывов', src)
-    page.write_text(src, encoding='utf-8')
+    page.write_text(typo(src), encoding='utf-8')  # висячие предлоги – source/tipograf.py
     print(len(rs), plural(len(rs)), f'(новых из канала: {len(auto())})')
 
 

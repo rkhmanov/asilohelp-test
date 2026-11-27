@@ -18,6 +18,10 @@
 """
 import html, pathlib, re, sys
 
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from tipograf import typo  # noqa: E402  висячие предлоги
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 TEMY = [
@@ -159,8 +163,8 @@ def voprosy_page(src):
         groups.append(f'<section class="vq-group" id="{tid}" aria-labelledby="{tid}-h"><h2 id="{tid}-h">{html.escape(title)}</h2>'
                       f'<div class="vq-acc">\n' + '\n'.join(items) + '\n</div></section>')
         nav.append(f'          <a href="#{tid}">{html.escape(title)} <i>{len(qs)}</i></a>')
-    src = re.sub(r'(<!-- faq:start -->).*?(<!-- faq:end -->)', lambda m: m.group(1) + '\n' + '\n'.join(groups) + '\n' + m.group(2), src, flags=re.S)
-    src = re.sub(r'(<nav class="vq-topics"[^>]*>\n).*?(\n        </nav>)', lambda m: m.group(1) + '\n'.join(nav) + m.group(2), src, flags=re.S)
+    src = re.sub(r'(<!-- faq:start -->).*?(<!-- faq:end -->)', lambda m: m.group(1) + '\n' + typo('\n'.join(groups)) + '\n' + m.group(2), src, flags=re.S)
+    src = re.sub(r'(<nav class="vq-topics"[^>]*>\n).*?(\n        </nav>)', lambda m: m.group(1) + typo('\n'.join(nav)) + m.group(2), src, flags=re.S)
     src = re.sub(r'data-total="\d*"', f'data-total="{len(V)}"', src)
     return src
 
@@ -196,7 +200,7 @@ def put(s, body, page):
     if a not in s or b not in s:
         raise SystemExit(f'{page}: нет меток {a} … {b}')
     i, j = s.index(a) + len(a), s.index(b)
-    return s[:i] + '\n' + body + '\n' + s[j:]
+    return s[:i] + '\n' + typo(body) + '\n' + s[j:]  # висячие предлоги – source/tipograf.py
 
 
 def main():
