@@ -13,7 +13,7 @@
 //   • нет ошибок JavaScript и битых локальных файлов;
 //   • нет горизонтальной прокрутки;
 //   • после прокрутки все блоки с data-reveal показались (анимация появления не застряла);
-//   • главная: стекло подключилось, «Мы справимся» раскрывается, карточка услуги ведет в раздел бота, якоря не пишут # в адрес, шапка прячется/возвращается, «Заявка» в нижнем меню ведет в бота.
+//   • главная: стекло подключилось, «Мы справимся» раскрывается, карточка услуги ведет в раздел бота, якоря не пишут # в адрес, ссылки index.html#help и т.п. с других страниц открывают главную на этом блоке, шапка прячется/возвращается, «Заявка» в нижнем меню ведет в бота.
 // --shots сохраняет скриншоты во tests/shots/ (папка в .gitignore).
 // Сторонние адреса (esm.sh, Turnstile, шрифты) не проверяются: они могут быть недоступны там, где идёт проверка.
 
@@ -185,6 +185,20 @@ async function checkBrowser() {
   }
 }
 
+// Ссылки с других страниц (index.html#help «Услуги», #news, #us, #reviews…): главная открывается на этом блоке,
+// блок не уходит под шапку, # в адресе не остается (раньше # стирался до прокрутки и открывался верх, 27.11.2026).
+async function checkArrival(p, base, F) {
+  for (const id of ['help', 'reviews', 'news']) {
+    await p.goto('about:blank');
+    await p.goto(base + 'index.html#' + id, { waitUntil: 'load' });
+    await p.waitForTimeout(700);
+    const r = await p.evaluate(id => { const t = document.getElementById(id).getBoundingClientRect().top; const h = document.querySelector('.m-header'); const hb = h && !h.classList.contains('is-hidden') ? h.getBoundingClientRect().bottom : 0; return { t: Math.round(t), hb: Math.round(hb), hash: location.hash }; }, id);
+    if (r.t > 150 || r.t < 0) err(F, `index.html#${id} открылась не на блоке #${id} (блок в ${r.t}px от верха окна)`);
+    else if (r.t < r.hb - 1) err(F, `index.html#${id}: блок уходит под шапку (${r.t} < ${r.hb})`);
+    if (r.hash) err(F, `index.html#${id}: # остался в адресе`);
+  }
+}
+
 // Поведение главной: стекло подключилось, карточки услуг на телефоне ведут на страницы услуг, «Мы справимся» – аккордеон,
 // шапка прячется при прокрутке вниз и возвращается вверх, пустая форма показывает ошибки и не уходит.
 async function checkInteractions(browser, base) {
@@ -211,6 +225,7 @@ async function checkInteractions(browser, base) {
     await p.evaluate(() => document.querySelector('a[href="#reviews"]').click());
     await p.waitForTimeout(200);
     if (p.url().includes('#')) err(F, 'якорная ссылка оставила #… в адресе');
+    { const pa = await ctx.newPage(); await checkArrival(pa, base, F + ', телефон'); await pa.close(); }
     // лента отзывов на телефоне: нажатие переворачивает саму карточку (фото ↔ отзыв этого человека, Саша 24.11)
     {
       await p.evaluate(() => document.getElementById('reviews').scrollIntoView({ block: 'center' }));
@@ -241,6 +256,7 @@ async function checkInteractions(browser, base) {
     const p = await ctx.newPage();
     await p.goto(base + 'index.html', { waitUntil: 'load' });
     await p.waitForTimeout(500);
+    { const pa = await ctx.newPage(); await checkArrival(pa, base, F + ', компьютер'); await pa.close(); }
     const dd = await p.evaluate(() => [...document.querySelectorAll('.nav-dd__card a')].map(a => a.getAttribute('href')));
     for (const g of ['site_uslugi_consult', 'site_uslugi_caseinfo', 'site_uslugi_soprinfo']) if (!dd.some(h => h.endsWith('start=' + g))) err(F, `в меню «Услуги» нет ссылки на бота ${g}`);
     const hdr = () => p.evaluate(() => { const h = document.querySelector('.m-header'); return h.classList.contains('is-hidden') && !h.classList.contains('m-header--stay'); });

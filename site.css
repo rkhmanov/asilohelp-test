@@ -501,8 +501,8 @@ body { background: #fff; }
 .flip__back { transform: rotateY(180deg) translateZ(1px); }
 .flip__front, .flip__back { transition: visibility 0s linear .4s; }
 /* переход по ссылкам меню: блок встаёт под шапкой, а не под неё (шапка 8 + 68 px + воздух) */
-main section[id] { scroll-margin-top: 96px; }
-@media (max-width: 1100px) { main section[id] { scroll-margin-top: 84px; } }
+main :is(section, article)[id] { scroll-margin-top: 96px; }
+@media (max-width: 1100px) { main :is(section, article)[id] { scroll-margin-top: 84px; } }
 
 /* ===== обновление по «мой прототип» (28.09): блок 6 «Бесплатно» на ярком бордовом, блок 7 «База знаний» ===== */
 .free { padding: 292px 0 310px; }

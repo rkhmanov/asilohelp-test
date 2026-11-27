@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="motion.css?v=18">
-<link rel="stylesheet" href="site.css?v=45">
+<link rel="stylesheet" href="site.css?v=46">
 <link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
 <link rel="stylesheet" href="ruki.css?v=6">
 <link rel="preload" as="image" href="img/ruki-left.png" media="(min-width: 481px)">
@@ -391,7 +391,23 @@
   }
   // Перезагрузка не кидает вниз (Саша 24.11): ссылки-якоря не пишут #… в адрес, браузер не восстанавливает прокрутку сам
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  if (location.hash) setTimeout(() => history.replaceState(null, '', location.pathname + location.search), 0);
+  // Пришли с другой страницы по ссылке index.html#help (#news, #us…): # убираем сразу, а к блоку едем сами.
+  // Раньше # стирался раньше, чем браузер успевал прокрутить к блоку, и «Услуги» из подвала открывали верх главной (27.11).
+  if (location.hash) {
+    const to = /^#[\w-]+$/.test(location.hash) && document.getElementById(location.hash.slice(1));
+    history.replaceState(null, '', location.pathname + location.search);
+    if (to) {
+      let moved = false; // человек сам начал листать – больше не трогаем
+      ['wheel', 'touchstart', 'keydown'].forEach(t => addEventListener(t, () => { moved = true; }, { once: true, passive: true }));
+      const go = () => { // сразу на место, без плавной прокрутки через всю страницу
+        if (moved) return;
+        const st = document.documentElement.style; st.scrollBehavior = 'auto';
+        to.scrollIntoView({ block: 'start' }); st.scrollBehavior = '';
+      };
+      go();
+      addEventListener('load', () => { go(); (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(go, 150)); }, { once: true });
+    }
+  }
   document.addEventListener('click', e => {
     const a = e.target.closest && e.target.closest('a[href^="#"]');
     if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
