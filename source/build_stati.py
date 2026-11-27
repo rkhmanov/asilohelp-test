@@ -81,7 +81,7 @@ def foot(pre, extra_js=""):
       <div class="foot__about"><img src="{pre}img/logo-footer.svg" alt="asilohelp" width="234" height="38">
         <p>Помогаем ЛГБТ-людям из России и постсоветских стран переехать в Испанию и запросить международную защиту.</p>
         <p>Мы не адвокатское бюро. Материалы сайта — информация, а не юридическая консультация.</p></div>
-      <div class="foot__col"><b>Сайт</b><a href="{pre}index.html#help">Услуги</a><a href="{pre}stati.html">Статьи и база знаний</a><a href="{pre}o-nas.html">О нас</a><a href="{pre}otzyvy.html">Отзывы</a><a href="{pre}voprosy.html">Частые вопросы</a><a href="https://t.me/ASILOhelperBot?start=site_statya_footer_chances" target="_blank" rel="noopener">Оставить заявку</a></div>
+      <div class="foot__col"><b>Сайт</b><a href="{pre}index.html#help">Услуги</a><a href="{pre}stati.html">Статьи и база знаний</a><a href="{pre}o-nas.html">О нас</a><a href="{pre}otzyvy.html">Отзывы</a><a href="{pre}voprosy.html">Частые вопросы</a><a href="https://t.me/ASILOhelperBot?start=site_statya_footer_start" target="_blank" rel="noopener">Оставить заявку</a></div>
       <div class="foot__col"><b>Мы в сети</b><a href="https://t.me/spainLGBTQ" target="_blank" rel="noopener">Telegram-канал</a><a href="https://www.instagram.com/rkhmanov/" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@rkhmanov/" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@rkhmanov" target="_blank" rel="noopener">TikTok</a><a href="https://t.me/+q-i8YWQhdJ40M2Uy" target="_blank" rel="noopener">Чат по Барселоне</a></div>
       <div class="foot__col"><b>Документы</b><a href="{pre}legal.html">Правовая информация</a><a href="{pre}privacy.html">Политика конфиденциальности</a><a href="{pre}cookies.html">Политика cookie</a></div>
     </div>
@@ -103,7 +103,7 @@ def cta(pre, place):
         <h2>Хотите пройти этот путь<br class="br-d"> с командой?</h2>
         <p>Оценка шансов — бесплатно. Расскажите о ситуации, и мы честно скажем, подходит ли вам защита и с чего начать.</p>
         <div class="btns">
-          <a class="btn btn--dark m-btn" href="https://t.me/ASILOhelperBot?start=site_statya_cta_chances" target="_blank" rel="noopener">Оставить заявку <span class="dot-arr" aria-hidden="true">↗</span></a>
+          <a class="btn btn--dark m-btn" href="https://t.me/ASILOhelperBot?start=site_statya_cta_start" target="_blank" rel="noopener">Оставить заявку <span class="dot-arr" aria-hidden="true">↗</span></a>
           <a class="btn btn--glass m-btn" href="{BOT}site_{place}_start" target="_blank" rel="noopener">Оценить шансы в боте</a>
         </div>
       </div>

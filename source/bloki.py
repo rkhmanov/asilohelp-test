@@ -107,15 +107,15 @@ HOME_REEL = [
 # новыми из канала, source/reviews-auto.json; буква – услуга, как в фильтре «Отзывов»), метки ссылок на бота
 STRANICY = {
     'index.html':          dict(s=None, more=('otzyvy.html', None, 'целиком'), sub='что они пишут о работе с нами',
-                                reel_tag='site_reel_chances', apply_tag='site_apply_chances'),
+                                reel_tag='site_reel_chances', apply_tag='site_apply_start'),
     'konsultacii.html':    dict(s='cl', more=('otzyvy.html#konsultacii', 'cl', 'о консультациях'), sub='что пишут после консультаций',
-                                reel_tag='site_konsult_reel_chances', apply_tag='site_konsult_apply_chances'),
+                                reel_tag='site_konsult_reel_chances', apply_tag='site_konsult_apply_start'),
     'keys.html':           dict(s='k', more=('otzyvy.html#keys', 'k', 'о работе с кейсом'), sub='что пишут о работе с кейсом',
-                                reel_tag='site_keys_reel_case', apply_tag='site_keys_apply_case'),
+                                reel_tag='site_keys_reel_case', apply_tag='site_keys_apply_start'),
     'soprovozhdenie.html': dict(s='sv', more=('otzyvy.html#soprovozhdenie', 's', 'о сопровождении'), sub='что пишут о сопровождении',
-                                reel_tag='site_soprpage_reel_chances', apply_tag='site_soprpage_apply_chances'),
-    'otzyvy.html':         dict(apply_tag='site_reviews_apply_chances'),
-    'voprosy.html':        dict(apply_tag='site_faq_apply_chances'),
+                                reel_tag='site_soprpage_reel_chances', apply_tag='site_soprpage_apply_start'),
+    'otzyvy.html':         dict(apply_tag='site_reviews_apply_start'),
+    'voprosy.html':        dict(apply_tag='site_faq_apply_start'),
 }
 
 BOT = 'https://t.me/ASILOhelperBot?start='

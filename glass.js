@@ -201,7 +201,7 @@ if (!off) {
         // { value: "us", label: "О нас", icon: icons.us, href: home + "o-nas.html" },
         { value: "news", label: "Статьи", icon: icons.news, href: home + "stati.html" },
         { value: "faq", label: "Вопросы", icon: icons.faq, href: faqHref },
-        { value: "apply", label: "Заявка", icon: icons.apply, href: "https://t.me/ASILOhelperBot?start=site_tabbar_chances" },
+        { value: "apply", label: "Заявка", icon: icons.apply, href: "https://t.me/ASILOhelperBot?start=site_tabbar_start" },
       ],
     }));
 }

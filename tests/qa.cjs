@@ -9,6 +9,7 @@
 //   • нет цен сопровождения (990/1190/1690/1990 €), кроме скрытой soprovozhdenie.html (Саша, 26.11.2026);
 //   • FAQ (voprosy.html, главная, страницы услуг) совпадает с единым источником source/voprosy.py (Саша, 27.11.2026);
 //   • висячих предлогов нет: source/tipograf.py --check (короткие слова, числа, тире привязаны &nbsp; – Саша, 27.11.2026);
+//   • «Оставить заявку» и «Заявка» в нижнем меню ведут в главное меню бота (цель start, Саша, 27.11.2026);
 //   • кнопки «Оставить заявку», «Оценить шансы», «Записаться» ведут в бота, а не на форму #apply (Саша, 24.11.2026; архивные и пробные страницы не в счет).
 // В браузере (Chromium из Playwright) на ширине 360, 390, 768 и 1440:
 //   • нет ошибок JavaScript и битых локальных файлов;
@@ -82,6 +83,10 @@ function checkStatic(file) {
   if (!/arhiv|animacii|hero-sticker/.test(file))
     for (const m of body.matchAll(/<a\s[^>]*href="([^"]*)"[^>]*>((?:(?!<\/a>)[\s\S])*?)<\/a>/g))
       if (/Оценить шансы/.test(m[2]) && /_chances\b/.test(m[1])) err(file, `«Оценить шансы» ведет сразу в анкету, а не в главное меню бота: ${m[1]}`);
+  // «Оставить заявку» (и «Оставьте заявку…») – тоже в главное меню бота, цель start (Саша, 27.11.2026)
+  if (!/arhiv|animacii|glavnaya-ruki|hero-sticker/.test(file))
+    for (const m of body.matchAll(/<a\s[^>]*href="([^"]*)"[^>]*>((?:(?!<\/a>)[\s\S])*?)<\/a>/g))
+      if (/заявк/i.test(m[2].replace(/<[^>]+>/g, '')) && BOT.test(m[1]) && !/_start$/.test(m[1])) err(file, `«${m[2].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 30)}» ведет не в главное меню бота (нужна цель start): ${m[1]}`);
   // цены сопровождения на сайте не публикуем (Саша, 24.11 и 26.11.2026); скрытая страница soprovozhdenie.html пока исключение
   if (!/arhiv|animacii|soprovozhdenie\.html/.test(file))
     for (const m of body.matchAll(/\b(990|1190|1690|1790|1990)(?:&nbsp;|\s)?(?:€|евро)/g)) err(file, `цена сопровождения на странице: ${m[0]}`);
@@ -255,7 +260,7 @@ async function checkInteractions(browser, base) {
     const opened = await p.evaluate(() => window.__opened);
     if (!opened.some(u => /start=site_help_consult$/.test(u))) err(F, `карточка услуги на телефоне не открывает раздел бота (открыто: ${opened.join(', ') || 'ничего'})`);
     const tabHref = await p.evaluate(() => [...document.querySelectorAll('.tabbar-lg a')].map(a => a.getAttribute('href')).find(h => /t\.me/.test(h || '')) || '');
-    if (!/start=site_tabbar_chances/.test(tabHref)) err(F, '«Заявка» в нижнем меню не ведет в бота');
+    if (!/start=site_tabbar_start/.test(tabHref)) err(F, '«Заявка» в нижнем меню не ведет в бота');
     await ctx.close();
   }
   // компьютер
@@ -310,6 +315,9 @@ async function checkInteractions(browser, base) {
 }
 
 (async () => {
+  // «Заявка» в нижнем меню телефона (glass.js) – в главное меню бота
+  for (const m of fs.readFileSync(path.join(ROOT, 'glass.js'), 'utf8').matchAll(/label: "Заявка"[^}]*href: "([^"]+)"/g))
+    if (!/_start$/.test(m[1])) err('glass.js', `«Заявка» в нижнем меню ведет не в главное меню бота: ${m[1]}`);
   if (!pages.length) { console.error('Нет страниц для проверки'); process.exit(1); }
   pages.forEach(checkStatic);
   if (!ONLY) {
