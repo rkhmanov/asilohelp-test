@@ -147,6 +147,7 @@
 .acc summary::after { content: ''; flex: none; width: 36px; height: 36px; border-radius: 50%; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 6v12M6 12h12' fill='none' stroke='%23A02538' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/20px no-repeat; transition: transform .3s var(--m-ease, ease); }
 .acc details[open] summary::after { transform: rotate(45deg); }
 .acc details > div { padding: 0 26px 24px; font-size: 14px; line-height: 1.7; color: #5F6068; max-width: 820px; }
+.acc details > div p + p { margin-top: 10px; }
 .acc details > div a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 .acc__more { text-align: center; margin-top: 28px; font-size: 14px; color: var(--sub); }
 .acc__more a { color: var(--accent); font-weight: 500; }
