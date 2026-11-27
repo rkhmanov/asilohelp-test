@@ -341,11 +341,13 @@ section { position: relative; }
 .foot__card { max-width: 1360px; margin-inline: auto; background: #fff; border-radius: 40px; padding: 46px 56px 30px; box-shadow: 0 2px 6px rgba(33,33,41,.05), 0 16px 40px -8px rgba(33,33,41,.14); }
 .foot__top { display: grid; grid-template-columns: 464px 270px 250px 1fr; }
 .foot__top img { width: 234px; height: 38px; }
-.foot__about p { font-size: 12px; line-height: 1.65; color: var(--sub); max-width: 330px; margin-top: 20px; }
-.foot__about p + p { font-size: 11px; line-height: 1.6; color: var(--muted); }
+.foot__about p { font-size: 12px; line-height: 1.65; color: var(--sub); max-width: 349px; margin-top: 20px; }
+.foot__about p + p { font-size: 11px; line-height: 1.6; color: var(--muted); max-width: 330px; }
 .foot__col { display: flex; flex-direction: column; gap: 12px; padding-top: 14px; font-size: 13px; }
 .foot__col b { font-weight: 500; font-size: 11px; letter-spacing: .04em; color: var(--muted); }
 .foot__col a:hover { color: var(--accent); }
+/* подвал: у компьютера и телефона разный состав колонок (Figma 5088:3416 / 5088:3460, source/podval.py) */
+.foot__col--m { display: none; }
 .foot__bottom { border-top: 1px solid #E9E9EC; margin-top: 40px; padding-top: 20px; font-size: 11px; color: var(--muted); }
 
 
@@ -882,6 +884,7 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .foot__about img { width: 170px; height: auto; } .foot__about p { margin-top: 12px; }
   .foot__col { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 16px; padding-top: 0; font-size: 13px; }
   .foot__col b { grid-column: 1 / -1; }
+  .foot__col.foot__col--d { display: none; }
   .foot__bottom { margin-top: 20px; padding-top: 14px; }
 }
 
