@@ -3,3 +3,4 @@ dl.sh
 node_modules/
 tests/shots/
 .reanimate/
+__pycache__/

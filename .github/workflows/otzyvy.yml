@@ -18,11 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Забрать отзывы из бота и пересобрать страницы
-        run: python3 source/reviews_sync.py
+        run: |
+          pip install --quiet pillow  # аватарки авторов → img/rv-ava/*.webp
+          python3 source/reviews_sync.py
       - name: Есть ли изменения
         id: diff
         run: |
-          git add -A source/ *.html
+          git add -A source/ img/rv-ava/ *.html
           if git diff --quiet HEAD; then echo "changed=false" >> "$GITHUB_OUTPUT"; echo "Новых отзывов нет" >> "$GITHUB_STEP_SUMMARY";
           else echo "changed=true" >> "$GITHUB_OUTPUT"; git diff --stat HEAD >> "$GITHUB_STEP_SUMMARY"; fi
       - uses: actions/setup-node@v4
@@ -43,6 +45,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A otzyvy.html index.html konsultacii.html keys.html soprovozhdenie.html source/reviews-auto.json
+          git add -A otzyvy.html index.html konsultacii.html keys.html soprovozhdenie.html source/reviews-auto.json img/rv-ava/
           git commit -m "Новые отзывы из канала «отзывы» ($(date -u +%d.%m.%Y))"
           git push origin HEAD:main

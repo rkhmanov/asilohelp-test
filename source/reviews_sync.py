@@ -9,6 +9,10 @@ src/sitereviews.ts). Отсюда их забираем: GET https://crm.asilohe
 поправить можно руками в reviews-auto.json — при следующем заборе правка сохранится (по id).
 Если отзыв уже есть в старом списке R (source/reviews.py) — второй раз не добавляем.
 
+Аватарки (с 27.11.2026): если автор открыт (photo: true), берем его аватарку у бота (/site/reviews/photo/<id>),
+уменьшаем до 96×96 webp (нужен Pillow) и кладем в img/rv-ava/a<id>.webp; уже скачанные не перекачиваем.
+Нет фото или нет Pillow — на карточке остается первая буква имени.
+
 Запуск: python3 source/reviews_sync.py [--file feed.json]  — потом сам пересобирает otzyvy.html и общие блоки.
 Раз в две недели запускает GitHub Action «Новые отзывы» (.github/workflows/otzyvy.yml).
 """
@@ -28,6 +32,30 @@ def fetch():
     req = urllib.request.Request(URL, headers={'user-agent': 'asilohelp-site-reviews'})
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.loads(r.read().decode('utf-8'))
+
+
+AVA_DIR = HERE.parent / 'img' / 'rv-ava'
+
+
+def avatar(rid):
+    """Аватарка автора отзыва rid → имя файла в img/rv-ava или None."""
+    name = f'a{rid}.webp'
+    if (AVA_DIR / name).exists():
+        return name
+    if '--file' in sys.argv:
+        return None
+    try:
+        from PIL import Image, ImageOps
+        import io
+        req = urllib.request.Request(URL.rstrip('/') + f'/photo/{rid}', headers={'user-agent': 'asilohelp-site-reviews'})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            img = Image.open(io.BytesIO(r.read())).convert('RGB')
+        AVA_DIR.mkdir(parents=True, exist_ok=True)
+        ImageOps.fit(img, (96, 96), Image.LANCZOS).save(AVA_DIR / name, 'WEBP', quality=82)
+        return name
+    except Exception as e:  # 404 — фото нет или автор скрыл профиль
+        print(f'Аватарка {rid}: нет ({e})')
+        return None
 
 
 def services(text):
@@ -71,8 +99,9 @@ def main():
         if not text or key(text) in known:
             continue
         prev = by_id.get(r['id'], {})
+        ava = prev.get('ava') or (avatar(r['id']) if r.get('photo') else None)
         out.append({'id': r['id'], 'date': r['date'], 'name': prev.get('name') or r['name'],
-                    's': prev.get('s') or services(text), 'text': text,
+                    's': prev.get('s') or services(text), 'text': text, **({'ava': ava} if ava else {}),
                     **({'hidden': True} if prev.get('hidden') else {})})
     added = len({r['id'] for r in out} - set(by_id))
     reviews.AUTO.write_text(json.dumps(out, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
