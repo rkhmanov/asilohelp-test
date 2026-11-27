@@ -230,8 +230,8 @@ def zayavka(page, tg_svg):
     return f'''<section class="apply" id="apply">
   <div class="apply__box" data-reveal>
     <div class="apply__bg" aria-hidden="true"><span class="apply__ghost">начинаем?</span></div>
-    <div class="arch" aria-hidden="true"><img src="img/rv-sasha-dog.jpg" alt=""></div>
-    <span class="sticker apply__sticker" aria-hidden="true">Ответим пн–пт</span>
+    <div class="arch" aria-hidden="true"><img src="img/rv-oldtown.jpg" alt=""></div>
+    <span class="sticker apply__sticker" aria-hidden="true">Ответим в течение суток</span>
     <div class="apply__left">
       <h2>¿Empezamos?</h2>
       <p>Расскажите, где вы сейчас и что вас интересует.<br class="only-d"> На бесплатной оценке шансов скажем, подходит ли<br class="only-d"> вам <span class="only-d">международная </span>защита и с чего начать.</p>

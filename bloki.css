@@ -71,7 +71,7 @@
   .apply__ghost { display: block; position: absolute; left: 589px; top: 81px; white-space: nowrap; font-weight: 600; font-size: 110px; line-height: 70.4px; letter-spacing: -3.2px; color: #C3C5CE; opacity: .2; filter: blur(4px); }
   .apply .arch { position: absolute; left: 117.5px; top: -54px; width: 401px; height: 490px; margin: 0; transform: rotate(3deg); }
   .apply .arch img { border-radius: 180px 180px 24px 24px; box-shadow: 0 30px 60px -10px rgba(0,0,0,.3); }
-  .apply__sticker { display: block; position: absolute; left: 373px; top: 338px; bottom: auto; width: 155px; height: 42px; padding: 0; line-height: 42px; text-align: center; transform: rotate(-4deg); font-size: 13px; color: var(--ink); z-index: 2; }
+  .apply__sticker { display: block; position: absolute; left: 373px; top: 338px; bottom: auto; width: auto; height: 42px; padding: 0 16px; white-space: nowrap; line-height: 42px; text-align: center; transform: rotate(-4deg); font-size: 13px; color: var(--ink); z-index: 2; }
   .apply__left { position: absolute; left: 709px; top: 128px; width: 620px; padding: 0; }
   .apply h2 { font-size: 64px; line-height: 70.4px; letter-spacing: -3.2px; }
   .apply__left > p { margin-top: 24.6px; max-width: none; font-size: 16px; line-height: 26.4px; color: #F6DDE2; }
