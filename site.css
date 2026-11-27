@@ -433,8 +433,8 @@ main, .foot { zoom: var(--z, 1); }
 /* шапка: матовое стекло (как «Regular» в iOS 26), всегда видна; размер фиксирован как в макете 1440 — 1360×68 */
 .m-header--stay.is-hidden { transform: none; opacity: 1; pointer-events: auto; }
 .hdr { position: relative; isolation: isolate; width: 100%; max-width: 1360px; height: 68px;
-  background: rgba(255,255,255,.12);
-  -webkit-backdrop-filter: blur(9px) contrast(.45) brightness(1.5) saturate(1.5); backdrop-filter: blur(9px) contrast(.45) brightness(1.5) saturate(1.5);
+  background: rgba(255,255,255,.08);
+  -webkit-backdrop-filter: blur(2px) contrast(.75) brightness(1.2) saturate(1.5); backdrop-filter: blur(2px) contrast(.75) brightness(1.2) saturate(1.5);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 0 0 1px rgba(255,255,255,.6),
               0 12px 32px -10px rgba(33,33,41,.18), 0 2px 6px rgba(33,33,41,.05); }
 .hdr::before { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
@@ -592,12 +592,14 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 .hdr.lg-on::before { display: none; }
 .lg-host { position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; }
 .lg-host > .lg-glass { position: absolute; inset: 0; border-radius: inherit; }
-/* шапка – прозрачное стекло (Саша, 27.11.2026): 12% белого вместо 50%. Читаемость держит не белая заливка, а фильтр под стеклом:
-   contrast(.45) brightness(1.5) поднимает темные фото и красные блоки к светлому, белое остается белым – меню читается поверх любого блока
-   (замер: контраст текста меню не хуже, чем было при 50%). var(--lg-filter) – преломление Glisse, его не трогаем */
-.hdr .lg-glass { background-color: rgb(255 255 255 / .12);
-  -webkit-backdrop-filter: blur(9px) contrast(.45) brightness(1.5) var(--lg-filter, saturate(1.5));
-  backdrop-filter: blur(9px) contrast(.45) brightness(1.5) var(--lg-filter, saturate(1.5)); }
+/* шапка – чистое прозрачное стекло (Саша, 27.11.2026: «до сих пор frozen glass»): 8% белого, размытие всего 2 px – под шапкой видно фото и цвета блоков.
+   Читаемость держат: легкое осветление под стеклом contrast(.75) brightness(1.2) и светлый ореол вокруг пунктов меню и логотипа.
+   var(--lg-filter) – преломление Glisse (искажение по краям), его не трогаем */
+.hdr .lg-glass { background-color: rgb(255 255 255 / .08);
+  -webkit-backdrop-filter: blur(2px) contrast(.75) brightness(1.2) var(--lg-filter, saturate(1.5));
+  backdrop-filter: blur(2px) contrast(.75) brightness(1.2) var(--lg-filter, saturate(1.5)); }
+.hdr nav > a, .hdr .nav-dd__btn { text-shadow: 0 0 1px #fff, 0 0 6px rgb(255 255 255 / .95), 0 0 14px rgb(255 255 255 / .85), 0 0 22px rgb(255 255 255 / .6); }
+.hdr__logo img { filter: drop-shadow(0 0 3px rgb(255 255 255 / .95)) drop-shadow(0 0 10px rgb(255 255 255 / .8)); }
 @media (prefers-reduced-transparency: reduce) { .hdr .lg-glass { background-color: rgb(255 255 255 / .95); } }
 
 /* шапка: «Услуги ⌄» — выпадающий список (glass.js). Кнопка выглядит как обычный пункт меню и остается на месте */

@@ -47,7 +47,7 @@ def head(title, desc, pre, page):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{pre}motion.css?v=18">
-<link rel="stylesheet" href="{pre}site.css?v=47">
+<link rel="stylesheet" href="{pre}site.css?v=48">
 <link rel="stylesheet" href="{pre}pages.css?v={V}">
 <script type="importmap">{{"imports":{{"react":"./{pre}vendor/react/react.mjs","react/jsx-runtime":"./{pre}vendor/react/react.mjs","react-dom/client":"./{pre}vendor/react/react.mjs","glisse":"./{pre}vendor/glisse/index.js"}}}}</script>
 <script type="module" src="{pre}glass.js?v=15"></script>
