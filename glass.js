@@ -197,7 +197,8 @@ if (!off) {
       defaultValue: document.documentElement.dataset.page || null,
       items: [
         { value: "help", label: "Услуги", icon: icons.help, href: anchor("help") },
-        { value: "us", label: "О нас", icon: icons.us, href: home + "o-nas.html" },
+        // «О нас» временно скрыто (Саша, 27.11.2026); вернуть – раскомментировать строку и поменять «/ 4» на «/ 5» в site.css (.tabbar-lg)
+        // { value: "us", label: "О нас", icon: icons.us, href: home + "o-nas.html" },
         { value: "news", label: "Статьи", icon: icons.news, href: home + "stati.html" },
         { value: "faq", label: "Вопросы", icon: icons.faq, href: faqHref },
         { value: "apply", label: "Заявка", icon: icons.apply, href: "https://t.me/ASILOhelperBot?start=site_tabbar_chances" },

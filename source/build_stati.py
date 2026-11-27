@@ -43,10 +43,10 @@ def head(title, desc, pre, page):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{pre}motion.css?v=18">
-<link rel="stylesheet" href="{pre}site.css?v=43">
+<link rel="stylesheet" href="{pre}site.css?v=44">
 <link rel="stylesheet" href="{pre}pages.css?v={V}">
 <script type="importmap">{{"imports":{{"react":"./{pre}vendor/react/react.mjs","react/jsx-runtime":"./{pre}vendor/react/react.mjs","react-dom/client":"./{pre}vendor/react/react.mjs","glisse":"./{pre}vendor/glisse/index.js"}}}}</script>
-<script type="module" src="{pre}glass.js?v=14"></script>
+<script type="module" src="{pre}glass.js?v=15"></script>
 <script>(function(){{var r=document.documentElement;function z(){{var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.2):1);}}z();addEventListener('resize',z);}})();document.documentElement.classList.add('m-js');</script>
 </head>
 <body>
