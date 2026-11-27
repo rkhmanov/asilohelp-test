@@ -1,0 +1,53 @@
+/* Читаемость «Частых вопросов», «Статей» и статей (impeccable, Figma 27.11.2026).
+   Подключен только на voprosy.html, stati.html и stati/*.html – на других страницах сайта ничего не меняет.
+   - серый подписей #777880 → #6B6C74 (контраст 5,2 на белом, 4,8 на сером);
+   - мелкий текст не меньше 14 px на компьютере и 13 px на телефоне;
+   - на телефоне крошки, чипы фильтра и кнопки высотой от 44 px;
+   - статья: колонка текста ~66 знаков (720 px), обложка – мягкий прямоугольник, радиус 24. */
+:root { --sub: #6B6C74; }
+
+/* ── мелкий текст: 14 px ── */
+.crumb, .tag, .chip, .feat__meta,
+.vq-side small, .vq-topics a, .vq-topics a i, .vq-ask p, .vq-ask a, .vq-ask .btn, .vq-reviews,
+.kbx .pill, .kbx__btns .ghost, .kbx__list small, .kbx__list a i, .kbx__list a span,
+.must > small, .must a .n, .must a .n b, .must a span:last-child,
+.filters button, .card p, .card small,
+.short > b, .prose .kbstrip span, .prose .kbstrip em, .src,
+.toc small, .toc a, .toc .up, .hola span, .hola a { font-size: 14px; }
+.kbx__list small, .vq-side small { letter-spacing: .04em; }
+.toc .up { text-transform: none; }
+
+/* ── статья: колонка ~66 знаков, обложка со скруглением 24 ── */
+.prose > * { max-width: 720px; }
+.src { max-width: 720px; }
+.paper__lead { max-width: 800px; }
+.paper__img { border-radius: 24px; }
+
+/* ── «Статьи»: большие карточки чередуются, последние две – по половине ──
+   Сетка из 6 колонок: обычная карточка = 2, большая = 4, половина = 3. */
+@media (min-width: 1101px) {
+  #all { grid-template-columns: repeat(6, 1fr); }
+  #all .card { grid-column: span 2; }
+  #all .card--wide { grid-column: span 4; }
+  #all .card--half { grid-column: span 3; }
+  #all.is-filtered .card { grid-column: span 2; }
+}
+.card--wide.card--right { flex-direction: row-reverse; }
+@media (max-width: 1100px) and (min-width: 601px) { .card--half { grid-column: span 1; } }
+@media (max-width: 600px) { .card--wide.card--right { flex-direction: column; } }
+
+/* ── телефон: мелкий текст 13 px, нажимаемое – от 44 px ── */
+@media (max-width: 600px) {
+  .crumb, .tag, .chip, .feat__meta,
+  .vq-side small, .vq-topics a, .vq-topics a i, .vq-ask p, .vq-ask a, .vq-ask .btn, .vq-reviews,
+  .kbx .pill, .kbx__btns .ghost, .kbx__list small, .kbx__list a i, .kbx__list a span,
+  .must > small, .must a .n, .must a .n b, .must a span:last-child,
+  .filters button, .card p, .card small,
+  .short > b, .prose .kbstrip span, .prose .kbstrip em, .src,
+  .toc small, .toc a, .toc .up, .hola span, .hola a { font-size: 13px; }
+  .crumb { align-items: center; }
+  .crumb a { display: inline-flex; align-items: center; min-height: 44px; }
+  .filters button { min-height: 44px; }
+  .vq-topics a { min-height: 44px; }
+  .kbx__btns .ghost { display: inline-flex; align-items: center; min-height: 44px; }
+}

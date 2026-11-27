@@ -5,7 +5,7 @@ cat: Кейс
 img: stati/kejs.webp
 pos: 50% 20%
 lead: Кейс – письменная история, на которую опирается весь запрос на защиту. Разбираем, из каких частей он состоит, что в нем писать и каких ошибок избегать.
-order: 7
+order: 8
 source: Кейс | https://asiloinspain.notion.site/312dba7d8a1c81ebbb8ad267fdc0087e
 ---
 :::short

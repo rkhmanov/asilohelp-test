@@ -4,7 +4,7 @@ short: Cita previa: как получить запись
 cat: Документы
 img: stati/cita-previa.webp
 lead: Без ситы в Испании не попасть ни на подачу запроса о защите, ни на отпечатки для карты. Объясняем, как ловить запись самостоятельно, когда обновляются слоты и как ускорить процесс расширением AutoFill.
-order: 11
+order: 10
 source: Cita Previa: как получить? | https://asiloinspain.notion.site/312dba7d8a1c81bbba60c304df191653; Как поймать СИТУ? | https://asiloinspain.notion.site/312dba7d8a1c8123b6ddf78c648d89d1; Как ловить ситу с помощью расширения Autofill | https://asiloinspain.notion.site/334dba7d8a1c80509450d8020c7d7202; Как взять ситу на TIE? | https://asiloinspain.notion.site/312dba7d8a1c81508430f7427510b838
 ---
 :::short
