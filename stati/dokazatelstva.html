@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="../motion.css?v=18">
 <link rel="stylesheet" href="../site.css?v=49">
 <link rel="stylesheet" href="../pages.css?v=1">
+<link rel="stylesheet" href="../bloki.css?v=10">
 <script type="importmap">{"imports":{"react":"./../vendor/react/react.mjs","react/jsx-runtime":"./../vendor/react/react.mjs","react-dom/client":"./../vendor/react/react.mjs","glisse":"./../vendor/glisse/index.js"}}</script>
 <script type="module" src="../glass.js?v=15"></script>
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.2):1);}z();addEventListener('resize',z);})();document.documentElement.classList.add('m-js');</script>
@@ -46,7 +47,7 @@
         <header class="paper__head">
           <span class="tag">Кейс</span>
           <h1>Доказательства для&nbsp;ЛГБТ-кейса</h1>
-          <div class="meta"><span><span class="ava" aria-hidden="true">a</span><b>Команда asilohelp</b></span><span>4&nbsp;мин чтения</span><span>Обновлено: 23.11.2026</span></div>
+          <div class="meta"><span>4&nbsp;мин чтения</span><span>Обновлено: 23.11.2026</span></div>
           <p class="paper__lead">Какие доказательства можно приложить к&nbsp;кейсу на&nbsp;международную защиту, как оформить письма свидетелей и&nbsp;почему поддельные документы только навредят.</p>
           <div class="share"><button type="button" data-share>Поделиться</button><button type="button" data-copy>Скопировать ссылку</button><a href="https://t.me/share/url?url=https%3A%2F%2Fasilohelp.com%2Fstati%2Fdokazatelstva" target="_blank" rel="noopener">Отправить в&nbsp;Telegram</a></div>
         </header>
@@ -114,18 +115,23 @@
       <div class="grid" data-reveal-group="0.08"><a class="card m-card" href="../stati/kejs.html" data-cat="Кейс" data-reveal><div class="card__img"><img src="../img/stati/kejs.webp" alt="" loading="lazy" style="object-position:50% 20%"><span class="chip">Кейс</span></div><div class="card__body"><h3>Как написать кейс</h3><p>Кейс&nbsp;– письменная история, на&nbsp;которую опирается весь запрос на&nbsp;защиту. Разбираем, из&nbsp;каких частей он&nbsp;состоит, что в&nbsp;нем писать и&nbsp;каких ошибок избегать.</p><small>5&nbsp;мин чтения</small></div></a><a class="card m-card" href="../stati/podacha-v-ispanii.html" data-cat="Подача" data-reveal><div class="card__img"><img src="../img/stati/podacha-v-ispanii.webp" alt="" loading="lazy"><span class="chip">Подача</span></div><div class="card__body"><h3>Первый визит в&nbsp;полицию</h3><p>Как взять ситу, что взять с&nbsp;собой в&nbsp;участок и&nbsp;что происходит на&nbsp;первом визите, когда вы&nbsp;регистрируете намерение просить международную защиту.</p><small>5&nbsp;мин чтения</small></div></a><a class="card m-card" href="../stati/podacha-v-aeroportu.html" data-cat="Подача" data-reveal><div class="card__img"><img src="../img/stati/podacha-v-aeroportu.webp" alt="" loading="lazy" style="object-position:50% 15%"><span class="chip">Подача</span></div><div class="card__body"><h3>Подача в&nbsp;аэропорту</h3><p>Можно&nbsp;ли&nbsp;попросить защиту прямо на&nbsp;границе, что для&nbsp;этого нужно гражданам России и&nbsp;как устроены первые дни в&nbsp;закрытом центре при&nbsp;аэропорту.</p><small>6&nbsp;мин чтения</small></div></a></div>
     </section>
 
-    <section class="cta" data-reveal>
-      <div>
-        <h2>Хотите пройти этот путь<br class="br-d"> с&nbsp;командой?</h2>
-        <p>Оценка шансов&nbsp;— бесплатно. Расскажите о&nbsp;ситуации, и&nbsp;мы&nbsp;честно скажем, подходит&nbsp;ли&nbsp;вам защита и&nbsp;с&nbsp;чего начать.</p>
-        <div class="btns">
-          <a class="btn btn--dark m-btn" href="https://t.me/ASILOhelperBot?start=site_statya_cta_start" target="_blank" rel="noopener">Оставить заявку <span class="dot-arr" aria-hidden="true">↗</span></a>
-          <a class="btn btn--glass m-btn" href="https://t.me/ASILOhelperBot?start=site_artdokazatelstva_start" target="_blank" rel="noopener">Оценить шансы в&nbsp;боте</a>
-        </div>
-      </div>
-      <div class="cta__hola" aria-hidden="true">¿Hablamos?<span>¡Sí, vamos!</span></div>
-    </section>
   </div>
+<!-- blok:zayavka -->
+<section class="apply" id="apply">
+  <div class="apply__box" data-reveal>
+    <div class="apply__bg" aria-hidden="true"><span class="apply__ghost">начинаем?</span></div>
+    <div class="arch" aria-hidden="true"><img src="../img/rv-oldtown.jpg" alt=""></div>
+    <span class="sticker apply__sticker" aria-hidden="true">Ответим в&nbsp;течение суток</span>
+    <div class="apply__left">
+      <h2>¿Empezamos?</h2>
+      <p>Расскажите, где вы&nbsp;сейчас и&nbsp;что вас интересует.<br class="only-d"> На&nbsp;бесплатной оценке шансов скажем, подходит&nbsp;ли<br class="only-d"> вам <span class="only-d">международная </span>защита и&nbsp;с&nbsp;чего начать.</p>
+      <a class="tg m-btn" href="https://t.me/ASILOhelperBot?start=site_artdokazatelstva_apply_start" target="_blank" rel="noopener"><span class="tg__ava" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M21.4 4.1 2.9 11.3c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.4-1.6Zm-3.7 3.4-8.4 7.6-.3 3.3-1.5-4.7 9.8-6.2c.5-.3.8 0 .4 0Z"/></svg></span><span class="tg__txt"><small>Оставьте заявку в</small><b>@ASILOhelperBot</b></span><img class="tg__go m-arrow" src="../img/arrow-red44.svg" alt="" width="40" height="40"></a>
+      <p class="apply__note">Общение с&nbsp;нами не&nbsp;нарушает законы РФ. Мы&nbsp;не&nbsp;передаем данные третьим лицам.</p>
+    </div>
+  </div>
+</section>
+<!-- /blok:zayavka -->
+
 </main>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Доказательства для ЛГБТ-кейса", "inLanguage": "ru", "author": {"@type": "Organization", "name": "asilohelp"}, "dateModified": "2026-11-23"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Будут ли проверять моих свидетелей?", "acceptedAnswer": {"@type": "Answer", "text": "Обычно нет. Свидетелей не обзванивают и не проверяют через место работы, а данные из дела не передают властям страны происхождения."}}, {"@type": "Question", "name": "Сколько писем свидетелей нужно?", "acceptedAnswer": {"@type": "Answer", "text": "В кейс можно включить 5–7 писем от разных людей. Объем одного письма – одна страница А4, максимум две."}}, {"@type": "Question", "name": "Что делать, если у меня нет документов из полиции?", "acceptedAnswer": {"@type": "Answer", "text": "Они не обязательны. Соберите то, что можно получить официально: справки врачей, переписку, фото, письма свидетелей. Подделывать документы нельзя."}}, {"@type": "Question", "name": "Можно ли собирать доказательства уже в Испании?", "acceptedAnswer": {"@type": "Answer", "text": "Да, часть документов можно собрать и оттуда. Но справки и письма проще получить, пока вы дома."}}]}</script>

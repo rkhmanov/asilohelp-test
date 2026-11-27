@@ -15,6 +15,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from tipograf import typo  # noqa: E402  висячие предлоги
 from podval import podval  # noqa: E402  общий подвал
+import bloki  # noqa: E402  общий блок заявки «¿Empezamos?»
 
 try:
     import markdown
@@ -50,6 +51,7 @@ def head(title, desc, pre, page):
 <link rel="stylesheet" href="{pre}motion.css?v=18">
 <link rel="stylesheet" href="{pre}site.css?v=49">
 <link rel="stylesheet" href="{pre}pages.css?v={V}">
+<link rel="stylesheet" href="{pre}bloki.css?v=10">
 <script type="importmap">{{"imports":{{"react":"./{pre}vendor/react/react.mjs","react/jsx-runtime":"./{pre}vendor/react/react.mjs","react-dom/client":"./{pre}vendor/react/react.mjs","glisse":"./{pre}vendor/glisse/index.js"}}}}</script>
 <script type="module" src="{pre}glass.js?v=15"></script>
 <script>(function(){{var r=document.documentElement;function z(){{var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.2):1);}}z();addEventListener('resize',z);}})();document.documentElement.classList.add('m-js');</script>
@@ -255,7 +257,7 @@ def article_page(a, arts):
         <header class="paper__head">
           <span class="tag">{html.escape(a['cat'])}</span>
           <h1>{html.escape(a['title'])}</h1>
-          <div class="meta"><span><span class="ava" aria-hidden="true">a</span><b>Команда asilohelp</b></span><span>{a['min']} мин чтения</span><span>Обновлено: {TODAY}</span></div>
+          <div class="meta"><span>{a['min']} мин чтения</span><span>Обновлено: {TODAY}</span></div>
           <p class="paper__lead">{html.escape(a['lead'])}</p>
           <div class="share"><button type="button" data-share>Поделиться</button><button type="button" data-copy>Скопировать ссылку</button><a href="https://t.me/share/url?url=https%3A%2F%2Fasilohelp.com%2Fstati%2F{a['slug']}" target="_blank" rel="noopener">Отправить в Telegram</a></div>
         </header>
@@ -276,8 +278,9 @@ def article_page(a, arts):
       <div class="grid" data-reveal-group="0.08">{''.join(card(x, pre) for x in nxt)}</div>
     </section>
 
-    {cta(pre, place)}
   </div>
+{bloki.blok('zayavka', bloki.zayavka('stati/' + a['slug'] + '.html'))}
+
 </main>
 {jsonld}
 """ + foot(pre, ART_JS)
@@ -367,8 +370,9 @@ def list_page(arts):
       <div class="grid" id="all" data-reveal-group="0.06">{grid}</div>
     </section>
 
-    {cta(pre, "articles")}
   </div>
+{bloki.blok('zayavka', bloki.zayavka('stati.html'))}
+
 </main>
 """ + foot(pre, LIST_JS)
 
