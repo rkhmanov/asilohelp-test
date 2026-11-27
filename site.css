@@ -1107,7 +1107,9 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
   .b--crew .crew__top { min-height: 55px; }
   .b--crew .crew__roles span { white-space: nowrap; } /* роли в одну строку, как в макете */
   .b--crew .crew__n { position: absolute; left: 445px; top: 154px; line-height: 17px; }
-  .b--crew .crew__n b { position: absolute; left: -69px; top: -142px; font-size: 150px; line-height: 1; letter-spacing: -2.2px; margin: 0; }
+  /* правый край цифры закреплен (было left: -69px): пока идет счет, «10» шире «11» и вылезало за плашку вправо (Саша 27.11);
+     теперь лишняя ширина уходит влево, а готовое «11» стоит ровно там же */
+  .b--crew .crew__n b { position: absolute; right: -8px; top: -142px; font-size: 150px; line-height: 1; letter-spacing: -2.2px; margin: 0; }
   /* «и главное»: рукописная стрелка вниз к базе знаний, как в макете (1139, 5745, 87×100) */
   .free .free__arrow { display: block; left: 1111px; top: 784px; width: 88px; transform: rotate(122deg); }
   /* заявка: форма как в макете (688, 8410) */
