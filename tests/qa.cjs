@@ -162,7 +162,7 @@ async function checkBrowser() {
               }
             }
           }
-          const stuck = [...document.querySelectorAll('[data-reveal]:not(.is-shown)')].map(e => e.className || e.tagName);
+          const stuck = [...document.querySelectorAll('[data-reveal]:not(.is-shown)')].filter(e => getComputedStyle(e).display !== 'none').map(e => e.className || e.tagName);
           return { sw: document.documentElement.scrollWidth, W, wide: wide.slice(0, 5), stuck: stuck.slice(0, 5), stuckN: stuck.length };
         });
         if (process.env.QA_DEBUG) console.log(where, JSON.stringify(r));

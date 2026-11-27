@@ -104,7 +104,7 @@ HOME_REEL = [
 STRANICY = {
     'index.html':          dict(s=None, more=('otzyvy.html', None, 'целиком'), sub='что они пишут о работе с нами',
                                 reel_tag='site_reel_chances', apply_tag='site_apply_chances'),
-    'konsultacii.html':    dict(s='cl', more=('otzyvy.html#konsultacii', 'c', 'о консультациях'), sub='что пишут после консультаций',
+    'konsultacii.html':    dict(s='cl', more=('otzyvy.html#konsultacii', 'cl', 'о консультациях'), sub='что пишут после консультаций',
                                 reel_tag='site_konsult_reel_chances', apply_tag='site_konsult_apply_chances'),
     'keys.html':           dict(s='k', more=('otzyvy.html#keys', 'k', 'о работе с кейсом'), sub='что пишут о работе с кейсом',
                                 reel_tag='site_keys_reel_case', apply_tag='site_keys_apply_case'),

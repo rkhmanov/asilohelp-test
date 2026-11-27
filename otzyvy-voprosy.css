@@ -133,8 +133,7 @@
   .rvf { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding: 2px 16px 6px; scrollbar-width: none; margin-top: 28px; }
   .rvf::-webkit-scrollbar { display: none; }
   .rvf button { flex: none; }
-  .rv-sum b { font-size: 30px; }
-  .rv-sum { gap: 14px 28px; }
+  .rv-sum { display: none; } /* телефон: строку цифр убрали (Саша, 27.11) */
   .rvg { columns: 1; }
   .rvc { padding: 24px 20px 18px; border-radius: 20px; }
   .rvc:nth-child(5n+2) { border-top-right-radius: 56px; }

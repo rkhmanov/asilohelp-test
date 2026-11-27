@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="motion.css?v=18">
 <link rel="stylesheet" href="site.css?v=43">
 <link rel="stylesheet" href="pages.css?v=1">
-<link rel="stylesheet" href="otzyvy-voprosy.css?v=1">
+<link rel="stylesheet" href="otzyvy-voprosy.css?v=2">
 <link rel="stylesheet" href="bloki.css?v=10">
 <script type="importmap">{"imports":{"react":"./vendor/react/react.mjs","react/jsx-runtime":"./vendor/react/react.mjs","react-dom/client":"./vendor/react/react.mjs","glisse":"./vendor/glisse/index.js"}}</script>
 <script type="module" src="glass.js?v=14"></script>
@@ -45,19 +45,18 @@
     <nav class="crumb" aria-label="Вы здесь"><a href="index.html">Главная</a><span>/</span><span aria-current="page">Отзывы</span></nav>
     <div class="pg-head rv-head" data-reveal style="margin-top:22px">
       <h1>Что говорят<span>те, кто уже прошел путь</span></h1>
-      <p>Это реальные люди: отзывы пришли нам в Telegram после консультаций, работы над кейсом и сопровождения. Публикуем без фамилий авторов.</p>
+      <p>Мало кто готов делиться отзывом открыто: большинство людей хотят сохранить анонимность, и мы это уважаем. Здесь – те, кто решил поддержать нас публично и сказать спасибо за работу.</p>
     </div>
 
     <div class="rv-sum" data-reveal>
-      <div><b>27</b><span>отзывов с 2023 года</span></div>
+      <div><b>30+</b><span>открытых отзывов</span></div>
       <div><b>187</b><span>людей переехали<br>с нами в Испанию</span></div>
       <div><b>с 2022</b><span>помогаем ЛГБТ-людям<br>запросить защиту</span></div>
     </div>
 
     <div class="rvf" role="group" aria-label="Показать отзывы об услуге">
       <button type="button" data-f="all" aria-pressed="true">Все <i>27</i></button>
-      <button type="button" id="konsultacii" data-f="c" aria-pressed="false">Консультации <i>17</i></button>
-      <button type="button" id="yurist" data-f="l" aria-pressed="false">Консультации юриста <i>5</i></button>
+      <button type="button" id="konsultacii" data-f="cl" aria-pressed="false">Консультации <i>22</i></button>
       <button type="button" id="keys" data-f="k" aria-pressed="false">Работа с кейсом <i>4</i></button>
       <button type="button" id="viza" data-f="v" aria-pressed="false">Виза <i>3</i></button>
       <button type="button" id="soprovozhdenie" data-f="s" aria-pressed="false">Сопровождение <i>5</i></button>
@@ -136,10 +135,11 @@
   const btns = [...document.querySelectorAll('.rvf button')];
   function show(f) {
     btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === f)));
-    cards.forEach(c => { c.hidden = f !== 'all' && !c.dataset.s.includes(f); if (!c.hidden) c.classList.add('is-shown'); });
+    cards.forEach(c => { c.hidden = f !== 'all' && ![...f].some(ch => c.dataset.s.includes(ch)); if (!c.hidden) c.classList.add('is-shown'); });
   }
   btns.forEach(b => b.addEventListener('click', () => { show(b.dataset.f); history.replaceState(null, '', b.dataset.f === 'all' ? location.pathname : '#' + b.id); }));
-  const start = btns.find(b => b.id && '#' + b.id === location.hash);
+  const hash = location.hash === '#yurist' ? '#konsultacii' : location.hash; // «Консультации юриста» слиты с «Консультациями» 27.11
+  const start = btns.find(b => b.id && '#' + b.id === hash);
   if (start) show(start.dataset.f);
   document.querySelectorAll('.rvc__more').forEach(b => b.addEventListener('click', () => {
     const card = b.closest('.rvc'), open = card.classList.toggle('open');

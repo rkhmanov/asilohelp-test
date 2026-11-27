@@ -10,7 +10,7 @@
 Первая буква — главная, по ней подпись на карточке.
 
 Запуск: python3 source/reviews.py — перезапишет блок между <!-- reviews:start --> и <!-- reviews:end --> в otzyvy.html,
-счётчики в фильтре и «N отзывов с 2023 года».
+счётчики в фильтре и «30+ открытых отзывов» в шапке (headline).
 
 Новые отзывы (с 26.11.2026) — автоматически: бот @ASILOhelperBot записывает каждый новый пост канала, раз в две недели
 GitHub Action «Новые отзывы» (.github/workflows/otzyvy.yml → source/reviews_sync.py) кладёт их в source/reviews-auto.json
@@ -101,9 +101,19 @@ def all_reviews():
     return sorted(auto() + R, key=lambda r: r[1], reverse=True)
 
 
+def has(r, s):
+    """Отзыв подходит под фильтр s — одна или несколько букв услуг («cl» — все консультации)."""
+    return any(ch in r[2] for ch in s)
+
+
 def count(s=None):
-    """Сколько отзывов (s — буква услуги, как в фильтре)."""
-    return sum(1 for r in all_reviews() if s is None or s in r[2])
+    """Сколько отзывов (s — буквы услуги, как в фильтре)."""
+    return sum(1 for r in all_reviews() if s is None or has(r, s))
+
+
+def headline(n):
+    """Число в шапке страницы: «30+» (так решил Саша 27.11), дальше круглые десятки — «40+», «50+»."""
+    return f'{max(30, n // 10 * 10)}+'
 
 
 def plural(n):
@@ -138,10 +148,10 @@ def main():
     rs = all_reviews()
     block = '\n'.join(card(*r) for r in rs)
     src = re.sub(r'(<!-- reviews:start -->).*?(<!-- reviews:end -->)', lambda m: m.group(1) + '\n' + block + '\n' + m.group(2), src, flags=re.S)
-    for k in ['all', *'clksv']:
-        n = len(rs) if k == 'all' else sum(k in r[2] for r in rs)
+    for k in ['all', 'cl', 'k', 's', 'v']:  # «Консультации» и «Консультации юриста» — один фильтр (Саша, 27.11)
+        n = len(rs) if k == 'all' else sum(has(r, k) for r in rs)
         src = re.sub(rf'(data-f="{k}"[^>]*>[^<]*<i>)\d*(</i>)', rf'\g<1>{n}\g<2>', src)
-    src = re.sub(r'(<div class="rv-sum"[^>]*>\s*<div><b>)\d+(</b><span>)[^<]*', lambda m: f'{m.group(1)}{len(rs)}{m.group(2)}{plural(len(rs))} с 2023 года', src)
+    src = re.sub(r'(<div class="rv-sum"[^>]*>\s*<div><b>)[^<]*(</b><span>)[^<]*', lambda m: f'{m.group(1)}{headline(len(rs))}{m.group(2)}открытых отзывов', src)
     page.write_text(src, encoding='utf-8')
     print(len(rs), plural(len(rs)), f'(новых из канала: {len(auto())})')
 
