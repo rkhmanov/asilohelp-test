@@ -24,9 +24,12 @@
 .rv--you > span:first-child { position: absolute; left: 0; right: 0; top: 149px; font-weight: 500; font-size: 14px; line-height: 19.6px; color: var(--accent); text-align: center; }
 .rv__cta { position: absolute; left: 50%; top: 262px; transform: translateX(-50%); height: 42px; padding: 0 20px; display: inline-flex; align-items: center; white-space: nowrap;
   border-radius: 999px; background: var(--accent); color: #fff; font-weight: 600; font-size: 13px; box-shadow: 0 8px 18px rgba(161,38,56,.35); transition: background-color .3s ease; }
-/* Саша 26.11: ссылка в бота – вся карточка; кнопка на месте при наведении (раньше подъем m-btn сбивал translateX, и она улетала вбок) */
-.rv--you { cursor: pointer; }
-.rv--you:hover .rv__cta, .rv--you:focus-visible .rv__cta { background: var(--accent-hover); }
+/* Саша 26.11: кнопка на месте при наведении (раньше подъем m-btn сбивал translateX, и она улетала вбок) */
+.rv--you { cursor: default; }
+/* Саша 27.11: кликается только кнопка; при наведении темнеет и тень ярче, но не двигается */
+.rv__cta { cursor: pointer; transition: background-color .3s ease, box-shadow .3s ease; }
+.rv__cta:hover, .rv__cta:focus-visible { background: var(--accent-hover); box-shadow: 0 10px 24px rgba(131,38,38,.5); outline: none; }
+.rv__cta:focus-visible { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--accent); }
 .reel--tap .rv--you { pointer-events: auto; }
 /* тень карточек не обрезается краем ленты */
 .reviews .reel--tap { padding-top: 30px; padding-bottom: 40px; margin-bottom: -40px; }

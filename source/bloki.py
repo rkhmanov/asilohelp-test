@@ -148,9 +148,11 @@ def ph_card(o, shape, r, front, foto=None):
 
 
 def you_card(cfg, attrs=''):
-    """«Здесь может быть ваше фото»: ссылка в бота – вся карточка (Саша, 26.11), кнопка внутри только для вида."""
-    return (f'<a class="rv rv--you"{attrs} href="{BOT}{cfg["reel_tag"]}" target="_blank" rel="noopener" draggable="false">'
-            f'<span>Здесь может<br>быть ваше фото</span><span class="rv__cta">Оставить заявку</span></a>')
+    """«Здесь может быть ваше фото»: кликается только кнопка (Саша, 27.11), ведет в бота на главное меню со всеми услугами
+    (метка ленты с целью start: site_reel_chances → site_reel_start)."""
+    tag = re.sub(r'_[a-z]+$', '', cfg['reel_tag']) + '_start'
+    return (f'<div class="rv rv--you"{attrs}><span>Здесь может<br>быть ваше фото</span>'
+            f'<a class="rv__cta" href="{BOT}{tag}" target="_blank" rel="noopener" draggable="false">Оставить заявку</a></div>')
 
 
 def otzyvy_home(cfg):
