@@ -17,6 +17,8 @@ jobs:
         run: python3 source/bloki.py --check
       - name: FAQ на всех страницах совпадает с source/voprosy.py
         run: python3 source/voprosy.py --check
+      - name: Висячих предлогов нет (source/tipograf.py)
+        run: python3 source/tipograf.py --check
       - name: Playwright и Chromium
         run: |
           npm i --no-save --no-package-lock playwright@1.63.0

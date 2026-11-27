@@ -11,6 +11,10 @@
 """
 import html, json, pathlib, re, sys
 
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from tipograf import typo  # noqa: E402  висячие предлоги
+
 try:
     import markdown
 except ImportError:
@@ -397,10 +401,10 @@ def main():
     for old in OUT.glob("*.html"):
         old.unlink()
     for a in arts:
-        (OUT / f"{a['slug']}.html").write_text(article_page(a, arts), encoding="utf-8")
-    (ROOT / "stati.html").write_text(list_page(arts).replace("start=site_statya_", "start=site_stati_"), encoding="utf-8")  # метка кнопок: site_stati_…
+        (OUT / f"{a['slug']}.html").write_text(typo(article_page(a, arts)), encoding="utf-8")
+    (ROOT / "stati.html").write_text(typo(list_page(arts).replace("start=site_statya_", "start=site_stati_")), encoding="utf-8")  # метка кнопок: site_stati_…
     if (ROOT / "source" / "o-nas.body.html").exists():
-        (ROOT / "o-nas.html").write_text(about_page().replace("start=site_statya_", "start=site_onas_"), encoding="utf-8")  # метка кнопок: site_onas_…
+        (ROOT / "o-nas.html").write_text(typo(about_page().replace("start=site_statya_", "start=site_onas_")), encoding="utf-8")  # метка кнопок: site_onas_…
     print(f"статей: {len(arts)} → stati/, stati.html" + (", o-nas.html" if (ROOT / 'o-nas.html').exists() else ""))
 
 

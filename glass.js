@@ -70,7 +70,7 @@ function mount(where, el) {
     const help = document.getElementById("help") ? "#help" : home + "index.html#help";
     const items = [
       ["Консультации", BOT + "site_uslugi_consult", ico("M4 5h16v11H9l-5 4z", "M8 9.5h8", "M8 12.5h5")],
-      ["Работа с кейсом", BOT + "site_uslugi_caseinfo", ico("M3.5 6.5h6l2 2h9v10.5h-17z", "M8 13.5h8")],
+      ["Работа с\u00a0кейсом", BOT + "site_uslugi_caseinfo", ico("M3.5 6.5h6l2 2h9v10.5h-17z", "M8 13.5h8")],
       ["Сопровождение", BOT + "site_uslugi_soprinfo", ico("M12 21s6.5-5.6 6.5-11a6.5 6.5 0 0 0-13 0c0 5.4 6.5 11 6.5 11z", "M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z")],
       null,
       ["Все услуги", help, ico("M4 4h7v7H4z", "M13 4h7v7h-7z", "M4 13h7v7H4z", "M13 13h7v7h-7z")],

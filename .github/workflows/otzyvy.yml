@@ -18,7 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Забрать отзывы из бота и пересобрать страницы
-        run: python3 source/reviews_sync.py
+        run: |
+          python3 source/reviews_sync.py
+          python3 source/tipograf.py
       - name: Есть ли изменения
         id: diff
         run: |
@@ -31,7 +33,9 @@ jobs:
           node-version: 22
       - name: Общие блоки совпадают с source/bloki.py
         if: steps.diff.outputs.changed == 'true'
-        run: python3 source/bloki.py --check
+        run: |
+          python3 source/bloki.py --check
+          python3 source/tipograf.py --check
       - name: Проверка сайта
         if: steps.diff.outputs.changed == 'true'
         run: |

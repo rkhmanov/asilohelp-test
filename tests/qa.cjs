@@ -8,10 +8,12 @@
 //   • на неготовые страницы услуг (konsultacii, keys, soprovozhdenie) ссылок нет – вместо них разделы бота _consult/_caseinfo/_soprinfo (Саша, 26.11.2026);
 //   • нет цен сопровождения (990/1190/1690/1990 €), кроме скрытой soprovozhdenie.html (Саша, 26.11.2026);
 //   • FAQ (voprosy.html, главная, страницы услуг) совпадает с единым источником source/voprosy.py (Саша, 27.11.2026);
+//   • висячих предлогов нет: source/tipograf.py --check (короткие слова, числа, тире привязаны &nbsp; – Саша, 27.11.2026);
 //   • кнопки «Оставить заявку», «Оценить шансы», «Записаться» ведут в бота, а не на форму #apply (Саша, 24.11.2026; архивные и пробные страницы не в счет).
 // В браузере (Chromium из Playwright) на ширине 360, 390, 768 и 1440:
 //   • нет ошибок JavaScript и битых локальных файлов;
 //   • нет горизонтальной прокрутки;
+//   • в тексте на странице (и в том, что дописал JS) нет короткого слова перед обычным пробелом – висячего предлога;
 //   • после прокрутки все блоки с data-reveal показались (анимация появления не застряла);
 //   • главная: стекло подключилось, «Мы справимся» раскрывается, карточка услуги ведет в раздел бота, якоря не пишут # в адрес, ссылки index.html#help и т.п. с других страниц открывают главную на этом блоке, шапка прячется/возвращается, «Заявка» в нижнем меню ведет в бота.
 // --shots сохраняет скриншоты во tests/shots/ (папка в .gitignore).
@@ -167,11 +169,18 @@ async function checkBrowser() {
               }
             }
           }
+          // висячие предлоги: короткое слово, после него обычный (разрывный) пробел – как в source/tipograf.py
+          const hang = /(?<![\p{L}\p{N}_\-’'&])(\p{L}{1,2}|для|без|над|под|про|при|обо|изо|ото|или)[ \t\r\n]+(?=\S)/giu;
+          const num = /(?<![\p{L}\p{N}_.,])(\d+|№)[ \t\r\n]+(?=[\p{L}\p{N}€$%«(])/gu;
+          const hangs = [];
+          const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement.closest('script, style, textarea, pre, code, svg, noscript, [data-sk], [data-notypo]') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+          while (tw.nextNode()) { const v = tw.currentNode.nodeValue; for (const re of [hang, num]) { re.lastIndex = 0; let m; while ((m = re.exec(v)) && hangs.length < 50) hangs.push('…' + v.slice(Math.max(0, m.index - 15), m.index + 25).replace(/\s+/g, ' ') + '…'); } }
           const stuck = [...document.querySelectorAll('[data-reveal]:not(.is-shown)')].filter(e => getComputedStyle(e).display !== 'none').map(e => e.className || e.tagName);
-          return { sw: document.documentElement.scrollWidth, W, wide: wide.slice(0, 5), stuck: stuck.slice(0, 5), stuckN: stuck.length };
+          return { sw: document.documentElement.scrollWidth, W, wide: wide.slice(0, 5), stuck: stuck.slice(0, 5), stuckN: stuck.length, hangs };
         });
         if (process.env.QA_DEBUG) console.log(where, JSON.stringify(r));
         if (r.sw > r.W + 1) err(where, `горизонтальная прокрутка ${r.sw - r.W}px: ${r.wide.join('; ')}`);
+        if (r.hangs.length && !/arhiv|animacii/.test(file)) err(where, `висячие предлоги (${r.hangs.length}): ${r.hangs.slice(0, 3).join('; ')} – запустите python3 source/tipograf.py`);
         if (r.stuckN) err(where, `${r.stuckN} блок(ов) data-reveal не показались: ${r.stuck.join('; ')}`);
         if (SHOTS) await page.screenshot({ path: path.join(__dirname, 'shots', `${file.replace(/[\\/]/g, '_').replace(/\.html$/, '')}-${vp.name}.png`), fullPage: true });
         await page.close();
@@ -306,6 +315,8 @@ async function checkInteractions(browser, base) {
   if (!ONLY) {
     try { require('child_process').execFileSync('python3', ['-B', path.join(ROOT, 'source/voprosy.py'), '--check'], { stdio: 'pipe' }); }
     catch (e) { err('source/voprosy.py', String(e.stderr || e.message).trim()); }
+    try { require('child_process').execFileSync('python3', ['-B', path.join(ROOT, 'source/tipograf.py'), '--check'], { stdio: 'pipe' }); }
+    catch (e) { err('source/tipograf.py', String(e.stderr || e.message).trim()); }
   }
   await checkBrowser();
   console.log(`Страниц: ${pages.length} (${pages.join(', ')})`);
