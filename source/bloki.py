@@ -243,7 +243,7 @@ def zayavka(page, tg_svg=None):
       <h2>¿Empezamos?</h2>
       <p>Расскажите, где вы сейчас и что вас интересует.<br class="only-d"> На бесплатной оценке шансов скажем, подходит ли<br class="only-d"> вам <span class="only-d">международная </span>защита и с чего начать.</p>
       <a class="tg m-btn" href="{BOT}{tag}" target="_blank" rel="noopener"><span class="tg__ava" aria-hidden="true">{tg_svg}</span><span class="tg__txt"><small>Оставьте заявку в</small><b>@ASILOhelperBot</b></span><img class="tg__go m-arrow" src="{pre}img/arrow-red44.svg" alt="" width="40" height="40"></a>
-      <p class="apply__note">Общение с нами не нарушает законы РФ. Мы не передаем данные третьим лицам.</p>
+      <p class="apply__note">Мы не передаем информацию третьим лицам. Общение с нами не нарушает законы России.</p>
     </div>
   </div>
 </section>'''

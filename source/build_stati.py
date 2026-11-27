@@ -25,6 +25,7 @@ except ImportError:
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "source" / "stati"
 OUT = ROOT / "stati"
+CHIT = '\n<link rel="stylesheet" href="{pre}chitaemost.css?v=1">'  # «Статьи» и статьи, не «О нас»
 V = "1"  # версия pages.css в ссылке — поднимать после правки стилей
 BOT = "https://t.me/ASILOhelperBot?start="
 CATS = ["Основы", "Подача", "Кейс", "Интервью", "До отъезда", "Документы", "Жизнь в Испании"]
@@ -40,7 +41,7 @@ def head(title, desc, pre, page):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>{html.escape(title)} — asilohelp (тестовая версия)</title>
+<title>{html.escape(title)} – asilohelp (тестовая версия)</title>
 <meta name="description" content="{html.escape(desc)}">
 <link rel="icon" href="{pre}img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="{pre}img/favicon-32.png" sizes="32x32" type="image/png">
@@ -50,7 +51,7 @@ def head(title, desc, pre, page):
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{pre}motion.css?v=18">
 <link rel="stylesheet" href="{pre}site.css?v=49">
-<link rel="stylesheet" href="{pre}pages.css?v={V}">
+<link rel="stylesheet" href="{pre}pages.css?v={V}">{CHIT.format(pre=pre) if page in ("news", "faq") else ""}
 <link rel="stylesheet" href="{pre}bloki.css?v=10">
 <script type="importmap">{{"imports":{{"react":"./{pre}vendor/react/react.mjs","react/jsx-runtime":"./{pre}vendor/react/react.mjs","react-dom/client":"./{pre}vendor/react/react.mjs","glisse":"./{pre}vendor/glisse/index.js"}}}}</script>
 <script type="module" src="{pre}glass.js?v=15"></script>
@@ -91,7 +92,7 @@ def cta(pre, place):
     return f"""<section class="cta" data-reveal>
       <div>
         <h2>Хотите пройти этот путь<br class="br-d"> с командой?</h2>
-        <p>Оценка шансов — бесплатно. Расскажите о ситуации, и мы честно скажем, подходит ли вам защита и с чего начать.</p>
+        <p>Оценка шансов – бесплатно. Расскажите о ситуации, и мы честно скажем, подходит ли вам защита и с чего начать.</p>
         <div class="btns">
           <a class="btn btn--dark m-btn" href="https://t.me/ASILOhelperBot?start=site_statya_cta_start" target="_blank" rel="noopener">Оставить заявку <span class="dot-arr" aria-hidden="true">↗</span></a>
           <a class="btn btn--glass m-btn" href="{BOT}site_{place}_start" target="_blank" rel="noopener">Оценить шансы в боте</a>
@@ -143,7 +144,7 @@ def slugify_h(text, used):
 def render_body(a, pre):
     body = a["body"]
     kb = (f'<a class="kbstrip" href="{BOT}site_articles_kb" target="_blank" rel="noopener">'
-          f'<div><b>Полная версия — в базе знаний</b><span>Бесплатно: гайды, чек-листы и ссылки по всем этапам</span></div><em>Открыть в боте ↗</em></a>')
+          f'<div><b>Полная версия – в базе знаний</b><span>Бесплатно: гайды, чек-листы и ссылки по всем этапам</span></div><em>Открыть в боте ↗</em></a>')
     # FAQ
     faq_html = ""
     fm = re.search(r"^## Вопросы по теме\s*\n(.*)$", body, re.S | re.M)
@@ -186,8 +187,8 @@ def render_body(a, pre):
     return out + faq_html, toc
 
 
-def card(a, pre, wide=False):
-    cls = "card m-card" + (" card--wide" if wide else "")
+def card(a, pre, wide=False, extra=""):
+    cls = "card m-card" + (" card--wide" if wide else "") + extra
     return (f'<a class="{cls}" href="{pre}stati/{a["slug"]}.html" data-cat="{html.escape(a["cat"])}" data-reveal>'
             f'<div class="card__img"><img src="{pre}img/{a["img"]}" alt="" loading="lazy"{a["pos_attr"]}><span class="chip">{html.escape(a["cat"])}</span></div>'
             f'<div class="card__body"><h3>{html.escape(a["short"] if not wide else a["title"])}</h3>'
@@ -202,8 +203,8 @@ def sources_html(a):
         name, url = name.strip(), url.strip()
         parts.append(f'<a href="{html.escape(url)}" target="_blank" rel="noopener">«{html.escape(name)}»</a>' if url.startswith("http") else f"«{html.escape(name)}»")
     by = ", ".join(parts) if parts else "базы знаний asilohelp"
-    return (f'<p class="src">По материалам статей базы знаний {by}. Текст — общая информация, а не юридическая консультация: '
-            f'правила и сроки меняются, а решение по вашей истории зависит от деталей. Нашли неточность — напишите нам в '
+    return (f'<p class="src">По материалам статей базы знаний {by}. Текст – общая информация, а не юридическая консультация: '
+            f'правила и сроки меняются, а решение по вашей истории зависит от деталей. Нашли неточность – напишите нам в '
             f'<a href="{BOT}site_articles_kb" target="_blank" rel="noopener">бот</a>.</p>')
 
 
@@ -269,7 +270,7 @@ def article_page(a, arts):
       </article>
       <aside class="aside">
         <nav class="toc" aria-label="На этой странице"><small>На этой странице</small>{toc_html}<a class="up" href="#top">↑ К началу</a></nav>
-        <div class="hola"><b>¡Hola!</b><p>Хотите пройти путь с командой?</p><span>Оценка шансов — бесплатно, ответим в течение суток.</span><a href="{BOT}site_{place}_start" target="_blank" rel="noopener">Оценить шансы ↗</a></div>
+        <div class="hola"><b>¡Hola!</b><p>Хотите пройти путь с командой?</p><span>Оценка шансов – бесплатно, ответим в течение суток.</span><a href="{BOT}site_{place}_start" target="_blank" rel="noopener">Оценить шансы ↗</a></div>
       </aside>
     </div>
 
@@ -304,12 +305,16 @@ LIST_JS = """<script>
     const set = cat => {
       btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cat === cat)));
       cards.forEach(c => c.hidden = cat !== 'all' && c.dataset.cat !== cat);
+      document.getElementById('all').classList.toggle('is-filtered', cat !== 'all');
     };
     btns.forEach(b => b.addEventListener('click', () => { set(b.dataset.cat); history.replaceState(null, '', b.dataset.cat === 'all' ? location.pathname : '#cat=' + b.dataset.cat); }));
     const m = decodeURIComponent(location.hash).match(/^#cat=(.+)$/);
     if (m && btns.some(b => b.dataset.cat === m[1])) { set(m[1]); document.getElementById('fresh').scrollIntoView(); }
   })();
 </script>"""
+
+
+WIDE = {"kto-mozhet-zaprosit": "left", "kejs": "right", "do-otezda": "left"}
 
 
 def list_page(arts):
@@ -324,7 +329,13 @@ def list_page(arts):
     must_html = "".join(
         f'<a href="stati/{a["slug"]}.html"><span class="n"><b>{i:02d}</b>{html.escape(a["cat"])}</span><strong>{html.escape(a["short"])}</strong><span>{a["min"]} мин чтения</span></a>'
         for i, a in enumerate(must, 1))
-    grid = "".join(card(a, pre, wide=(i == 0)) for i, a in enumerate(rest[1:]))
+    # Figma 5120:2863 (Саша, 27.11.2026): большие карточки чередуются – слева, справа, слева;
+    # между ними ряды из трех, последние две статьи – по половине ряда (сетка в chitaemost.css)
+    items = rest[1:]
+    grid = "".join(card(a, pre, wide=a["slug"] in WIDE,
+                        extra=(" card--right" if WIDE.get(a["slug"]) == "right" else "")
+                        + (" card--half" if i >= len(items) - 2 and a["slug"] not in WIDE else ""))
+                   for i, a in enumerate(items))
     filters = '<button type="button" data-cat="all" aria-pressed="true">Все</button>' + "".join(
         f'<button type="button" data-cat="{html.escape(c)}" aria-pressed="false">{html.escape(c)}</button>' for c in cats)
     return head("Статьи и база знаний", "Гайды о международной защите в Испании для ЛГБТ-людей: кейс, доказательства, подача, интервью, документы и жизнь после.", pre, "news") + f"""
