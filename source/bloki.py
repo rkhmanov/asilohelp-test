@@ -66,32 +66,38 @@ T_SH = ['f', 'b', 'e', 'g', 'd', 'f', 'h', 'g']
 P_SH = ['a', 'c', 'd', 'h', 'c', 'a', 'e', 'b']
 TILT = [2, -2, 3, -3, 2, -3, 3, -2]
 
-# Главная (Саша, 26.11, расстановка в Figma, блок 5036:3416): своя очередь для компьютера и телефона.
-# Вид карточки (что лежит сверху, форма, красный текст, наклон наклейки) едет вместе с карточкой.
-HOME_LOOK = {  # id: (лежит текстом, форма, красный текст, наклон)
-    'angelina': (True, 'f', False, 2), 'yulia': (False, 'a', False, -2), 'daniil': (True, 'b', True, 3),
-    'gela': (False, 'h', True, -2), 'lyubava': (True, 'e', False, 2), 'daniel': (False, 'd', False, -3),
-    'aleksej': (True, 'g', True, 3), 'kirill': (False, 'e', False, -3), 'dmitrij': (True, 'd', False, 2),
-    'rostislav': (False, 'c', False, -2), 'vika': (True, 'f', True, 3), 'apollinaria': (False, 'a', True, -3),
-    'elena': (True, 'h', False, 2), 'valentin': (False, 'c', True, -3),
+# Главная (Саша, 27.11, Figma 5055:1448 – компьютер, 5068:1450 – телефон): одна очередь на обоих экранах.
+# Верхний ряд макета – лицевые стороны, нижний – обороты тех же карточек. Пары фото + отзыв Саша поставил сам:
+# фото с именем человека, на обороте отзыв (не всегда того же человека – так в макете). Форма у пары общая.
+# Поля: up – что лежит сверху ('ph' фото, 'q' отзыв, 'you', 'more'), sh – форма, foto/name – фото и наклейка,
+# q – id отзыва из OTZYVY или dict(text, label), red – красная карточка отзыва, rp/rq – наклон наклеек фото/отзыва.
+# В тексте [[…]] – только для компьютера (на телефоне карточка меньше).
+HOME_TXT = {
+    'vika': 'Два года не могла решиться. Координатор помог выбрать страну и тип легализации. Оказалось, все не так страшно[[, как я себе представляла]]',
+    'angelina': 'Визу получала впервые и очень боялась напортачить. [[Очень помогли с документами и анкетами. ]]Ребята были на связи постоянно и даже поймали слот в моем регионе',
+    'yulia': 'Юрист спокойно и грамотно объяснил все сложности и пути их решения. Стало понятно, а главное – не страшно. Спасибо, что не оставляете людей в одиночестве',
+    'aleksej': 'Удалось сдаться в аэропорту при наличии шенгена, пройти детеншн и интервью в полиции и получить красную карту всего через неделю. Команда была рядом',
+    'daniil': 'Мы с парнем заранее написали кучу вопросов о переезде и беженстве и на все получили четкие ответы. А еще таблицы, памятки и полезные контакты',
+    'nikita': 'Все четко, быстро и простым языком. Помогли с визой, хотя паспорт был «пустой», и отдельное спасибо за помощь с поиском ситы. Без них я бы точно не справился!',
+    'apollinaria': 'Очень информативно, много полезного, еще и материалы после консультации. Ответили на все вопросы, стало понятнее и спокойнее',
+    'gela': 'Мы с партнером ехали в Барселону без четкого плана. Координатор ответил на все вопросы и остался на связи[[. Сейчас у нас все хорошо]]',
 }
-# 26.11 поздно вечером Саша убрал из блока Дмитрия, Вику, Аполлинарию и Елену (компьютер), Дмитрия и Любаву (телефон),
-# «27 отзывов» на компьютере перед Ростиславом, на телефоне шестой.
-HOME_PK = ['angelina', 'yulia', 'daniil', 'gela', 'you', 'lyubava', 'daniel', 'aleksej', 'kirill', 'more', 'rostislav']
-HOME_PH = ['angelina', 'yulia', 'you', 'kirill', 'daniil', 'more', 'daniel', 'aleksej', 'gela', 'rostislav',
-           'vika', 'apollinaria']
-# Порядок фото – ряд Саши в Figma 4859:3816 (26.11): фото идут по ленте в этом порядке. Сначала получают фото
-# карточки, которые лежат фото вверх (их видно сразу), потом обороты карточек, лежащих текстом. Свой расчет
-# для компьютера и телефона, имя на наклейке – по-прежнему автор текста.
-HOME_FOTO = ['vika.jpg', 'aleksej-k.jpg', 'yulia.jpg', 'sanya.jpg', 'apollinaria.jpg', 'kirill.jpg', 'daniil.jpg',
-             'aleksandr.jpg', 'valentin.jpg', 'lyubava.jpg', 'elena.jpg', 'daniel.jpg', 'lera.jpg', 'ross.jpg']
-
-
-def home_foto(order):
-    """id -> фото для одной ленты: сначала карточки фото вверх, потом лежащие текстом, каждая группа по ленте."""
-    people = [k for k in order if k in HOME_LOOK]
-    queue = [k for k in people if not HOME_LOOK[k][0]] + [k for k in people if HOME_LOOK[k][0]]
-    return dict(zip(queue, HOME_FOTO))
+HOME_REEL = [
+    dict(up='ph', sh='a', foto='vika.jpg', name='Вика', rp=-2, q='vika', red=False, rq=2),
+    dict(up='q', sh='f', foto='angelina.jpg', name='Ангелина', rp=2, q='angelina', red=False, rq=-2),
+    dict(up='ph', sh='c', foto='aleksej-a.jpg', name='Алексей', rp=-3, q='yulia', red=False, rq=-3),
+    dict(up='you', sh='a'),
+    dict(up='ph', sh='d', foto='yulia.jpg', name='Юлия', rp=3, q='aleksej', red=True, rq=2),
+    dict(up='more', sh='e'),
+    dict(up='q', sh='e', foto='ross.jpg', name='Ростислав', rp=-2, q='daniil', red=False, rq=-3),
+    dict(up='ph', sh='h', foto='sanya.jpg', name='Саша', rp=3, red=True, rq=-3,
+         q=dict(label='Консультация', text='Координатор подробно расписал весь процесс, ответил на все вопросы и успокоил. Стало гораздо понятнее, с чего начать и что делать дальше')),
+    dict(up='q', sh='e', foto='nikita.jpg', name='Никита', rp=2, q='nikita', red=False, rq=3),
+    dict(up='ph', sh='c', foto='lera.jpg', name='Лера', rp=3, q='apollinaria', red=False, rq=-2),
+    dict(up='q', sh='c', foto='aleksandr.jpg', name='Александр', rp=3, red=True, rq=3,
+         q=dict(label='Консультация', text='Я в самом начале пути, а в интернете много неверного. После консультации стало ясно, как действовать и на что обратить внимание')),
+    dict(up='ph', sh='a', foto='kirill.jpg', name='Кирилл', rp=2, q='gela', red=True, rq=2),
+]
 
 # Страницы: какие услуги показывать в ленте, куда ведет «N отзывов» (N считается по source/reviews.py вместе с
 # новыми из канала, source/reviews-auto.json; буква – услуга, как в фильтре «Отзывов»), метки ссылок на бота
@@ -147,29 +153,22 @@ def you_card(cfg, attrs=''):
             f'<span>Здесь может<br>быть ваше фото</span><span class="rv__cta">Оставить заявку</span></a>')
 
 
-def pos(key):
-    """data-pk / data-ph – место карточки в ленте на компьютере / телефоне (ставит otzyvy-lenta*.js)."""
-    return ''.join(f' data-{d}="{lst.index(key)}"' for d, lst in (('pk', HOME_PK), ('ph', HOME_PH)) if key in lst)
-
-
 def otzyvy_home(cfg):
     by_id = {o['id']: o for o in OTZYVY if o != 'you'}
-    fk, fh = home_foto(HOME_PK), home_foto(HOME_PH)
     cards = []
-    for key in HOME_PK + [k for k in HOME_PH if k not in HOME_PK]:
-        if key == 'you':
-            cards.append(you_card(cfg, pos(key)))
-        elif key == 'more':
+    for i, c in enumerate(HOME_REEL):
+        if c['up'] == 'you':
+            cards.append(you_card(cfg).replace('class="rv rv--you"', f'class="rv rv--you rv--{c["sh"]}"'))
+            continue
+        if c['up'] == 'more':
             href, n, txt = more(cfg['more'])
-            cards.append(f'<a class="rv rv--more"{pos(key)} href="{href}" draggable="false"><b>{n}</b>{txt} →</a>')
-        else:
-            o = by_id[key]
-            up, shape, red, r = HOME_LOOK[key]
-            foto = (fk.get(key) or fh[key], fh.get(key) or fk[key])
-            q = q_card(o, shape, red, r, up).replace(' data-front', ' data-front' + pos(key)) if up else q_card(o, shape, red, r, up)
-            ph = ph_card(o, shape, -r, not up, foto)
-            ph = ph.replace(' data-front', ' data-front' + pos(key)) if not up else ph
-            cards += [q, ph] if up else [ph, q]
+            cards.append(f'<a class="rv rv--more rv--{c["sh"]}" href="{href}" draggable="false"><b>{n}</b>{txt} →</a>')
+            continue
+        q = c['q'] if isinstance(c['q'], dict) else dict(label=by_id[c['q']]['label'], text=HOME_TXT[c['q']])
+        pid = f'h{i}'
+        qc = q_card(dict(id=pid, text=q['text'], label=q['label']), c['sh'], c['red'], c['rq'], c['up'] == 'q')
+        pc = ph_card(dict(id=pid, name=c['name'], photo=c['foto']), c['sh'], c['rp'], c['up'] == 'ph')
+        cards += [qc, pc] if c['up'] == 'q' else [pc, qc]
     return cards
 
 
