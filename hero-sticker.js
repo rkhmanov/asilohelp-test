@@ -14,8 +14,8 @@
 
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Стикеры: [картинка, эмодзи], по порядку букв (дальше по кругу). Тема как в оригинале – дорога: флаги, документы,
-  // чемодан, перелет, люди и пары, глобус, пляж. Картинки – Microsoft Fluent Emoji 3D (MIT), см. img/stickers/README.md.
+  // Стикеры: [картинка, эмодзи], по порядку букв (дальше по кругу). Тема – дорога и защита: флаги, документы,
+  // чемодан, перелет, люди и пары, глобус, щит, голубь, весы (пляж, пальму и остров Саша заменил 27.11.2026). Картинки – Microsoft Fluent Emoji 3D (MIT), см. img/stickers/README.md.
   // Вариант hero-sticker-emoji.html (<h1 data-emoji>): вместо картинок системные эмодзи –
   // на iPhone и Mac это эмодзи Apple, на Android – Google, на Windows – Microsoft. Картинок не грузим.
   // Чего нет в Fluent Emoji (пары, флаг Испании), есть только в варианте с эмодзи (картинка null).
@@ -36,15 +36,15 @@
     [null, '👨🏻‍❤️‍👨🏼'],
     ['compass', '🧭'],
     ['man', '👱🏼‍♂️'],
-    ['palm-tree', '🌴'],
+    ['shield', '🛡️'],
     [null, '👩🏼‍❤️‍👩🏻'],
     ['world-map', '🗺️'],
     ['woman', '👱🏻‍♀️'],
     ['camera', '📸'],
     [null, '🧑🏻‍🤝‍🧑🏽'],
-    ['beach-with-umbrella', '🏖️'],
+    ['dove', '🕊️'],
     ['key', '🔑'],
-    ['desert-island', '🏝️'],
+    ['balance-scale', '⚖️'],
     ['house', '🏠']
   ];
   var emoji = h1.hasAttribute('data-emoji');
