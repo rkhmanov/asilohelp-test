@@ -49,6 +49,7 @@
 .rvc__by { display: flex; align-items: center; gap: 12px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
 .rvc__by > i { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--pink); color: var(--accent); font-style: normal; font-weight: 600; font-size: 15px; }
 .rvc:nth-child(7n+4) .rvc__by > i { background: #fff; }
+.rvc__ava { flex: none; width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--pink); } /* аватарка из Telegram, 27.11 */
 .rvc__by b { display: block; font-weight: 600; font-size: 14px; }
 .rvc__by time { display: block; margin-top: 3px; font-size: 11px; color: var(--muted); }
 .rvc__tag { margin-left: auto; flex: none; background: var(--tile-2); border-radius: 999px; padding: 7px 12px; font-weight: 500; font-size: 11px; }

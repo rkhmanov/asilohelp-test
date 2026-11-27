@@ -90,6 +90,16 @@ Muchas gracias ❤️"""),
 ]
 
 AUTO = pathlib.Path(__file__).resolve().parent / 'reviews-auto.json'
+
+# Аватарки авторов из Telegram (Саша, 27.11.2026): img/rv-ava/*.webp, 96×96. Старые 27 – по (имя, месяц) ниже,
+# скачаны из канала «отзывы» (tg_export/otzyvy_avatars.py на маке). Новые из канала – поле 'ava' в reviews-auto.json,
+# reviews_sync.py сам берет их у бота (/site/reviews/photo/<id>). Нет аватарки – на карточке первая буква имени.
+AVA = {
+    ('Гела и Нико', '2024-03'): 'p8.webp', ('Саша и Вера', '2024-03'): 'p9.webp', ('Вика', '2024-04'): 'p11.webp',
+    ('Лера', '2024-04'): 'p12.webp', ('Элина', '2025-03'): 'p16.webp', ('Елена', '2025-08'): 'p19.webp',
+    ('Саша', '2025-08'): 'p20.webp', ('Кирилл', '2025-08'): 'p21.webp', ('Никита', '2026-09'): 'p30.webp',
+    ('Любава', '2026-09'): 'p31.webp', ('Алексей', '2026-10'): 'p32.webp', ('Аполлинария', '2026-10'): 'p34.webp',
+}  # p<номер поста в канале>; Любава и Аполлинария найдены по имени в переписках Леси (единственное совпадение)
 NO_NAME = 'Клиент'  # ник вместо имени — имени нет
 
 
@@ -98,7 +108,7 @@ def auto():
     if not AUTO.exists():
         return []
     items = json.loads(AUTO.read_text(encoding='utf-8'))
-    return [(r['name'] or NO_NAME, r['date'], r['s'], r['text']) for r in items if not r.get('hidden')]
+    return [(r['name'] or NO_NAME, r['date'], r['s'], r['text'], r.get('ava')) for r in items if not r.get('hidden')]
 
 
 def all_reviews():
@@ -132,17 +142,26 @@ def plural(n):
 LONG = 330  # длиннее — сворачиваем с кнопкой «Читать полностью»
 
 
-def card(name, ym, s, text):
+def ava_of(r):
+    """Файл аватарки отзыва (относительно корня сайта) или None."""
+    f = r[4] if len(r) > 4 and r[4] else AVA.get((r[0], r[1]))
+    root = pathlib.Path(__file__).resolve().parent.parent
+    return f'img/rv-ava/{f}' if f and (root / 'img/rv-ava' / f).exists() else None
+
+
+def card(name, ym, s, text, ava=None):
     y, m = ym.split('-')
     when = f'{MONTHS[int(m) - 1]} {y}'
     paras = ''.join(f'<p>{html.escape(p.strip())}</p>' for p in text.strip().split('\n') if p.strip())
     long = len(text) > LONG
     initial = html.escape(name.strip()[0].upper())
+    face = (f'<img class="rvc__ava" src="{ava}" alt="" width="40" height="40" loading="lazy" decoding="async">' if ava
+            else f'<i aria-hidden="true">{initial}</i>')
     return (f'<article class="rvc{" rvc--long" if long else ""}" data-s="{s}" data-reveal>'
             f'<span class="rvc__q" aria-hidden="true">«</span>'
             f'<div class="rvc__txt">{paras}</div>'
             + ('<button type="button" class="rvc__more" aria-expanded="false">Читать полностью</button>' if long else '')
-            + f'<footer class="rvc__by"><i aria-hidden="true">{initial}</i><span><b>{html.escape(name)}</b><time datetime="{ym}">{when}</time></span>'
+            + f'<footer class="rvc__by">{face}<span><b>{html.escape(name)}</b><time datetime="{ym}">{when}</time></span>'
             f'<span class="rvc__tag">{LABEL[s[0]]}</span></footer></article>')
 
 
@@ -151,7 +170,7 @@ def main():
     page = root / 'otzyvy.html'
     src = page.read_text(encoding='utf-8')
     rs = all_reviews()
-    block = '\n'.join(card(*r) for r in rs)
+    block = '\n'.join(card(*r[:4], ava=ava_of(r)) for r in rs)
     src = re.sub(r'(<!-- reviews:start -->).*?(<!-- reviews:end -->)', lambda m: m.group(1) + '\n' + block + '\n' + m.group(2), src, flags=re.S)
     for k in ['all', 'cl', 'k', 's', 'v']:  # «Консультации» и «Консультации юриста» — один фильтр (Саша, 27.11)
         n = len(rs) if k == 'all' else sum(has(r, k) for r in rs)
