@@ -89,3 +89,5 @@
   .paper .meta { font-size: 13px; }
   .share button, .share a { font-size: 13px; min-height: 44px; display: inline-flex; align-items: center; padding: 0 15px; }
 }
+/* правая большая карточка («Как написать кейс…»): у колонки текста 360 px, «для международной» в 30 px не влезает (типограф склеивает предлог со словом) – 27 px, строки как в Figma, без наезда на фото */
+@media (min-width: 1101px) { .card--wide.card--right h3 { font-size: 27px; } }

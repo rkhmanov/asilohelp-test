@@ -25,7 +25,7 @@ except ImportError:
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "source" / "stati"
 OUT = ROOT / "stati"
-CHIT = '\n<link rel="stylesheet" href="{pre}chitaemost.css?v=2">'  # «Статьи» и статьи, не «О нас»
+CHIT = '\n<link rel="stylesheet" href="{pre}chitaemost.css?v=3">'  # «Статьи» и статьи, не «О нас»
 V = "1"  # версия pages.css в ссылке — поднимать после правки стилей
 BOT = "https://t.me/ASILOhelperBot?start="
 CATS = ["Основы", "Подача", "Кейс", "Интервью", "До отъезда", "Документы", "Жизнь в Испании"]
