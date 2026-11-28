@@ -25,7 +25,7 @@ except ImportError:
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "source" / "stati"
 OUT = ROOT / "stati"
-CHIT = '\n<link rel="stylesheet" href="{pre}chitaemost.css?v=1">'  # «Статьи» и статьи, не «О нас»
+CHIT = '\n<link rel="stylesheet" href="{pre}chitaemost.css?v=3">'  # «Статьи» и статьи, не «О нас»
 V = "1"  # версия pages.css в ссылке — поднимать после правки стилей
 BOT = "https://t.me/ASILOhelperBot?start="
 CATS = ["Основы", "Подача", "Кейс", "Интервью", "До отъезда", "Документы", "Жизнь в Испании"]
@@ -270,7 +270,7 @@ def article_page(a, arts):
       </article>
       <aside class="aside">
         <nav class="toc" aria-label="На этой странице"><small>На этой странице</small>{toc_html}<a class="up" href="#top">↑ К началу</a></nav>
-        <div class="hola"><b>¡Hola!</b><p>Хотите пройти путь с командой?</p><span>Оценка шансов – бесплатно, ответим в течение суток.</span><a href="{BOT}site_{place}_start" target="_blank" rel="noopener">Оценить шансы ↗</a></div>
+        <div class="hola"><b>¡Hola!</b><p>Хотите пройти путь с командой?</p><span>Оценка шансов – бесплатно, ответим в течение суток.</span><a href="{BOT}site_{place}_start" target="_blank" rel="noopener">Оценить шансы</a></div>
       </aside>
     </div>
 
@@ -343,7 +343,7 @@ def list_page(arts):
   <div class="wrap">
     <div class="pg-head" data-reveal>
       <h1>Статьи и база знаний<span>о защите в Испании</span></h1>
-      <p>Чтобы понимать процедуру и чувствовать себя увереннее. Пишем по своему опыту и опыту людей, которые прошли этот путь с нами.</p>
+      <p>Чтобы понимать процедуру и чувствовать себя увереннее.<span class="pg-head__gap"></span> Пишем по своему опыту и опыту людей, которые прошли этот путь с нами.</p>
     </div>
 
     <section class="kbx" id="kb" data-reveal>
@@ -396,6 +396,53 @@ def about_page():
     return head("О нас", "Команда ЛГБТ-людей и союзников: многие из нас сами получили международную защиту в Испании.", "", "us") + body + foot("")
 
 
+# ── 404 (Figma 5128:2937 компьютер / 5129:2937 телефон, 27.11.2026) ─────────────
+
+E404_CSS = """<style>
+.e404 { padding: 150px 0 45px; text-align: center; }
+.e404__num { font-weight: 500; font-size: 300px; line-height: 270px; letter-spacing: -.06em; color: #F7E9EB; }
+.e404 h1 { margin-top: 7px; font-weight: 500; font-size: 56px; line-height: 1.05; letter-spacing: -.05em; color: var(--ink); }
+.e404 h1 span { display: block; font-weight: 300; color: #555968; }
+.e404__lead { max-width: 600px; margin: 22px auto 0; font-size: 16px; line-height: 1.55; color: #777880; }
+.e404__btns { display: flex; justify-content: center; gap: 12px; margin-top: 27px; }
+.e404__btns .btn { height: 56px; font-size: 15px; }
+.e404__btns .btn--pill { gap: 16px; }
+.e404__light { background: #F5F5F7; color: var(--ink); padding: 0 26px; transition: background .2s; }
+.e404__light:hover { background: var(--beige, #EFEAE4); }
+@media (max-width: 600px) {
+  .e404 { padding: 147px 0 47px; }
+  .e404__num { font-size: 132px; line-height: 118.8px; }
+  .e404 h1 { margin-top: 52px; font-size: 27px; letter-spacing: -.04em; }
+  .e404__lead { margin-top: 22px; font-size: 15px; }
+  .e404__btns { flex-direction: column; gap: 12px; margin-top: 28px; }
+  .e404__btns .btn--pill { position: relative; padding: 0 56px; }
+  .e404__btns .btn--pill img { position: absolute; right: 5px; top: 5px; }
+}
+</style>
+"""
+
+# 404 отдается по любому адресу (/a/b/c), поэтому все относительные ссылки считаем от корня сайта:
+# на тесте (GitHub Pages) это /asilohelp-test/, на бою tools/perenos.py ставит <base href="/">
+BASE_404 = """<script>document.write('<base href="' + (location.hostname.endsWith('github.io') ? '/asilohelp-test/' : '/') + '">')</script>"""
+
+
+def page_404():
+    body = f"""{E404_CSS}
+<main id="top" class="e404"><div class="wrap">
+  <div class="e404__num" aria-hidden="true">404</div>
+  <h1>Такой страницы нет,<span>но путь продолжается</span></h1>
+  <p class="e404__lead">Возможно, ссылка устарела или в адресе опечатка. Начните с главной или загляните в статьи: там все этапы защиты по шагам.</p>
+  <div class="e404__btns">
+    <a class="btn btn--accent btn--pill m-btn m-btn--accent" href="index.html">На главную <img class="m-arrow" src="img/arrow-white46.svg" alt="" width="46" height="46"></a>
+    <a class="btn e404__light m-btn" href="stati.html">Статьи и база знаний</a>
+  </div>
+</div></main>
+"""
+    h = head("Страница не найдена", "Такой страницы нет, но путь продолжается.", "", "404") + body + foot("")
+    h = h.replace("<head>\n", "<head>\n" + BASE_404 + "\n", 1)
+    return h.replace("start=site_statya_", "start=site_404_")
+
+
 def main():
     arts = sorted((parse(p) for p in SRC.glob("*.md") if p.name != "FORMAT.md"), key=lambda a: (a["order"], a["slug"]))
     if not arts:
@@ -408,6 +455,7 @@ def main():
     (ROOT / "stati.html").write_text(typo(list_page(arts).replace("start=site_statya_", "start=site_stati_")), encoding="utf-8")  # метка кнопок: site_stati_…
     if (ROOT / "source" / "o-nas.body.html").exists():
         (ROOT / "o-nas.html").write_text(typo(about_page().replace("start=site_statya_", "start=site_onas_")), encoding="utf-8")  # метка кнопок: site_onas_…
+    (ROOT / "404.html").write_text(typo(page_404()), encoding="utf-8")  # страница 404 (метки site_404_…)
     print(f"статей: {len(arts)} → stati/, stati.html" + (", o-nas.html" if (ROOT / 'o-nas.html').exists() else ""))
 
 

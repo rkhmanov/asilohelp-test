@@ -2,7 +2,7 @@
 """Подвал сайта – один на все страницы (Саша, 27.11.2026, Figma: компонент «Подвал сайта · единый» 5088:3507).
 
 В Figma у компонента два варианта, и они отличаются не только расстановкой, но и составом:
-  • компьютер (5088:3416) – «Сайт» / «Мы в соц. сетях» / «Доп. информация» (Отзывы и Частые вопросы – там), без «О нас»;
+  • компьютер (5088:3416) – «Сайт» / «Мы в соц. сетях» / «Доп. информация» (Частые вопросы и Отзывы – там), без «О нас»;
   • телефон (5088:3460) – «Сайт» (8 ссылок, «Статьи», «О нас») / «Мы в сети» / «Документы», ссылки в две колонки.
 Поэтому в HTML обе раскладки: колонки .foot__col--d видны шире 600 px, .foot__col--m – до 600 px (site.css, «Подвал»).
 
@@ -28,6 +28,7 @@ STRANICY = {
     'otzyvy.html': 'site_reviews_footer_start',
     'stati.html': 'site_stati_footer_start',
     'o-nas.html': 'site_onas_footer_start',
+    '404.html': 'site_404_footer_start',
     'keys.html': 'site_keys_footer_start',
     'konsultacii.html': 'site_konsult_footer_start',
     'soprovozhdenie.html': 'site_soprpage_footer_start',
@@ -66,7 +67,7 @@ def links(pre, tag):
 KOMPYUTER = [
     ('Сайт', ['consult', 'case', 'sopr', 'stati', 'zayavka']),
     ('Мы в соц. сетях', ['tg', 'ig', 'yt']),
-    ('Доп. информация', ['legal', 'privacy', 'cookies', 'otzyvy', 'faq']),
+    ('Доп. информация', ['legal', 'privacy', 'cookies', 'faq', 'otzyvy']),
 ]
 TELEFON = [
     ('Сайт', ['consult', 'case', 'sopr', 'stati_m', 'onas', 'otzyvy', 'faq', 'zayavka']),
