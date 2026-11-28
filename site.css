@@ -600,8 +600,9 @@ html { --lg-glass: rgb(255 255 255 / .5); --lg-edge: rgb(255 255 255 / .55); --l
 .hdr .lg-glass { background-color: rgb(255 255 255 / .08);
   -webkit-backdrop-filter: blur(2px) contrast(.75) brightness(1.2) var(--lg-filter, saturate(1.5));
   backdrop-filter: blur(2px) contrast(.75) brightness(1.2) var(--lg-filter, saturate(1.5)); }
-.hdr nav > a, .hdr .nav-dd__btn { text-shadow: 0 0 1px #fff, 0 0 6px rgb(255 255 255 / .95), 0 0 14px rgb(255 255 255 / .85), 0 0 22px rgb(255 255 255 / .6); }
-.hdr__logo img { filter: drop-shadow(0 0 3px rgb(255 255 255 / .95)) drop-shadow(0 0 10px rgb(255 255 255 / .8)); }
+/* ореол мягче и шире (Саша 28.11: «чтобы не было видно, что обведено») */
+.hdr nav > a, .hdr .nav-dd__btn { text-shadow: 0 0 12px rgb(255 255 255 / .55), 0 0 28px rgb(255 255 255 / .4), 0 0 44px rgb(255 255 255 / .25); }
+.hdr__logo img { filter: drop-shadow(0 0 10px rgb(255 255 255 / .5)) drop-shadow(0 0 26px rgb(255 255 255 / .35)); }
 @media (prefers-reduced-transparency: reduce) { .hdr .lg-glass { background-color: rgb(255 255 255 / .95); } }
 
 /* шапка: «Услуги ⌄» — выпадающий список (glass.js). Кнопка выглядит как обычный пункт меню и остается на месте */
