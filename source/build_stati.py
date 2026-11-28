@@ -46,9 +46,7 @@ def head(title, desc, pre, page):
 <link rel="icon" href="{pre}img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="{pre}img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="{pre}img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{pre}fonts/fonts.css?v=1">
 <link rel="stylesheet" href="{pre}motion.css?v=18">
 <link rel="stylesheet" href="{pre}site.css?v=50">
 <link rel="stylesheet" href="{pre}pages.css?v={V}">{CHIT.format(pre=pre) if page in ("news", "faq") else ""}

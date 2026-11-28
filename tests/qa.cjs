@@ -147,19 +147,22 @@ async function checkBrowser() {
     // Ширины — параллельно, страницы внутри ширины — по 3 сразу: 20+ страниц × 4 ширины иначе идут минуты.
     await Promise.all(VIEWPORTS.map(async vp => {
       const ctx = await browser.newContext(vp);
-      // Сторонние адреса не ждём (в CI и песочнице они могут не открываться), кроме шрифтов Google:
-      // без Unbounded текст уже и переполнения на телефоне не видно.
-      await ctx.route(u => !u.href.startsWith(base) && !/^https:\/\/fonts\.(googleapis|gstatic)\.com\//.test(u.href), r => r.abort());
+      // Сторонние адреса не ждём (в CI и песочнице они могут не открываться). Шрифты лежат на сайте (fonts/, с 28.11.2026):
+      // запрос к Google Fonts – ошибка (IP посетителя уходил бы Google).
+      await ctx.route(u => !u.href.startsWith(base), r => r.abort());
       const queue = [...pages];
       await Promise.all([0, 1, 2].map(async () => { for (let file; (file = queue.shift());) {
         const page = await ctx.newPage();
         const where = `${file} @${vp.name}`;
         page.on('pageerror', e => { if (!/esm\.sh|turnstile|Failed to fetch dynamically imported module|Failed to resolve module specifier/i.test(e.message)) err(where, `ошибка JS: ${e.message}`); });
+        page.on('request', q => { if (/^https:\/\/fonts\.(googleapis|gstatic)\.com\//.test(q.url())) err(where, `запрос к Google Fonts: ${q.url()}`); });
         page.on('response', r => { if (r.url().startsWith(base) && r.status() >= 400) err(where, `${r.status()} ${r.url().slice(base.length)}`); });
         await page.goto(base + file.split(path.sep).join('/'), { waitUntil: 'load' });
         const h = await page.evaluate(() => document.documentElement.scrollHeight);
         for (let y = 0; y < h; y += Math.round(vp.viewport.height * 0.6)) { await page.evaluate(y => scrollTo(0, y), y); await page.waitForTimeout(30); }
         await page.evaluate(() => document.fonts.ready);
+        if (!(await page.evaluate(() => [...document.fonts].some(f => f.family.replace(/["']/g, '') === 'Unbounded' && f.status === 'loaded'))))
+          err(where, 'шрифт Unbounded не загрузился из fonts/');
         await page.waitForTimeout(700);
         const r = await page.evaluate(() => {
           const W = document.documentElement.clientWidth;
