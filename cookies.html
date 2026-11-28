@@ -8,9 +8,8 @@
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css?v=1">
 <link rel="stylesheet" href="site.css?v=50">
 <link rel="stylesheet" href="docs.css?v=2">
 <script>(function(){var r=document.documentElement;function z(){var w=window.innerWidth;r.style.setProperty('--z',w<=480?w/390:(w>=1100&&w!==1440)?Math.min(w/1440,1.2):1);}z();addEventListener('resize',z);})();</script>
@@ -51,7 +50,6 @@
           <thead><tr><th>Сервис</th><th>Что делает</th><th>Cookie или&nbsp;данные</th><th>Срок</th></tr></thead>
           <tbody>
             <tr><td>Cloudflare Turnstile<small>Cloudflare, Inc. · challenges.cloudflare.com</small></td><td>Проверяет, что форму отправляет человек, а&nbsp;не&nbsp;программа. Работает только на&nbsp;странице с&nbsp;формой</td><td>Может устанавливать технически необходимые cookie домена challenges.cloudflare.com (например, <code>cf_clearance</code>, <code>__cf_bm</code>) и&nbsp;использовать локальное хранилище браузера. Для&nbsp;рекламы и&nbsp;аналитики не&nbsp;используется</td><td>Обычно от&nbsp;сессии до&nbsp;нескольких часов <mark class="todo">[уточнить]</mark></td></tr>
-            <tr><td>Google Fonts<small>Google · fonts.googleapis.com, fonts.gstatic.com</small></td><td>Загружает шрифты сайта</td><td>Cookie не&nbsp;ставит. Браузер передаёт Google IP-адрес</td><td>—</td></tr>
             <tr><td>GitHub Pages<small>GitHub, Inc.</small></td><td>Хостинг страниц сайта</td><td>Cookie не&nbsp;ставит. Ведёт технические журналы (IP-адрес, время запроса)</td><td>—</td></tr>
           </tbody>
         </table>
