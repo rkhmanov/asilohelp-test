@@ -236,3 +236,9 @@
   .kb__box .btn .up { text-transform: uppercase; font-size: 14px; }
   .kb__box--v2 .fl--screens { rotate: -2.1deg; }
 }
+/* Телефон, 28.11: «Оценим шансы» – типограф склеивает «а мы скажем», абзац в 5 строк вместо 4 из Figma,
+   и при высоте 589 кнопка «Записаться» срезалась по низу. Плашка растет по тексту, снизу 2 px, как в 4818:5021 */
+@media (max-width: 600px) {
+  .who .dark { height: auto; min-height: 589px; }
+  .who .dark__text { padding-bottom: 2px; }
+}
