@@ -209,3 +209,30 @@
      прижато влево и поднято на 123, пара идет крупно справа (раньше фото стояло по центру карточки) */
   .news .lead-art > img { inset: auto; left: 0; top: -36.18%; width: 136.31%; height: 136.18%; max-width: none; }
 }
+
+/* Сверка с финалами Figma 28.11 (компьютер 4750:4451, телефон 4818:5021): тексты и отступы, которые разошлись с макетом */
+.b--red .big--xl + p { font-weight: 700; }                 /* «человека переехали…» в макете жирным на обоих экранах */
+@media (min-width: 1101px) {
+  /* «Как мы помогаем»: кнопки на карточках видны сразу, как в макете (при наведении карточка по-прежнему переворачивается) */
+  .help .flip__btn--face { opacity: 1 !important; transform: translateZ(0) !important; pointer-events: auto !important; }
+  .help .flip__back p { transform: translateY(-84px) !important; }
+  /* вертикальный ритм блоков по макету */
+  .who { padding-top: 120px; }
+  .who .tiles3 { position: relative; top: -12px; margin-bottom: -12px; }
+  .us { padding-top: 53px; }
+  .reviews { padding-top: 70px; }
+  .free { margin-top: 23px; }
+  .kb { padding-top: 114px; }
+  .kb .kb__box { margin-top: 90px; left: 13px; width: 1328px; }
+  .news__list { gap: 16px; } .news .lead-art { min-height: 552px; }
+  .news { padding-top: 58px; }
+  .faq { padding-top: 17px; }
+  .apply { padding-bottom: 26px; }
+  /* нижние блоки в макете начинаются с x 70, как карточки выше */
+  .news .wrap, .faq .wrap { position: relative; left: 13px; }
+  .kb__box--v2 > .btn { font-size: 28px; }
+}
+@media (max-width: 600px) {
+  .kb__box .btn .up { text-transform: uppercase; font-size: 14px; }
+  .kb__box--v2 .fl--screens { rotate: -2.1deg; }
+}
