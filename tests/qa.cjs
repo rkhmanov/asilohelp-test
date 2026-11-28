@@ -175,7 +175,8 @@ async function checkBrowser() {
             }
           }
           // висячие предлоги: короткое слово, после него обычный (разрывный) пробел – как в source/tipograf.py
-          const hang = /(?<![\p{L}\p{N}_\-’'&])(\p{L}{1,2}|для|без|над|под|про|при|обо|изо|ото|или)[ \t\r\n]+(?=\S)/giu;
+          // (частицы ли/ль/же/бы держатся за предыдущее слово, после них перенос можно)
+          const hang = /(?<![\p{L}\p{N}_\-’'&])(?!(?:ли|ль|же|бы)(?![\p{L}\p{N}_]))(\p{L}{1,2}|для|без|над|под|про|при|обо|изо|ото|или)[ \t\r\n]+(?=\S)/giu;
           const num = /(?<![\p{L}\p{N}_.,])(\d+|№)[ \t\r\n]+(?=[\p{L}\p{N}€$%«(])/gu;
           const hangs = [];
           const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement.closest('script, style, textarea, pre, code, svg, noscript, [data-sk], [data-notypo]') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
